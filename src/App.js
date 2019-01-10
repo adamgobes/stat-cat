@@ -1,14 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Grommet } from 'grommet';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+import Home from './components/presentational/Home';
+
+const theme = {
+    global: {
+        font: {
+            family: 'Roboto',
+            size: '14px',
+            height: '20px'
+        }
+    }
+};
+
 const App = () => (
-	<Router>
-		<Router>
-                <div>
-                    <Route exact path="/" component={Home} />
-                </div>
-            </Router>
-	</Router>
-)
+    <Router>
+        <Router>
+            <Grommet theme={theme}>
+                <Route exact path="/" component={Home} />
+            </Grommet>
+        </Router>
+    </Router>
+);
 
 export default App;

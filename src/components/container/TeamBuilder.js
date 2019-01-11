@@ -1,14 +1,46 @@
 import React, { Component } from 'react';
-import { Box, Button, TextInput } from 'grommet';
+import {
+    Box,
+    Button,
+    Table,
+    TableBody,
+    TableCell,
+    TableHeader,
+    TableRow,
+    Text,
+    TextInput
+} from 'grommet';
+import styled from 'styled-components';
 import base64 from 'base-64';
 import axios from 'axios';
+
+const Header = styled.h1`
+    text-align: center;
+    margin: 60px 0;
+`;
+
+const AddPlayerInput = styled(TextInput)`
+    width: 300px;
+    margin: 0 24px;
+`;
+
+const COLUMNS = [
+    {
+        property: 'fullName',
+        label: 'Name'
+    },
+    {
+        property: 'currentTeam',
+        label: 'Team'
+    }
+];
 
 class TeamBuilder extends Component {
     state = {
         playerInput: '',
         allPlayers: [],
-		autocomplete: [],
-		team: []
+        autocomplete: [],
+        team: []
     };
 
     componentDidMount() {
@@ -47,49 +79,80 @@ class TeamBuilder extends Component {
                 )
                 .map(player => `${player.firstName} ${player.lastName}`)
         });
-	};
+    };
 
-	handleAddPlayer = playerName => {
-		const firstName = playerName.substring(0, playerName.indexOf(" "))
-		const lastName = playerName.substring(playerName.indexOf(" ") + 1)
+    handleAddPlayer = playerName => {
+        const firstName = playerName.substring(0, playerName.indexOf(' '));
+        const lastName = playerName.substring(playerName.indexOf(' ') + 1);
 
-		const playerObject = this.state.allPlayers.filter(p => p.firstName === firstName && p.lastName === lastName)[0]
+        const playerObject = this.state.allPlayers.filter(
+            p => p.firstName === firstName && p.lastName === lastName
+		)
+		.map(p => ({
+			fullName: `${p.firstName} ${p.lastName}`,
+			currentTeam: p.currentTeam.abbreviation,
+			id: p.id
+		}))[0];
+		
+		
 
-		this.setState(prevState => ({
-			team: [...prevState.team, playerObject],
-			playerInput: ''
-		}))
-	}
-	
-	handlePlayerSelect = e => {
-		this.setState({
-			playerInput: e.suggestion
-		})
-	}
+        this.setState(prevState => ({
+            team: [...prevState.team, playerObject],
+            playerInput: ''
+        }));
+    };
+
+    handlePlayerSelect = e => {
+        this.setState({
+            playerInput: e.suggestion
+        });
+    };
 
     render() {
         return (
             <div>
-                <h1>Let's Build Your Team</h1>
+                <Header>Team Builder</Header>
                 <Box align="center">
                     <Box direction="row" width="medium">
-                        <TextInput
-							size="large"
-							value={this.state.playerInput}
+                        <AddPlayerInput
+                            size="large"
+                            value={this.state.playerInput}
                             onChange={this.handlePlayerInputChange}
-							suggestions={this.state.autocomplete}
-							onSelect={this.handlePlayerSelect}
+                            suggestions={this.state.autocomplete}
+                            onSelect={this.handlePlayerSelect}
                         />
-                        <Button label="Add" onClick={() => this.handleAddPlayer(this.state.playerInput)}/>
+                        <Button
+                            label="Add"
+                            onClick={() =>
+                                this.handleAddPlayer(this.state.playerInput)
+                            }
+                        />
                     </Box>
                 </Box>
-				<Box>
-					<ul>
-						{this.state.team.map(player => (
-							<li key={player.id}>{`${player.firstName} ${player.lastName}`}</li>
-						))}
-					</ul>
-				</Box>
+                <Box align="center" pad="large">
+                    <Table caption="Your Team">
+                        <TableHeader>
+                            <TableRow>
+                                {COLUMNS.map(c => (
+                                    <TableCell key={c.property} scope="col">
+                                        <Text>{c.label}</Text>
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {this.state.team.map(player => (
+                                <TableRow key={player.id}>
+                                    {COLUMNS.map(c => (
+                                        <TableCell key={c.property}>
+                                            <Text>{player[c.property]}</Text>
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </Box>
             </div>
         );
     }

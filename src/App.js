@@ -1,9 +1,9 @@
-import React from 'react';
-import { Grommet } from 'grommet';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import React from 'react'
+import { Grommet } from 'grommet'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import Home from './components/presentational/Home';
-import TeamBuilder from './components/container/TeamBuilder';
+import Home from './components/presentational/Home'
+import TeamBuilder from './components/container/TeamBuilder'
 
 const theme = {
     global: {
@@ -13,7 +13,7 @@ const theme = {
             height: '20px',
         },
     },
-};
+}
 
 const App = () => (
     <Router>
@@ -24,6 +24,6 @@ const App = () => (
             </Grommet>
         </Router>
     </Router>
-);
+)
 
-export default App;
+export default App

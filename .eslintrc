@@ -13,7 +13,8 @@
         "indent": 0,
         "no-tabs": 0,
         "react/jsx-indent-props": 0,
-        "no-unused-vars": 1
+		"no-unused-vars": 1,
+		"semi": [2, "never"]
     },
     "env": {
         "browser": true

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Box, Button } from 'grommet';
+import React from 'react'
+import { Box, Button } from 'grommet'
 
-import Logo from './Logo';
+import Logo from './Logo'
 
 const Home = () => (
 	<Box align="center" justify="center" className="container">
@@ -12,6 +12,6 @@ const Home = () => (
 			<Button label="Continue as Guest" />
 		</Box>
 	</Box>
-);
+)
 
-export default Home;
+export default Home

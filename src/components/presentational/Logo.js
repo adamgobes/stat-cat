@@ -1,5 +1,5 @@
-import React from 'react';
-import '../../styles/Logo.css';
+import React from 'react'
+import '../../styles/Logo.css'
 
 const Logo = () => (
     <div className="container logo-container">
@@ -27,6 +27,6 @@ const Logo = () => (
             </div>
         </div>
     </div>
-);
+)
 
-export default Logo;
+export default Logo

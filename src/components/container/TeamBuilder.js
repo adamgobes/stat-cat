@@ -8,7 +8,7 @@ import {
     TableHeader,
     TableRow,
     Text,
-    TextInput
+    TextInput,
 } from 'grommet';
 import styled from 'styled-components';
 import base64 from 'base-64';
@@ -27,88 +27,79 @@ const AddPlayerInput = styled(TextInput)`
 const COLUMNS = [
     {
         property: 'fullName',
-        label: 'Name'
+        label: 'Name',
     },
     {
         property: 'currentTeam',
-        label: 'Team'
-    }
+        label: 'Team',
+    },
 ];
 
 class TeamBuilder extends Component {
-    state = {
-        playerInput: '',
-        allPlayers: [],
-        autocomplete: [],
-        team: []
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            playerInput: '',
+            allPlayers: [],
+            autocomplete: [],
+            team: [],
+        };
+    }
 
     componentDidMount() {
         const username = 'adamgobes';
         const password = 'MYSPORTSFEEDS';
         const pass = base64.encode(`${username}:${password}`);
         const config = {
-            headers: { Authorization: `Basic ${pass}` }
+            headers: { Authorization: `Basic ${pass}` },
         };
-        axios
-            .get(
-                'https://api.mysportsfeeds.com/v2.0/pull/nba/players.json',
-                config
-            )
-            .then(res =>
-                this.setState({
-                    allPlayers: res.data.players.map(p => p.player),
-                    isLoading: false
-                })
-            );
+        axios.get('https://api.mysportsfeeds.com/v2.0/pull/nba/players.json', config).then(res => this.setState({
+                allPlayers: res.data.players.map(p => p.player),
+            }));
     }
 
-    handlePlayerInputChange = e => {
+    handlePlayerInputChange = (e) => {
         const val = e.target.value;
-        this.setState({
-            playerInput: val,
-            autocomplete: this.state.allPlayers
-                .filter(
-                    player =>
-                        player.firstName
-                            .toLowerCase()
-                            .startsWith(val.toLowerCase()) ||
-                        player.lastName
-                            .toLowerCase()
-                            .startsWith(val.toLowerCase())
-                )
-                .map(player => `${player.firstName} ${player.lastName}`)
-        });
-    };
-
-    handleAddPlayer = playerName => {
-        const firstName = playerName.substring(0, playerName.indexOf(' '));
-        const lastName = playerName.substring(playerName.indexOf(' ') + 1);
-
-        const playerObject = this.state.allPlayers.filter(
-            p => p.firstName === firstName && p.lastName === lastName
-		)
-		.map(p => ({
-			fullName: `${p.firstName} ${p.lastName}`,
-			currentTeam: p.currentTeam.abbreviation,
-			id: p.id
-		}))[0];
-		
-		
-
         this.setState(prevState => ({
-            team: [...prevState.team, playerObject],
-            playerInput: ''
+            playerInput: val,
+            autocomplete: prevState.allPlayers
+                .filter(
+                    player => player.firstName.toLowerCase().startsWith(val.toLowerCase())
+                        || player.lastName.toLowerCase().startsWith(val.toLowerCase()),
+                )
+                .map(player => `${player.firstName} ${player.lastName}`),
         }));
     };
 
-    handlePlayerSelect = e => {
+    handleAddPlayer = (playerName) => {
+        const firstName = playerName.substring(0, playerName.indexOf(' '));
+        const lastName = playerName.substring(playerName.indexOf(' ') + 1);
+
+        const { allPlayers } = this.state;
+
+        const playerObject = allPlayers
+            .filter(p => p.firstName === firstName && p.lastName === lastName)
+            .map(p => ({
+                fullName: `${p.firstName} ${p.lastName}`,
+                currentTeam: p.currentTeam.abbreviation,
+                id: p.id,
+            }))[0];
+
+        this.setState(prevState => ({
+            team: [...prevState.team, playerObject],
+            playerInput: '',
+        }));
+    };
+
+    handlePlayerSelect = (e) => {
         this.setState({
-            playerInput: e.suggestion
+            playerInput: e.suggestion,
         });
     };
 
     render() {
+        const { playerInput, autocomplete, team } = this.state;
+
         return (
             <div>
                 <Header>Team Builder</Header>
@@ -116,17 +107,12 @@ class TeamBuilder extends Component {
                     <Box direction="row" width="medium">
                         <AddPlayerInput
                             size="large"
-                            value={this.state.playerInput}
+                            value={playerInput}
                             onChange={this.handlePlayerInputChange}
-                            suggestions={this.state.autocomplete}
+                            suggestions={autocomplete}
                             onSelect={this.handlePlayerSelect}
                         />
-                        <Button
-                            label="Add"
-                            onClick={() =>
-                                this.handleAddPlayer(this.state.playerInput)
-                            }
-                        />
+                        <Button label="Add" onClick={() => this.handleAddPlayer(playerInput)} />
                     </Box>
                 </Box>
                 <Box align="center" pad="large">
@@ -141,7 +127,7 @@ class TeamBuilder extends Component {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {this.state.team.map(player => (
+                            {team.map(player => (
                                 <TableRow key={player.id}>
                                     {COLUMNS.map(c => (
                                         <TableCell key={c.property}>

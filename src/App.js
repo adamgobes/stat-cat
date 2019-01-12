@@ -10,9 +10,9 @@ const theme = {
         font: {
             family: 'Roboto',
             size: '14px',
-            height: '20px'
-        }
-    }
+            height: '20px',
+        },
+    },
 };
 
 const App = () => (
@@ -20,7 +20,7 @@ const App = () => (
         <Router>
             <Grommet theme={theme}>
                 <Route exact path="/" component={Home} />
-				<Route exact path="/teambuilder" component={TeamBuilder} />
+                <Route exact path="/teambuilder" component={TeamBuilder} />
             </Grommet>
         </Router>
     </Router>

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { Box } from 'grommet'
 import styled from 'styled-components'
 
 import allPlayersRequest from '../../utils/sportsFeedAPI'
 import AddPlayerInput from '../presentational/TeamBuilder/AddPlayerInput'
 import TeamTable from '../presentational/TeamBuilder/TeamTable'
+import Logo from '../presentational/Logo'
 
 const Header = styled.h1`
     text-align: center;
@@ -63,7 +65,13 @@ const TeamBuilder = () => {
                 handlePlayerInputChange={onPlayerInputChange}
                 handlePlayerSelect={onPlayerSelect}
             />
-            <TeamTable team={team} />
+            {team.length !== 0 && <TeamTable team={team} />}
+            {team.length === 0 && (
+                <Box align="center" pad="large">
+                    <Logo />
+					<h2>Add players using the form above!</h2>
+                </Box>
+            )}
         </div>
     )
 }

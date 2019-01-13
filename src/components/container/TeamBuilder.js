@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import base64 from 'base-64'
-import axios from 'axios'
 
+import allPlayersRequest from '../../utils/sportsFeedAPI'
 import AddPlayerInput from '../presentational/TeamBuilder/AddPlayerInput'
 import TeamTable from '../presentational/TeamBuilder/TeamTable'
 
@@ -11,47 +10,33 @@ const Header = styled.h1`
     margin: 60px 0;
 `
 
-class TeamBuilder extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            playerInput: '',
-            allPlayers: [],
-            autocomplete: [],
-            team: [],
-        }
-    }
+const TeamBuilder = () => {
+    const [playerInput, setPlayerInput] = useState('')
+    const [allPlayers, setAllPlayers] = useState([])
+    const [autocomplete, setAutocomplete] = useState([])
+    const [team, setTeam] = useState([])
 
-    componentDidMount() {
-        const username = 'adamgobes'
-        const password = 'MYSPORTSFEEDS'
-        const pass = base64.encode(`${username}:${password}`)
-        const config = {
-            headers: { Authorization: `Basic ${pass}` },
-        }
-        axios.get('https://api.mysportsfeeds.com/v2.0/pull/nba/players.json', config).then(res => this.setState({
-                allPlayers: res.data.players.map(p => p.player),
-            }))
-    }
+    useEffect(() => {
+        allPlayersRequest().then(res => setAllPlayers(res.data.players.map(p => p.player)))
+    })
 
-    onPlayerInputChange = (e) => {
+    const onPlayerInputChange = (e) => {
         const val = e.target.value
-        this.setState(prevState => ({
-            playerInput: val,
-            autocomplete: prevState.allPlayers
+
+        setPlayerInput(val)
+        setAutocomplete(
+            allPlayers
                 .filter(
                     player => player.firstName.toLowerCase().startsWith(val.toLowerCase())
                         || player.lastName.toLowerCase().startsWith(val.toLowerCase()),
                 )
                 .map(player => `${player.firstName} ${player.lastName}`),
-        }))
+        )
     }
 
-    onAddPlayer = (playerName) => {
+    const onAddPlayer = (playerName) => {
         const firstName = playerName.substring(0, playerName.indexOf(' '))
         const lastName = playerName.substring(playerName.indexOf(' ') + 1)
-
-        const { allPlayers } = this.state
 
         const playerObject = allPlayers
             .filter(p => p.firstName === firstName && p.lastName === lastName)
@@ -61,35 +46,26 @@ class TeamBuilder extends Component {
                 id: p.id,
             }))[0]
 
-        this.setState(prevState => ({
-            team: [...prevState.team, playerObject],
-            playerInput: '',
-        }))
+        setTeam([...team, playerObject])
+        setPlayerInput('')
+        setAutocomplete([])
     }
 
-    onPlayerSelect = (e) => {
-        this.setState({
-            playerInput: e.suggestion,
-        })
-    }
+    const onPlayerSelect = e => setPlayerInput(e.suggestion)
 
-    render() {
-        const { playerInput, autocomplete, team } = this.state
-
-        return (
-            <div>
-                <Header>Team Builder</Header>
-                <AddPlayerInput
-                    autocomplete={autocomplete}
-                    playerInput={playerInput}
-					handleAddPlayer={this.onAddPlayer}
-					handlePlayerInputChange={this.onPlayerInputChange}
-					handlePlayerSelect={this.onPlayerSelect}
-                />
-                <TeamTable team={team} />
-            </div>
-        )
-    }
+    return (
+        <div>
+            <Header>Team Builder</Header>
+            <AddPlayerInput
+                autocomplete={autocomplete}
+                playerInput={playerInput}
+                handleAddPlayer={onAddPlayer}
+                handlePlayerInputChange={onPlayerInputChange}
+                handlePlayerSelect={onPlayerSelect}
+            />
+            <TeamTable team={team} />
+        </div>
+    )
 }
 
 export default TeamBuilder

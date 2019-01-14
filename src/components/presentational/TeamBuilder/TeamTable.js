@@ -1,49 +1,51 @@
 import React from 'react'
-import {
-    Box,
-    Table,
-    TableBody,
-    TableCell,
-    TableHeader,
-    TableRow,
-    Text,
-} from 'grommet'
+import styled from 'styled-components'
+import { Box } from 'grommet'
+import { SubtractCircle } from 'grommet-icons'
 
-const COLUMNS = [
-    {
-        property: 'fullName',
-        label: 'Name',
-    },
-    {
-        property: 'currentTeam',
-        label: 'Team',
-    },
-]
+import NoImagePlayer from '../../../assets/images/player.png'
 
-const TeamTable = ({ team }) => (
+const PlayerContainer = styled(Box)`
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px;
+	padding: 12px;
+	margin: 10px 0;
+    min-width: 300px;
+`
+
+const ImageWrapper = styled(Box)`
+    width: 80px;
+    height: 60px;
+`
+
+const PlayerElement = styled(Box)`
+	margin: 0 10px;
+`
+
+const TeamTable = ({ team, handleRemovePlayer }) => (
     <Box align="center" pad="large">
-        <Table caption="Your Team">
-            <TableHeader>
-                <TableRow>
-                    {COLUMNS.map(c => (
-                        <TableCell key={c.property} scope="col">
-                            <Text>{c.label}</Text>
-                        </TableCell>
-                    ))}
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                {team.map(player => (
-                    <TableRow key={player.id}>
-                        {COLUMNS.map(c => (
-                            <TableCell key={c.property}>
-                                <Text>{player[c.property]}</Text>
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                ))}
-            </TableBody>
-        </Table>
+        {team.map(player => (
+            <PlayerContainer align="center" direction="row" key={player.id}>
+                <ImageWrapper align="center" justify="center" className="container">
+                    {player.imageSrc && (
+                        <img
+                            src={player.imageSrc}
+                            height="100%"
+                            width="100%"
+                            alt={player.fullName}
+                        />
+                    )}
+                    {!player.imageSrc && (
+                        <img src={NoImagePlayer} height="100%" width="100%" alt={player.fullName} />
+                    )}
+                </ImageWrapper>
+                <PlayerElement>
+                    <p>{player.fullName}</p>
+                </PlayerElement>
+				<PlayerElement style={{ cursor: 'pointer' }} onClick={() => handleRemovePlayer(player)}>
+					<SubtractCircle />
+				</PlayerElement>
+            </PlayerContainer>
+        ))}
     </Box>
 )
 

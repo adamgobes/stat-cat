@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import allPlayersRequest from '../../utils/sportsFeedAPI'
 import AddPlayerInput from '../presentational/TeamBuilder/AddPlayerInput'
 import TeamTable from '../presentational/TeamBuilder/TeamTable'
-import PlayersGrid from '../presentational/TeamBuilder/PlayersGrid'
+import SuggestionsGrid from '../presentational/TeamBuilder/PlayersGrid'
 import Logo from '../presentational/Logo'
 
 const Header = styled.h1`
@@ -74,7 +74,7 @@ const TeamBuilder = () => {
                     handleAddPlayer={onAddPlayer}
                     handlePlayerInputChange={onPlayerInputChange}
                 />
-                <PlayersGrid suggestions={suggestions} onAddPlayer={onAddPlayer} />
+                <SuggestionsGrid suggestions={suggestions} onAddPlayer={onAddPlayer} />
             </Box>
             <Box gridArea="team">
                 {team.length !== 0 && <TeamTable team={team} handleRemovePlayer={onRemovePlayer} />}

@@ -9,7 +9,7 @@ const StyledBox = styled(Box)`
     overflow: scroll;
 `
 
-const PlayersGrid = ({ suggestions, onAddPlayer }) => (
+const SuggestionsGrid = ({ suggestions, onAddPlayer }) => (
     <StyledBox>
         <Grid
             columns={{
@@ -25,4 +25,4 @@ const PlayersGrid = ({ suggestions, onAddPlayer }) => (
     </StyledBox>
 )
 
-export default PlayersGrid
+export default SuggestionsGrid

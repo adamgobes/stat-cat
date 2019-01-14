@@ -3,15 +3,18 @@ import styled from 'styled-components'
 import { Box } from 'grommet'
 import { AddCircle } from 'grommet-icons'
 
+import NoImagePlayer from '../../../assets/images/player.png'
+
 const ImageWrapper = styled.div`
     width: 100px;
     height: 100px;
     border: 1px solid black;
     border-radius: 100%;
-    overflow: hidden;
+	overflow: hidden;
 `
 
 const PlayerName = styled.h3`
+	margin-top: -18px;
     text-align: center;
 `
 
@@ -31,11 +34,12 @@ const PlayerSelectable = ({ player, handleAddPlayer }) => (
                 className="container"
                 style={{ marginTop: '10px' }}
             >
-                <img src={player.imageSrc} height="80%" width="100%" alt={player.fullName} />
+				{player.imageSrc && <img src={player.imageSrc} height="80%" width="100%" alt={player.fullName} />}
+				{!player.imageSrc && <img src={NoImagePlayer} height="100%" width="100%" alt={player.fullName} />}
             </Box>
         </ImageWrapper>
         <AddCircleButton onClick={() => handleAddPlayer(player)}>
-            <AddCircle />
+            <AddCircle color="brand" />
         </AddCircleButton>
         <PlayerName>{player.fullName}</PlayerName>
     </Box>

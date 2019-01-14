@@ -5,20 +5,20 @@ import { Box, Grid } from 'grommet'
 import PlayerSelectable from './PlayerSelectable'
 
 const StyledBox = styled(Box)`
-    margin-top: 20px;
+    margin-top: 40px;
     overflow: scroll;
 `
 
 const PlayersGrid = ({ autocomplete, onAddPlayer }) => (
-    <StyledBox align="center">
+    <StyledBox>
         <Grid
             columns={{
-                count: 3,
-                size: 'auto',
+				count: 3,
+				size: 'auto',
             }}
-            gap="small"
+            gap="none"
         >
-            {autocomplete.slice(0, 20).map(
+            {autocomplete.slice(0, 6).map(
                 p => <PlayerSelectable player={p} handleAddPlayer={onAddPlayer} key={p.id} />,
             )}
         </Grid>

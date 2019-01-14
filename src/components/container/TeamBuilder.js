@@ -13,10 +13,6 @@ const Header = styled.h1`
     margin: 60px 0;
 `
 
-const PlayersGridWrapper = styled.div`
-    overflow: scroll;
-`
-
 const TeamBuilder = () => {
     const [playerInput, setPlayerInput] = useState('')
     const [allPlayers, setAllPlayers] = useState([])
@@ -63,7 +59,7 @@ const TeamBuilder = () => {
                 { name: 'search', start: [0, 0], end: [0, 0] },
                 { name: 'team', start: [1, 0], end: [1, 0] },
             ]}
-            columns={['1/3', 'flex']}
+            columns={['1/2', 'flex']}
             rows={['flex']}
             gap="small"
         >
@@ -76,9 +72,7 @@ const TeamBuilder = () => {
                         handlePlayerInputChange={onPlayerInputChange}
                     />
                 </div>
-                <PlayersGridWrapper>
-                    <PlayersGrid autocomplete={autocomplete} onAddPlayer={onAddPlayer} />
-                </PlayersGridWrapper>
+                <PlayersGrid autocomplete={autocomplete} onAddPlayer={onAddPlayer} />
             </Box>
             <Box gridArea="team">
                 {team.length !== 0 && <TeamTable team={team} />}

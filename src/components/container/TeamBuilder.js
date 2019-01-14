@@ -52,6 +52,10 @@ const TeamBuilder = () => {
         setTeam([...team, player])
     }
 
+    const onRemovePlayer = (player) => {
+        setTeam(team.filter(p => player.id !== p.id))
+    }
+
     return (
         <Grid
             fill
@@ -59,7 +63,7 @@ const TeamBuilder = () => {
                 { name: 'search', start: [0, 0], end: [0, 0] },
                 { name: 'team', start: [1, 0], end: [1, 0] },
             ]}
-            columns={['1/2', 'flex']}
+            columns={['1/3', 'flex']}
             rows={['flex']}
             gap="small"
         >
@@ -75,7 +79,7 @@ const TeamBuilder = () => {
                 <PlayersGrid autocomplete={autocomplete} onAddPlayer={onAddPlayer} />
             </Box>
             <Box gridArea="team">
-                {team.length !== 0 && <TeamTable team={team} />}
+                {team.length !== 0 && <TeamTable team={team} handleRemovePlayer={onRemovePlayer} />}
                 {team.length === 0 && (
                     <Box align="center" pad="large" justify="center" className="container">
                         <Logo />

@@ -8,20 +8,16 @@ const AddPlayer = styled(TextInput)`
 `
 
 const AddPlayerInput = ({
-    autocomplete,
     playerInput,
     handlePlayerInputChange,
-	handlePlayerSelect,
 	handleAddPlayer,
 }) => (
     <Box align="center">
         <Box direction="row" width="medium">
             <AddPlayer
-                size="large"
+                size="medium"
                 value={playerInput}
                 onChange={handlePlayerInputChange}
-                suggestions={autocomplete}
-                onSelect={handlePlayerSelect}
             />
             <Button label="Add" onClick={() => handleAddPlayer(playerInput)} />
         </Box>

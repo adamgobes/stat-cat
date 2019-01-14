@@ -9,18 +9,18 @@ const StyledBox = styled(Box)`
     overflow: scroll;
 `
 
-const PlayersGrid = ({ autocomplete, onAddPlayer }) => (
+const PlayersGrid = ({ suggestions, onAddPlayer }) => (
     <StyledBox>
         <Grid
             columns={{
-				count: 3,
-				size: 'auto',
+                count: 3,
+                size: 'auto',
             }}
-            gap="none"
+            gap={{ row: 'medium', column: 'none' }}
         >
-            {autocomplete.slice(0, 6).map(
-                p => <PlayerSelectable player={p} handleAddPlayer={onAddPlayer} key={p.id} />,
-            )}
+            {suggestions.slice(0, 6).map(p => (
+                <PlayerSelectable player={p} handleAddPlayer={onAddPlayer} key={p.id} />
+            ))}
         </Grid>
     </StyledBox>
 )

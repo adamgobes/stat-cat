@@ -16,7 +16,7 @@ const Header = styled.h1`
 const TeamBuilder = () => {
     const [playerInput, setPlayerInput] = useState('')
     const [allPlayers, setAllPlayers] = useState([])
-    const [autocomplete, setAutocomplete] = useState([])
+    const [suggestions, setSuggestions] = useState([])
     const [team, setTeam] = useState([])
 
     useEffect(() => {
@@ -36,9 +36,9 @@ const TeamBuilder = () => {
 
         setPlayerInput(val)
 
-        if (val === '') setAutocomplete([])
+        if (val === '') setSuggestions([])
         else {
-            setAutocomplete(
+            setSuggestions(
                 allPlayers.filter(
                     player => player.fullName.toLowerCase().startsWith(val.toLowerCase())
                         || player.firstName.toLowerCase().startsWith(val.toLowerCase())
@@ -69,14 +69,12 @@ const TeamBuilder = () => {
         >
             <Box gridArea="search">
                 <Header>Team Builder</Header>
-                <div>
-                    <AddPlayerInput
-                        playerInput={playerInput}
-                        handleAddPlayer={onAddPlayer}
-                        handlePlayerInputChange={onPlayerInputChange}
-                    />
-                </div>
-                <PlayersGrid autocomplete={autocomplete} onAddPlayer={onAddPlayer} />
+                <AddPlayerInput
+                    playerInput={playerInput}
+                    handleAddPlayer={onAddPlayer}
+                    handlePlayerInputChange={onPlayerInputChange}
+                />
+                <PlayersGrid suggestions={suggestions} onAddPlayer={onAddPlayer} />
             </Box>
             <Box gridArea="team">
                 {team.length !== 0 && <TeamTable team={team} handleRemovePlayer={onRemovePlayer} />}

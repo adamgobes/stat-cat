@@ -43,7 +43,7 @@ const Home = () => (
             <Description>The fantasy basketball statistician you&apos;ll love to use</Description>
         </Box>
         <Box align="center" justify="center">
-            <Box align="center" direction="row">
+            <Box direction="row" align="center">
                 <HomeButton label="Sign Up" primary style={{ color: 'white', fontWeight: 'bold' }} />
 				<StyledLink to="/teambuilder">
 					<HomeButton label="Continue as Guest" />

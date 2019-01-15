@@ -12,7 +12,7 @@ const AddPlayerInput = ({
     playerInput,
     handlePlayerInputChange,
 }) => (
-    <Box justify="center" direction="row">
+    <Box direction="row" justify="center">
         <Box>
             <AddPlayer
                 size="medium"

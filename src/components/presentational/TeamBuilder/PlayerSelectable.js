@@ -3,13 +3,14 @@ import styled, { withTheme } from 'styled-components'
 import { Box } from 'grommet'
 
 import NoImagePlayer from '../../../assets/images/player.png'
+import AddRemovePlayerButton from '../shared/CircleButton'
 
 const ImageWrapper = styled.div`
     width: 100px;
     height: 100px;
     border: 1px solid;
-	border-radius: 100%;
-	border: 1px solid ${props => props.theme.global.colors.brand};
+    border-radius: 100%;
+    border: 1px solid ${props => props.theme.global.colors.brand};
     overflow: hidden;
 `
 
@@ -18,25 +19,10 @@ const PlayerName = styled.h3`
     text-align: center;
 `
 
-const AddCircleButton = styled(Box)`
+const AddPlayerButton = styled(AddRemovePlayerButton)`
     position: relative;
     left: 40px;
-    bottom: 94px;
-	cursor: pointer;
-
-	width: 26px;
-    height: 26px;
-    border-radius: 100%;
-	background: ${props => props.theme.global.colors.brand};
-	font-weight: bold;
-	color: white;
-	font-size: 1.6em;
-	&:hover {
-		background: white;
-		color: ${props => props.theme.global.colors.brand};
-		transition: 0.2s ease;
-		border: 1px solid ${props => props.theme.global.colors.brand};
-	}
+	bottom: 94px;
 `
 
 const PlayerSelectable = ({ player, handleAddPlayer }) => (
@@ -56,9 +42,7 @@ const PlayerSelectable = ({ player, handleAddPlayer }) => (
                 )}
             </Box>
         </ImageWrapper>
-        <AddCircleButton direction="column" align="center" justify="center" className="container" onClick={() => handleAddPlayer(player)}>
-            <div style={{ margin: '0 0 2px 1px' }}>+</div>
-        </AddCircleButton>
+        <AddPlayerButton handleClick={() => handleAddPlayer(player)}>+</AddPlayerButton>
         <PlayerName>{player.fullName}</PlayerName>
     </Box>
 )

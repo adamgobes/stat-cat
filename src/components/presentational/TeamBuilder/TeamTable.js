@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
-import { SubtractCircle } from 'grommet-icons'
 
 import NoImagePlayer from '../../../assets/images/player.png'
+import CircleButton from '../shared/CircleButton'
 
 const PlayerContainer = styled(Box)`
     box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px;
@@ -19,6 +19,13 @@ const ImageWrapper = styled(Box)`
 
 const PlayerElement = styled(Box)`
     margin: 0 10px;
+`
+
+const RemovePlayerButton = styled(CircleButton)`
+    cursor: pointer;
+    position: absolute;
+	right: 220px;
+	font-size: 2em;
 `
 
 const TeamTable = ({ team, handleRemovePlayer }) => (
@@ -41,16 +48,9 @@ const TeamTable = ({ team, handleRemovePlayer }) => (
                 <PlayerElement>
                     <p>{player.fullName}</p>
                 </PlayerElement>
-                <PlayerElement
-                    style={{
-                        cursor: 'pointer',
-                        position: 'absolute',
-                        right: '206px',
-                    }}
-                    onClick={() => handleRemovePlayer(player)}
-                >
-                    <SubtractCircle />
-                </PlayerElement>
+                <RemovePlayerButton handleClick={() => handleRemovePlayer(player)}>
+                    -
+                </RemovePlayerButton>
             </PlayerContainer>
         ))}
     </Box>

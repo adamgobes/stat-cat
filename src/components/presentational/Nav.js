@@ -11,10 +11,10 @@ const LogoContainer = styled(Box)`
     margin: 0 20px 0 0;
 `
 
-const Nav = ({ theme }) => (
+const Nav = ({ theme, showMenu, showSignUp }) => (
     <Box direction="row" justify="center" style={{ margin: '36px 0 40px 0' }}>
         <Box direction="row" justify="between" width="xlarge">
-            <Box>
+            <Box style={{ visibility: showMenu ? 'visible' : 'hidden' }}>
                 <Menu
                     label="Actions"
                     items={[
@@ -31,8 +31,7 @@ const Nav = ({ theme }) => (
                     <h2 style={{ color: `${theme.global.colors.brand}` }}>StatCat</h2>
                 </Box>
             </StyledLink>
-
-            <Box justify="center">
+            <Box justify="center" style={{ visibility: showMenu ? 'visible' : 'hidden' }}>
                 <Button label="Sign Up" />
             </Box>
         </Box>

@@ -1,8 +1,8 @@
 import React from 'react'
 import '../../styles/Logo.css'
 
-const Logo = () => (
-    <div className="container logo-container">
+const Logo = ({ className }) => (
+    <div className={`container logo-container ${className}`}>
         <div className="head">
             <div className="stripe one" />
             <div className="stripe two" />

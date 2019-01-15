@@ -11,7 +11,7 @@ import Nav from '../presentational/Nav'
 
 const Header = styled.h2`
     text-align: center;
-	margin: 40px 0;
+    margin: 40px 0;
 `
 
 const TeamBuilder = () => {
@@ -59,7 +59,7 @@ const TeamBuilder = () => {
 
     return (
         <Box>
-            <Nav />
+            <Nav showMenu showSignUp />
             <Grid
                 fill
                 areas={[
@@ -80,7 +80,7 @@ const TeamBuilder = () => {
                     <SuggestionsGrid suggestions={suggestions} onAddPlayer={onAddPlayer} />
                 </Box>
                 <Box gridArea="team">
-					<Header>Your Team</Header>
+                    <Header>Your Team</Header>
                     {team.length !== 0 && (
                         <TeamTable team={team} handleRemovePlayer={onRemovePlayer} />
                     )}

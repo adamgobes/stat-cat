@@ -17,11 +17,11 @@ const Nav = () => (
             <Box>
                 <Button>Sign Up</Button>
             </Box>
-			<Box direction="row">
+            <Box direction="row">
                 <LogoContainer direction="row">
                     <img src={StatLogo} alt="Stat Logo" height="100%" width="100%" />
                 </LogoContainer>
-				<h2 style={{ color: '#e17e62' }}>StatCat</h2>
+                <h2 style={{ color: '#e17e62' }}>StatCat</h2>
             </Box>
             <Box>
                 <Menu

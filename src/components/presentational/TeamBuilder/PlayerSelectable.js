@@ -8,7 +8,7 @@ import NoImagePlayer from '../../../assets/images/player.png'
 const ImageWrapper = styled.div`
     width: 100px;
     height: 100px;
-    border: 1px solid black;
+    border: 1px solid #e17e62;
     border-radius: 100%;
 	overflow: hidden;
 `

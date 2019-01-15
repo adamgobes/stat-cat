@@ -4,22 +4,22 @@ import styled from 'styled-components'
 
 const AddPlayer = styled(TextInput)`
     width: 300px;
-    margin: 0 24px;
+	margin: 0 24px;
+	border-color: #6FFFB0;
 `
 
 const AddPlayerInput = ({
     playerInput,
     handlePlayerInputChange,
-	handleAddPlayer,
 }) => (
-    <Box align="center">
-        <Box direction="row" width="medium">
+    <Box justify="center" direction="row">
+        <Box>
             <AddPlayer
                 size="medium"
                 value={playerInput}
-                onChange={handlePlayerInputChange}
+				onChange={handlePlayerInputChange}
+				placeholder="Search for Players"
             />
-            <Button label="Add" onClick={() => handleAddPlayer(playerInput)} />
         </Box>
     </Box>
 )

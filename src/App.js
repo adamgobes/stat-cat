@@ -13,7 +13,8 @@ const theme = {
             height: '20px',
 		},
 		colors: {
-			brand: '#e17e62',
+			brand: '#E17E62',
+			secondary: '#E9C547',
 		},
     },
 }

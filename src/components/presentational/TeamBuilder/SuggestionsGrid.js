@@ -10,7 +10,7 @@ const StyledBox = styled(Box)`
 `
 
 const SuggestionsGrid = ({ suggestions, onAddPlayer }) => (
-    <StyledBox>
+    <StyledBox width="large">
         <Grid
             columns={{
                 count: 3,

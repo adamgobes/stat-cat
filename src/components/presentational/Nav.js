@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { withTheme } from 'styled-components'
 import { Box, Button, Menu } from 'grommet'
 
-import Logo from './Logo'
+import StyledLink from './shared/StyledLink'
 import StatLogo from '../../assets/images/stat-logo.png'
 
 const LogoContainer = styled(Box)`
@@ -23,12 +23,15 @@ const Nav = ({ theme }) => (
                     ]}
                 />
             </Box>
-            <Box direction="row">
-                <LogoContainer direction="row">
-                    <img src={StatLogo} alt="Stat Logo" height="100%" width="100%" />
-                </LogoContainer>
-                <h2 style={{ color: `${theme.global.colors.brand}` }}>StatCat</h2>
-            </Box>
+            <StyledLink to="/">
+                <Box direction="row">
+                    <LogoContainer direction="row">
+                        <img src={StatLogo} alt="Stat Logo" height="100%" width="100%" />
+                    </LogoContainer>
+                    <h2 style={{ color: `${theme.global.colors.brand}` }}>StatCat</h2>
+                </Box>
+            </StyledLink>
+
             <Box justify="center">
                 <Button label="Sign Up" />
             </Box>

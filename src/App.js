@@ -8,10 +8,13 @@ import TeamBuilder from './components/container/TeamBuilder'
 const theme = {
     global: {
         font: {
-            family: 'Roboto',
+            family: 'Thasadith',
             size: '14px',
             height: '20px',
-        },
+		},
+		colors: {
+			brand: '#e17e62',
+		},
     },
 }
 

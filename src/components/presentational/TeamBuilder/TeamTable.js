@@ -7,8 +7,8 @@ import NoImagePlayer from '../../../assets/images/player.png'
 
 const PlayerContainer = styled(Box)`
     box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px;
-	padding: 12px;
-	margin: 10px 0;
+    padding: 12px;
+    margin: 10px 0;
     min-width: 300px;
 `
 
@@ -18,7 +18,7 @@ const ImageWrapper = styled(Box)`
 `
 
 const PlayerElement = styled(Box)`
-	margin: 0 10px;
+    margin: 0 10px;
 `
 
 const TeamTable = ({ team, handleRemovePlayer }) => (
@@ -41,9 +41,16 @@ const TeamTable = ({ team, handleRemovePlayer }) => (
                 <PlayerElement>
                     <p>{player.fullName}</p>
                 </PlayerElement>
-				<PlayerElement style={{ cursor: 'pointer' }} onClick={() => handleRemovePlayer(player)}>
-					<SubtractCircle />
-				</PlayerElement>
+                <PlayerElement
+                    style={{
+                        cursor: 'pointer',
+                        position: 'absolute',
+                        right: '206px',
+                    }}
+                    onClick={() => handleRemovePlayer(player)}
+                >
+                    <SubtractCircle />
+                </PlayerElement>
             </PlayerContainer>
         ))}
     </Box>

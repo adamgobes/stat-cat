@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 import { Box, Button, Menu } from 'grommet'
 
 import Logo from './Logo'
@@ -11,7 +11,7 @@ const LogoContainer = styled(Box)`
     margin: 0 20px 0 0;
 `
 
-const Nav = () => (
+const Nav = ({ theme }) => (
     <Box direction="row" justify="center" style={{ margin: '36px 0 40px 0' }}>
         <Box direction="row" justify="between" width="xlarge">
             <Box>
@@ -21,7 +21,7 @@ const Nav = () => (
                 <LogoContainer direction="row">
                     <img src={StatLogo} alt="Stat Logo" height="100%" width="100%" />
                 </LogoContainer>
-                <h2 style={{ color: '#e17e62' }}>StatCat</h2>
+                <h2 style={{ color: `${theme.global.colors.brand}` }}>StatCat</h2>
             </Box>
             <Box>
                 <Menu
@@ -36,4 +36,4 @@ const Nav = () => (
     </Box>
 )
 
-export default Nav
+export default withTheme(Nav)

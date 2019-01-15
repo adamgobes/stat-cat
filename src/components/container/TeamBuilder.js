@@ -7,6 +7,7 @@ import AddPlayerInput from '../presentational/TeamBuilder/AddPlayerInput'
 import TeamTable from '../presentational/TeamBuilder/TeamTable'
 import SuggestionsGrid from '../presentational/TeamBuilder/PlayersGrid'
 import Logo from '../presentational/Logo'
+import Nav from '../presentational/Nav'
 
 const Header = styled.h1`
     text-align: center;
@@ -57,35 +58,40 @@ const TeamBuilder = () => {
     }
 
     return (
-        <Grid
-            fill
-            areas={[
-                { name: 'search', start: [0, 0], end: [0, 0] },
-                { name: 'team', start: [1, 0], end: [1, 0] },
-            ]}
-            columns={['1/3', 'flex']}
-            rows={['flex']}
-            gap="small"
-        >
-            <Box gridArea="search">
-                <Header>Team Builder</Header>
-                <AddPlayerInput
-                    playerInput={playerInput}
-                    handleAddPlayer={onAddPlayer}
-                    handlePlayerInputChange={onPlayerInputChange}
-                />
-                <SuggestionsGrid suggestions={suggestions} onAddPlayer={onAddPlayer} />
-            </Box>
-            <Box gridArea="team">
-                {team.length !== 0 && <TeamTable team={team} handleRemovePlayer={onRemovePlayer} />}
-                {team.length === 0 && (
-                    <Box align="center" pad="large" justify="center" className="container">
-                        <Logo />
-                        <h2>Add players using the form to the left!</h2>
-                    </Box>
-                )}
-            </Box>
-        </Grid>
+        <Box>
+            <Nav />
+            <Grid
+                fill
+                areas={[
+                    { name: 'search', start: [0, 0], end: [0, 0] },
+                    { name: 'team', start: [1, 0], end: [1, 0] },
+                ]}
+                columns={['1/3', 'flex']}
+                rows={['flex']}
+                gap="small"
+            >
+                <Box gridArea="search">
+                    <Header>Team Builder</Header>
+                    <AddPlayerInput
+                        playerInput={playerInput}
+                        handleAddPlayer={onAddPlayer}
+                        handlePlayerInputChange={onPlayerInputChange}
+                    />
+                    <SuggestionsGrid suggestions={suggestions} onAddPlayer={onAddPlayer} />
+                </Box>
+                <Box gridArea="team">
+                    {team.length !== 0 && (
+                        <TeamTable team={team} handleRemovePlayer={onRemovePlayer} />
+                    )}
+                    {team.length === 0 && (
+                        <Box align="center" pad="large" justify="center" className="container">
+                            <Logo />
+                            <h2>Add players using the form to the left!</h2>
+                        </Box>
+                    )}
+                </Box>
+            </Grid>
+        </Box>
     )
 }
 

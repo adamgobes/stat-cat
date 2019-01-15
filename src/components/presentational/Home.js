@@ -40,7 +40,7 @@ const Home = () => (
             </Box>
         </Box>
         <Box direction="row" justify="center">
-            <Description>The fantasy basketball statistician you'll love to use</Description>
+            <Description>The fantasy basketball statistician you&apos;ll love to use</Description>
         </Box>
         <Box align="center" justify="center">
             <Box align="center" direction="row">

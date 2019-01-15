@@ -29,7 +29,7 @@ const RemovePlayerButton = styled(CircleButton)`
 `
 
 const TeamTable = ({ team, handleRemovePlayer }) => (
-    <Box align="center" pad="large">
+    <Box align="center" pad="large" style={{ marginTop: '-66px' }}>
         {team.map(player => (
             <PlayerContainer align="center" direction="row" key={player.id}>
                 <ImageWrapper align="center" justify="center" className="container">

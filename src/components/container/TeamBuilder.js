@@ -5,13 +5,13 @@ import styled from 'styled-components'
 import allPlayersRequest from '../../utils/sportsFeedAPI'
 import AddPlayerInput from '../presentational/TeamBuilder/AddPlayerInput'
 import TeamTable from '../presentational/TeamBuilder/TeamTable'
-import SuggestionsGrid from '../presentational/TeamBuilder/PlayersGrid'
+import SuggestionsGrid from '../presentational/TeamBuilder/SuggestionsGrid'
 import Logo from '../presentational/Logo'
 import Nav from '../presentational/Nav'
 
-const Header = styled.h1`
+const Header = styled.h2`
     text-align: center;
-    margin: 60px 0;
+	margin: 40px 0;
 `
 
 const TeamBuilder = () => {
@@ -66,11 +66,11 @@ const TeamBuilder = () => {
                     { name: 'search', start: [0, 0], end: [0, 0] },
                     { name: 'team', start: [1, 0], end: [1, 0] },
                 ]}
-                columns={['1/3', 'flex']}
+                columns={['1/2', 'flex']}
                 rows={['flex']}
                 gap="small"
             >
-                <Box gridArea="search">
+                <Box gridArea="search" style={{ borderRight: '1px solid black' }}>
                     <Header>Team Builder</Header>
                     <AddPlayerInput
                         playerInput={playerInput}
@@ -80,11 +80,12 @@ const TeamBuilder = () => {
                     <SuggestionsGrid suggestions={suggestions} onAddPlayer={onAddPlayer} />
                 </Box>
                 <Box gridArea="team">
+					<Header>Your Team</Header>
                     {team.length !== 0 && (
                         <TeamTable team={team} handleRemovePlayer={onRemovePlayer} />
                     )}
                     {team.length === 0 && (
-                        <Box align="center" pad="large" justify="center" className="container">
+                        <Box align="center" pad="large" justify="center">
                             <Logo />
                             <h2>Add players using the form to the left!</h2>
                         </Box>

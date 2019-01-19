@@ -1,0 +1,19 @@
+type Query {
+	allUsers: [User!]!
+}
+
+type Mutation {
+	register(name: String!, email: String!, password: String!): AuthPayLoad
+	login(email: String!, password: String!): AuthPayLoad
+}
+
+type User {
+	id: ID!,
+	email: String!,
+	name: String!,
+}
+
+type AuthPayLoad {
+	token: String,
+	user: User
+}

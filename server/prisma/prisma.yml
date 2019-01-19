@@ -1,0 +1,10 @@
+endpoint: https://stat-cat-8c98ddaa79.herokuapp.com/statcatserver/dev
+datamodel: datamodel.prisma
+
+generate:
+    - generator: javascript-client
+      output: ../src/generated/prisma-client
+
+hooks:
+    post-deploy:
+        - prisma generate

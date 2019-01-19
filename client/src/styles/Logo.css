@@ -1,0 +1,202 @@
+.logo-container {
+    width: 200px;
+    height: 220px;
+}
+
+.head {
+  z-index: 1;
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: #e17e62;
+  border-radius: 100px;
+}
+
+.ear {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: #e17e62;
+  border-radius: 70% 100% 100% 100%;
+}
+
+.ear.right {
+  left: 150px;
+  border-radius: 100% 70% 100% 100%;
+}
+
+.inner {
+  position: absolute;
+  top: 7px;
+  left: 6px;
+  width: 30px;
+  height: 30px;
+  background: #F7C4A5;
+  border-radius: 70% 100% 100% 100%;
+}
+
+.inner.right {
+  left: 10px;
+  border-radius: 100% 70% 100% 100%;
+}
+
+.face {
+  position: absolute;
+  left: 10px;
+}
+
+.eye {
+  position: absolute;
+  top: 120px;
+  left: 66px;
+  width: 10px;
+  height: 10px;
+  background: #333;
+  border-radius: 100%;
+}
+
+.eye.right {
+  left: 110px;
+}
+
+.nose {
+  position: absolute;
+  top: 119px;
+  left: 82px;
+  width: 25px;
+  height: 25px;
+  background: #A15131;
+  border-radius: 100%;
+}
+
+.mouth {
+  position: absolute;
+  top: 130px;
+  left: 70px;
+  width: 30px;
+  height: 30px;
+  background: #FFF;
+  border-radius: 100%;
+}
+
+.mouth:before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  width: 30px;
+  height: 30px;
+  background: #FFF;
+  border-radius: 100%;
+}
+
+.stripe.one {
+  position: absolute;
+  top: 80px;
+  left: 2px;
+  width: 40px;
+  height: 10px;
+  background: #000;
+  border-radius: 3px 100% 0 0;
+}
+
+.stripe.two {
+  position: absolute;
+  top: 100px;
+  left: 2px;
+  width: 37px;
+  height: 10px;
+  background: #000;
+  border-radius: 3px 100% 0 0;
+}
+
+.stripe.three {
+  position: absolute;
+  top: 120px;
+  left: 5px;
+  width: 30px;
+  height: 10px;
+  background: #000;
+  border-radius: 3px 100% 0 7px;
+}
+
+.stripe.four {
+  position: absolute;
+  top: 80px;
+  left: 158px;
+  width: 40px;
+  height: 10px;
+  background: #000;
+  border-radius: 100% 3px 0 0;
+}
+
+.stripe.five {
+  position: absolute;
+  top: 100px;
+  left: 162px;
+  width: 37px;
+  height: 10px;
+  background: #000;
+  border-radius: 100% 3px 0 0;
+}
+
+.stripe.six {
+  position: absolute;
+  top: 120px;
+  left: 166px;
+  width: 30px;
+  height: 10px;
+  background: #000;
+  border-radius: 100% 3px 7px 0;
+}
+
+.stripe.seven {
+  z-index: 1;
+  position: absolute;
+  top: 3px;
+  left: 76px;
+  width: 10px;
+  height: 40px;
+  background: #000;
+  border-radius: 3px 10px 150% 0;
+}
+
+.stripe.eight {
+  z-index: 1;
+  position: absolute;
+  top: 1px;
+  left: 95px;
+  width: 10px;
+  height: 40px;
+  background: #000;
+  border-radius: 3px 10px 150% 0;
+}
+
+.stripe.nine {
+  z-index: 1;
+  position: absolute;
+  top: 3px;
+  left: 116px;
+  width: 10px;
+  height: 40px;
+  background: #000;
+  border-radius: 3px 10px 150% 0;
+}
+
+.hair {
+  position: absolute;
+  top: 1px;
+  left: 70px;
+  background: #e17e62;
+  width: 20px;
+  height: 20px;
+  border-radius: 100% 0 100% 100%;
+  transform: rotate(-20deg);
+}
+
+.hair.two {
+  left: 80px;
+}
+
+.hair.three {
+  left: 90px;
+}

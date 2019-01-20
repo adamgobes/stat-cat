@@ -7,7 +7,7 @@ const Mutation = require('./resolvers/Mutation');
 
 const resolvers = {
     Query,
-	Mutation,
+    Mutation
 };
 
 const server = new GraphQLServer({

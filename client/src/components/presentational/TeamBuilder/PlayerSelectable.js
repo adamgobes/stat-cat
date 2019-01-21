@@ -22,7 +22,7 @@ const PlayerName = styled.h3`
 const AddPlayerButton = styled(AddRemovePlayerButton)`
     position: relative;
     left: 40px;
-	bottom: 94px;
+    bottom: 94px;
 `
 
 const PlayerSelectable = ({ player, handleAddPlayer }) => (

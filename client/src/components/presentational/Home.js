@@ -3,7 +3,7 @@ import { Box, Button } from 'grommet'
 import styled, { withTheme } from 'styled-components'
 
 import StatLogo from '../../assets/images/stat-logo.png'
-import StyledLink from './shared/StyledLink';
+import StyledLink from './shared/StyledLink'
 
 const LogoContainer = styled(Box)`
     width: 100px;
@@ -44,11 +44,14 @@ const Home = () => (
         </Box>
         <Box align="center" justify="center">
             <Box direction="row" align="center">
-                <HomeButton label="Sign Up" primary style={{ color: 'white', fontWeight: 'bold' }} />
-				<StyledLink to="/teambuilder">
-					<HomeButton label="Continue as Guest" />
-				</StyledLink>
-                
+                <HomeButton
+                    label="Sign Up"
+                    primary
+                    style={{ color: 'white', fontWeight: 'bold' }}
+                />
+                <StyledLink to="/teambuilder">
+                    <HomeButton label="Continue as Guest" />
+                </StyledLink>
             </Box>
         </Box>
     </Box>

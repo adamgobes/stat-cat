@@ -24,8 +24,8 @@ const PlayerElement = styled(Box)`
 const RemovePlayerButton = styled(CircleButton)`
     cursor: pointer;
     position: absolute;
-	right: 220px;
-	font-size: 2em;
+    right: 220px;
+    font-size: 2em;
 `
 
 const TeamTable = ({ team, handleRemovePlayer }) => (

@@ -11,11 +11,11 @@ const theme = {
             family: 'Thasadith',
             size: '14px',
             height: '20px',
-		},
-		colors: {
-			brand: '#E17E62',
-			secondary: '#E9C547',
-		},
+        },
+        colors: {
+            brand: '#E17E62',
+            secondary: '#E9C547',
+        },
     },
 }
 

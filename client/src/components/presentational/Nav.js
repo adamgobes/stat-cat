@@ -19,7 +19,7 @@ const Nav = ({ theme, showMenu, showSignUp }) => (
                     label="Actions"
                     items={[
                         { label: 'Launch', onClick: () => {} },
-                        { label: 'Abort', onClick: () => {} },
+                        { label: 'Abort', onClick: () => {} }
                     ]}
                 />
             </Box>
@@ -31,7 +31,7 @@ const Nav = ({ theme, showMenu, showSignUp }) => (
                     <h2 style={{ color: `${theme.global.colors.brand}` }}>StatCat</h2>
                 </Box>
             </StyledLink>
-            <Box justify="center" style={{ visibility: showMenu ? 'visible' : 'hidden' }}>
+            <Box justify="center" style={{ visibility: showSignUp ? 'visible' : 'hidden' }}>
                 <Button label="Sign Up" />
             </Box>
         </Box>

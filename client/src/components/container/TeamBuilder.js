@@ -21,7 +21,8 @@ const TeamBuilder = () => {
     const [team, setTeam] = useState([])
 
     useEffect(() => {
-        allPlayersRequest().then(res => setAllPlayers(
+        allPlayersRequest().then(res =>
+            setAllPlayers(
                 res.data.players.map(p => ({
                     firstName: p.player.firstName,
                     lastName: p.player.lastName,
@@ -29,10 +30,11 @@ const TeamBuilder = () => {
                     currentTeam: p.player.currentTeam ? p.player.currentTeam.abbreviation : 'None',
                     imageSrc: p.player.officialImageSrc,
                     id: p.player.id,
-                })),
-            ))
+                }))
+            )
+        )
     })
-    const onPlayerInputChange = (e) => {
+    const onPlayerInputChange = e => {
         const val = e.target.value
 
         setPlayerInput(val)
@@ -41,19 +43,20 @@ const TeamBuilder = () => {
         else {
             setSuggestions(
                 allPlayers.filter(
-                    player => player.fullName.toLowerCase().startsWith(val.toLowerCase())
-                        || player.firstName.toLowerCase().startsWith(val.toLowerCase())
-                        || player.lastName.toLowerCase().startsWith(val.toLowerCase()),
-                ),
+                    player =>
+                        player.fullName.toLowerCase().startsWith(val.toLowerCase()) ||
+                        player.firstName.toLowerCase().startsWith(val.toLowerCase()) ||
+                        player.lastName.toLowerCase().startsWith(val.toLowerCase())
+                )
             )
         }
     }
 
-    const onAddPlayer = (player) => {
+    const onAddPlayer = player => {
         setTeam([...team, player])
     }
 
-    const onRemovePlayer = (player) => {
+    const onRemovePlayer = player => {
         setTeam(team.filter(p => player.id !== p.id))
     }
 

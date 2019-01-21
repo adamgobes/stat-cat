@@ -10,93 +10,93 @@ import Logo from '../presentational/Logo'
 import Nav from '../presentational/Nav'
 
 const Header = styled.h2`
-    text-align: center;
-    margin: 40px 0;
+	text-align: center;
+	margin: 40px 0;
 `
 
 const TeamBuilder = () => {
-    const [playerInput, setPlayerInput] = useState('')
-    const [allPlayers, setAllPlayers] = useState([])
-    const [suggestions, setSuggestions] = useState([])
-    const [team, setTeam] = useState([])
+	const [playerInput, setPlayerInput] = useState('')
+	const [allPlayers, setAllPlayers] = useState([])
+	const [suggestions, setSuggestions] = useState([])
+	const [team, setTeam] = useState([])
 
-    useEffect(() => {
-        allPlayersRequest().then(res =>
-            setAllPlayers(
-                res.data.players.map(p => ({
-                    firstName: p.player.firstName,
-                    lastName: p.player.lastName,
-                    fullName: `${p.player.firstName} ${p.player.lastName}`,
-                    currentTeam: p.player.currentTeam ? p.player.currentTeam.abbreviation : 'None',
-                    imageSrc: p.player.officialImageSrc,
-                    id: p.player.id,
-                }))
-            )
-        )
-    })
-    const onPlayerInputChange = e => {
-        const val = e.target.value
+	useEffect(() => {
+		allPlayersRequest().then(res =>
+			setAllPlayers(
+				res.data.players.map(p => ({
+					firstName: p.player.firstName,
+					lastName: p.player.lastName,
+					fullName: `${p.player.firstName} ${p.player.lastName}`,
+					currentTeam: p.player.currentTeam ? p.player.currentTeam.abbreviation : 'None',
+					imageSrc: p.player.officialImageSrc,
+					id: p.player.id,
+				}))
+			)
+		)
+	})
+	const onPlayerInputChange = e => {
+		const val = e.target.value
 
-        setPlayerInput(val)
+		setPlayerInput(val)
 
-        if (val === '') setSuggestions([])
-        else {
-            setSuggestions(
-                allPlayers.filter(
-                    player =>
-                        player.fullName.toLowerCase().startsWith(val.toLowerCase()) ||
-                        player.firstName.toLowerCase().startsWith(val.toLowerCase()) ||
-                        player.lastName.toLowerCase().startsWith(val.toLowerCase())
-                )
-            )
-        }
-    }
+		if (val === '') setSuggestions([])
+		else {
+			setSuggestions(
+				allPlayers.filter(
+					player =>
+						player.fullName.toLowerCase().startsWith(val.toLowerCase()) ||
+						player.firstName.toLowerCase().startsWith(val.toLowerCase()) ||
+						player.lastName.toLowerCase().startsWith(val.toLowerCase())
+				)
+			)
+		}
+	}
 
-    const onAddPlayer = player => {
-        setTeam([...team, player])
-    }
+	const onAddPlayer = player => {
+		setTeam([...team, player])
+	}
 
-    const onRemovePlayer = player => {
-        setTeam(team.filter(p => player.id !== p.id))
-    }
+	const onRemovePlayer = player => {
+		setTeam(team.filter(p => player.id !== p.id))
+	}
 
-    return (
-        <Box>
-            <Nav showMenu showSignUp />
-            <Grid
-                fill
-                areas={[
-                    { name: 'search', start: [0, 0], end: [0, 0] },
-                    { name: 'team', start: [1, 0], end: [1, 0] },
-                ]}
-                columns={['1/2', 'flex']}
-                rows={['flex']}
-                gap="small"
-            >
-                <Box gridArea="search" style={{ borderRight: '1px solid black' }}>
-                    <Header>Team Builder</Header>
-                    <AddPlayerInput
-                        playerInput={playerInput}
-                        handleAddPlayer={onAddPlayer}
-                        handlePlayerInputChange={onPlayerInputChange}
-                    />
-                    <SuggestionsGrid suggestions={suggestions} onAddPlayer={onAddPlayer} />
-                </Box>
-                <Box gridArea="team">
-                    <Header>Your Team</Header>
-                    {team.length !== 0 && (
-                        <TeamTable team={team} handleRemovePlayer={onRemovePlayer} />
-                    )}
-                    {team.length === 0 && (
-                        <Box align="center" pad="large" justify="center">
-                            <Logo />
-                            <h2>Add players using the form to the left!</h2>
-                        </Box>
-                    )}
-                </Box>
-            </Grid>
-        </Box>
-    )
+	return (
+		<Box>
+			<Nav showMenu showSignUp />
+			<Grid
+				fill
+				areas={[
+					{ name: 'search', start: [0, 0], end: [0, 0] },
+					{ name: 'team', start: [1, 0], end: [1, 0] },
+				]}
+				columns={['1/2', 'flex']}
+				rows={['flex']}
+				gap="small"
+			>
+				<Box gridArea="search" style={{ borderRight: '1px solid black' }}>
+					<Header>Team Builder</Header>
+					<AddPlayerInput
+						playerInput={playerInput}
+						handleAddPlayer={onAddPlayer}
+						handlePlayerInputChange={onPlayerInputChange}
+					/>
+					<SuggestionsGrid suggestions={suggestions} onAddPlayer={onAddPlayer} />
+				</Box>
+				<Box gridArea="team">
+					<Header>Your Team</Header>
+					{team.length !== 0 && (
+						<TeamTable team={team} handleRemovePlayer={onRemovePlayer} />
+					)}
+					{team.length === 0 && (
+						<Box align="center" pad="large" justify="center">
+							<Logo />
+							<h2>Add players using the form to the left!</h2>
+						</Box>
+					)}
+				</Box>
+			</Grid>
+		</Box>
+	)
 }
 
 export default TeamBuilder

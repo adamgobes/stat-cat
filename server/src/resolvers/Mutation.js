@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+
 const { APP_SECRET } = require('../utils')
+const { getUserId } = require('../utils')
 
 async function register(parents, args, context, info) {
 	const password = await bcrypt.hash(args.password, 10)
@@ -34,7 +36,16 @@ async function login(parent, args, context, info) {
 	}
 }
 
+function saveTeam(parent, args, context) {
+	const id = getUserId(context)
+	console.log(context.prisma.user({ id }))
+	return context.prisma.updateUser({
+		team: args.input,
+	})
+}
+
 module.exports = {
 	register,
 	login,
+	saveTeam,
 }

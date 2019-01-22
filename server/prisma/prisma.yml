@@ -1,4 +1,4 @@
-endpoint: https://stat-cat-8c98ddaa79.herokuapp.com/statcatserver/dev
+endpoint: https://stat-cat-d9fe60a328.herokuapp.com/stat-cat/dev
 datamodel: datamodel.prisma
 
 generate:

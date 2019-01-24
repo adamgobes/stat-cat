@@ -3,4 +3,12 @@ type User {
     name: String!
     email: String! @unique
     password: String!
+	team: Team
+}
+
+type Team {
+	id: ID! @unique
+	name: String!
+	owner: User!
+	players: [Int!]!
 }

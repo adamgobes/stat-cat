@@ -9,6 +9,13 @@ async function register(parents, args, context, info) {
 
 	const user = await context.prisma.createUser({ ...args, password })
 
+	const initialTeam = {
+		name: `${user.name}'s Team`,
+		owner: { connect: { id: user.id } },
+	}
+
+	await context.prisma.createTeam({ ...initialTeam })
+
 	const token = jwt.sign({ userId: user.id }, APP_SECRET)
 
 	return {
@@ -36,11 +43,18 @@ async function login(parent, args, context, info) {
 	}
 }
 
-function saveTeam(parent, args, context) {
-	const id = getUserId(context)
-	console.log(context.prisma.user({ id }))
-	return context.prisma.updateUser({
-		team: args.input,
+async function saveTeam(parent, args, context) {
+	const userId = getUserId(context)
+	const teamId = await context.prisma
+		.user({ id: userId })
+		.team()
+		.id()
+
+	return context.prisma.updateTeam({
+		where: { id: teamId },
+		data: {
+			players: { set: args.playerIds },
+		},
 	})
 }
 

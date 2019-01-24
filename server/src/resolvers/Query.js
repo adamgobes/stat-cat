@@ -6,13 +6,13 @@ function allUsers(parent, args, context) {
 	return context.prisma.users()
 }
 
-function userTeam(parent, args, context) {
+function me(parent, args, context) {
 	const id = getUserId(context)
 
-	return context.prisma.userTeam({ id })
+	return context.prisma.user({ id })
 }
 
 module.exports = {
 	allUsers,
-	userTeam,
+	me,
 }

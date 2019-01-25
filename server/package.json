@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "base-64": "^0.1.0",
     "bcryptjs": "^2.4.3",
     "graphql-yoga": "^1.17.0",
     "jsonwebtoken": "^8.4.0",

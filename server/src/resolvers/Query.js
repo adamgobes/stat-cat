@@ -1,11 +1,5 @@
 const { getUserId } = require('../utils')
 
-function allUsers(parent, args, context) {
-	const id = getUserId(context)
-
-	return context.prisma.users()
-}
-
 function me(parent, args, context) {
 	const id = getUserId(context)
 
@@ -13,6 +7,5 @@ function me(parent, args, context) {
 }
 
 module.exports = {
-	allUsers,
 	me,
 }

@@ -10,5 +10,5 @@ type Team {
 	id: ID! @unique
 	name: String!
 	owner: User!
-	players: [Int!]!
+	players: [ID!]!
 }

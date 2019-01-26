@@ -1,19 +1,37 @@
 type Query {
 	allUsers: [User!]!
+	me: User!
 }
 
 type Mutation {
 	register(name: String!, email: String!, password: String!): AuthPayLoad
 	login(email: String!, password: String!): AuthPayLoad
+	saveTeam(playerIds: [ID!]!): Team
 }
 
 type User {
 	id: ID!,
 	email: String!,
 	name: String!,
+	team: Team!
 }
 
 type AuthPayLoad {
 	token: String,
 	user: User
+}
+
+type Team {
+	id: ID!,
+	name: String!,
+	owner: User!,
+	players: [Player!]!
+}
+
+type Player {
+	id: ID!,
+	firstName: String!,
+	lastName: String!,
+	fullName: String!,
+	position: String!
 }

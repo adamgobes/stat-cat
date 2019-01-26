@@ -4,5 +4,8 @@
     "rules": {
 		"prettier/prettier": ["error"],
 		"no-unused-vars": 1
-    }
+	},
+	"globals": {
+		"fetch": false
+	}
 }

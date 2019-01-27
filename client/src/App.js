@@ -22,18 +22,16 @@ const theme = {
 }
 
 const client = new ApolloClient({
-	uri: 'localhost:4000',
+	uri: 'http://localhost:4000',
 })
 
 const App = () => (
 	<ApolloProvider client={client}>
 		<Router>
-			<Router>
-				<Grommet theme={theme}>
-					<Route exact path="/" component={Home} />
-					<Route exact path="/teambuilder" component={TeamBuilder} />
-				</Grommet>
-			</Router>
+			<Grommet theme={theme}>
+				<Route exact path="/" component={Home} />
+				<Route exact path="/teambuilder" component={TeamBuilder} />
+			</Grommet>
 		</Router>
 	</ApolloProvider>
 )

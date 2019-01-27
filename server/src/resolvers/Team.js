@@ -1,8 +1,6 @@
-const base64 = require('base-64')
-
 const { getUserId } = require('../utils')
 
-const { sportsFeedUsername, sportsFeedPassword, sportsFeedUrl } = require('../config')
+const { sportsFeedRequest } = require('../sportsFeed')
 
 function owner(parent, args, context) {
 	const id = getUserId(context)
@@ -13,12 +11,8 @@ function owner(parent, args, context) {
 // in DB players are stored as IDs, this resolver turns those IDs into actual player objects
 // resolves User.team.players
 function players(parent) {
-	const pass = base64.encode(`${sportsFeedUsername}:${sportsFeedPassword}`)
-	const config = {
-		headers: { Authorization: `Basic ${pass}` },
-	}
 	return parent.players.map(playerId =>
-		fetch(`${sportsFeedUrl}/player_stats_totals.json?player=${playerId}`, config)
+		sportsFeedRequest(`player_stats_totals.json?player=${playerId}`)
 			.then(res => res.json())
 			.then(json => ({
 				id: json.playerStatsTotals[0].player.id,

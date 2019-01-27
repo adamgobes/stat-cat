@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Box, Grid } from 'grommet'
 import styled from 'styled-components'
 
-import allPlayersRequest from '../../utils/sportsFeedAPI'
 import AddPlayerInput from '../presentational/TeamBuilder/AddPlayerInput'
 import TeamTable from '../presentational/TeamBuilder/TeamTable'
 import SuggestionsGrid from '../presentational/TeamBuilder/SuggestionsGrid'
@@ -16,41 +15,7 @@ const Header = styled.h2`
 
 const TeamBuilder = () => {
 	const [playerInput, setPlayerInput] = useState('')
-	const [allPlayers, setAllPlayers] = useState([])
-	const [suggestions, setSuggestions] = useState([])
 	const [team, setTeam] = useState([])
-
-	useEffect(() => {
-		allPlayersRequest().then(res =>
-			setAllPlayers(
-				res.data.players.map(p => ({
-					firstName: p.player.firstName,
-					lastName: p.player.lastName,
-					fullName: `${p.player.firstName} ${p.player.lastName}`,
-					currentTeam: p.player.currentTeam ? p.player.currentTeam.abbreviation : 'None',
-					imageSrc: p.player.officialImageSrc,
-					id: p.player.id,
-				}))
-			)
-		)
-	})
-	const onPlayerInputChange = e => {
-		const val = e.target.value
-
-		setPlayerInput(val)
-
-		if (val === '') setSuggestions([])
-		else {
-			setSuggestions(
-				allPlayers.filter(
-					player =>
-						player.fullName.toLowerCase().startsWith(val.toLowerCase()) ||
-						player.firstName.toLowerCase().startsWith(val.toLowerCase()) ||
-						player.lastName.toLowerCase().startsWith(val.toLowerCase())
-				)
-			)
-		}
-	}
 
 	const onAddPlayer = player => {
 		setTeam([...team, player])
@@ -58,6 +23,12 @@ const TeamBuilder = () => {
 
 	const onRemovePlayer = player => {
 		setTeam(team.filter(p => player.id !== p.id))
+	}
+
+	const onPlayerInputChange = e => {
+		const val = e.target.value
+
+		setPlayerInput(val)
 	}
 
 	return (
@@ -80,7 +51,7 @@ const TeamBuilder = () => {
 						handleAddPlayer={onAddPlayer}
 						handlePlayerInputChange={onPlayerInputChange}
 					/>
-					<SuggestionsGrid suggestions={suggestions} onAddPlayer={onAddPlayer} />
+					<SuggestionsGrid filter={playerInput} onAddPlayer={onAddPlayer} />
 				</Box>
 				<Box gridArea="team">
 					<Header>Your Team</Header>

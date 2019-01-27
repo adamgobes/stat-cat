@@ -1,5 +1,7 @@
 import React from 'react'
 import { Grommet } from 'grommet'
+import ApolloClient from 'apollo-boost'
+import { ApolloProvider } from 'react-apollo'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Home from './components/presentational/Home'
@@ -19,15 +21,19 @@ const theme = {
 	},
 }
 
+const client = new ApolloClient({
+	uri: 'http://localhost:4000',
+})
+
 const App = () => (
-	<Router>
+	<ApolloProvider client={client}>
 		<Router>
 			<Grommet theme={theme}>
 				<Route exact path="/" component={Home} />
 				<Route exact path="/teambuilder" component={TeamBuilder} />
 			</Grommet>
 		</Router>
-	</Router>
+	</ApolloProvider>
 )
 
 export default App

@@ -33,5 +33,12 @@ type Player {
 	firstName: String!,
 	lastName: String!,
 	fullName: String!,
-	position: String!
+	position: String!,
+	currentTeam: NbaTeam,
+	imageSrc: String
+}
+
+type NbaTeam {
+	id: ID!,
+	abbreviation: String!
 }

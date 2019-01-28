@@ -12,7 +12,7 @@ function owner(parent, args, context) {
 // resolves User.team.players
 function players(parent) {
 	return parent.players.map(playerId =>
-		sportsFeedRequest(`player_stats_totals.json?player=${playerId}`)
+		sportsFeedRequest(`2018-2019-regular/player_stats_totals.json?player=${playerId}`)
 			.then(res => res.json())
 			.then(json => ({
 				id: json.playerStatsTotals[0].player.id,

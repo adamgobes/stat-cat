@@ -18,16 +18,23 @@ function me(parent, args, context) {
 // resolver to retrieve all players from third-party SportsFeed datasource
 // map through response from API, transform into object that matches schema and finally filter if there was one passed (args.filter)
 function allPlayers(parent, args) {
-	return sportsFeedRequest('player_stats_totals.json')
+	return sportsFeedRequest('players.json')
 		.then(res => res.json())
 		.then(json =>
-			json.playerStatsTotals
+			json.players
 				.map(p => ({
 					id: p.player.id,
 					firstName: p.player.firstName,
 					lastName: p.player.lastName,
 					fullName: `${p.player.firstName} ${p.player.lastName}`,
 					position: p.player.primaryPosition,
+					currentTeam: p.player.currentTeam
+						? {
+								id: p.player.currentTeam.id,
+								abbreviation: p.player.currentTeam.abbreviation,
+						  }
+						: null,
+					imageSrc: p.player.officialImageSrc,
 				}))
 				.filter(pObj => (args.filter ? containsFilter(pObj, args.filter) : true))
 		)

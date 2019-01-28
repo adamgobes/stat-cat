@@ -15,6 +15,7 @@ const ALL_PLAYERS_QUERY = gql`
 		allPlayers(filter: $filter) {
 			id
 			fullName
+			imageSrc
 		}
 	}
 `

@@ -32,7 +32,9 @@ const Nav = ({ theme, showMenu, showSignUp }) => (
 				</Box>
 			</StyledLink>
 			<Box justify="center" style={{ visibility: showSignUp ? 'visible' : 'hidden' }}>
-				<Button label="Sign Up" />
+				<StyledLink to="/register">
+					<Button label="Sign Up" />
+				</StyledLink>
 			</Box>
 		</Box>
 	</Box>

@@ -44,11 +44,14 @@ const Home = () => (
 		</Box>
 		<Box align="center" justify="center">
 			<Box direction="row" align="center">
-				<HomeButton
-					label="Sign Up"
-					primary
-					style={{ color: 'white', fontWeight: 'bold' }}
-				/>
+				<StyledLink to="/register">
+					<HomeButton
+						label="Sign Up"
+						primary
+						style={{ color: 'white', fontWeight: 'bold' }}
+					/>
+				</StyledLink>
+
 				<StyledLink to="/teambuilder">
 					<HomeButton label="Continue as Guest" />
 				</StyledLink>

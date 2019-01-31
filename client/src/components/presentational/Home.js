@@ -44,7 +44,7 @@ const Home = () => (
 		</Box>
 		<Box align="center" justify="center">
 			<Box direction="row" align="center">
-				<StyledLink to="/register">
+				<StyledLink to="/auth">
 					<HomeButton
 						label="Sign Up"
 						primary

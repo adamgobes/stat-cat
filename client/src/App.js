@@ -6,8 +6,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Home from './components/presentational/Home'
 import TeamBuilder from './components/container/TeamBuilder'
-import Login from './components/presentational/Login'
-import Register from './components/presentational/Register'
+import Register from './components/container/Register'
 
 const theme = {
 	global: {
@@ -33,8 +32,7 @@ const App = () => (
 			<Grommet theme={theme}>
 				<Route exact path="/" component={Home} />
 				<Route exact path="/teambuilder" component={TeamBuilder} />
-				<Route exact path="/login" component={Login} />
-				<Route exact path="/register" component={Register} />
+				<Route exact path="/auth" component={Register} />
 			</Grommet>
 		</Router>
 	</ApolloProvider>

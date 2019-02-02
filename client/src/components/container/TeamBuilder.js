@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import { Box, Grid } from 'grommet'
+import { Box, Grid, Button } from 'grommet'
 import styled from 'styled-components'
+import gql from 'graphql-tag'
 
+import { Mutation } from 'react-apollo'
 import AddPlayerInput from '../presentational/TeamBuilder/AddPlayerInput'
 import TeamTable from '../presentational/TeamBuilder/TeamTable'
 import SuggestionsGrid from '../presentational/TeamBuilder/SuggestionsGrid'
@@ -11,6 +13,23 @@ import Nav from '../presentational/Nav'
 const Header = styled.h2`
 	text-align: center;
 	margin: 40px 0;
+`
+
+const SaveButton = styled(Button)`
+	background: white;
+	color: ${props => props.theme.global.colors.brand};
+	margin-top: 20px;
+	border-radius: 0;
+`
+
+const SAVE_TEAM_MUTATION = gql`
+	mutation saveTeamMutation($playerIds: [ID!]!) {
+		saveTeam(playerIds: $playerIds) {
+			players {
+				fullName
+			}
+		}
+	}
 `
 
 const TeamBuilder = () => {
@@ -29,6 +48,15 @@ const TeamBuilder = () => {
 		const val = e.target.value
 
 		setPlayerInput(val)
+	}
+
+	// given players (stored in state) return array of their ids
+	function extractIds(players) {
+		return players.map(p => p.id)
+	}
+
+	function onTeamSave(data) {
+		console.log(data)
 	}
 
 	return (
@@ -66,6 +94,15 @@ const TeamBuilder = () => {
 					)}
 				</Box>
 			</Grid>
+			<Box direction="row" justify="center">
+				<Mutation
+					mutation={SAVE_TEAM_MUTATION}
+					variables={{ playerIds: extractIds(team) }}
+					onCompleted={data => onTeamSave(data)}
+				>
+					{mutation => <SaveButton label="Save and proceed" onClick={mutation} />}
+				</Mutation>
+			</Box>
 		</Box>
 	)
 }

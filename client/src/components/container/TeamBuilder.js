@@ -26,7 +26,7 @@ const SAVE_TEAM_MUTATION = gql`
 	mutation saveTeamMutation($playerIds: [ID!]!) {
 		saveTeam(playerIds: $playerIds) {
 			players {
-				fullName
+				id
 			}
 		}
 	}
@@ -99,6 +99,9 @@ const TeamBuilder = () => {
 					mutation={SAVE_TEAM_MUTATION}
 					variables={{ playerIds: extractIds(team) }}
 					onCompleted={data => onTeamSave(data)}
+					update={(store, { data: { saveTeam } }) =>
+						store.writeData({ data: { userTeam: saveTeam.players.map(p => p.id) } })
+					}
 				>
 					{mutation => <SaveButton label="Save and proceed" onClick={mutation} />}
 				</Mutation>

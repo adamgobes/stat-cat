@@ -5,7 +5,7 @@ import { setContext } from 'apollo-link-context'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloClient } from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import cookie from 'react-cookies'
 
 import Home from './components/presentational/Home'
@@ -45,12 +45,18 @@ const client = new ApolloClient({
 	cache: new InMemoryCache(),
 })
 
+const isLoggedIn = () => !!cookie.load('authToken')
+
 const App = () => (
 	<ApolloProvider client={client}>
 		<Router>
 			<Grommet theme={theme}>
 				<Route exact path="/" component={Home} />
-				<Route exact path="/teambuilder" component={TeamBuilder} />
+				<Route
+					exact
+					path="/teambuilder"
+					render={() => (isLoggedIn() ? <TeamBuilder /> : <Redirect to="/auth" />)}
+				/>
 				<Route exact path="/auth" component={LoginRegister} />
 			</Grommet>
 		</Router>

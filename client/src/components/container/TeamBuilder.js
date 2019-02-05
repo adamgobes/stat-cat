@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Box, Grid, Button } from 'grommet'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 import gql from 'graphql-tag'
 
 import { Mutation } from 'react-apollo'
@@ -9,6 +9,7 @@ import TeamTable from '../presentational/TeamBuilder/TeamTable'
 import SuggestionsGrid from '../presentational/TeamBuilder/SuggestionsGrid'
 import Logo from '../presentational/Logo'
 import Nav from '../presentational/Nav'
+import { StoreContext } from '../../App'
 
 const Header = styled.h2`
 	text-align: center;
@@ -26,15 +27,28 @@ const SAVE_TEAM_MUTATION = gql`
 	mutation saveTeamMutation($playerIds: [ID!]!) {
 		saveTeam(playerIds: $playerIds) {
 			players {
+				id
 				fullName
+				currentTeam {
+					abbreviation
+				}
+				position
+				imageSrc
 			}
 		}
 	}
 `
 
-const TeamBuilder = () => {
+function TeamBuilder(props) {
 	const [playerInput, setPlayerInput] = useState('')
 	const [team, setTeam] = useState([])
+	const [loading, setLoading] = useState(true)
+
+	const store = useContext(StoreContext)
+	useEffect(() => {
+		setTeam(store.userTeam)
+		setLoading(false)
+	}, [])
 
 	const onAddPlayer = player => {
 		setTeam([...team, player])
@@ -56,7 +70,8 @@ const TeamBuilder = () => {
 	}
 
 	function onTeamSave(data) {
-		console.log(data)
+		store.setUserTeam(data.saveTeam.players)
+		props.history.push('/')
 	}
 
 	return (
@@ -83,15 +98,17 @@ const TeamBuilder = () => {
 				</Box>
 				<Box gridArea="team">
 					<Header>Your Team</Header>
-					{team.length !== 0 && (
+					{}
+					{team.length !== 0 && !loading && (
 						<TeamTable team={team} handleRemovePlayer={onRemovePlayer} />
 					)}
-					{team.length === 0 && (
+					{team.length === 0 && !loading && (
 						<Box align="center" pad="large" justify="center">
 							<Logo />
 							<h2>Add players using the form to the left!</h2>
 						</Box>
 					)}
+					{loading && <div>Loading</div>}
 				</Box>
 			</Grid>
 			<Box direction="row" justify="center">

@@ -12,24 +12,25 @@ function owner(parent, args, context) {
 // resolves User.team.players
 function players(parent) {
 	return parent.players.map(playerId =>
-		sportsFeedRequest(`2018-2019-regular/player_stats_totals.json?player=${playerId}`)
+		sportsFeedRequest(`players.json?player=${playerId}`)
 			.then(res => res.json())
-			.then(json => ({
-				id: json.playerStatsTotals[0].player.id,
-				firstName: json.playerStatsTotals[0].player.firstName,
-				lastName: json.playerStatsTotals[0].player.lastName,
-				fullName: `${json.playerStatsTotals[0].player.firstName} ${
-					json.playerStatsTotals[0].player.lastName
-				}`,
-				position: json.playerStatsTotals[0].player.primaryPosition,
-				currentTeam: json.playerStatsTotals[0].player.currentTeam
-					? {
-							id: json.playerStatsTotals[0].player.currentTeam.id,
-							abbreviation: json.playerStatsTotals[0].player.currentTeam.abbreviation,
-					  }
-					: null,
-				imageSrc: json.playerStatsTotals[0].player.officialImageSrc,
-			}))
+			.then(
+				json =>
+					json.players.map(p => ({
+						id: p.player.id,
+						firstName: p.player.firstName,
+						lastName: p.player.lastName,
+						fullName: `${p.player.firstName} ${p.player.lastName}`,
+						position: p.player.primaryPosition,
+						currentTeam: p.player.currentTeam
+							? {
+									id: p.player.currentTeam.id,
+									abbreviation: p.player.currentTeam.abbreviation,
+							  }
+							: null,
+						imageSrc: p.player.officialImageSrc,
+					}))[0]
+			)
 	)
 }
 

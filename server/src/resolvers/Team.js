@@ -22,6 +22,13 @@ function players(parent) {
 					json.playerStatsTotals[0].player.lastName
 				}`,
 				position: json.playerStatsTotals[0].player.primaryPosition,
+				currentTeam: json.playerStatsTotals[0].player.currentTeam
+					? {
+							id: json.playerStatsTotals[0].player.currentTeam.id,
+							abbreviation: json.playerStatsTotals[0].player.currentTeam.abbreviation,
+					  }
+					: null,
+				imageSrc: json.playerStatsTotals[0].player.officialImageSrc,
 			}))
 	)
 }

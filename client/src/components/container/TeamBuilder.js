@@ -1,7 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import { Box, Grid, Button } from 'grommet'
-import styled, { withTheme } from 'styled-components'
+import styled from 'styled-components'
 import gql from 'graphql-tag'
+import { observer } from 'mobx-react-lite'
 
 import { Mutation } from 'react-apollo'
 import AddPlayerInput from '../presentational/TeamBuilder/AddPlayerInput'
@@ -41,21 +42,17 @@ const SAVE_TEAM_MUTATION = gql`
 
 function TeamBuilder(props) {
 	const [playerInput, setPlayerInput] = useState('')
-	const [team, setTeam] = useState([])
-	const [loading, setLoading] = useState(true)
 
 	const store = useContext(StoreContext) // get mobx store
-	useEffect(() => {
-		setTeam(store.userTeam)
-		setLoading(false)
-	}, [])
+	const { userTeam } = store // userTeam section of the store will me modified as user adds/removes players
 
 	const onAddPlayer = player => {
-		setTeam([...team, player])
+		store.setUserTeam([...store.userTeam, player])
 	}
 
 	const onRemovePlayer = player => {
-		setTeam(team.filter(p => player.id !== p.id))
+		const team = store.userTeam
+		store.setUserTeam(team.filter(p => player.id !== p.id))
 	}
 
 	const onPlayerInputChange = e => {
@@ -64,7 +61,7 @@ function TeamBuilder(props) {
 		setPlayerInput(val)
 	}
 
-	// given players (stored in state) return array of their ids
+	// given players, return array of their ids to persist to server
 	function extractIds(players) {
 		return players.map(p => p.id)
 	}
@@ -98,23 +95,21 @@ function TeamBuilder(props) {
 				</Box>
 				<Box gridArea="team">
 					<Header>Your Team</Header>
-					{}
-					{team.length !== 0 && !loading && (
-						<TeamTable team={team} handleRemovePlayer={onRemovePlayer} />
+					{userTeam.length !== 0 && (
+						<TeamTable team={userTeam} handleRemovePlayer={onRemovePlayer} />
 					)}
-					{team.length === 0 && !loading && (
+					{userTeam.length === 0 && (
 						<Box align="center" pad="large" justify="center">
 							<Logo />
 							<h2>Add players using the form to the left!</h2>
 						</Box>
 					)}
-					{loading && <div>Loading</div>}
 				</Box>
 			</Grid>
 			<Box direction="row" justify="center">
 				<Mutation
 					mutation={SAVE_TEAM_MUTATION}
-					variables={{ playerIds: extractIds(team) }}
+					variables={{ playerIds: extractIds(userTeam) }}
 					onCompleted={data => onTeamSave(data)}
 				>
 					{mutation => <SaveButton label="Save and proceed" onClick={mutation} />}
@@ -124,4 +119,4 @@ function TeamBuilder(props) {
 	)
 }
 
-export default TeamBuilder
+export default observer(TeamBuilder)

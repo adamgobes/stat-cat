@@ -25,7 +25,7 @@ const theme = {
 
 const isLoggedIn = () => !!cookie.load('authToken')
 
-export const StoreContext = React.createContext(new Store())
+export const StoreContext = React.createContext(new Store()) // init mobx store and make it globally available
 
 const App = () => (
 	<ApolloWrapper>

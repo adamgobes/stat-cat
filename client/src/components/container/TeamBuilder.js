@@ -44,7 +44,7 @@ function TeamBuilder(props) {
 	const [team, setTeam] = useState([])
 	const [loading, setLoading] = useState(true)
 
-	const store = useContext(StoreContext)
+	const store = useContext(StoreContext) // get mobx store
 	useEffect(() => {
 		setTeam(store.userTeam)
 		setLoading(false)

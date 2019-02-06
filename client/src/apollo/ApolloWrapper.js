@@ -29,7 +29,7 @@ const authLink = setContext((_, { headers }) => {
 	}
 })
 
-// query to fetch user's info to initialize Apollo store
+// query to fetch user's info to initialize mobx store
 const ME_QUERY = gql`
 	query {
 		me {

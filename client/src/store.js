@@ -1,4 +1,8 @@
-import { decorate, observable, action } from 'mobx'
+import { decorate, observable, action, configure } from 'mobx'
+
+configure({
+	enforceActions: 'observed',
+})
 
 class Store {
 	loggedIn = ''

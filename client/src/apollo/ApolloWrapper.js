@@ -65,7 +65,7 @@ const client = new ApolloClient({
 
 // component that queries user's data, writes to store, then renders component tree
 function ApolloWrapper({ children }) {
-	const store = useContext(StoreContext)
+	const store = useContext(StoreContext) // get mobx store
 	return (
 		<ApolloProvider client={client}>
 			<Query query={ME_QUERY}>

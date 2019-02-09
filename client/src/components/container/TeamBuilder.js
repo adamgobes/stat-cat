@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Box, Grid, Button } from 'grommet'
 import styled from 'styled-components'
-import gql from 'graphql-tag'
 import { observer } from 'mobx-react-lite'
 
 import { Mutation } from 'react-apollo'
@@ -11,6 +10,7 @@ import SuggestionsGrid from '../presentational/TeamBuilder/SuggestionsGrid'
 import Logo from '../presentational/Logo'
 import Nav from '../presentational/Nav'
 import { StoreContext } from '../../App'
+import { SAVE_TEAM_MUTATION } from '../../apollo/queries'
 
 const Header = styled.h2`
 	text-align: center;
@@ -24,38 +24,22 @@ const SaveButton = styled(Button)`
 	border-radius: 0;
 `
 
-const SAVE_TEAM_MUTATION = gql`
-	mutation saveTeamMutation($playerIds: [ID!]!) {
-		saveTeam(playerIds: $playerIds) {
-			players {
-				id
-				fullName
-				currentTeam {
-					abbreviation
-				}
-				position
-				imageSrc
-			}
-		}
-	}
-`
-
 function TeamBuilder(props) {
 	const [playerInput, setPlayerInput] = useState('')
 
 	const store = useContext(StoreContext) // get mobx store
 	const { userTeam } = store // userTeam section of the store will me modified as user adds/removes players
 
-	const onAddPlayer = player => {
+	function onAddPlayer(player) {
 		store.setUserTeam([...store.userTeam, player])
 	}
 
-	const onRemovePlayer = player => {
+	function onRemovePlayer(player) {
 		const team = store.userTeam
 		store.setUserTeam(team.filter(p => player.id !== p.id))
 	}
 
-	const onPlayerInputChange = e => {
+	function onPlayerInputChange(e) {
 		const val = e.target.value
 
 		setPlayerInput(val)

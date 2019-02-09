@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, TextInput } from 'grommet'
-import styled, { withTheme } from 'styled-components'
+import styled from 'styled-components'
 
 const AddPlayer = styled(TextInput)`
 	width: 300px;
@@ -22,4 +22,4 @@ const AddPlayerInput = ({ playerInput, handlePlayerInputChange }) => (
 	</Box>
 )
 
-export default withTheme(AddPlayerInput)
+export default AddPlayerInput

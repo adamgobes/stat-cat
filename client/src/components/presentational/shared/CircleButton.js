@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from 'grommet'
-import styled, { withTheme } from 'styled-components'
+import styled from 'styled-components'
 
 const CircleButtonWrapper = styled(Box)`
 	cursor: pointer;
@@ -31,4 +31,4 @@ const CircleButton = ({ className, children, handleClick }) => (
 	</CircleButtonWrapper>
 )
 
-export default withTheme(CircleButton)
+export default CircleButton

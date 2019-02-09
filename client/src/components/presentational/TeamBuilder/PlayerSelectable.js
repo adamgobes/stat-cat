@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { withTheme } from 'styled-components'
+import styled from 'styled-components'
 import { Box } from 'grommet'
 
 import NoImagePlayer from '../../../assets/images/player.png'
@@ -47,4 +47,4 @@ const PlayerSelectable = ({ player, handleAddPlayer }) => (
 	</Box>
 )
 
-export default withTheme(PlayerSelectable)
+export default PlayerSelectable

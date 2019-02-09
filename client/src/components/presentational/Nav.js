@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { withTheme } from 'styled-components'
+import styled from 'styled-components'
 import { Box, Button, Menu } from 'grommet'
 
 import StyledLink from './shared/StyledLink'
@@ -9,6 +9,10 @@ const LogoContainer = styled(Box)`
 	width: 60px;
 	height: 60px;
 	margin: 0 20px 0 0;
+`
+
+const HomeHeader = styled.h2`
+	color: ${props => props.theme.global.colors.brand};
 `
 
 const Nav = ({ theme, showMenu, showSignUp }) => (
@@ -28,7 +32,7 @@ const Nav = ({ theme, showMenu, showSignUp }) => (
 					<LogoContainer direction="row">
 						<img src={StatLogo} alt="Stat Logo" height="100%" width="100%" />
 					</LogoContainer>
-					<h2 style={{ color: `${theme.global.colors.brand}` }}>StatCat</h2>
+					<HomeHeader>StatCat</HomeHeader>
 				</Box>
 			</StyledLink>
 			<Box justify="center" style={{ visibility: showSignUp ? 'visible' : 'hidden' }}>
@@ -40,4 +44,4 @@ const Nav = ({ theme, showMenu, showSignUp }) => (
 	</Box>
 )
 
-export default withTheme(Nav)
+export default Nav

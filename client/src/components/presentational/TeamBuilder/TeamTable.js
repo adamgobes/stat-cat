@@ -48,9 +48,7 @@ const TeamTable = ({ team, handleRemovePlayer }) => (
 				<PlayerElement>
 					<p>{player.fullName}</p>
 				</PlayerElement>
-				<RemovePlayerButton handleClick={() => handleRemovePlayer(player)}>
-					-
-				</RemovePlayerButton>
+				<RemovePlayerButton handleClick={() => handleRemovePlayer(player)}>-</RemovePlayerButton>
 			</PlayerContainer>
 		))}
 	</Box>

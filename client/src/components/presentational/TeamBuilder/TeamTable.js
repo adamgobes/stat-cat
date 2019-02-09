@@ -42,7 +42,7 @@ const TeamTable = ({ team, handleRemovePlayer }) => (
 						/>
 					)}
 					{!player.imageSrc && (
-						<img src={NoImagePlayer} height="100%" width="100%" alt={player.fullName} />
+						<img src={NoImagePlayer} height="100%" width="85%" alt={player.fullName} />
 					)}
 				</ImageWrapper>
 				<PlayerElement>

@@ -11,6 +11,10 @@ const LogoContainer = styled(Box)`
 	margin: 0 20px 0 0;
 `
 
+const HomeHeader = styled.h2`
+	color: ${props => props.theme.global.colors.brand};
+`
+
 const Nav = ({ theme, showMenu, showSignUp }) => (
 	<Box direction="row" justify="center" style={{ margin: '36px 0 40px 0' }}>
 		<Box direction="row" justify="between" width="xlarge">
@@ -28,7 +32,7 @@ const Nav = ({ theme, showMenu, showSignUp }) => (
 					<LogoContainer direction="row">
 						<img src={StatLogo} alt="Stat Logo" height="100%" width="100%" />
 					</LogoContainer>
-					<h2 style={{ color: `${theme.global.colors.brand}` }}>StatCat</h2>
+					<HomeHeader>StatCat</HomeHeader>
 				</Box>
 			</StyledLink>
 			<Box justify="center" style={{ visibility: showSignUp ? 'visible' : 'hidden' }}>

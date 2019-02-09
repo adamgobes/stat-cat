@@ -30,16 +30,16 @@ function TeamBuilder(props) {
 	const store = useContext(StoreContext) // get mobx store
 	const { userTeam } = store // userTeam section of the store will me modified as user adds/removes players
 
-	const onAddPlayer = player => {
+	function onAddPlayer(player) {
 		store.setUserTeam([...store.userTeam, player])
 	}
 
-	const onRemovePlayer = player => {
+	function onRemovePlayer(player) {
 		const team = store.userTeam
 		store.setUserTeam(team.filter(p => player.id !== p.id))
 	}
 
-	const onPlayerInputChange = e => {
+	function onPlayerInputChange(e) {
 		const val = e.target.value
 
 		setPlayerInput(val)

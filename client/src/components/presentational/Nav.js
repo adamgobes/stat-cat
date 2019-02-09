@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { withTheme } from 'styled-components'
+import styled from 'styled-components'
 import { Box, Button, Menu } from 'grommet'
 
 import StyledLink from './shared/StyledLink'
@@ -40,4 +40,4 @@ const Nav = ({ theme, showMenu, showSignUp }) => (
 	</Box>
 )
 
-export default withTheme(Nav)
+export default Nav

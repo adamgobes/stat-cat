@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
 import { Box, TextInput, Button } from 'grommet'
-import styled, { withTheme } from 'styled-components'
+import styled from 'styled-components'
 import cookie from 'react-cookies'
 
 import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../apollo/queries'
@@ -104,4 +104,4 @@ function LoginRegister({ history }) {
 	)
 }
 
-export default withTheme(LoginRegister)
+export default LoginRegister

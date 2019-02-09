@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Button } from 'grommet'
-import styled, { withTheme } from 'styled-components'
+import styled from 'styled-components'
 
 import StatLogo from '../../assets/images/stat-logo.png'
 import StyledLink from './shared/StyledLink'
@@ -60,4 +60,4 @@ const Home = () => (
 	</Box>
 )
 
-export default withTheme(Home)
+export default Home

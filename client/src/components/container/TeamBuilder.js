@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Box, Grid, Button } from 'grommet'
 import styled from 'styled-components'
-import gql from 'graphql-tag'
 import { observer } from 'mobx-react-lite'
 
 import { Mutation } from 'react-apollo'
@@ -11,6 +10,7 @@ import SuggestionsGrid from '../presentational/TeamBuilder/SuggestionsGrid'
 import Logo from '../presentational/Logo'
 import Nav from '../presentational/Nav'
 import { StoreContext } from '../../App'
+import { SAVE_TEAM_MUTATION } from '../../apollo/queries'
 
 const Header = styled.h2`
 	text-align: center;
@@ -22,22 +22,6 @@ const SaveButton = styled(Button)`
 	color: ${props => props.theme.global.colors.brand};
 	margin-top: 20px;
 	border-radius: 0;
-`
-
-const SAVE_TEAM_MUTATION = gql`
-	mutation saveTeamMutation($playerIds: [ID!]!) {
-		saveTeam(playerIds: $playerIds) {
-			players {
-				id
-				fullName
-				currentTeam {
-					abbreviation
-				}
-				position
-				imageSrc
-			}
-		}
-	}
 `
 
 function TeamBuilder(props) {

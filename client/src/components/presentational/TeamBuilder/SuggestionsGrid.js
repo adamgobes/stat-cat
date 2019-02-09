@@ -1,23 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Box, Grid } from 'grommet'
-import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 
 import PlayerSelectable from './PlayerSelectable'
+import { ALL_PLAYERS_QUERY } from '../../../apollo/queries'
 
 const StyledBox = styled(Box)`
 	margin-top: 40px;
 	overflow: scroll;
-`
-const ALL_PLAYERS_QUERY = gql`
-	query allPlayersQuery($filter: String) {
-		allPlayers(filter: $filter) {
-			id
-			fullName
-			imageSrc
-		}
-	}
 `
 
 const SuggestionsGrid = ({ filter, onAddPlayer }) => (

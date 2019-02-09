@@ -7,11 +7,11 @@ import { createHttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloClient } from 'apollo-boost'
-import gql from 'graphql-tag'
 import { ApolloProvider, Query } from 'react-apollo'
 import cookie from 'react-cookies'
 
 import { StoreContext } from '../App'
+import { ME_QUERY } from './queries'
 
 const httpLink = createHttpLink({
 	uri: 'http://localhost:4000',
@@ -28,26 +28,6 @@ const authLink = setContext((_, { headers }) => {
 		},
 	}
 })
-
-// query to fetch user's info to initialize mobx store
-const ME_QUERY = gql`
-	query {
-		me {
-			id
-			team {
-				players {
-					id
-					fullName
-					currentTeam {
-						abbreviation
-					}
-					position
-					imageSrc
-				}
-			}
-		}
-	}
-`
 
 // initialize store values
 const defaults = {

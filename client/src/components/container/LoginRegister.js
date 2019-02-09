@@ -2,24 +2,9 @@ import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
 import { Box, TextInput, Button } from 'grommet'
 import styled, { withTheme } from 'styled-components'
-import gql from 'graphql-tag'
 import cookie from 'react-cookies'
 
-const REGISTER_MUTATION = gql`
-	mutation registerMutation($name: String!, $email: String!, $password: String!) {
-		register(name: $name, email: $email, password: $password) {
-			token
-		}
-	}
-`
-
-const LOGIN_MUTATION = gql`
-	mutation loginMutation($email: String!, $password: String!) {
-		login(email: $email, password: $password) {
-			token
-		}
-	}
-`
+import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../apollo/queries'
 
 const FormInput = styled(TextInput)`
 	width: 300px;

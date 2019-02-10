@@ -10,7 +10,7 @@ function owner(parent, args, context) {
 
 // in DB players are stored as IDs, this resolver turns those IDs into actual player objects
 // resolves User.team.players
-function players(parent) {
+function players(parent, args) {
 	return parent.players.map(playerId =>
 		sportsFeedRequest(`players.json?player=${playerId}`)
 			.then(res => res.json())
@@ -29,6 +29,7 @@ function players(parent) {
 							  }
 							: null,
 						imageSrc: p.player.officialImageSrc,
+						// stats is resolved using resolver in Player.js
 					}))[0]
 			)
 	)

@@ -36,7 +36,7 @@ type Player {
 	position: String!,
 	currentTeam: NbaTeam,
 	imageSrc: String
-	stats(timeFrame: String!): [Stat!]!
+	stats(timeFrame: String): [Stat!]!
 }
 
 type Stat {

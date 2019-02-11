@@ -36,6 +36,12 @@ type Player {
 	position: String!,
 	currentTeam: NbaTeam,
 	imageSrc: String
+	stats(timeFrame: String): [Stat!]!
+}
+
+type Stat {
+	category: String!,
+	value: Float!
 }
 
 type NbaTeam {

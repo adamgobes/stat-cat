@@ -21,6 +21,10 @@ export const ME_QUERY = gql`
 			team {
 				players {
 					...BasicPlayerInfo
+					stats {
+						category
+						value
+					}
 				}
 			}
 		}

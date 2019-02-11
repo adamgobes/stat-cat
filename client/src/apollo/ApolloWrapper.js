@@ -2,7 +2,7 @@
  * File containing all Apollo related initilization logic
  */
 
-import React, { useContext } from 'react'
+import React from 'react'
 import { createHttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -10,7 +10,6 @@ import { ApolloClient } from 'apollo-boost'
 import { ApolloProvider, Query } from 'react-apollo'
 import cookie from 'react-cookies'
 
-import { StoreContext } from '../App'
 import { ME_QUERY } from './queries'
 
 const httpLink = createHttpLink({
@@ -45,14 +44,15 @@ const client = new ApolloClient({
 
 // component that queries user's data, writes to store, then renders component tree
 function ApolloWrapper({ children }) {
-	const store = useContext(StoreContext) // get mobx store
 	return (
 		<ApolloProvider client={client}>
-			<Query query={ME_QUERY}>
-				{({ loading, error, data }) => {
+			<Query query={ME_QUERY} fetchPolicy="network-only">
+				{({ loading, error, data, client: store }) => {
 					if (!loading) {
-						store.setUserTeam(data.me.team.players)
-						store.setLoggedIn(data.me.id)
+						console.log(store)
+						store.writeData({ data: { userTeam: data.me.team.players } })
+						store.writeData({ data: { loggedIn: data.me.id } })
+						console.log(store)
 						return children
 					}
 					return <div>Loading</div>

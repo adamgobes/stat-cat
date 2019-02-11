@@ -1,5 +1,5 @@
 const { getUserId } = require('../utils')
-const { sportsFeedRequest } = require('../sportsFeed')
+const { sportsFeedRequest, extractBasicInfo } = require('../sportsFeed')
 
 function containsFilter(playerObj, filter) {
 	return (
@@ -22,20 +22,7 @@ function allPlayers(parent, args) {
 		.then(res => res.json())
 		.then(json =>
 			json.players
-				.map(p => ({
-					id: p.player.id,
-					firstName: p.player.firstName,
-					lastName: p.player.lastName,
-					fullName: `${p.player.firstName} ${p.player.lastName}`,
-					position: p.player.primaryPosition,
-					currentTeam: p.player.currentTeam
-						? {
-								id: p.player.currentTeam.id,
-								abbreviation: p.player.currentTeam.abbreviation,
-						  }
-						: null,
-					imageSrc: p.player.officialImageSrc,
-				}))
+				.map(p => extractBasicInfo(p.player))
 				.filter(pObj => (args.filter ? containsFilter(pObj, args.filter) : true))
 		)
 }

@@ -1,19 +1,26 @@
 import gql from 'graphql-tag'
 
+const BasicPlayerInfoFragment = gql`
+	fragment BasicPlayerInfo on Player {
+		id
+		fullName
+		currentTeam {
+			abbreviation
+		}
+		position
+		imageSrc
+	}
+`
+
 // query to fetch user's info to initialize mobx store
 export const ME_QUERY = gql`
+	${BasicPlayerInfoFragment}
 	query {
 		me {
 			id
 			team {
 				players {
-					id
-					fullName
-					currentTeam {
-						abbreviation
-					}
-					position
-					imageSrc
+					...BasicPlayerInfo
 				}
 			}
 		}
@@ -21,16 +28,11 @@ export const ME_QUERY = gql`
 `
 
 export const SAVE_TEAM_MUTATION = gql`
+	${BasicPlayerInfoFragment}
 	mutation saveTeamMutation($playerIds: [ID!]!) {
 		saveTeam(playerIds: $playerIds) {
 			players {
-				id
-				fullName
-				currentTeam {
-					abbreviation
-				}
-				position
-				imageSrc
+				...BasicPlayerInfo
 			}
 		}
 	}
@@ -53,11 +55,10 @@ export const LOGIN_MUTATION = gql`
 `
 
 export const ALL_PLAYERS_QUERY = gql`
+	${BasicPlayerInfoFragment}
 	query allPlayersQuery($filter: String) {
 		allPlayers(filter: $filter) {
-			id
-			fullName
-			imageSrc
+			...BasicPlayerInfo
 		}
 	}
 `

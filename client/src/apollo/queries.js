@@ -35,6 +35,10 @@ export const USER_TEAM_QUERY = gql`
 	query {
 		userTeam @client {
 			...BasicPlayerInfo
+			stats {
+				category
+				value
+			}
 		}
 	}
 `

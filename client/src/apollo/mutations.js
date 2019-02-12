@@ -8,6 +8,10 @@ export const SAVE_TEAM_MUTATION = gql`
 		saveTeam(playerIds: $playerIds) {
 			players {
 				...BasicPlayerInfo
+				stats {
+					category
+					value
+				}
 			}
 		}
 	}

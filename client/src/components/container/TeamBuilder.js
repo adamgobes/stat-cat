@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Box, Grid, Button } from 'grommet'
 import styled from 'styled-components'
+import { compose } from 'recompose'
 
-import { Mutation, graphql } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import AddPlayerInput from '../presentational/TeamBuilder/AddPlayerInput'
 import TeamTable from '../presentational/TeamBuilder/TeamTable'
 import SuggestionsGrid from '../presentational/TeamBuilder/SuggestionsGrid'
@@ -23,7 +24,7 @@ const SaveButton = styled(Button)`
 	border-radius: 0;
 `
 
-function TeamBuilder({ history, data }) {
+function TeamBuilder({ data, mutateTeam }) {
 	const [playerInput, setPlayerInput] = useState('')
 	const [team, setTeam] = useState([...data.userTeam])
 
@@ -82,21 +83,30 @@ function TeamBuilder({ history, data }) {
 				</Box>
 			</Grid>
 			<Box direction="row" justify="center">
-				<Mutation
-					mutation={SAVE_TEAM_MUTATION}
-					variables={{ playerIds: extractIds(team) }}
-					update={(cache, { data: { saveTeam } }) => {
-						cache.writeData({
-							data: { userTeam: [...saveTeam.players] },
+				<SaveButton
+					label="Save and proceed"
+					onClick={() => {
+						mutateTeam({
+							variables: { playerIds: extractIds(team) },
+							update: (cache, { data: { saveTeam } }) => {
+								cache.writeData({
+									data: { userTeam: [...saveTeam.players] },
+								})
+							},
 						})
 					}}
-					onCompleted={() => history.push('/')}
-				>
-					{mutation => <SaveButton label="Save and proceed" onClick={mutation} />}
-				</Mutation>
+				/>
 			</Box>
 		</Box>
 	)
 }
 
-export default graphql(USER_TEAM_QUERY)(TeamBuilder)
+export default compose(
+	graphql(USER_TEAM_QUERY),
+	graphql(SAVE_TEAM_MUTATION, {
+		options: props => ({
+			onCompleted: () => props.history.push('/'),
+		}),
+		name: 'mutateTeam',
+	})
+)(TeamBuilder)

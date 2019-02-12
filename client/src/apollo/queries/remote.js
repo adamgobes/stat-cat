@@ -1,24 +1,6 @@
 import gql from 'graphql-tag'
 
-const BasicPlayerInfoFragment = gql`
-	fragment BasicPlayerInfo on Player {
-		id
-		fullName
-		currentTeam {
-			abbreviation
-		}
-		position
-		imageSrc
-	}
-`
-export const USER_TEAM_QUERY = gql`
-	${BasicPlayerInfoFragment}
-	query {
-		userTeam @client {
-			...BasicPlayerInfo
-		}
-	}
-`
+import BasicPlayerInfoFragment from '../fragments'
 
 // query to fetch user's info to initialize apollo cache
 export const ME_QUERY = gql`

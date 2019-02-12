@@ -8,7 +8,8 @@ import TeamTable from '../presentational/TeamBuilder/TeamTable'
 import SuggestionsGrid from '../presentational/TeamBuilder/SuggestionsGrid'
 import Logo from '../presentational/Logo'
 import Nav from '../presentational/Nav'
-import { SAVE_TEAM_MUTATION, USER_TEAM_QUERY } from '../../apollo/queries'
+import { SAVE_TEAM_MUTATION } from '../../apollo/queries/remote'
+import { USER_TEAM_QUERY } from '../../apollo/queries/cache'
 
 const Header = styled.h2`
 	text-align: center;

@@ -10,7 +10,7 @@ import { ApolloClient } from 'apollo-boost'
 import { ApolloProvider, Query } from 'react-apollo'
 import cookie from 'react-cookies'
 
-import { ME_QUERY } from './queries'
+import { ME_QUERY } from './queries/remote'
 
 const httpLink = createHttpLink({
 	uri: 'http://localhost:4000',

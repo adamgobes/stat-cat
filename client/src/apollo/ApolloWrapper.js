@@ -49,10 +49,8 @@ function ApolloWrapper({ children }) {
 			<Query query={ME_QUERY} fetchPolicy="network-only">
 				{({ loading, error, data, client: store }) => {
 					if (!loading) {
-						console.log(store)
 						store.writeData({ data: { userTeam: data.me.team.players } })
 						store.writeData({ data: { loggedIn: data.me.id } })
-						console.log(store)
 						return children
 					}
 					return <div>Loading</div>

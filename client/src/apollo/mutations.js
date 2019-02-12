@@ -1,25 +1,6 @@
 import gql from 'graphql-tag'
 
-import BasicPlayerInfoFragment from '../fragments'
-
-// query to fetch user's info to initialize apollo cache
-export const ME_QUERY = gql`
-	${BasicPlayerInfoFragment}
-	query {
-		me {
-			id
-			team {
-				players {
-					...BasicPlayerInfo
-					stats {
-						category
-						value
-					}
-				}
-			}
-		}
-	}
-`
+import BasicPlayerInfoFragment from './fragments'
 
 export const SAVE_TEAM_MUTATION = gql`
 	${BasicPlayerInfoFragment}
@@ -44,15 +25,6 @@ export const LOGIN_MUTATION = gql`
 	mutation loginMutation($email: String!, $password: String!) {
 		login(email: $email, password: $password) {
 			token
-		}
-	}
-`
-
-export const ALL_PLAYERS_QUERY = gql`
-	${BasicPlayerInfoFragment}
-	query allPlayersQuery($filter: String) {
-		allPlayers(filter: $filter) {
-			...BasicPlayerInfo
 		}
 	}
 `

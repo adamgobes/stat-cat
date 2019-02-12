@@ -4,7 +4,7 @@ import { Box, TextInput, Button } from 'grommet'
 import styled from 'styled-components'
 import cookie from 'react-cookies'
 
-import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../apollo/queries'
+import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../apollo/mutations'
 
 const FormInput = styled(TextInput)`
 	width: 300px;

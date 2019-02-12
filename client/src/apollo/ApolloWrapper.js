@@ -42,7 +42,7 @@ const client = new ApolloClient({
 	},
 })
 
-// component that queries user's data, writes to store, then renders component tree
+// component that queries user's data, writes to cache, then renders component tree
 function ApolloWrapper({ children }) {
 	return (
 		<ApolloProvider client={client}>

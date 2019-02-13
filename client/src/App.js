@@ -6,7 +6,6 @@ import cookie from 'react-cookies'
 import Home from './components/presentational/Home'
 import TeamBuilder from './components/container/TeamBuilder'
 import LoginRegister from './components/container/LoginRegister'
-import Store from './store'
 import ApolloWrapper from './apollo/ApolloWrapper'
 
 const theme = {
@@ -24,8 +23,6 @@ const theme = {
 }
 
 const isLoggedIn = () => !!cookie.load('authToken')
-
-export const StoreContext = React.createContext(new Store()) // init mobx store and make it globally available
 
 const App = () => (
 	<ApolloWrapper>

@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Mutation } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import { Box, TextInput, Button } from 'grommet'
 import styled from 'styled-components'
 import cookie from 'react-cookies'
+import { compose, withProps } from 'recompose'
 
-import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../apollo/queries'
+import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../apollo/mutations'
 
 const FormInput = styled(TextInput)`
 	width: 300px;
@@ -17,7 +18,7 @@ const StyledButton = styled(Button)`
 	color: white;
 `
 
-function LoginRegister({ history }) {
+function LoginRegister({ handleLoginUser, handleRegisterUser }) {
 	const [isLogin, setIsLogin] = useState(false)
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
@@ -38,12 +39,6 @@ function LoginRegister({ history }) {
 				password === secondPassword) ||
 			(isLogin && email.length !== 0 && password.length !== 0)
 		)
-	}
-
-	function onFormComplete(data) {
-		const { token } = isLogin ? data.login : data.register
-		cookie.save('authToken', token, { path: '/' })
-		history.push('/teambuilder')
 	}
 
 	return (
@@ -79,20 +74,16 @@ function LoginRegister({ history }) {
 						onChange={e => handleInputChange(setSecondPassword, e.target.value)}
 					/>
 				)}
-				<Mutation
-					mutation={isLogin ? LOGIN_MUTATION : REGISTER_MUTATION}
-					variables={{ name, email, password }}
-					onCompleted={data => onFormComplete(data)}
-				>
-					{mutation => (
-						<StyledButton
-							label={isLogin ? 'Login' : 'Register'}
-							onClick={mutation}
-							style={{ opacity: formValid() ? 1 : 0.5 }}
-							disabled={!formValid()}
-						/>
-					)}
-				</Mutation>
+				<StyledButton
+					label={isLogin ? 'Login' : 'Register'}
+					onClick={
+						isLogin
+							? handleLoginUser({ email, password })
+							: handleRegisterUser({ name, email, password })
+					}
+					style={{ opacity: formValid() ? 1 : 0.5 }}
+					disabled={!formValid()}
+				/>
 			</Box>
 			<Box>
 				<Button
@@ -104,4 +95,37 @@ function LoginRegister({ history }) {
 	)
 }
 
-export default LoginRegister
+export default compose(
+	withProps({
+		handleAuthentication: (mutation, { name, email, password }) =>
+			mutation({
+				variables: { name, email, password },
+			}),
+		handleSuccess: (history, data) => {
+			const isLogin = !!data.login
+			const { token } = isLogin ? data.login : data.register
+			cookie.save('authToken', token, { path: '/' })
+			history.push('/teambuilder')
+		},
+	}),
+	graphql(LOGIN_MUTATION, {
+		name: 'loginUser',
+		options: props => ({
+			onCompleted: data => props.handleSuccess(props.history, data),
+		}),
+		props: ({ loginUser, ownProps: { handleAuthentication } }) => ({
+			handleLoginUser: ({ email, password }) => () =>
+				handleAuthentication(loginUser, { email, password }),
+		}),
+	}),
+	graphql(REGISTER_MUTATION, {
+		name: 'registerUser',
+		options: props => ({
+			onCompleted: ({ data }) => props.handleSuccess({ history: props.history, data }),
+		}),
+		props: ({ registerUser, ownProps: { handleAuthentication } }) => ({
+			handleRegisterUser: ({ name, email, password }) => () =>
+				handleAuthentication(registerUser, { name, email, password }),
+		}),
+	})
+)(LoginRegister)

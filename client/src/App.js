@@ -7,6 +7,7 @@ import Home from './components/presentational/Home'
 import TeamBuilder from './components/container/TeamBuilder'
 import LoginRegister from './components/container/LoginRegister'
 import ApolloWrapper from './apollo/ApolloWrapper'
+import Dashboard from './components/container/Dashboard'
 
 const theme = {
 	global: {
@@ -37,6 +38,7 @@ const App = () => (
 					}
 				/>
 				<Route exact path="/auth" component={LoginRegister} />
+				<Route exact path="/dashboard" component={Dashboard} />
 			</Grommet>
 		</Router>
 	</ApolloWrapper>

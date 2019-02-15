@@ -55,19 +55,22 @@ async function projections(parent, args, context) {
 		.team()
 		.players()
 
+	// array of promises
 	let resolvedPlayers = playersResolver({
 		players: userPlayers,
 	})
 
+	// wait for all those promises to resolve
 	resolvedPlayers = await Promise.all(resolvedPlayers)
 
 	const projectedStats = {}
 
 	const teamToGameCount = {}
 
-	const teamIds = []
-	const computed = []
+	const teamIds = [] // keep track of all teamIds (used for lookup later)
+	const computed = [] // keep track of which teams we've computed how many times they play (avoid duplicate network requests)
 
+	// array of team count promises
 	const teamCountPromises = resolvedPlayers.map(player => {
 		const playerTeam = player.currentTeam.id
 		const previouslyComputed = computed.includes(playerTeam)
@@ -84,16 +87,21 @@ async function projections(parent, args, context) {
 		return count
 	})
 
+	// wait for all those promises to resolve
 	const teamCounts = await Promise.all(teamCountPromises)
 
+	// create teamToGameCount map using teamIds to index
 	teamCounts.forEach((count, i) => {
 		teamToGameCount[teamIds[i]] = count
 	})
 
+	// array of stat promises
 	const playerStatPromises = resolvedPlayers.map(player => statsResolver({ id: player.id }))
 
+	// wait for all those promises to resolve
 	const allPlayerStats = await Promise.all(playerStatPromises)
 
+	// iterate through each player and each of their stats, computing their projected stats using (number of times they play * stat average)
 	resolvedPlayers.forEach((player, i) => {
 		const playerStats = allPlayerStats[i]
 		playerStats.forEach(stat => {

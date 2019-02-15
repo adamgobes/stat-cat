@@ -32,10 +32,7 @@ function allPlayers(parent, args) {
 function myTeam(parent, args, context) {
 	const id = getUserId(context)
 
-	return context.prisma
-		.user({ id })
-		.team()
-		.players()
+	return context.prisma.user({ id }).team()
 }
 
 function calculateGameCount(teamId, startDate, endDate) {
@@ -69,14 +66,22 @@ async function projections(parent, args, context) {
 	const teamToGameCount = {}
 
 	const teamIds = []
+	const computed = []
 
 	const teamCountPromises = resolvedPlayers.map(player => {
 		const playerTeam = player.currentTeam.id
-		if (!teamIds.includes(playerTeam)) {
+		const previouslyComputed = computed.includes(playerTeam)
+		if (previouslyComputed) {
 			teamIds.push(playerTeam)
-			return calculateGameCount(playerTeam, startDate, endDate)
+			return null
 		}
-		return null
+
+		const count = calculateGameCount(playerTeam, startDate, endDate)
+
+		computed.push(playerTeam)
+		teamIds.push(playerTeam)
+
+		return count
 	})
 
 	const teamCounts = await Promise.all(teamCountPromises)
@@ -120,6 +125,7 @@ async function projections(parent, args, context) {
 
 module.exports = {
 	me,
+	myTeam,
 	allPlayers,
 	projections,
 }

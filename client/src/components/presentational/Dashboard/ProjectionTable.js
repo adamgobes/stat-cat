@@ -44,6 +44,7 @@ export default compose(
 				startDate: parseDate(getStartDate()),
 				endDate: parseDate(getEndDate(getStartDate())),
 			},
+			fetchPolicy: 'network-only',
 		}),
 		name: 'projectionsData',
 	}),

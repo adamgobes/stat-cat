@@ -58,8 +58,6 @@ const TopPerformers = ({ data: { userTeam } }) => {
 		],
 	}
 
-	console.log(data)
-
 	return (
 		<Box style={{ width: '600px' }}>
 			<h4>Top Performers</h4>

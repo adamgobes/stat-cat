@@ -67,7 +67,9 @@ function TeamBuilder({ data, mutateTeam }) {
 						handleAddPlayer={onAddPlayer}
 						handlePlayerInputChange={onPlayerInputChange}
 					/>
-					<SuggestionsGrid filter={playerInput} onAddPlayer={onAddPlayer} />
+					{playerInput && (
+						<SuggestionsGrid filter={playerInput} onAddPlayer={onAddPlayer} />
+					)}
 				</Box>
 				<Box gridArea="team">
 					<Header>Your Team</Header>

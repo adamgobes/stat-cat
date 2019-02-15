@@ -1,6 +1,8 @@
 type Query {
 	me: User!
+	myTeam: Team!
 	allPlayers(filter: String): [Player!]!
+	projections(userId: ID!, startDate: String!, endDate: String!): [Stat!]!
 }
 
 type Mutation {

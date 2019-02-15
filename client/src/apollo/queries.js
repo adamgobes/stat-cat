@@ -21,6 +21,15 @@ export const ME_QUERY = gql`
 	}
 `
 
+export const PROJECTIONS_QUERY = gql`
+	query projectionsQuery($userId: ID!, $startDate: String!, $endDate: String!) {
+		projections(userId: $userId, startDate: $startDate, endDate: $endDate) {
+			category
+			value
+		}
+	}
+`
+
 export const ALL_PLAYERS_QUERY = gql`
 	${BasicPlayerInfoFragment}
 	query allPlayersQuery($filter: String) {

@@ -44,7 +44,7 @@ function calculateGameCount(teamId, startDate, endDate) {
 }
 
 function roundAndParse(float) {
-	return parseFloat(float.toFixed(1))
+	return parseFloat(float.toFixed(0))
 }
 
 async function projections(parent, args, context) {

@@ -3,9 +3,9 @@ import { Box } from 'grommet'
 import { graphql } from 'react-apollo'
 import { compose } from 'recompose'
 import { Bar } from 'react-chartjs-2'
-import { USER_TEAM_QUERY } from '../../../apollo/queries'
 
-const allStats = ['RPG', 'APG', 'PPG', 'SPG', 'BPG', 'TPG']
+import { USER_TEAM_QUERY } from '../../../apollo/queries'
+import { allStats } from '../../../utils/computeHelpers'
 
 const TopPerformers = ({ data: { userTeam } }) => {
 	const bestAndAverage = allStats.map(stat => {

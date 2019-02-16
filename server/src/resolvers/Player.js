@@ -61,6 +61,7 @@ function calculateGameCount(teamId, startDate, endDate) {
 	)
 		.then(res => res.json())
 		.then(json => json.gamelogs.length)
+		.catch(err => 2)
 }
 
 function stats(parent, args) {

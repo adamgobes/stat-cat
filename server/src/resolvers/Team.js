@@ -1,6 +1,8 @@
 const { getUserId } = require('../utils')
 
-const { sportsFeedRequest, extractBasicInfo } = require('../sportsFeed')
+const { sportsFeedRequest } = require('../sportsFeed/api')
+
+const { extractBasicInfo, extractInjuryInfo } = require('../sportsFeed/helpers')
 
 function owner(parent, args, context) {
 	const id = getUserId(context)
@@ -14,7 +16,14 @@ function players(parent, args) {
 	return parent.players.map(playerId =>
 		sportsFeedRequest(`players.json?player=${playerId}`)
 			.then(res => res.json())
-			.then(json => json.players.map(p => extractBasicInfo(p.player))[0])
+			.then(json => {
+				const { player } = json.players[0]
+
+				return {
+					...extractBasicInfo(player),
+					...extractInjuryInfo(player),
+				}
+			})
 	)
 }
 

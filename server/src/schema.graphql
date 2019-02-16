@@ -2,7 +2,6 @@ type Query {
 	me: User!
 	myTeam: Team!
 	allPlayers(filter: String): [Player!]!
-	projections(userId: ID!, startDate: String!, endDate: String!): [Stat!]!
 }
 
 type Mutation {
@@ -39,6 +38,13 @@ type Player {
 	currentTeam: NbaTeam,
 	imageSrc: String
 	stats(timeFrame: String): [Stat!]!
+	gameCountThisWeek: Int!
+	injury: Injury
+}
+
+type Injury {
+	playingProbability: String!,
+	description: String!
 }
 
 type Stat {

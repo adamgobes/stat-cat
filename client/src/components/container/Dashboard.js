@@ -6,6 +6,7 @@ import { compose } from 'recompose'
 import Nav from '../presentational/Nav'
 import TopPerformers from '../presentational/Dashboard/TopPerformers'
 import ProjectionTable from '../presentational/Dashboard/ProjectionTable'
+import InjuryReport from '../presentational/Dashboard/InjuryReport'
 
 const Dashboard = () => {
 	return (
@@ -14,6 +15,7 @@ const Dashboard = () => {
 			<h1 style={{ textAlign: 'center' }}>Your Dashboard</h1>
 			<TopPerformers />
 			<ProjectionTable />
+			<InjuryReport />
 		</Box>
 	)
 }

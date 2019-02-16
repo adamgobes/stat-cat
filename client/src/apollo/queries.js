@@ -25,6 +25,7 @@ export const PROJECTIONS_QUERY = gql`
 	query {
 		myTeam {
 			players {
+				id
 				stats {
 					category
 					value
@@ -40,12 +41,12 @@ export const INJURIES_QUERY = gql`
 		myTeam {
 			players {
 				id
+				fullName
+				imageSrc
 				injury {
 					playingProbability
 					description
 				}
-				fullName
-				imageSrc
 			}
 		}
 	}

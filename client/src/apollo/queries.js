@@ -35,6 +35,22 @@ export const PROJECTIONS_QUERY = gql`
 	}
 `
 
+export const INJURIES_QUERY = gql`
+	query {
+		myTeam {
+			players {
+				id
+				injury {
+					playingProbability
+					description
+				}
+				fullName
+				imageSrc
+			}
+		}
+	}
+`
+
 export const ALL_PLAYERS_QUERY = gql`
 	${BasicPlayerInfoFragment}
 	query allPlayersQuery($filter: String) {

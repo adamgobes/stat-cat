@@ -1,32 +1,12 @@
 import React from 'react'
 import { Box } from 'grommet'
-import { graphql } from 'react-apollo'
-import { compose } from 'recompose'
 import { Bar } from 'react-chartjs-2'
 
-import { USER_TEAM_QUERY } from '../../../apollo/queries'
-import { allStats } from '../../../utils/computeHelpers'
+import { allStats, computeBestAndAverage } from '../../../utils/computeHelpers'
 
-const TopPerformers = ({ data: { userTeam } }) => {
-	const bestAndAverage = allStats.map(stat => {
-		const sorted = userTeam.sort(
-			(a, b) =>
-				b.stats.find(s => s.category === stat).value -
-				a.stats.find(s => s.category === stat).value
-		)
-		const teamAverage = parseFloat(
-			userTeam.reduce((a, b) => a + b.stats.find(s => s.category === stat).value, 0) /
-				userTeam.length
-		).toFixed(1)
-		return {
-			stat,
-			topPerformer: {
-				name: sorted[0].fullName,
-				metric: sorted[0].stats.find(s => s.category === stat).value,
-			},
-			teamAverage,
-		}
-	})
+const TopPerformers = ({ topPerformersData }) => {
+	const { players } = topPerformersData
+	const bestAndAverage = computeBestAndAverage(players)
 
 	const options = {
 		maintainAspectRatio: true,
@@ -66,4 +46,4 @@ const TopPerformers = ({ data: { userTeam } }) => {
 	)
 }
 
-export default compose(graphql(USER_TEAM_QUERY))(TopPerformers)
+export default TopPerformers

@@ -21,15 +21,21 @@ export const ME_QUERY = gql`
 	}
 `
 
-export const PROJECTIONS_QUERY = gql`
+export const DASHBOARD_QUERY = gql`
+	${BasicPlayerInfoFragment}
 	query {
 		myTeam {
 			players {
+				...BasicPlayerInfo
+				gameCountThisWeek
 				stats {
 					category
 					value
 				}
-				gameCountThisWeek
+				injury {
+					playingProbability
+					description
+				}
 			}
 		}
 	}

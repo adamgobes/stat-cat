@@ -7,8 +7,9 @@ import { Bar } from 'react-chartjs-2'
 import { USER_TEAM_QUERY } from '../../../apollo/queries'
 import { allStats, computeBestAndAverage } from '../../../utils/computeHelpers'
 
-const TopPerformers = ({ data: { userTeam } }) => {
-	const bestAndAverage = computeBestAndAverage(userTeam)
+const TopPerformers = ({ topPerformersData }) => {
+	const { players } = topPerformersData
+	const bestAndAverage = computeBestAndAverage(players)
 
 	const options = {
 		maintainAspectRatio: true,
@@ -48,4 +49,4 @@ const TopPerformers = ({ data: { userTeam } }) => {
 	)
 }
 
-export default compose(graphql(USER_TEAM_QUERY))(TopPerformers)
+export default TopPerformers

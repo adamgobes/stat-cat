@@ -5,7 +5,7 @@ import { compose, branch, renderComponent } from 'recompose'
 import { INJURIES_QUERY } from '../../../apollo/queries'
 
 const InjuryReport = ({ injuriesData }) => {
-	const { players } = injuriesData.myTeam
+	const { players } = injuriesData
 	return players.map(
 		player =>
 			player.injury && (
@@ -14,12 +14,5 @@ const InjuryReport = ({ injuriesData }) => {
 	)
 }
 
-export default compose(
-	graphql(INJURIES_QUERY, {
-		options: props => ({
-			fetchPolicy: 'network-only',
-		}),
-		name: 'injuriesData',
-	}),
-	branch(props => props.injuriesData.loading, renderComponent(() => <div>loading</div>))
-)(InjuryReport)
+export default InjuryReport
+

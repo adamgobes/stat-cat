@@ -7,10 +7,8 @@ import { createHttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloClient } from 'apollo-boost'
-import { ApolloProvider, Query } from 'react-apollo'
+import { ApolloProvider } from 'react-apollo'
 import cookie from 'react-cookies'
-
-import { ME_QUERY } from './queries'
 
 const httpLink = createHttpLink({
 	uri: 'http://localhost:4000',
@@ -28,36 +26,14 @@ const authLink = setContext((_, { headers }) => {
 	}
 })
 
-// initialize store values
-const defaults = {
-	loggedIn: '',
-	userTeam: [],
-}
-
 const client = new ApolloClient({
 	link: authLink.concat(httpLink),
 	cache: new InMemoryCache(),
-	clientState: {
-		defaults,
-	},
 })
 
 // component that queries user's data, writes to cache, then renders component tree
 function ApolloWrapper({ children }) {
-	return (
-		<ApolloProvider client={client}>
-			<Query query={ME_QUERY} fetchPolicy="network-only">
-				{({ loading, error, data, client: store }) => {
-					if (!loading) {
-						store.writeData({ data: { userTeam: data.me.team.players } })
-						store.writeData({ data: { loggedIn: data.me.id } })
-						return children
-					}
-					return <div>Loading</div>
-				}}
-			</Query>
-		</ApolloProvider>
-	)
+	return <ApolloProvider client={client}>{children}</ApolloProvider>
 }
 
 export default ApolloWrapper

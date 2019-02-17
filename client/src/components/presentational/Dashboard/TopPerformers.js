@@ -1,10 +1,7 @@
 import React from 'react'
 import { Box } from 'grommet'
-import { graphql } from 'react-apollo'
-import { compose } from 'recompose'
 import { Bar } from 'react-chartjs-2'
 
-import { USER_TEAM_QUERY } from '../../../apollo/queries'
 import { allStats, computeBestAndAverage } from '../../../utils/computeHelpers'
 
 const TopPerformers = ({ topPerformersData }) => {

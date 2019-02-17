@@ -1,8 +1,4 @@
 import React from 'react'
-import { Box } from 'grommet'
-import { graphql } from 'react-apollo'
-import { compose, branch, renderComponent } from 'recompose'
-import { INJURIES_QUERY } from '../../../apollo/queries'
 
 const InjuryReport = ({ injuriesData }) => {
 	const { players } = injuriesData
@@ -15,4 +11,3 @@ const InjuryReport = ({ injuriesData }) => {
 }
 
 export default InjuryReport
-

@@ -1,8 +1,5 @@
 import React from 'react'
-import { graphql } from 'react-apollo'
-import { compose, branch, renderComponent } from 'recompose'
 
-import { PROJECTIONS_QUERY } from '../../../apollo/queries'
 import { computeProjections } from '../../../utils/computeHelpers'
 
 const ProjectionTable = ({ projectionsData }) => {
@@ -12,4 +9,3 @@ const ProjectionTable = ({ projectionsData }) => {
 }
 
 export default ProjectionTable
-

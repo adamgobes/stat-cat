@@ -41,37 +41,6 @@ export const DASHBOARD_QUERY = gql`
 	}
 `
 
-export const PROJECTIONS_QUERY = gql`
-	query {
-		myTeam {
-			players {
-				id
-				stats {
-					category
-					value
-				}
-				gameCountThisWeek
-			}
-		}
-	}
-`
-
-export const INJURIES_QUERY = gql`
-	query {
-		myTeam {
-			players {
-				id
-				fullName
-				imageSrc
-				injury {
-					playingProbability
-					description
-				}
-			}
-		}
-	}
-`
-
 export const ALL_PLAYERS_QUERY = gql`
 	${BasicPlayerInfoFragment}
 	query allPlayersQuery($filter: String) {

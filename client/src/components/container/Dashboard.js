@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from 'grommet'
+import { Box, Grid } from 'grommet'
 import { graphql } from 'react-apollo'
 import { compose } from 'recompose'
 
@@ -17,9 +17,25 @@ const Dashboard = ({ dashboardData }) => {
 		<Box>
 			<Nav showMenu showSignUp={false} />
 			<h1 style={{ textAlign: 'center' }}>Your Dashboard</h1>
-			<TopPerformers topPerformersData={myTeam} />
-			<ProjectionTable projectionsData={myTeam} />
-			<InjuryReport injuriesData={myTeam} />
+			<Grid
+				rows={['flex', 'flex']}
+				columns={['flex', 'flex']}
+				areas={[
+					{ name: 'weeklyReport', start: [0, 0], end: [0, 0] },
+					{ name: 'projections', start: [1, 0], end: [1, 0] },
+					{ name: 'topPerformers', start: [0, 1], end: [1, 1] },
+				]}
+			>
+				<Box gridArea="weeklyReport">
+					<InjuryReport injuriesData={myTeam} />
+				</Box>
+				<Box gridArea="projections">
+					<ProjectionTable projectionsData={myTeam} />
+				</Box>
+				<Box gridArea="topPerformers">
+					<TopPerformers topPerformersData={myTeam} />
+				</Box>
+			</Grid>
 		</Box>
 	)
 }

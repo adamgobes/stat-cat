@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Box, Grid, Button } from 'grommet'
 import styled from 'styled-components'
-import { compose, branch, renderComponent } from 'recompose'
+import { compose } from 'recompose'
 
 import { graphql } from 'react-apollo'
 import AddPlayerInput from '../presentational/TeamBuilder/AddPlayerInput'
@@ -11,6 +11,7 @@ import Logo from '../presentational/Logo'
 import Nav from '../presentational/Nav'
 import { SAVE_TEAM_MUTATION } from '../../apollo/mutations'
 import { DASHBOARD_QUERY, MY_TEAM_QUERY } from '../../apollo/queries'
+import { renderWhileLoading } from '../helperComponents'
 
 const Header = styled.h2`
 	text-align: center;
@@ -112,5 +113,5 @@ export default compose(
 		}),
 		name: 'mutateTeam',
 	}),
-	branch(props => props.data.loading, renderComponent(() => <div>loading</div>))
+	renderWhileLoading('data')
 )(TeamBuilder)

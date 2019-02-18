@@ -1,13 +1,14 @@
 import React from 'react'
 import { Box } from 'grommet'
 import { graphql } from 'react-apollo'
-import { compose, branch, renderComponent } from 'recompose'
+import { compose } from 'recompose'
 
 import Nav from '../presentational/Nav'
 import TopPerformers from '../presentational/Dashboard/TopPerformers'
 import ProjectionTable from '../presentational/Dashboard/ProjectionTable'
 import InjuryReport from '../presentational/Dashboard/InjuryReport'
 import { DASHBOARD_QUERY } from '../../apollo/queries'
+import { renderWhileLoading } from '../helperComponents'
 
 const Dashboard = ({ dashboardData }) => {
 	console.log(dashboardData)
@@ -27,5 +28,5 @@ export default compose(
 	graphql(DASHBOARD_QUERY, {
 		name: 'dashboardData',
 	}),
-	branch(props => props.dashboardData.loading, renderComponent(() => <div>loading</div>))
+	renderWhileLoading('dashboardData')
 )(Dashboard)

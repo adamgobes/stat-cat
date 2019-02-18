@@ -7,7 +7,7 @@ const ProjectionTable = ({ projectionsData }) => {
 	const { players } = projectionsData
 	const projections = computeProjections(players)
 	return (
-		<Box>
+		<Box justify="center" align="center">
 			<DataTable
 				columns={[
 					{

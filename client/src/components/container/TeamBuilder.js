@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Box, Grid, Button } from 'grommet'
 import styled from 'styled-components'
-import { compose } from 'recompose'
+import { compose, branch, renderComponent } from 'recompose'
 
 import { graphql } from 'react-apollo'
 import AddPlayerInput from '../presentational/TeamBuilder/AddPlayerInput'
@@ -10,7 +10,7 @@ import SuggestionsGrid from '../presentational/TeamBuilder/SuggestionsGrid'
 import Logo from '../presentational/Logo'
 import Nav from '../presentational/Nav'
 import { SAVE_TEAM_MUTATION } from '../../apollo/mutations'
-import { USER_TEAM_QUERY } from '../../apollo/queries'
+import { DASHBOARD_QUERY, MY_TEAM_QUERY } from '../../apollo/queries'
 
 const Header = styled.h2`
 	text-align: center;
@@ -24,9 +24,11 @@ const SaveButton = styled(Button)`
 	border-radius: 0;
 `
 
-function TeamBuilder({ data, mutateTeam }) {
+function TeamBuilder({ data: { myTeam }, mutateTeam }) {
+	const { players } = myTeam
+
 	const [playerInput, setPlayerInput] = useState('')
-	const [team, setTeam] = useState([...data.userTeam])
+	const [team, setTeam] = useState([...players])
 
 	function onAddPlayer(player) {
 		setTeam([...team, player])
@@ -43,8 +45,8 @@ function TeamBuilder({ data, mutateTeam }) {
 	}
 
 	// given players, return array of their ids to persist to server
-	function extractIds(players) {
-		return players.map(p => p.id)
+	function extractIds(playersArr) {
+		return playersArr.map(p => p.id)
 	}
 
 	return (
@@ -91,9 +93,7 @@ function TeamBuilder({ data, mutateTeam }) {
 						mutateTeam({
 							variables: { playerIds: extractIds(team) },
 							update: (cache, { data: { saveTeam } }) => {
-								cache.writeData({
-									data: { userTeam: [...saveTeam.players] },
-								})
+								cache.writeQuery({ query: MY_TEAM_QUERY, data: saveTeam.players })
 							},
 						})
 					}}
@@ -104,11 +104,13 @@ function TeamBuilder({ data, mutateTeam }) {
 }
 
 export default compose(
-	graphql(USER_TEAM_QUERY),
+	graphql(MY_TEAM_QUERY),
 	graphql(SAVE_TEAM_MUTATION, {
 		options: props => ({
 			onCompleted: () => props.history.push('/'),
+			refetchQueries: () => [{ query: DASHBOARD_QUERY }],
 		}),
 		name: 'mutateTeam',
-	})
+	}),
+	branch(props => props.data.loading, renderComponent(() => <div>loading</div>))
 )(TeamBuilder)

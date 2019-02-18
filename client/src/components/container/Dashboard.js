@@ -7,7 +7,7 @@ import Nav from '../presentational/Nav'
 import TopPerformers from '../presentational/Dashboard/TopPerformers'
 import ProjectionTable from '../presentational/Dashboard/ProjectionTable'
 import InjuryReport from '../presentational/Dashboard/InjuryReport'
-import { DASHBOARD_QUERY } from '../../apollo/queries';
+import { DASHBOARD_QUERY } from '../../apollo/queries'
 
 const Dashboard = ({ dashboardData }) => {
 	console.log(dashboardData)

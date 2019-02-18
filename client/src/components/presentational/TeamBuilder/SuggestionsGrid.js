@@ -2,10 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box, Grid } from 'grommet'
 import { graphql } from 'react-apollo'
-import { compose, branch, renderComponent } from 'recompose'
+import { compose } from 'recompose'
 
 import PlayerSelectable from './PlayerSelectable'
 import { ALL_PLAYERS_QUERY } from '../../../apollo/queries'
+import { renderWhileLoading } from '../../helperComponents'
 
 const StyledBox = styled(Box)`
 	margin-top: 40px;
@@ -33,5 +34,5 @@ const SuggestionsGrid = ({ filter, onAddPlayer, data }) => (
 
 export default compose(
 	graphql(ALL_PLAYERS_QUERY),
-	branch(props => props.data.loading && props.filter, renderComponent(() => <div>loading</div>))
+	renderWhileLoading('data')
 )(SuggestionsGrid)

@@ -11,36 +11,43 @@ import InjuryReport from '../presentational/Dashboard/InjuryReport'
 import { DASHBOARD_QUERY } from '../../apollo/queries'
 import { renderWhileLoading } from '../helperComponents'
 
-const DashboardComponentBox = styled(Box)`
+const WeeklyReportWrapper = styled(Box)`
+	box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
+	background-color: ${props => props.theme.global.colors.brand};
+`
+
+const ProjectionTableWrapper = styled(Box)`
+	box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
+`
+
+const TopPerformersWrapper = styled(Box)`
 	box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
 `
 
 const Dashboard = ({ dashboardData }) => {
-	console.log(dashboardData)
 	const { myTeam } = dashboardData
 	return (
 		<Box>
 			<Nav showMenu showSignUp={false} />
-			<h1 style={{ textAlign: 'center' }}>Your Dashboard</h1>
 			<Grid
-				rows={['flex', 'flex']}
-				columns={['flex', 'flex']}
+				rows={['1/2', '1/2']}
+				columns={['1/3', '2/3']}
 				gap="small"
 				areas={[
-					{ name: 'weeklyReport', start: [0, 0], end: [0, 0] },
+					{ name: 'weeklyReport', start: [0, 0], end: [0, 1] },
 					{ name: 'projections', start: [1, 0], end: [1, 0] },
-					{ name: 'topPerformers', start: [0, 1], end: [1, 1] },
+					{ name: 'topPerformers', start: [1, 1], end: [1, 1] },
 				]}
 			>
-				<DashboardComponentBox gridArea="weeklyReport">
+				<WeeklyReportWrapper gridArea="weeklyReport">
 					<InjuryReport injuriesData={myTeam} />
-				</DashboardComponentBox>
-				<DashboardComponentBox gridArea="projections">
+				</WeeklyReportWrapper>
+				<ProjectionTableWrapper gridArea="projections">
 					<ProjectionTable projectionsData={myTeam} />
-				</DashboardComponentBox>
-				<DashboardComponentBox gridArea="topPerformers">
+				</ProjectionTableWrapper>
+				<TopPerformersWrapper gridArea="topPerformers">
 					<TopPerformers topPerformersData={myTeam} />
-				</DashboardComponentBox>
+				</TopPerformersWrapper>
 			</Grid>
 		</Box>
 	)

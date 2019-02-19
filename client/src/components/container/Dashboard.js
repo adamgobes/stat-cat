@@ -31,7 +31,7 @@ const Dashboard = ({ dashboardData }) => {
 			<Nav showMenu showSignUp={false} />
 			<Grid
 				rows={['1/2', '1/2']}
-				columns={['1/3', '2/3']}
+				columns={['2/5', 'flex']}
 				gap="small"
 				areas={[
 					{ name: 'weeklyReport', start: [0, 0], end: [0, 1] },

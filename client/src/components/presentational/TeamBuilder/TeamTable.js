@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 
-import NoImagePlayer from '../../../assets/images/player.png'
 import CircleButton from '../shared/CircleButton'
+import PlayerImage from '../shared/PlayerImage'
 
 const PlayerContainer = styled(Box)`
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px;
@@ -33,17 +33,14 @@ const TeamTable = ({ team, handleRemovePlayer }) => (
 		{team.map(player => (
 			<PlayerContainer direction="row" align="center" key={player.id}>
 				<ImageWrapper align="center" justify="center" className="container">
-					{player.imageSrc && (
-						<img
-							src={player.imageSrc}
-							height="100%"
-							width="100%"
-							alt={player.fullName}
-						/>
-					)}
-					{!player.imageSrc && (
-						<img src={NoImagePlayer} height="100%" width="85%" alt={player.fullName} />
-					)}
+					<PlayerImage
+						src={player.imageSrc}
+						name={player.fullName}
+						imageHeight="100%"
+						imageWidth="100%"
+						noImageHeight="100%"
+						noImageWidth="85%"
+					/>
 				</ImageWrapper>
 				<PlayerElement>
 					<p>{player.fullName}</p>

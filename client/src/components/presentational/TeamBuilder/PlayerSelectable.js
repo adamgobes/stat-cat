@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 
-import NoImagePlayer from '../../../assets/images/player.png'
 import AddRemovePlayerButton from '../shared/CircleButton'
+import PlayerImage from '../shared/PlayerImage'
 
 const ImageWrapper = styled.div`
 	width: 100px;
@@ -34,12 +34,14 @@ const PlayerSelectable = ({ player, handleAddPlayer }) => (
 				className="container"
 				style={{ marginTop: '10px' }}
 			>
-				{player.imageSrc && (
-					<img src={player.imageSrc} height="80%" width="100%" alt={player.fullName} />
-				)}
-				{!player.imageSrc && (
-					<img src={NoImagePlayer} height="100%" width="100%" alt={player.fullName} />
-				)}
+				<PlayerImage
+					src={player.imageSrc}
+					name={player.fullName}
+					imageHeight="80%"
+					imageWidth="100%"
+					noImageHeight="100%"
+					noImageWidth="100%"
+				/>
 			</Box>
 		</ImageWrapper>
 		<AddPlayerButton handleClick={() => handleAddPlayer(player)}>+</AddPlayerButton>

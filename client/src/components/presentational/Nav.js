@@ -8,7 +8,7 @@ import StatLogo from '../../assets/images/stat-logo.png'
 const LogoContainer = styled(Box)`
 	width: 60px;
 	height: 60px;
-	margin: 0 20px 0 0;
+	margin: 0 20px 10px 0;
 `
 
 const HomeHeader = styled.h2`
@@ -16,7 +16,7 @@ const HomeHeader = styled.h2`
 `
 
 const Nav = ({ theme, showMenu, showSignUp }) => (
-	<Box direction="row" justify="center" style={{ margin: '36px 0 40px 0' }}>
+	<Box direction="row" justify="center" style={{ margin: '36px 0 10px 0' }}>
 		<Box direction="row" justify="between" width="xlarge">
 			<Box style={{ visibility: showMenu ? 'visible' : 'hidden' }}>
 				<Menu

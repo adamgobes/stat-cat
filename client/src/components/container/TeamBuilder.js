@@ -11,7 +11,7 @@ import Logo from '../presentational/Logo'
 import Nav from '../presentational/Nav'
 import { SAVE_TEAM_MUTATION } from '../../apollo/mutations'
 import { DASHBOARD_QUERY, MY_TEAM_QUERY } from '../../apollo/queries'
-import { renderWhileLoading } from '../helperComponents'
+import { renderWhileLoading, renderError } from '../helperComponents'
 
 const Header = styled.h2`
 	text-align: center;
@@ -52,7 +52,6 @@ function TeamBuilder({ data: { myTeam }, mutateTeam }) {
 
 	return (
 		<Box>
-			<Nav showMenu showSignUp />
 			<Grid
 				fill
 				areas={[
@@ -113,5 +112,6 @@ export default compose(
 		}),
 		name: 'mutateTeam',
 	}),
-	renderWhileLoading('data')
+	renderWhileLoading('data'),
+	renderError('data')
 )(TeamBuilder)

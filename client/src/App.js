@@ -8,6 +8,7 @@ import TeamBuilder from './components/container/TeamBuilder'
 import LoginRegister from './components/container/LoginRegister'
 import ApolloWrapper from './apollo/ApolloWrapper'
 import Dashboard from './components/container/Dashboard'
+import Nav from './components/presentational/Nav'
 
 const theme = {
 	global: {
@@ -30,15 +31,22 @@ const App = () => (
 		<Router>
 			<Grommet theme={theme}>
 				<Route exact path="/" component={Home} />
-				<Route
-					exact
-					path="/teambuilder"
-					render={({ history }) =>
-						isLoggedIn() ? <TeamBuilder history={history} /> : <Redirect to="/auth" />
-					}
-				/>
 				<Route exact path="/auth" component={LoginRegister} />
-				<Route exact path="/dashboard" component={Dashboard} />
+				<div>
+					<Nav showMenu showSignUp />
+					<Route exact path="/dashboard" component={Dashboard} />
+					<Route
+						exact
+						path="/teambuilder"
+						render={({ history }) =>
+							isLoggedIn() ? (
+								<TeamBuilder history={history} />
+							) : (
+								<Redirect to="/auth" />
+							)
+						}
+					/>
+				</div>
 			</Grommet>
 		</Router>
 	</ApolloWrapper>

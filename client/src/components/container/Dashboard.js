@@ -25,37 +25,37 @@ const TopPerformersWrapper = styled(Box)`
 `
 
 const Dashboard = ({ dashboardData }) => {
-	const { myTeam } = dashboardData
-	return (
-		<Box>
-			<Nav showMenu showSignUp={false} />
-			<Grid
-				rows={['1/2', '1/2']}
-				columns={['2/5', 'flex']}
-				gap="small"
-				areas={[
-					{ name: 'weeklyReport', start: [0, 0], end: [0, 1] },
-					{ name: 'projections', start: [1, 0], end: [1, 0] },
-					{ name: 'topPerformers', start: [1, 1], end: [1, 1] },
-				]}
-			>
-				<WeeklyReportWrapper gridArea="weeklyReport">
-					<InjuryReport injuriesData={myTeam} />
-				</WeeklyReportWrapper>
-				<ProjectionTableWrapper gridArea="projections">
-					<ProjectionTable projectionsData={myTeam} />
-				</ProjectionTableWrapper>
-				<TopPerformersWrapper gridArea="topPerformers">
-					<TopPerformers topPerformersData={myTeam} />
-				</TopPerformersWrapper>
-			</Grid>
-		</Box>
-	)
+    const { myTeam } = dashboardData
+    return (
+        <Box>
+            <Nav showMenu showSignUp={false} />
+            <Grid
+                rows={['1/2', '1/2']}
+                columns={['2/5', 'flex']}
+                gap="small"
+                areas={[
+                    { name: 'weeklyReport', start: [0, 0], end: [0, 1] },
+                    { name: 'projections', start: [1, 0], end: [1, 0] },
+                    { name: 'topPerformers', start: [1, 1], end: [1, 1] },
+                ]}
+            >
+                <WeeklyReportWrapper gridArea="weeklyReport">
+                    <InjuryReport injuriesData={myTeam} />
+                </WeeklyReportWrapper>
+                <ProjectionTableWrapper gridArea="projections">
+                    <ProjectionTable projectionsData={myTeam} />
+                </ProjectionTableWrapper>
+                <TopPerformersWrapper gridArea="topPerformers">
+                    <TopPerformers topPerformersData={myTeam} />
+                </TopPerformersWrapper>
+            </Grid>
+        </Box>
+    )
 }
 
 export default compose(
-	graphql(DASHBOARD_QUERY, {
-		name: 'dashboardData',
-	}),
-	renderWhileLoading('dashboardData')
+    graphql(DASHBOARD_QUERY, {
+        name: 'dashboardData',
+    }),
+    renderWhileLoading('dashboardData')
 )(Dashboard)

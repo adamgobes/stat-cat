@@ -12,16 +12,16 @@ import { DASHBOARD_QUERY } from '../../apollo/queries'
 import { renderWhileLoading } from '../helperComponents'
 
 const WeeklyReportWrapper = styled(Box)`
-	box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
-	background-color: ${props => props.theme.global.colors.brand};
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
+    background-color: ${props => props.theme.global.colors.brand};
 `
 
 const ProjectionTableWrapper = styled(Box)`
-	box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
 `
 
 const TopPerformersWrapper = styled(Box)`
-	box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
 `
 
 const Dashboard = ({ dashboardData }) => {

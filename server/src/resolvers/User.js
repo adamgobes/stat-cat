@@ -1,11 +1,11 @@
 const { getUserId } = require('../utils')
 
 function team(parent, args, context) {
-	const id = getUserId(context)
+    const id = getUserId(context)
 
-	return context.prisma.user({ id }).team()
+    return context.prisma.user({ id }).team()
 }
 
 module.exports = {
-	team,
+    team,
 }

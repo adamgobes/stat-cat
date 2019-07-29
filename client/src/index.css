@@ -1,7 +1,11 @@
-html, body, #root, #root > div, .container {
-	height: 100%
+html,
+body,
+#root,
+#root > div,
+.container {
+    height: 100%;
 }
 
 body {
-	margin: 0;
+    margin: 0;
 }

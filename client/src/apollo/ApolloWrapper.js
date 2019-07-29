@@ -11,29 +11,29 @@ import { ApolloProvider } from 'react-apollo'
 import cookie from 'react-cookies'
 
 const httpLink = createHttpLink({
-	uri: 'http://localhost:4000',
+    uri: 'http://localhost:4000',
 })
 
 // link to attach auth header to each request
 const authLink = setContext((_, { headers }) => {
-	const token = cookie.load('authToken')
+    const token = cookie.load('authToken')
 
-	return {
-		headers: {
-			...headers,
-			authorization: token ? `Bearer ${token}` : '',
-		},
-	}
+    return {
+        headers: {
+            ...headers,
+            authorization: token ? `Bearer ${token}` : '',
+        },
+    }
 })
 
 const client = new ApolloClient({
-	link: authLink.concat(httpLink),
-	cache: new InMemoryCache(),
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache(),
 })
 
 // component that queries user's data, writes to cache, then renders component tree
 function ApolloWrapper({ children }) {
-	return <ApolloProvider client={client}>{children}</ApolloProvider>
+    return <ApolloProvider client={client}>{children}</ApolloProvider>
 }
 
 export default ApolloWrapper

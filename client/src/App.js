@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grommet } from 'grommet'
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 import cookie from 'react-cookies'
 
 import Home from './components/presentational/Home'
@@ -26,27 +26,26 @@ const theme = {
 
 const isLoggedIn = () => !!cookie.load('authToken')
 
+const renderComponentOrRedirect = (history, Component) =>
+    isLoggedIn() ? <Component history={history} /> : <Redirect to="/auth" />
+
 const App = () => (
     <ApolloWrapper>
         <Router>
             <Grommet theme={theme}>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/auth" component={LoginRegister} />
-                <div>
-                    <Nav showMenu showSignUp />
-                    <Route exact path="/dashboard" component={Dashboard} />
-                    <Route
-                        exact
-                        path="/teambuilder"
-                        render={({ history }) =>
-                            isLoggedIn() ? (
-                                <TeamBuilder history={history} />
-                            ) : (
-                                <Redirect to="/auth" />
-                            )
-                        }
-                    />
-                </div>
+
+                <Route
+                    exact
+                    path="/dashboard"
+                    render={({ history }) => renderComponentOrRedirect(history, Dashboard)}
+                />
+                <Route
+                    exact
+                    path="/teambuilder"
+                    render={({ history }) => renderComponentOrRedirect(history, TeamBuilder)}
+                />
             </Grommet>
         </Router>
     </ApolloWrapper>

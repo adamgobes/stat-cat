@@ -52,6 +52,7 @@ function TeamBuilder({ data: { myTeam }, mutateTeam }) {
 
     return (
         <Box>
+            <Nav showMenu showSignUp={false} />
             <Grid
                 fill
                 areas={[

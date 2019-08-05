@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
-import { graphql } from 'react-apollo'
+import React, { useReducer } from 'react'
+import { useMutation } from '@apollo/react-hooks'
 import { Box, TextInput, Button } from 'grommet'
 import styled from 'styled-components'
 import cookie from 'react-cookies'
-import { compose, withProps } from 'recompose'
 
 import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../apollo/mutations'
 
@@ -18,114 +17,127 @@ const StyledButton = styled(Button)`
     color: white;
 `
 
-function LoginRegister({ handleLoginUser, handleRegisterUser }) {
-    const [isLogin, setIsLogin] = useState(false)
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [secondPassword, setSecondPassword] = useState('')
+const INPUT_CHANGE = 'INPUT_CHANGE'
+const LOGIN_CHANGE = 'LOGIN_CHANGE'
 
-    function handleInputChange(setFunction, value) {
-        setFunction(value)
+function reducer(state, action) {
+    switch (action.type) {
+        case INPUT_CHANGE:
+            return {
+                ...state,
+                [action.input]: action.value,
+            }
+        case LOGIN_CHANGE:
+            return {
+                ...state,
+                isLogin: !state.isLogin,
+            }
+        default:
+            return state
+    }
+}
+
+const initialState = {
+    name: '',
+    email: '',
+    password: '',
+    secondPassword: '',
+    isLogin: false,
+}
+
+function LoginRegister({ history }) {
+    const [state, dispatch] = useReducer(reducer, initialState)
+
+    const [loginUser] = useMutation(LOGIN_MUTATION, {
+        variables: { email: state.email, password: state.password },
+        onCompleted: data => {
+            const { token } = data.login
+            cookie.save('authToken', token, { path: '/' })
+            history.push('/teambuilder')
+        },
+    })
+
+    const [registerUser] = useMutation(REGISTER_MUTATION, {
+        variables: {
+            name: state.name,
+            email: state.email,
+            password: state.password,
+        },
+        onCompleted: data => {
+            const { token } = data.register
+            cookie.save('authToken', token, { path: '/' })
+            history.push('/teambuilder')
+        },
+    })
+
+    function handleInputChange(event) {
+        dispatch({
+            type: INPUT_CHANGE,
+            input: event.target.name,
+            value: event.target.value,
+        })
     }
 
     function formValid() {
         return (
-            (!isLogin &&
-                email.length !== 0 &&
-                name.length !== 0 &&
-                password.length !== 0 &&
-                secondPassword.length !== 0 &&
-                password === secondPassword) ||
-            (isLogin && email.length !== 0 && password.length !== 0)
+            (!state.isLogin &&
+                state.email.length !== 0 &&
+                state.name.length !== 0 &&
+                state.password.length !== 0 &&
+                state.secondPassword.length !== 0 &&
+                state.password.length === state.secondPassword.length) ||
+            (state.isLogin && state.email.length !== 0 && state.password.length !== 0)
         )
     }
 
     return (
         <Box pad="large" justify="center" align="center" className="container">
             <Box pad="small">
-                {!isLogin && (
+                {!state.isLogin && (
                     <FormInput
+                        name="name"
                         size="medium"
                         placeholder="Full Name"
-                        value={name}
-                        onChange={e => handleInputChange(setName, e.target.value)}
+                        onChange={handleInputChange}
                     />
                 )}
                 <FormInput
                     size="medium"
+                    name="email"
                     placeholder="Email"
-                    value={email}
-                    onChange={e => handleInputChange(setEmail, e.target.value)}
+                    onChange={handleInputChange}
                 />
                 <FormInput
                     size="medium"
+                    name="password"
                     placeholder="password"
                     type="password"
-                    value={password}
-                    onChange={e => handleInputChange(setPassword, e.target.value)}
+                    onChange={handleInputChange}
                 />
-                {!isLogin && (
+                {!state.isLogin && (
                     <FormInput
                         size="medium"
+                        name="secondPassword"
                         placeholder="Re-enter password"
                         type="password"
-                        value={secondPassword}
-                        onChange={e => handleInputChange(setSecondPassword, e.target.value)}
+                        onChange={handleInputChange}
                     />
                 )}
                 <StyledButton
-                    label={isLogin ? 'Login' : 'Register'}
-                    onClick={
-                        isLogin
-                            ? handleLoginUser({ email, password })
-                            : handleRegisterUser({ name, email, password })
-                    }
+                    label={state.isLogin ? 'Login' : 'Register'}
+                    onClick={state.isLogin ? loginUser : registerUser}
                     style={{ opacity: formValid() ? 1 : 0.5 }}
                     disabled={!formValid()}
                 />
             </Box>
             <Box>
                 <Button
-                    label={`Click here to ${isLogin ? 'Register' : 'Login'}`}
-                    onClick={() => setIsLogin(!isLogin)}
+                    label={`Click here to ${state.isLogin ? 'Register' : 'Login'}`}
+                    onClick={() => dispatch({ type: LOGIN_CHANGE })}
                 />
             </Box>
         </Box>
     )
 }
 
-export default compose(
-    withProps({
-        handleAuthentication: (mutation, { name, email, password }) =>
-            mutation({
-                variables: { name, email, password },
-            }),
-        handleSuccess: (history, data) => {
-            const isLogin = !!data.login
-            const { token } = isLogin ? data.login : data.register
-            cookie.save('authToken', token, { path: '/' })
-            history.push('/teambuilder')
-        },
-    }),
-    graphql(LOGIN_MUTATION, {
-        name: 'loginUser',
-        options: props => ({
-            onCompleted: data => props.handleSuccess(props.history, data),
-        }),
-        props: ({ loginUser, ownProps: { handleAuthentication } }) => ({
-            handleLoginUser: ({ email, password }) => () =>
-                handleAuthentication(loginUser, { email, password }),
-        }),
-    }),
-    graphql(REGISTER_MUTATION, {
-        name: 'registerUser',
-        options: props => ({
-            onCompleted: ({ data }) => props.handleSuccess({ history: props.history, data }),
-        }),
-        props: ({ registerUser, ownProps: { handleAuthentication } }) => ({
-            handleRegisterUser: ({ name, email, password }) => () =>
-                handleAuthentication(registerUser, { name, email, password }),
-        }),
-    })
-)(LoginRegister)
+export default LoginRegister

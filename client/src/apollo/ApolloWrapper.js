@@ -8,6 +8,7 @@ import { setContext } from 'apollo-link-context'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloClient } from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
+import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import cookie from 'react-cookies'
 
 const httpLink = createHttpLink({
@@ -33,7 +34,11 @@ const client = new ApolloClient({
 
 // component that queries user's data, writes to cache, then renders component tree
 function ApolloWrapper({ children }) {
-    return <ApolloProvider client={client}>{children}</ApolloProvider>
+    return (
+        <ApolloProvider client={client}>
+            <ApolloHooksProvider client={client}>{children}</ApolloHooksProvider>
+        </ApolloProvider>
+    )
 }
 
 export default ApolloWrapper

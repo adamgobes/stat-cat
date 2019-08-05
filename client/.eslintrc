@@ -8,13 +8,13 @@
             {
                 "extensions": [".js", "jsx"]
             }
-		],
-		"prettier/prettier": ["error"],
+        ],
+        "prettier/prettier": ["error"],
         "react/jsx-indent": 0,
         "react/jsx-indent-props": 0,
-		"no-unused-vars": 1,
-		"react/prop-types": 0,
-		"react-hooks/rules-of-hooks": "error"
+        "no-unused-vars": 1,
+        "react/prop-types": 0,
+        "react-hooks/rules-of-hooks": "error"
     },
     "env": {
         "browser": true

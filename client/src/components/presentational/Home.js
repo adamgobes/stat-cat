@@ -17,7 +17,7 @@ const Description = styled.h1`
     line-height: 34px;
     font-weight: 500;
     width: 400px;
-    margin: 60px;
+    margin: 60px 60px 30px 60px;
 `
 
 const HomeButton = styled(Button)`
@@ -50,10 +50,6 @@ const Home = () => (
                         primary
                         style={{ color: 'white', fontWeight: 'bold' }}
                     />
-                </StyledLink>
-
-                <StyledLink to="/teambuilder">
-                    <HomeButton label="Continue as Guest" />
                 </StyledLink>
             </Box>
         </Box>

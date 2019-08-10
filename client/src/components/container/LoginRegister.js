@@ -19,6 +19,16 @@ const StyledButton = styled(Button)`
 
 const INPUT_CHANGE = 'INPUT_CHANGE'
 const LOGIN_CHANGE = 'LOGIN_CHANGE'
+const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
+
+const initialState = {
+    name: '',
+    email: '',
+    password: '',
+    secondPassword: '',
+    errorMessage: null,
+    isLogin: false,
+}
 
 function reducer(state, action) {
     switch (action.type) {
@@ -29,20 +39,18 @@ function reducer(state, action) {
             }
         case LOGIN_CHANGE:
             return {
-                ...state,
+                ...initialState,
                 isLogin: !state.isLogin,
+                errorMessage: null,
+            }
+        case SET_ERROR_MESSAGE:
+            return {
+                ...state,
+                errorMessage: action.payload,
             }
         default:
             return state
     }
-}
-
-const initialState = {
-    name: '',
-    email: '',
-    password: '',
-    secondPassword: '',
-    isLogin: false,
 }
 
 function LoginRegister({ history }) {
@@ -54,6 +62,12 @@ function LoginRegister({ history }) {
             const { token } = data.login
             cookie.save('authToken', token, { path: '/' })
             history.push('/teambuilder')
+        },
+        onError: error => {
+            dispatch({
+                type: SET_ERROR_MESSAGE,
+                payload: error.message,
+            })
         },
     })
 
@@ -92,12 +106,14 @@ function LoginRegister({ history }) {
 
     return (
         <Box pad="large" justify="center" align="center" className="container">
+            {state.errorMessage && <h1>{state.errorMessage}</h1>}
             <Box pad="small">
                 {!state.isLogin && (
                     <FormInput
                         name="name"
                         size="medium"
                         placeholder="Full Name"
+                        value={state.name}
                         onChange={handleInputChange}
                     />
                 )}
@@ -105,12 +121,14 @@ function LoginRegister({ history }) {
                     size="medium"
                     name="email"
                     placeholder="Email"
+                    value={state.email}
                     onChange={handleInputChange}
                 />
                 <FormInput
                     size="medium"
                     name="password"
                     placeholder="password"
+                    value={state.password}
                     type="password"
                     onChange={handleInputChange}
                 />
@@ -119,6 +137,7 @@ function LoginRegister({ history }) {
                         size="medium"
                         name="secondPassword"
                         placeholder="Re-enter password"
+                        value={state.secondPassword}
                         type="password"
                         onChange={handleInputChange}
                     />

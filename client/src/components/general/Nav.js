@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box, Button, Menu } from 'grommet'
 
-import StyledLink from './shared/StyledLink'
+import StyledLink from '../shared/StyledLink'
 import StatLogo from '../../assets/images/stat-logo.png'
 
 const LogoContainer = styled(Box)`

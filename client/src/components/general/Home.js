@@ -3,7 +3,7 @@ import { Box, Button } from 'grommet'
 import styled from 'styled-components'
 
 import StatLogo from '../../assets/images/stat-logo.png'
-import StyledLink from './shared/StyledLink'
+import StyledLink from '../shared/StyledLink'
 
 const LogoContainer = styled(Box)`
     width: 100px;

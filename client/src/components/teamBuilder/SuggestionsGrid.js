@@ -5,8 +5,8 @@ import { graphql } from 'react-apollo'
 import { compose } from 'recompose'
 
 import PlayerSelectable from './PlayerSelectable'
-import { ALL_PLAYERS_QUERY } from '../../../apollo/queries'
-import { renderWhileLoading } from '../../helperComponents'
+import { ALL_PLAYERS_QUERY } from '../../apollo/queries'
+import { renderWhileLoading } from '../helperComponents'
 
 const StyledBox = styled(Box)`
     margin-top: 40px;

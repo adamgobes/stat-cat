@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useCallback } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { Box, TextInput, Button } from 'grommet'
 import styled from 'styled-components'
@@ -104,8 +104,27 @@ function LoginRegister({ history }) {
         )
     }
 
+    const submitForm = useCallback(() => (state.isLogin ? loginUser() : registerUser()), [
+        state.isLogin,
+    ])
+
+    function handleEnterClicked(event) {
+        switch (event.keyCode) {
+            case 13:
+                return submitForm()
+            default:
+                return null
+        }
+    }
+
     return (
-        <Box pad="large" justify="center" align="center" className="container">
+        <Box
+            pad="large"
+            justify="center"
+            align="center"
+            className="container"
+            onKeyDown={handleEnterClicked}
+        >
             {state.errorMessage && <h1>{state.errorMessage}</h1>}
             <Box pad="small">
                 {!state.isLogin && (
@@ -144,7 +163,7 @@ function LoginRegister({ history }) {
                 )}
                 <StyledButton
                     label={state.isLogin ? 'Login' : 'Register'}
-                    onClick={state.isLogin ? loginUser : registerUser}
+                    onClick={submitForm}
                     style={{ opacity: formValid() ? 1 : 0.5 }}
                     disabled={!formValid()}
                 />

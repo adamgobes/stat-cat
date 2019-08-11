@@ -54,10 +54,13 @@ function reducer(state, action) {
 }
 
 function LoginRegister({ history }) {
-    const [state, dispatch] = useReducer(reducer, initialState)
+    const [{ name, email, password, secondPassword, errorMessage, isLogin }, dispatch] = useReducer(
+        reducer,
+        initialState
+    )
 
     const [loginUser] = useMutation(LOGIN_MUTATION, {
-        variables: { email: state.email, password: state.password },
+        variables: { email, password },
         onCompleted: data => {
             const { token } = data.login
             cookie.save('authToken', token, { path: '/' })
@@ -73,9 +76,9 @@ function LoginRegister({ history }) {
 
     const [registerUser] = useMutation(REGISTER_MUTATION, {
         variables: {
-            name: state.name,
-            email: state.email,
-            password: state.password,
+            name,
+            email,
+            password,
         },
         onCompleted: data => {
             const { token } = data.register
@@ -94,19 +97,17 @@ function LoginRegister({ history }) {
 
     function formValid() {
         return (
-            (!state.isLogin &&
-                state.email.length !== 0 &&
-                state.name.length !== 0 &&
-                state.password.length !== 0 &&
-                state.secondPassword.length !== 0 &&
-                state.password.length === state.secondPassword.length) ||
-            (state.isLogin && state.email.length !== 0 && state.password.length !== 0)
+            (!isLogin &&
+                email.length !== 0 &&
+                name.length !== 0 &&
+                password.length !== 0 &&
+                secondPassword.length !== 0 &&
+                password.length === secondPassword.length) ||
+            (isLogin && email.length !== 0 && password.length !== 0)
         )
     }
 
-    const submitForm = useCallback(() => (state.isLogin ? loginUser() : registerUser()), [
-        state.isLogin,
-    ])
+    const submitForm = useCallback(() => (isLogin ? loginUser() : registerUser()), [isLogin])
 
     function handleEnterClicked(event) {
         switch (event.keyCode) {
@@ -125,14 +126,14 @@ function LoginRegister({ history }) {
             className="container"
             onKeyDown={handleEnterClicked}
         >
-            {state.errorMessage && <h1>{state.errorMessage}</h1>}
+            {errorMessage && <h1>{errorMessage}</h1>}
             <Box pad="small">
-                {!state.isLogin && (
+                {!isLogin && (
                     <FormInput
                         name="name"
                         size="medium"
                         placeholder="Full Name"
-                        value={state.name}
+                        value={name}
                         onChange={handleInputChange}
                     />
                 )}
@@ -140,29 +141,29 @@ function LoginRegister({ history }) {
                     size="medium"
                     name="email"
                     placeholder="Email"
-                    value={state.email}
+                    value={email}
                     onChange={handleInputChange}
                 />
                 <FormInput
                     size="medium"
                     name="password"
                     placeholder="password"
-                    value={state.password}
+                    value={password}
                     type="password"
                     onChange={handleInputChange}
                 />
-                {!state.isLogin && (
+                {!isLogin && (
                     <FormInput
                         size="medium"
                         name="secondPassword"
                         placeholder="Re-enter password"
-                        value={state.secondPassword}
+                        value={secondPassword}
                         type="password"
                         onChange={handleInputChange}
                     />
                 )}
                 <StyledButton
-                    label={state.isLogin ? 'Login' : 'Register'}
+                    label={isLogin ? 'Login' : 'Register'}
                     onClick={submitForm}
                     style={{ opacity: formValid() ? 1 : 0.5 }}
                     disabled={!formValid()}
@@ -170,7 +171,7 @@ function LoginRegister({ history }) {
             </Box>
             <Box>
                 <Button
-                    label={`Click here to ${state.isLogin ? 'Register' : 'Login'}`}
+                    label={`Click here to ${isLogin ? 'Register' : 'Login'}`}
                     onClick={() => dispatch({ type: LOGIN_CHANGE })}
                 />
             </Box>

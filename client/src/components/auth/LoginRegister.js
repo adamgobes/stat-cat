@@ -5,6 +5,12 @@ import styled from 'styled-components'
 import cookie from 'react-cookies'
 
 import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../apollo/mutations'
+import loginRegisterReducer, {
+    changeInput,
+    initialState,
+    setErrorMessage,
+    changeIsLogin,
+} from './reducer'
 
 const FormInput = styled(TextInput)`
     width: 300px;
@@ -17,45 +23,9 @@ const StyledButton = styled(Button)`
     color: white;
 `
 
-const INPUT_CHANGE = 'INPUT_CHANGE'
-const LOGIN_CHANGE = 'LOGIN_CHANGE'
-const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
-
-const initialState = {
-    name: '',
-    email: '',
-    password: '',
-    secondPassword: '',
-    errorMessage: null,
-    isLogin: false,
-}
-
-function reducer(state, action) {
-    switch (action.type) {
-        case INPUT_CHANGE:
-            return {
-                ...state,
-                [action.input]: action.value,
-            }
-        case LOGIN_CHANGE:
-            return {
-                ...initialState,
-                isLogin: !state.isLogin,
-                errorMessage: null,
-            }
-        case SET_ERROR_MESSAGE:
-            return {
-                ...state,
-                errorMessage: action.payload,
-            }
-        default:
-            return state
-    }
-}
-
 function LoginRegister({ history }) {
     const [{ name, email, password, secondPassword, errorMessage, isLogin }, dispatch] = useReducer(
-        reducer,
+        loginRegisterReducer,
         initialState
     )
 
@@ -67,10 +37,7 @@ function LoginRegister({ history }) {
             history.push('/teambuilder')
         },
         onError: error => {
-            dispatch({
-                type: SET_ERROR_MESSAGE,
-                payload: error.message,
-            })
+            dispatch(setErrorMessage(error.message))
         },
     })
 
@@ -88,11 +55,7 @@ function LoginRegister({ history }) {
     })
 
     function handleInputChange(event) {
-        dispatch({
-            type: INPUT_CHANGE,
-            input: event.target.name,
-            value: event.target.value,
-        })
+        dispatch(changeInput(event.target.name, event.target.value))
     }
 
     function formValid() {
@@ -172,7 +135,7 @@ function LoginRegister({ history }) {
             <Box>
                 <Button
                     label={`Click here to ${isLogin ? 'Register' : 'Login'}`}
-                    onClick={() => dispatch({ type: LOGIN_CHANGE })}
+                    onClick={() => dispatch(changeIsLogin())}
                 />
             </Box>
         </Box>

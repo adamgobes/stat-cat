@@ -32,7 +32,13 @@ const App = () => (
     <ApolloWrapper>
         <Router>
             <Grommet theme={theme}>
-                <Route exact path="/" component={Home} />
+                <Route
+                    exact
+                    path="/"
+                    render={({ history }) =>
+                        isLoggedIn() ? <Redirect to="/teambuilder" /> : <Home history={history} />
+                    }
+                />
                 <Route exact path="/auth" component={LoginRegister} />
 
                 <Route

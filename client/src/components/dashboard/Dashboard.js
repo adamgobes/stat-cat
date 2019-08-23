@@ -1,6 +1,5 @@
 import React from 'react'
 import { Box, Grid } from 'grommet'
-import { graphql } from 'react-apollo'
 import { compose } from 'recompose'
 import styled from 'styled-components'
 
@@ -9,7 +8,6 @@ import TopPerformers from './TopPerformers'
 import ProjectionTable from './ProjectionTable'
 import InjuryReport from './InjuryReport'
 import { DASHBOARD_QUERY } from '../../apollo/queries'
-import { renderWhileLoading } from '../helperComponents'
 
 const WeeklyReportWrapper = styled(Box)`
     box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
@@ -24,11 +22,9 @@ const TopPerformersWrapper = styled(Box)`
     box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
 `
 
-const Dashboard = ({ dashboardData }) => {
-    const { myTeam } = dashboardData
-    return (
-        <Box>
-            <Nav showMenu showSignUp={false} />
+const Dashboard = () => (
+    <Box>
+        {/* <Nav showMenu showSignUp={false} />
             <Grid
                 rows={['1/2', '1/2']}
                 columns={['2/5', 'flex']}
@@ -48,14 +44,8 @@ const Dashboard = ({ dashboardData }) => {
                 <TopPerformersWrapper gridArea="topPerformers">
                     <TopPerformers topPerformersData={myTeam} />
                 </TopPerformersWrapper>
-            </Grid>
-        </Box>
-    )
-}
+            </Grid> */}
+    </Box>
+)
 
-export default compose(
-    graphql(DASHBOARD_QUERY, {
-        name: 'dashboardData',
-    }),
-    renderWhileLoading('dashboardData')
-)(Dashboard)
+export default Dashboard

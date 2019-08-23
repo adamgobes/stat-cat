@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { Box, Grid, Button } from 'grommet'
 import styled from 'styled-components'
-import { compose } from 'recompose'
 
-import { graphql } from 'react-apollo'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import AddPlayerInput from './AddPlayerInput'
 import TeamTable from './TeamTable'
 import SuggestionsGrid from './SuggestionsGrid'
@@ -11,7 +10,6 @@ import Logo from '../general/Logo'
 import Nav from '../general/Nav'
 import { SAVE_TEAM_MUTATION } from '../../apollo/mutations'
 import { DASHBOARD_QUERY, MY_TEAM_QUERY } from '../../apollo/queries'
-import { renderWhileLoading, renderError } from '../helperComponents'
 
 const Header = styled.h2`
     text-align: center;
@@ -25,11 +23,25 @@ const SaveButton = styled(Button)`
     border-radius: 0;
 `
 
-function TeamBuilder({ data: { myTeam }, mutateTeam }) {
-    const { players } = myTeam
-
+function TeamBuilder({ history }) {
     const [playerInput, setPlayerInput] = useState('')
-    const [team, setTeam] = useState([...players])
+    const [team, setTeam] = useState([])
+
+    const { data, loading } = useQuery(MY_TEAM_QUERY)
+
+    const [mutateTeam] = useMutation(SAVE_TEAM_MUTATION, {
+        onCompleted: () => history.push('/auth'),
+        refetchQueries: () => [{ query: DASHBOARD_QUERY }],
+    })
+
+    useMemo(
+        () => {
+            if (data && data.myTeam) {
+                setTeam(data.myTeam.players)
+            }
+        },
+        [data]
+    )
 
     function onAddPlayer(player) {
         setTeam([...team, player])
@@ -49,6 +61,8 @@ function TeamBuilder({ data: { myTeam }, mutateTeam }) {
     function extractIds(playersArr) {
         return playersArr.map(p => p.id)
     }
+
+    if (loading) return <div>loading</div>
 
     return (
         <Box>
@@ -73,6 +87,7 @@ function TeamBuilder({ data: { myTeam }, mutateTeam }) {
                     {playerInput && (
                         <SuggestionsGrid filter={playerInput} onAddPlayer={onAddPlayer} />
                     )}
+                    {!playerInput && <div>type some shit</div>}
                 </Box>
                 <Box gridArea="team">
                     <Header>Your Team</Header>
@@ -104,15 +119,4 @@ function TeamBuilder({ data: { myTeam }, mutateTeam }) {
     )
 }
 
-export default compose(
-    graphql(MY_TEAM_QUERY),
-    graphql(SAVE_TEAM_MUTATION, {
-        options: props => ({
-            onCompleted: () => props.history.push('/'),
-            refetchQueries: () => [{ query: DASHBOARD_QUERY }],
-        }),
-        name: 'mutateTeam',
-    }),
-    renderWhileLoading('data'),
-    renderError('data')
-)(TeamBuilder)
+export default TeamBuilder

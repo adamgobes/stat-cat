@@ -62,7 +62,7 @@ function TeamBuilder() {
         return playersArr.map(p => p.id)
     }
 
-    if (initLoading) return <div>loading</div>
+    if (initLoading) return <Loader size={80} />
 
     return (
         <Box>
@@ -104,7 +104,7 @@ function TeamBuilder() {
             </Grid>
             <Box direction="row" justify="center">
                 <SaveButton
-                    label={saveTeamLoading ? <Loader /> : 'Save Team'}
+                    label={saveTeamLoading ? <Loader size={20} /> : 'Save Team'}
                     onClick={() => {
                         mutateTeam({
                             variables: { playerIds: extractIds(team) },

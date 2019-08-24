@@ -4,7 +4,7 @@ import { Box, Grid } from 'grommet'
 import { useQuery } from '@apollo/react-hooks'
 
 import PlayerSelectable from './PlayerSelectable'
-import { ALL_PLAYERS_QUERY } from '../../apollo/queries'
+import { SEARCH_PLAYERS_QUERY } from '../../apollo/queries'
 import Loader from '../shared/Loader'
 
 const StyledBox = styled(Box)`
@@ -13,7 +13,7 @@ const StyledBox = styled(Box)`
 `
 
 const SuggestionsGrid = ({ filter, onAddPlayer }) => {
-    const { data, loading } = useQuery(ALL_PLAYERS_QUERY, {
+    const { data, loading } = useQuery(SEARCH_PLAYERS_QUERY, {
         variables: { filter },
     })
 

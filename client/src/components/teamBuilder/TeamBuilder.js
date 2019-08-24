@@ -84,10 +84,14 @@ function TeamBuilder() {
                         handleAddPlayer={onAddPlayer}
                         handlePlayerInputChange={onPlayerInputChange}
                     />
-                    {playerInput && (
+                    {playerInput.length >= 3 && (
                         <SuggestionsGrid filter={playerInput} onAddPlayer={onAddPlayer} />
                     )}
-                    {!playerInput && <div>type some shit</div>}
+                    {!!playerInput && playerInput.length < 3 && (
+                        <h3 style={{ marginTop: '50px', textAlign: 'center' }}>
+                            Psst... Type in at least 3 characters
+                        </h3>
+                    )}
                 </Box>
                 <Box gridArea="team">
                     <Header>Your Team</Header>

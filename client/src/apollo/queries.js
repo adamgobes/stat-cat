@@ -33,7 +33,7 @@ export const DASHBOARD_QUERY = gql`
     }
 `
 
-export const ALL_PLAYERS_QUERY = gql`
+export const PLAYERS_SEARCH_QUERY = gql`
     ${BasicPlayerInfoFragment}
     query allPlayersQuery($filter: String) {
         allPlayers(filter: $filter) {

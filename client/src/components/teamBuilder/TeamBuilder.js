@@ -8,6 +8,7 @@ import TeamTable from './TeamTable'
 import SuggestionsGrid from './SuggestionsGrid'
 import Logo from '../general/Logo'
 import Nav from '../general/Nav'
+import Loader from '../shared/Loader'
 import { SAVE_TEAM_MUTATION } from '../../apollo/mutations'
 import { DASHBOARD_QUERY, MY_TEAM_QUERY } from '../../apollo/queries'
 
@@ -23,14 +24,13 @@ const SaveButton = styled(Button)`
     border-radius: 0;
 `
 
-function TeamBuilder({ history }) {
+function TeamBuilder() {
     const [playerInput, setPlayerInput] = useState('')
     const [team, setTeam] = useState([])
 
-    const { data, loading } = useQuery(MY_TEAM_QUERY)
+    const { data, loading: initLoading } = useQuery(MY_TEAM_QUERY)
 
-    const [mutateTeam] = useMutation(SAVE_TEAM_MUTATION, {
-        onCompleted: () => history.push('/auth'),
+    const [mutateTeam, { loading: saveTeamLoading }] = useMutation(SAVE_TEAM_MUTATION, {
         refetchQueries: () => [{ query: DASHBOARD_QUERY }],
     })
 
@@ -62,7 +62,7 @@ function TeamBuilder({ history }) {
         return playersArr.map(p => p.id)
     }
 
-    if (loading) return <div>loading</div>
+    if (initLoading) return <div>loading</div>
 
     return (
         <Box>
@@ -104,13 +104,10 @@ function TeamBuilder({ history }) {
             </Grid>
             <Box direction="row" justify="center">
                 <SaveButton
-                    label="Save and proceed"
+                    label={saveTeamLoading ? <Loader /> : 'Save Team'}
                     onClick={() => {
                         mutateTeam({
                             variables: { playerIds: extractIds(team) },
-                            update: (cache, { data: { saveTeam } }) => {
-                                cache.writeQuery({ query: MY_TEAM_QUERY, data: saveTeam.players })
-                            },
                         })
                     }}
                 />

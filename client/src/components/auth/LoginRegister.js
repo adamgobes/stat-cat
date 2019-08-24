@@ -1,9 +1,10 @@
-import React, { useReducer, useCallback } from 'react'
+import React, { useReducer, useCallback, useMemo } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { Box, TextInput, Button } from 'grommet'
 import styled from 'styled-components'
 import cookie from 'react-cookies'
 
+import Loader from '../shared/Loader'
 import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../apollo/mutations'
 import loginRegisterReducer, {
     changeInput,
@@ -29,7 +30,7 @@ function LoginRegister({ history }) {
         initialState
     )
 
-    const [loginUser] = useMutation(LOGIN_MUTATION, {
+    const [loginUser, { loading: loginLoading }] = useMutation(LOGIN_MUTATION, {
         variables: { email, password },
         onCompleted: data => {
             const { token } = data.login
@@ -41,7 +42,7 @@ function LoginRegister({ history }) {
         },
     })
 
-    const [registerUser] = useMutation(REGISTER_MUTATION, {
+    const [registerUser, { loading: registerLoading }] = useMutation(REGISTER_MUTATION, {
         variables: {
             name,
             email,
@@ -71,6 +72,8 @@ function LoginRegister({ history }) {
     }
 
     const submitForm = useCallback(() => (isLogin ? loginUser() : registerUser()), [isLogin])
+
+    const submitButtonString = useMemo(() => (isLogin ? 'Login' : 'Register'), [isLogin])
 
     function handleEnterClicked(event) {
         switch (event.keyCode) {
@@ -126,7 +129,9 @@ function LoginRegister({ history }) {
                     />
                 )}
                 <StyledButton
-                    label={isLogin ? 'Login' : 'Register'}
+                    label={
+                        loginLoading || registerLoading ? <Loader size={20} /> : submitButtonString
+                    }
                     onClick={submitForm}
                     style={{ opacity: formValid() ? 1 : 0.5 }}
                     disabled={!formValid()}

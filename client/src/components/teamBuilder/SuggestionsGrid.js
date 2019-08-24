@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks'
 
 import PlayerSelectable from './PlayerSelectable'
 import { ALL_PLAYERS_QUERY } from '../../apollo/queries'
+import Loader from '../shared/Loader'
 
 const StyledBox = styled(Box)`
     margin-top: 40px;
@@ -16,7 +17,7 @@ const SuggestionsGrid = ({ filter, onAddPlayer }) => {
         variables: { filter },
     })
 
-    if (loading) return <div>loading</div>
+    if (loading) return <Loader size={50} />
 
     return (
         <StyledBox width="large">

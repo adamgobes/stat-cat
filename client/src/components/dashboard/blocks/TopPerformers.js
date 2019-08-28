@@ -2,7 +2,7 @@ import React from 'react'
 import { Box } from 'grommet'
 import { Bar } from 'react-chartjs-2'
 
-import { allStats, computeBestAndAverage } from '../../utils/computeHelpers'
+import { allStats, computeBestAndAverage } from '../../../utils/computeHelpers'
 
 const TopPerformers = ({ topPerformersData }) => {
     const { players } = topPerformersData

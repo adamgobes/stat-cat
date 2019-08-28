@@ -4,6 +4,7 @@
     "private": true,
     "dependencies": {
         "@apollo/react-hooks": "^3.0.1",
+        "@storybook/storybook-deployer": "^2.8.1",
         "apollo-boost": "^0.4.4",
         "apollo-cache-inmemory": "^1.4.2",
         "apollo-link-context": "^1.0.14",
@@ -28,7 +29,10 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "storybook": "start-storybook -p 9009 -s public",
+        "build-storybook": "build-storybook -s public",
+        "deploy-storybook": "storybook-to-ghpages"
     },
     "eslintConfig": {
         "extends": "react-app"
@@ -40,6 +44,10 @@
         "not op_mini all"
     ],
     "devDependencies": {
+        "@storybook/addon-actions": "^5.1.11",
+        "@storybook/addon-links": "^5.1.11",
+        "@storybook/addons": "^5.1.11",
+        "@storybook/react": "^5.1.11",
         "eslint-config-airbnb": "^17.1.0",
         "eslint-plugin-import": "^2.14.0",
         "eslint-plugin-jsx-a11y": "^6.1.2",

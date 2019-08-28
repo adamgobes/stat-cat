@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, DataTable, Text } from 'grommet'
 
-import { computeProjections } from '../../utils/computeHelpers'
+import { computeProjections } from '../../../utils/computeHelpers'
 
 const ProjectionTable = ({ projectionsData }) => {
     const { players } = projectionsData

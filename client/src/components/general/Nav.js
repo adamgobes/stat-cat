@@ -27,8 +27,6 @@ function mapUrlToPage(url) {
             return 'Team Builder'
         case 'dashboard':
             return 'Dashboard'
-        case 'logout':
-            return 'Logout'
         default:
             return ''
     }

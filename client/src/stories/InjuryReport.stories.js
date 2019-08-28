@@ -6,4 +6,4 @@ import { linkTo } from '@storybook/addon-links'
 
 import InjuryReport from '../components/dashboard/blocks/InjuryReport'
 
-storiesOf('Injury Report', module).add('default', () => <InjuryReport />)
+storiesOf('Dashboard/Injury Report', module).add('default', () => <InjuryReport />)

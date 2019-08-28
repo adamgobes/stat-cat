@@ -66,7 +66,7 @@ function TeamBuilder() {
 
     return (
         <Box>
-            <Nav showMenu showSignUp={false} />
+            <Nav />
             <Grid
                 fill
                 areas={[

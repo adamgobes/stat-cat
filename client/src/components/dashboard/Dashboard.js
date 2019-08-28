@@ -24,6 +24,7 @@ const TopPerformersWrapper = styled(Box)`
 
 const Dashboard = () => (
     <Box>
+        <Nav />
         {/* <Nav showMenu showSignUp={false} />
             <Grid
                 rows={['1/2', '1/2']}

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import { Box, Button, Menu } from 'grommet'
+import cookie from 'react-cookies'
 
 import StyledLink from '../shared/StyledLink'
 import StatLogo from '../../assets/images/stat-logo.png'
@@ -18,6 +19,7 @@ const HomeHeader = styled.h2`
 
 const DASHBOARD = 'Dashboard'
 const TEAM_BUILDER = 'Team Builder'
+const LOGOUT = 'Logout'
 
 function mapUrlToPage(url) {
     switch (url) {
@@ -25,6 +27,8 @@ function mapUrlToPage(url) {
             return 'Team Builder'
         case 'dashboard':
             return 'Dashboard'
+        case 'logout':
+            return 'Logout'
         default:
             return ''
     }
@@ -48,6 +52,13 @@ function Nav({ showMenu = true, showSignUp = false, history }) {
             onClick: () => {
                 setCurrentPage(TEAM_BUILDER)
                 history.push('teambuilder')
+            },
+        },
+        {
+            label: LOGOUT,
+            onClick: () => {
+                cookie.remove('authToken')
+                history.push('/')
             },
         },
     ]

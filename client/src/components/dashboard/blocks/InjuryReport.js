@@ -40,7 +40,13 @@ const InjuryReportWrapper = styled(Box)`
 function InjuryReport({ injuriesData }) {
     return (
         <InjuryReportWrapper>
-            <Box />
+            {injuriesData.map(injury => (
+                <Box>
+                    <p>{injury.imageSrc}</p>
+                    <p>{injury.description}</p>
+                    <p>{injury.playingProbability}</p>
+                </Box>
+            ))}
         </InjuryReportWrapper>
     )
 }

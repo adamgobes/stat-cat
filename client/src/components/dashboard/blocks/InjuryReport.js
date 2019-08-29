@@ -42,6 +42,7 @@ function InjuryReport({ injuriesData }) {
         <InjuryReportWrapper>
             {injuriesData.map(injury => (
                 <Box>
+                    <p>{injury.fullName}</p>
                     <p>{injury.imageSrc}</p>
                     <p>{injury.description}</p>
                     <p>{injury.playingProbability}</p>

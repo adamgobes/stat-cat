@@ -27,6 +27,7 @@ const SaveButton = styled(Button)`
 function TeamBuilder() {
     const [playerInput, setPlayerInput] = useState('')
     const [team, setTeam] = useState([])
+    const [warningMessage, setWarningMessage] = useState('')
 
     const { data, loading: initLoading } = useQuery(MY_TEAM_QUERY)
 
@@ -44,7 +45,12 @@ function TeamBuilder() {
     )
 
     function onAddPlayer(player) {
-        setTeam([...team, player])
+        if (team.map(p => p.id).includes(player.id)) {
+            setWarningMessage('Oops, looks like you already have that player!')
+        } else {
+            setTeam([...team, player])
+            setWarningMessage('')
+        }
     }
 
     function onRemovePlayer(player) {
@@ -53,6 +59,12 @@ function TeamBuilder() {
 
     function onPlayerInputChange(e) {
         const val = e.target.value
+
+        if (!!val && val.length < 3) {
+            setWarningMessage('Psst... Type in at least 3 characters')
+        } else {
+            setWarningMessage('')
+        }
 
         setPlayerInput(val)
     }
@@ -84,13 +96,11 @@ function TeamBuilder() {
                         handleAddPlayer={onAddPlayer}
                         handlePlayerInputChange={onPlayerInputChange}
                     />
+                    {!!warningMessage && (
+                        <h3 style={{ marginTop: '50px', textAlign: 'center' }}>{warningMessage}</h3>
+                    )}
                     {playerInput.length >= 3 && (
                         <SuggestionsGrid filter={playerInput} onAddPlayer={onAddPlayer} />
-                    )}
-                    {!!playerInput && playerInput.length < 3 && (
-                        <h3 style={{ marginTop: '50px', textAlign: 'center' }}>
-                            Psst... Type in at least 3 characters
-                        </h3>
                     )}
                 </Box>
                 <Box gridArea="team">

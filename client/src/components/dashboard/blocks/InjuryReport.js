@@ -4,50 +4,48 @@ import { Box } from 'grommet'
 
 import PlayerImage from '../../shared/PlayerImage'
 
-const ImageWrapper = styled(Box)`
-    width: 80px;
-    height: 60px;
-`
-
-const WeekHeader = styled.h1`
-    color: white;
-    opacity: 0.6;
-    margin-top: 60px;
-`
-
-const DateHeader = styled.h1`
-    color: white;
-    margin-top: 0px;
-`
-
-const PlayerContainer = styled(Box)`
-    padding: 12px;
-    margin: 10px 0;
-    width: 80%;
-    background-color: white;
-`
-
 const PlayerElement = styled(Box)`
     margin: 0 10px;
 `
 
+const ImageWrapper = styled.div`
+    width: 100px;
+    height: 100px;
+    border: 1px solid;
+    border-radius: 100%;
+    border: 1px solid ${props => props.theme.global.colors.brand};
+    overflow: hidden;
+`
+
 const InjuryReportWrapper = styled(Box)`
-    width: 300px;
-    height: 450px;
+    width: 400px;
+    height: 550px;
     box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
 `
 
 function InjuryReport({ injuriesData }) {
     return (
         <InjuryReportWrapper>
-            {injuriesData.map(injury => (
-                <Box>
-                    <p>{injury.fullName}</p>
-                    <p>{injury.imageSrc}</p>
-                    <p>{injury.description}</p>
-                    <p>{injury.playingProbability}</p>
-                </Box>
-            ))}
+            <h1>Current Injuries</h1>
+            <Box style={{ display: 'flex', flexDirection: 'column' }}>
+                {injuriesData.map(injury => (
+                    <Box style={{ display: 'flex', flexDirection: 'row' }}>
+                        <ImageWrapper align="center" justify="center" className="container">
+                            <PlayerImage
+                                src={injury.imageSrc}
+                                name={injury.fullName}
+                                imageHeight="80%"
+                                imageWidth="100%"
+                                noImageHeight="100%"
+                                noImageWidth="85%"
+                            />
+                        </ImageWrapper>
+                        <PlayerElement>
+                            <p>{injury.fullName}</p>
+                        </PlayerElement>
+                    </Box>
+                ))}
+            </Box>
         </InjuryReportWrapper>
     )
 }

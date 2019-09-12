@@ -8,15 +8,6 @@ const PlayerElement = styled(Box)`
     margin: 0 10px;
 `
 
-const ImageWrapper = styled.div`
-    width: 100px;
-    height: 100px;
-    border: 1px solid;
-    border-radius: 100%;
-    border: 1px solid ${props => props.theme.global.colors.brand};
-    overflow: hidden;
-`
-
 const InjuryReportWrapper = styled(Box)`
     width: 400px;
     height: 550px;
@@ -29,17 +20,8 @@ function InjuryReport({ injuriesData }) {
             <h1>Current Injuries</h1>
             <Box style={{ display: 'flex', flexDirection: 'column' }}>
                 {injuriesData.map(injury => (
-                    <Box style={{ display: 'flex', flexDirection: 'row' }}>
-                        <ImageWrapper align="center" justify="center" className="container">
-                            <PlayerImage
-                                src={injury.imageSrc}
-                                name={injury.fullName}
-                                imageHeight="80%"
-                                imageWidth="100%"
-                                noImageHeight="100%"
-                                noImageWidth="85%"
-                            />
-                        </ImageWrapper>
+                    <Box direction="row" align="center">
+                        <PlayerImage src={injury.imageSrc} name={injury.fullName} size="S" />
                         <PlayerElement>
                             <p>{injury.fullName}</p>
                         </PlayerElement>

@@ -17,7 +17,7 @@ const SuggestionsGrid = ({ filter, onAddPlayer }) => {
         variables: { filter },
     })
 
-    if (loading) return <Loader />
+    if (loading) return <Loader size={50} />
 
     return (
         <StyledBox width="large">

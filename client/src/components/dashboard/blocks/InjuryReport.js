@@ -4,13 +4,26 @@ import { Box } from 'grommet'
 
 import PlayerImage from '../../shared/PlayerImage'
 
-const PlayerElement = styled(Box)`
-    margin: 0 10px;
+const InjuryText = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 70px;
+    margin: 0 14px;
+    width: 90px;
+`
+
+const Truncated = styled.span`
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `
 
 const InjuryReportWrapper = styled(Box)`
-    width: 400px;
-    height: 550px;
+    width: 620px;
+    height: 400px;
+    overflow: scroll;
+    padding: 0px 20px;
     box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
 `
 
@@ -18,52 +31,26 @@ function InjuryReport({ injuriesData }) {
     return (
         <InjuryReportWrapper>
             <h1>Current Injuries</h1>
-            <Box style={{ display: 'flex', flexDirection: 'column' }}>
+            <Box>
                 {injuriesData.map(injury => (
-                    <Box direction="row" align="center">
-                        <PlayerImage src={injury.imageSrc} name={injury.fullName} size="S" />
-                        <PlayerElement>
-                            <p>{injury.fullName}</p>
-                        </PlayerElement>
+                    <Box direction="row" justify="between" style={{ margin: '10px 0' }}>
+                        <Box direction="row" justify="start">
+                            <PlayerImage src={injury.imageSrc} name={injury.fullName} size="S" />
+                            <InjuryText>
+                                <Truncated>{injury.fullName}</Truncated>
+                            </InjuryText>
+                        </Box>
+                        <InjuryText>
+                            <Truncated>{injury.description}</Truncated>
+                        </InjuryText>
+                        <InjuryText>
+                            <Truncated>{injury.playingProbability}</Truncated>
+                        </InjuryText>
                     </Box>
                 ))}
             </Box>
         </InjuryReportWrapper>
     )
 }
-
-// const InjuryReport = ({ injuriesData }) => {
-//     const { players } = injuriesData
-//     return (
-//         <Box>
-//             <Box justify="center" align="center">
-//                 <WeekHeader>Week Of</WeekHeader>
-//                 <DateHeader>Feb 26</DateHeader>
-//             </Box>
-//             <Box wrap gap="small">
-//                 {players.map(player => (
-//                     <PlayerContainer direction="row" align="center" key={player.id}>
-//                         <ImageWrapper align="center" justify="center" className="container">
-//                             <PlayerImage
-//                                 src={player.imageSrc}
-//                                 name={player.fullName}
-//                                 imageHeight="100%"
-//                                 imageWidth="100%"
-//                                 noImageHeight="100%"
-//                                 noImageWidth="85%"
-//                             />
-//                         </ImageWrapper>
-//                         <PlayerElement>
-//                             <p>{player.fullName}</p>
-//                         </PlayerElement>
-//                         <PlayerElement>
-//                             <h2>{player.gameCountThisWeek}</h2>
-//                         </PlayerElement>
-//                     </PlayerContainer>
-//                 ))}
-//             </Box>
-//         </Box>
-//     )
-// }
 
 export default InjuryReport

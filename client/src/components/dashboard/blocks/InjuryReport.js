@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
+import ReactTooltip from 'react-tooltip'
 
 import PlayerImage from '../../shared/PlayerImage'
 
@@ -30,6 +31,7 @@ const InjuryReportWrapper = styled(Box)`
 function InjuryReport({ injuriesData }) {
     return (
         <InjuryReportWrapper>
+            <ReactTooltip />
             <h1>Current Injuries</h1>
             <Box>
                 {injuriesData.map(injury => (
@@ -41,7 +43,9 @@ function InjuryReport({ injuriesData }) {
                             </InjuryText>
                         </Box>
                         <InjuryText>
-                            <Truncated>{injury.description}</Truncated>
+                            <Truncated data-tip={injury.description}>
+                                {injury.description}
+                            </Truncated>
                         </InjuryText>
                         <InjuryText>
                             <Truncated>{injury.playingProbability}</Truncated>

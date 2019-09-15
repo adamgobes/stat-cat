@@ -9,7 +9,7 @@ import LoginRegister from './components/auth/LoginRegister'
 import ApolloWrapper from './apollo/ApolloWrapper'
 import Dashboard from './components/dashboard/Dashboard'
 
-const theme = {
+export const theme = {
     global: {
         font: {
             family: 'Thasadith',

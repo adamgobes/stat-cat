@@ -12,11 +12,6 @@ const PlayerContainer = styled(Box)`
     min-width: 300px;
 `
 
-const ImageWrapper = styled(Box)`
-    width: 80px;
-    height: 60px;
-`
-
 const PlayerElement = styled(Box)`
     margin: 0 10px;
 `
@@ -32,16 +27,7 @@ const TeamTable = ({ team, handleRemovePlayer }) => (
     <Box align="center" pad="large" style={{ marginTop: '-66px' }}>
         {team.map(player => (
             <PlayerContainer direction="row" align="center" key={player.id}>
-                <ImageWrapper align="center" justify="center" className="container">
-                    <PlayerImage
-                        src={player.imageSrc}
-                        name={player.fullName}
-                        imageHeight="100%"
-                        imageWidth="100%"
-                        noImageHeight="100%"
-                        noImageWidth="85%"
-                    />
-                </ImageWrapper>
+                <PlayerImage src={player.imageSrc} name={player.fullName} size="S" />
                 <PlayerElement>
                     <p>{player.fullName}</p>
                 </PlayerElement>

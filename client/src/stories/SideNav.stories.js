@@ -9,4 +9,5 @@ import SideNav from '../components/general/Nav'
 
 storiesOf('Side Navigation', module)
     .addDecorator(StoryRouter())
-    .add('default', () => <SideNav />)
+    .add('open', () => <SideNav isNavOpen />)
+    .add('closed', () => <SideNav isNavOpen={false} />)

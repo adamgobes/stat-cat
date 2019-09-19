@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-import { Box, Button, Menu } from 'grommet'
+import { Box, Button } from 'grommet'
 import cookie from 'react-cookies'
+import { Menu } from 'grommet-icons'
 
 import StyledLink from '../shared/StyledLink'
 import StatLogo from '../../assets/images/stat-logo.png'
@@ -15,6 +16,29 @@ const LogoContainer = styled(Box)`
 
 const HomeHeader = styled.h2`
     color: ${props => props.theme.global.colors.brand};
+`
+
+const NavigationContainer = styled(Box)`
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    z-index: 1;
+    padding: 60px 0 60px 60px;
+    border-right: 1px solid black;
+    overflow-x: hidden;
+    transition: 0.5s;
+`
+
+const NavButton = styled(Box)`
+    position: absolute;
+    left: 40px;
+    top: 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 1px solid black;
 `
 
 const DASHBOARD = 'Dashboard'
@@ -32,7 +56,7 @@ function mapUrlToPage(url) {
     }
 }
 
-function Nav({ showMenu = true, showSignUp = false, history }) {
+function Nav({ history, isNavOpen, setNavOpen }) {
     const [currentPage, setCurrentPage] = useState(
         mapUrlToPage(window.location.pathname.substring(1))
     )
@@ -62,29 +86,26 @@ function Nav({ showMenu = true, showSignUp = false, history }) {
     ]
 
     return (
-        <Box direction="row" justify="center" style={{ margin: '36px 0 10px 0' }}>
-            <Box direction="row" justify="between" width="xlarge">
-                <Box style={{ visibility: showMenu ? 'visible' : 'hidden' }}>
-                    <Menu
-                        label={currentPage}
-                        items={allPages.filter(p => p.label !== currentPage)}
-                    />
-                </Box>
-                <StyledLink to="/">
-                    <Box direction="row">
-                        <LogoContainer direction="row">
-                            <img src={StatLogo} alt="Stat Logo" height="100%" width="100%" />
-                        </LogoContainer>
-                        <HomeHeader>StatCat</HomeHeader>
-                    </Box>
-                </StyledLink>
-                <Box justify="center" style={{ visibility: showSignUp ? 'visible' : 'hidden' }}>
-                    <StyledLink to="/auth">
-                        <Button label="Sign Up" />
-                    </StyledLink>
-                </Box>
+        <>
+            <Box>
+                {(isNavOpen && (
+                    <NavigationContainer direction="column" justify="between">
+                        <h1>Thing 1</h1>
+                        <h1>Thing 2</h1>
+                        <h1>Thing 3</h1>
+                    </NavigationContainer>
+                )) || (
+                    <NavButton
+                        direction="column"
+                        justify="center"
+                        align="center"
+                        onClick={() => setNavOpen(!isNavOpen)}
+                    >
+                        <Menu size="medium" color="black" />
+                    </NavButton>
+                )}
             </Box>
-        </Box>
+        </>
     )
 }
 

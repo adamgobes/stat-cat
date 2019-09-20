@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { Grommet } from 'grommet'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import cookie from 'react-cookies'
@@ -9,6 +9,7 @@ import LoginRegister from './components/auth/LoginRegister'
 import ApolloWrapper from './apollo/ApolloWrapper'
 import Dashboard from './components/dashboard/Dashboard'
 import Nav from './components/general/Nav'
+import { AppContext, TOGGLE_NAV } from './components/general/AppContext'
 
 export const theme = {
     global: {
@@ -26,22 +27,26 @@ export const theme = {
 
 const isLoggedIn = () => !!cookie.load('authToken')
 
-const renderComponentOrRedirect = (history, Component, isNavOpen, handleNavOpen) =>
-    isLoggedIn() ? (
-        <>
-            {!!handleNavOpen && <Nav isNavOpen={isNavOpen} setNavOpen={handleNavOpen} />}
-            <Component history={history} />
-        </>
-    ) : (
-        <Redirect to="/auth" />
-    )
+const renderComponentOrRedirect = (history, Component) =>
+    isLoggedIn() ? <Component history={history} /> : <Redirect to="/auth" />
 
 const App = () => {
-    const [navOpen, setNavOpen] = useState(false)
+    const { appContext, dispatch } = useContext(AppContext)
+
     return (
         <ApolloWrapper>
             <Router>
-                <Grommet theme={theme}>
+                <Grommet
+                    theme={theme}
+                    style={{
+                        marginLeft: appContext.isNavOpen ? '250px' : '0',
+                        transition: 'margin-left 0.3s',
+                    }}
+                >
+                    <Nav
+                        setNavOpen={() => dispatch({ type: TOGGLE_NAV })}
+                        isNavOpen={appContext.isNavOpen}
+                    />
                     <Route
                         exact
                         path="/"
@@ -58,16 +63,12 @@ const App = () => {
                     <Route
                         exact
                         path="/dashboard"
-                        render={({ history }) =>
-                            renderComponentOrRedirect(history, Dashboard, navOpen, setNavOpen)
-                        }
+                        render={({ history }) => renderComponentOrRedirect(history, Dashboard)}
                     />
                     <Route
                         exact
                         path="/teambuilder"
-                        render={({ history }) =>
-                            renderComponentOrRedirect(history, TeamBuilder, navOpen, setNavOpen)
-                        }
+                        render={({ history }) => renderComponentOrRedirect(history, TeamBuilder)}
                     />
                 </Grommet>
             </Router>

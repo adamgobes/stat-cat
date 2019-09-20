@@ -78,7 +78,6 @@ function TeamBuilder() {
 
     return (
         <Box>
-            <Nav />
             <Grid
                 fill
                 areas={[

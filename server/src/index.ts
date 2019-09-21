@@ -1,13 +1,11 @@
 import { GraphQLServer } from 'graphql-yoga'
 import { prisma } from './generated/prisma-client'
 
-import Mutation from './resolvers/Mutation'
-import Player from './resolvers/Player'
-import Query from './resolvers/Query'
-import Team from './resolvers/Team'
-import User from './resolvers/User'
-
-const typeDefs = './src/schema.graphql'
+import * as Mutation from './resolvers/Mutation'
+import * as Player from './resolvers/Player'
+import * as Query from './resolvers/Query'
+import * as Team from './resolvers/Team'
+import * as User from './resolvers/User'
 
 const resolvers = {
     Mutation,
@@ -16,6 +14,8 @@ const resolvers = {
     Team,
     User,
 }
+
+const typeDefs = './src/schema.graphql'
 
 const server = new GraphQLServer({
     context: request => ({ ...request, prisma }), // attach request object (for Authorization) and prisma client to context

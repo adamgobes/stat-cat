@@ -2,7 +2,7 @@ endpoint: https://stat-cat-97aa6cabbe.herokuapp.com/stat-cat-server/dev
 datamodel: datamodel.prisma
 
 generate:
-    - generator: javascript-client
+    - generator: typescript-client
       output: ../src/generated/prisma-client
 
 hooks:

@@ -21,7 +21,7 @@ const statToIcon = {
 }
 
 const ProjectionsContainer = styled(Box)`
-    height: 200px;
+    height: 500px;
 `
 
 const ProjectionsHeader = styled.h1`
@@ -81,7 +81,7 @@ function ProjectionsRow({ data }) {
 function WeeklyProjections({ showOpponent, myProjections, opponentsProjection }) {
     const [timeFrame, setTimeFrame] = useState(timeFrames[0])
     return (
-        <ProjectionsContainer direction="column" justify="center">
+        <ProjectionsContainer direction="column" justify={showOpponent ? 'evenly' : ''}>
             <Box direction="row" align="center">
                 <ProjectionsHeader>Team Averages Per Stat</ProjectionsHeader>
                 <DropdownContainer>
@@ -99,7 +99,7 @@ function WeeklyProjections({ showOpponent, myProjections, opponentsProjection })
             </Box>
             {showOpponent && (
                 <>
-                    <Box>
+                    <Box direction="row" justify="center">
                         <h1>Vs.</h1>
                     </Box>
                     <Box gridArea="opponent" direction="row">

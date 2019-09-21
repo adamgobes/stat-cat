@@ -7,7 +7,7 @@ import { linkTo } from '@storybook/addon-links'
 
 import SideNav from '../components/general/Nav'
 
-storiesOf('Side Navigation', module)
+storiesOf('Shared/Side Navigation', module)
     .addDecorator(StoryRouter())
     .add('open', () => <SideNav isNavOpen />)
     .add('closed', () => <SideNav isNavOpen={false} />)

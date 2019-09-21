@@ -38,7 +38,7 @@ const NavigationContainer = styled(Box)`
     width: ${({ isNavOpen }) => (isNavOpen ? '250px' : '0')};
     z-index: 1;
     padding: ${({ isNavOpen }) => (isNavOpen ? '60px 0 60px 10px' : '0')};
-    border-right: 1px solid black;
+    border-right: ${({ isNavOpen }) => (isNavOpen ? '1px solid black' : 'none')};
     overflow-x: hidden;
     transition: 0.3s;
 `

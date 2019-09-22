@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken'
 
-import { APP_SECRET } from './config.js'
+import { APP_SECRET } from './config'
 
 export function getUserId(context): string {
     const Authorization = context.request.get('Authorization')

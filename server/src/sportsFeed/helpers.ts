@@ -18,9 +18,6 @@ export function extractBasicInfo(sportsFeedPlayerObj) {
 }
 
 export function extractInjuryInfo(sportsFeedPlayerObj): GQLInjury {
-    if (!sportsFeedPlayerObj.currentInjury) {
-        return null
-    }
     const { playingProbability, description } = sportsFeedPlayerObj.currentInjury
     return {
         description,

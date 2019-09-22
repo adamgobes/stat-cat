@@ -20,9 +20,11 @@ export function players(parent): Array<Promise<GQLPlayer>> {
 
                 return {
                     ...extractBasicInfo(player),
-                    injury: {
-                        ...extractInjuryInfo(player),
-                    },
+                    injury: player.currentInjury
+                        ? {
+                              ...extractInjuryInfo(player),
+                          }
+                        : null,
                 }
             })
     )

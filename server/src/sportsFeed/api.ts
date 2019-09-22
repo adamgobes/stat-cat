@@ -1,4 +1,4 @@
-import base64 from 'base-64'
+import * as base64 from 'base-64'
 
 import { sportsFeedPassword, sportsFeedUrl, sportsFeedUsername } from '../config'
 

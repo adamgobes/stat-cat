@@ -1,4 +1,6 @@
-function extractBasicInfo(sportsFeedPlayerObj) {
+import { GQLInjury } from '../generated/gqlTypes'
+
+export function extractBasicInfo(sportsFeedPlayerObj) {
     return {
         id: sportsFeedPlayerObj.id,
         firstName: sportsFeedPlayerObj.firstName,
@@ -15,18 +17,18 @@ function extractBasicInfo(sportsFeedPlayerObj) {
     }
 }
 
-function extractInjuryInfo(sportsFeedPlayerObj) {
-    if (!sportsFeedPlayerObj.currentInjury) return null
+export function extractInjuryInfo(sportsFeedPlayerObj): GQLInjury {
+    if (!sportsFeedPlayerObj.currentInjury) {
+        return null
+    }
     const { playingProbability, description } = sportsFeedPlayerObj.currentInjury
     return {
-        injury: {
-            playingProbability,
-            description,
-        },
+        description,
+        playingProbability,
     }
 }
 
-function parseDate(date) {
+export function parseDate(date: Date): string {
     const year = date.getFullYear()
     const month = date.getMonth() > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`
     const day = date.getDate() > 9 ? date.getDate() + 1 : `0${date.getDate() + 1}`
@@ -34,7 +36,7 @@ function parseDate(date) {
     return `${year}${month}${day}`
 }
 
-function getStartDate() {
+export function getStartDate(): Date {
     const date = new Date()
     const day = date.getDay()
     let prevMonday
@@ -47,15 +49,7 @@ function getStartDate() {
     return new Date(prevMonday)
 }
 
-function getEndDate(startDate) {
+export function getEndDate(startDate: Date): Date {
     const endDate = new Date().setDate(startDate.getDate() + 7)
     return new Date(endDate)
-}
-
-module.exports = {
-    extractBasicInfo,
-    extractInjuryInfo,
-    parseDate,
-    getStartDate,
-    getEndDate,
 }

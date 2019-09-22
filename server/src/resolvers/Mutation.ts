@@ -1,11 +1,11 @@
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+import * as bcrypt from 'bcryptjs'
+import * as jwt from 'jsonwebtoken'
 
-import { APP_SECRET } from '../utils'
+import { APP_SECRET } from '../config'
 import { getUserId } from '../utils'
-import { GQLAuthPayLoad, GQLUser } from '../generated/gqlTypes'
+import { GQLAuthPayLoad, GQLTeam } from '../generated/gqlTypes'
 
-export async function register(parents, args, context, info) {
+export async function register(parents, args, context, info): Promise<GQLAuthPayLoad> {
     const password = await bcrypt.hash(args.password, 10)
 
     const user = await context.prisma.createUser({ ...args, password })
@@ -26,7 +26,7 @@ export async function register(parents, args, context, info) {
     }
 }
 
-export async function login(parent, args, context, info) {
+export async function login(parent, args, context, info): Promise<GQLAuthPayLoad> {
     const user = await context.prisma.user({ email: args.email })
     if (!user) {
         throw new Error('No such user found')
@@ -45,7 +45,7 @@ export async function login(parent, args, context, info) {
     }
 }
 
-export async function saveTeam(parent, args, context) {
+export async function saveTeam(parent, args, context): Promise<GQLTeam> {
     const userId: string = getUserId(context)
     const teamId: string = await context.prisma // get user's team based on their id
         .user({ id: userId })

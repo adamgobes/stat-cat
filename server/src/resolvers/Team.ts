@@ -1,18 +1,17 @@
-const { getUserId } = require('../utils')
+import { getUserId } from '../utils'
 
-const { sportsFeedRequest } = require('../sportsFeed/api')
+import { sportsFeedRequest } from '../sportsFeed/api'
 
-const { extractBasicInfo, extractInjuryInfo } = require('../sportsFeed/helpers')
+import { extractBasicInfo, extractInjuryInfo } from '../sportsFeed/helpers'
+import { GQLTeam, GQLUser, GQLPlayer } from '../generated/gqlTypes'
 
-function owner(parent, args, context) {
-    const id = getUserId(context)
-
+export function owner(parent, args, context): GQLUser {
     return context.prisma.team({ id: parent.id }).owner()
 }
 
 // in DB players are stored as IDs, this resolver turns those IDs into actual player objects
 // resolves User.team.players
-function players(parent, args) {
+export function players(parent): Array<Promise<GQLPlayer>> {
     return parent.players.map(playerId =>
         sportsFeedRequest(`players.json?player=${playerId}`)
             .then(res => res.json())
@@ -21,13 +20,10 @@ function players(parent, args) {
 
                 return {
                     ...extractBasicInfo(player),
-                    ...extractInjuryInfo(player),
+                    injury: {
+                        ...extractInjuryInfo(player),
+                    },
                 }
             })
     )
-}
-
-module.exports = {
-    owner,
-    players,
 }

@@ -1,5 +1,4 @@
-import { GQLPlayer } from '../generated/gqlTypes'
-import { User, Team, ID_Input } from '../generated/prisma-client'
+import { GQLPlayer, GQLUser, GQLTeam } from '../generated/gqlTypes'
 import { sportsFeedRequest } from '../sportsFeed/api'
 import { extractBasicInfo } from '../sportsFeed/helpers'
 import { getUserId } from '../utils'
@@ -12,8 +11,8 @@ function containsFilter(playerObj, filter): boolean {
     )
 }
 
-export function me(parent, args, context): User {
-    const id: ID_Input = getUserId(context)
+export function me(parent, args, context): GQLUser {
+    const id: string = getUserId(context)
 
     return context.prisma.user({ id })
 }
@@ -30,8 +29,8 @@ export function allPlayers(parent, args): Promise<GQLPlayer[]> {
         )
 }
 
-export function myTeam(parent, args, context): Team {
-    const id: ID_Input = getUserId(context)
+export function myTeam(parent, args, context): GQLTeam {
+    const id: string = getUserId(context)
 
     return context.prisma.user({ id }).team()
 }

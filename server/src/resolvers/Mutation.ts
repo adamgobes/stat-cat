@@ -1,15 +1,14 @@
-import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
-import { ID_Input, User } from '../generated/prisma-client'
 import { APP_SECRET } from '../utils'
 import { getUserId } from '../utils'
-import { GQLAuthPayLoad } from '../generated/gqlTypes'
+import { GQLAuthPayLoad, GQLUser } from '../generated/gqlTypes'
 
 export async function register(parents, args, context, info) {
     const password = await bcrypt.hash(args.password, 10)
 
-    const user: User = await context.prisma.createUser({ ...args, password })
+    const user = await context.prisma.createUser({ ...args, password })
 
     // initialize user's team when they create an account
     const initialTeam = {
@@ -28,7 +27,7 @@ export async function register(parents, args, context, info) {
 }
 
 export async function login(parent, args, context, info) {
-    const user: User = await context.prisma.user({ email: args.email })
+    const user = await context.prisma.user({ email: args.email })
     if (!user) {
         throw new Error('No such user found')
     }
@@ -47,8 +46,8 @@ export async function login(parent, args, context, info) {
 }
 
 export async function saveTeam(parent, args, context) {
-    const userId: ID_Input = getUserId(context)
-    const teamId: ID_Input = await context.prisma // get user's team based on their id
+    const userId: string = getUserId(context)
+    const teamId: string = await context.prisma // get user's team based on their id
         .user({ id: userId })
         .team()
         .id()

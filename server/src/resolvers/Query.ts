@@ -3,7 +3,7 @@ import { sportsFeedRequest } from '../sportsFeed/api'
 import { extractBasicInfo } from '../sportsFeed/helpers'
 import { getUserId } from '../utils'
 
-function containsFilter(playerObj, filter): boolean {
+function containsFilter(playerObj, filter: string): boolean {
     return (
         playerObj.fullName.toLowerCase().startsWith(filter.toLowerCase()) ||
         playerObj.firstName.toLowerCase().startsWith(filter.toLowerCase()) ||

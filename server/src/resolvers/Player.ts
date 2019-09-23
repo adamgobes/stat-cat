@@ -1,7 +1,8 @@
-const { sportsFeedRequest } = require('../sportsFeed/api')
-const { getStartDate, getEndDate, parseDate } = require('../sportsFeed/helpers')
+import { GQLStat, GQLTeam } from '../generated/gqlTypes'
+import { sportsFeedRequest } from '../sportsFeed/api'
+import { getEndDate, getStartDate, parseDate } from '../sportsFeed/helpers'
 
-function fetchPlayerStats(playerId) {
+function fetchPlayerStats(playerId: string): Promise<GQLStat[]> {
     return sportsFeedRequest(`2018-2019-regular/player_stats_totals.json?player=${playerId}`)
         .then(res => res.json())
         .then(json => {
@@ -10,6 +11,7 @@ function fetchPlayerStats(playerId) {
             const reboundsObj = json.playerStatsTotals[0].stats.rebounds
             const offenseObj = json.playerStatsTotals[0].stats.offense
             const defenseObj = json.playerStatsTotals[0].stats.defense
+
             return [
                 {
                     category: 'FGA',
@@ -55,7 +57,7 @@ function fetchPlayerStats(playerId) {
         })
 }
 
-function calculateGameCount(teamId, startDate, endDate) {
+function calculateGameCount(teamId: string, startDate: string, endDate: string): Promise<number> {
     return sportsFeedRequest(
         `2018-2019-regular/team_gamelogs.json?team=${teamId}&date=from-${startDate}-to-${endDate}`
     )
@@ -64,19 +66,15 @@ function calculateGameCount(teamId, startDate, endDate) {
         .catch(err => 2)
 }
 
-function stats(parent, args) {
+export function stats(parent, args): Promise<GQLStat[]> {
     return fetchPlayerStats(parent.id)
 }
 
-function gameCountThisWeek(parent, args) {
+export function gameCountThisWeek(parent, args): Promise<number> {
+    const currentTeam: GQLTeam = parent.currentTeam
     return calculateGameCount(
-        parent.currentTeam.id,
+        currentTeam.id,
         parseDate(getStartDate()),
         parseDate(getEndDate(getStartDate()))
     )
-}
-
-module.exports = {
-    stats,
-    gameCountThisWeek,
 }

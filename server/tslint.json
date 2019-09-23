@@ -3,7 +3,9 @@
     "extends": ["tslint:recommended", "tslint-config-prettier", "tslint-plugin-prettier"],
     "jsRules": {},
     "rules": {
-        "prettier": true
+        "prettier": true,
+        "ordered-imports": false,
+        "object-literal-sort-keys": false
     },
     "rulesDirectory": []
 }

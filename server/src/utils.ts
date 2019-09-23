@@ -1,7 +1,8 @@
-const jwt = require('jsonwebtoken')
-const { APP_SECRET } = require('./config.js')
+import * as jwt from 'jsonwebtoken'
 
-function getUserId(context) {
+import { APP_SECRET } from './config'
+
+export function getUserId(context): string {
     const Authorization = context.request.get('Authorization')
     if (Authorization) {
         const token = Authorization.replace('Bearer ', '')
@@ -10,9 +11,4 @@ function getUserId(context) {
     }
 
     throw new Error('Not authenticated')
-}
-
-module.exports = {
-    APP_SECRET,
-    getUserId,
 }

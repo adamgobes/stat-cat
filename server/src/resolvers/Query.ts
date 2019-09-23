@@ -1,8 +1,9 @@
-const { getUserId } = require('../utils')
-const { sportsFeedRequest } = require('../sportsFeed/api')
-const { extractBasicInfo } = require('../sportsFeed/helpers')
+import { GQLPlayer, GQLUser, GQLTeam } from '../generated/gqlTypes'
+import { sportsFeedRequest } from '../sportsFeed/api'
+import { extractBasicInfo } from '../sportsFeed/helpers'
+import { getUserId } from '../utils'
 
-function containsFilter(playerObj, filter) {
+function containsFilter(playerObj, filter: string): boolean {
     return (
         playerObj.fullName.toLowerCase().startsWith(filter.toLowerCase()) ||
         playerObj.firstName.toLowerCase().startsWith(filter.toLowerCase()) ||
@@ -10,15 +11,15 @@ function containsFilter(playerObj, filter) {
     )
 }
 
-function me(parent, args, context) {
-    const id = getUserId(context)
+export function me(parent, args, context): GQLUser {
+    const id: string = getUserId(context)
 
     return context.prisma.user({ id })
 }
 
 // resolver to retrieve all players from third-party SportsFeed datasource
 // map through response from API, transform into object that matches schema and finally filter if there was one passed (args.filter)
-function allPlayers(parent, args) {
+export function allPlayers(parent, args): Promise<GQLPlayer[]> {
     return sportsFeedRequest('players.json')
         .then(res => res.json())
         .then(json =>
@@ -28,14 +29,8 @@ function allPlayers(parent, args) {
         )
 }
 
-function myTeam(parent, args, context) {
-    const id = getUserId(context)
+export function myTeam(parent, args, context): GQLTeam {
+    const id: string = getUserId(context)
 
     return context.prisma.user({ id }).team()
-}
-
-module.exports = {
-    me,
-    myTeam,
-    allPlayers,
 }

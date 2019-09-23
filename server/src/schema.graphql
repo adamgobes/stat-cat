@@ -38,8 +38,8 @@ type Player {
     position: String!
     currentTeam: NbaTeam
     imageSrc: String
-    stats(timeFrame: String): [Stat!]!
-    gameCountThisWeek: Int!
+    stats(timeFrame: String): [Stat!]
+    gameCountThisWeek: Int
     injury: Injury
 }
 

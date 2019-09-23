@@ -1,10 +1,22 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-import { Box, Button, Menu } from 'grommet'
+import { Box } from 'grommet'
 import cookie from 'react-cookies'
+import {
+    Menu,
+    Group,
+    Dashboard,
+    Trophy,
+    Configure,
+    Info,
+    CircleInformation,
+    Help,
+    Logout,
+    FormPreviousLink,
+} from 'grommet-icons'
+import Toggle from '../shared/Toggle'
 
-import StyledLink from '../shared/StyledLink'
 import StatLogo from '../../assets/images/stat-logo.png'
 
 const LogoContainer = styled(Box)`
@@ -13,8 +25,34 @@ const LogoContainer = styled(Box)`
     margin: 0 20px 10px 0;
 `
 
-const HomeHeader = styled.h2`
-    color: ${props => props.theme.global.colors.brand};
+const NavigationContainer = styled(Box)`
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: ${({ isNavOpen }) => (isNavOpen ? '250px' : '0')};
+    z-index: 1;
+    padding: ${({ isNavOpen }) => (isNavOpen ? '60px 0 60px 10px' : '0')};
+    border-right: ${({ isNavOpen }) => (isNavOpen ? '1px solid black' : 'none')};
+    overflow-x: hidden;
+    transition: 0.3s;
+`
+
+const ToggleNavButton = styled(Box)`
+    position: absolute;
+    left: ${({ isNavOpen }) => (isNavOpen ? '290px' : '40px')};
+    top: 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 1px solid black;
+    transition: 0.3s;
+`
+
+const NavIconWrapper = styled(Box)`
+    width: 40px;
+    height: 40px;
+    margin: 0 10px;
 `
 
 const DASHBOARD = 'Dashboard'
@@ -32,7 +70,11 @@ function mapUrlToPage(url) {
     }
 }
 
-function Nav({ showMenu = true, showSignUp = false, history }) {
+const NavListItem = styled(Box)`
+    margin: 0 10px;
+`
+
+function Nav({ history, isNavOpen, setNavOpen }) {
     const [currentPage, setCurrentPage] = useState(
         mapUrlToPage(window.location.pathname.substring(1))
     )
@@ -62,28 +104,75 @@ function Nav({ showMenu = true, showSignUp = false, history }) {
     ]
 
     return (
-        <Box direction="row" justify="center" style={{ margin: '36px 0 10px 0' }}>
-            <Box direction="row" justify="between" width="xlarge">
-                <Box style={{ visibility: showMenu ? 'visible' : 'hidden' }}>
-                    <Menu
-                        label={currentPage}
-                        items={allPages.filter(p => p.label !== currentPage)}
-                    />
-                </Box>
-                <StyledLink to="/">
-                    <Box direction="row">
-                        <LogoContainer direction="row">
-                            <img src={StatLogo} alt="Stat Logo" height="100%" width="100%" />
-                        </LogoContainer>
-                        <HomeHeader>StatCat</HomeHeader>
-                    </Box>
-                </StyledLink>
-                <Box justify="center" style={{ visibility: showSignUp ? 'visible' : 'hidden' }}>
-                    <StyledLink to="/auth">
-                        <Button label="Sign Up" />
-                    </StyledLink>
-                </Box>
-            </Box>
+        <Box>
+            <ToggleNavButton
+                direction="column"
+                justify="center"
+                align="center"
+                onClick={() => setNavOpen(!isNavOpen)}
+                isNavOpen={isNavOpen}
+            >
+                {!isNavOpen && <Menu size="medium" color="black" />}
+                {isNavOpen && <FormPreviousLink size="medium" color="black" />}
+            </ToggleNavButton>
+
+            <NavigationContainer direction="column" justify="evenly" isNavOpen={isNavOpen}>
+                <NavListItem direction="row" align="center">
+                    <NavIconWrapper direction="column" justify="center" align="center">
+                        <Group size="medium" color="black" />
+                    </NavIconWrapper>
+                    <h3>Team Builder</h3>
+                </NavListItem>
+                <NavListItem direction="row" align="center">
+                    <NavIconWrapper direction="column" justify="center" align="center">
+                        <Dashboard size="medium" color="black" />
+                    </NavIconWrapper>
+                    <h3>Dashboard</h3>
+                </NavListItem>
+                <NavListItem direction="row" align="center">
+                    <NavIconWrapper direction="column" justify="center" align="center">
+                        <Trophy size="medium" color="black" />
+                    </NavIconWrapper>
+                    <h3>My League</h3>
+                </NavListItem>
+                <NavListItem direction="row" align="center">
+                    <NavIconWrapper direction="column" justify="center" align="center">
+                        <Configure size="medium" color="black" />
+                    </NavIconWrapper>
+                    <h3>Settings</h3>
+                </NavListItem>
+                <NavListItem direction="row" align="center">
+                    <NavIconWrapper direction="column" justify="center" align="center">
+                        <Info size="medium" color="black" />
+                    </NavIconWrapper>
+                    <h3 style={{ marginRight: '10px' }}>Dark Mode</h3>
+                    <Toggle />
+                </NavListItem>
+
+                <Box style={{ height: '100px' }} />
+
+                <NavListItem direction="row" align="center">
+                    <NavIconWrapper direction="column" justify="center" align="center">
+                        <CircleInformation size="medium" color="black" />
+                    </NavIconWrapper>
+                    <h3>About StatCat</h3>
+                </NavListItem>
+                <NavListItem direction="row" align="center">
+                    <NavIconWrapper direction="column" justify="center" align="center">
+                        <Help size="medium" color="black" />
+                    </NavIconWrapper>
+                    <h3>Help</h3>
+                </NavListItem>
+
+                <Box style={{ height: '100px' }} />
+
+                <NavListItem direction="row" align="center">
+                    <NavIconWrapper direction="column" justify="center" align="center">
+                        <Logout size="medium" color="black" />
+                    </NavIconWrapper>
+                    <h3>Logout</h3>
+                </NavListItem>
+            </NavigationContainer>
         </Box>
     )
 }

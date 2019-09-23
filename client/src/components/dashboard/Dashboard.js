@@ -24,7 +24,6 @@ const SomeBox = styled(Box)`
 
 const Dashboard = () => (
     <Box>
-        <Nav />
         <Grid
             style={{ margin: '0 40px' }}
             rows={['1/2', '1/2']}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import styled, { keyframes } from 'styled-components'
-import { Box, Button } from 'grommet'
+import styled from 'styled-components'
+import { Box } from 'grommet'
 import cookie from 'react-cookies'
 import {
     Menu,
@@ -17,17 +17,12 @@ import {
 } from 'grommet-icons'
 import Toggle from '../shared/Toggle'
 
-import StyledLink from '../shared/StyledLink'
 import StatLogo from '../../assets/images/stat-logo.png'
 
 const LogoContainer = styled(Box)`
     width: 60px;
     height: 60px;
     margin: 0 20px 10px 0;
-`
-
-const HomeHeader = styled.h2`
-    color: ${props => props.theme.global.colors.brand};
 `
 
 const NavigationContainer = styled(Box)`

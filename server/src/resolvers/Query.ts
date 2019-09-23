@@ -34,9 +34,13 @@ export function myTeam(parent, args, context): GQLTeam {
 }
 
 export async function leagueLeaders(parent, args): Promise<any[]> {
-    const allPlayersReq = await sportsFeedRequest('players.json')
+    const allPlayers = await sportsFeedRequest('players.json')
 
-    console.log(allPlayersReq)
+    const allPlayersIds = allPlayers.players.map(p => {
+        return p.player.id
+    })
+
+    console.log(allPlayersIds)
 
     return [
         {

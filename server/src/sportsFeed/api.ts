@@ -3,6 +3,8 @@ import t from 'typy'
 
 import { sportsFeedPassword, sportsFeedUrl, sportsFeedUsername } from '../config'
 
+export const season: string = '2018-2019-regular'
+
 export function sportsFeedRequest(path): Promise<any> {
     const pass = base64.encode(`${sportsFeedUsername}:${sportsFeedPassword}`)
     const config = {
@@ -59,5 +61,3 @@ export const statCategories = [
         selector: json => t(json, `${defenseSelector}.tovPerGame`).safeNumber,
     },
 ]
-
-export const season: string = '2018-2019-regular'

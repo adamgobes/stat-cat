@@ -9,6 +9,9 @@ type Mutation {
     register(name: String!, email: String!, password: String!): AuthPayLoad
     login(email: String!, password: String!): AuthPayLoad
     saveTeam(playerIds: [ID!]!): Team
+    createLeague(name: String!): FantasyLeague
+    addLeagueMember(leagueId: ID!, memberId: ID!): Boolean
+    removeLeagueMember(leagueId: ID!, memberId: ID!): Boolean
 }
 
 type User {
@@ -16,6 +19,7 @@ type User {
     email: String!
     name: String!
     team: Team!
+    leaguesEnrolled: [FantasyLeague!]
 }
 
 type AuthPayLoad {
@@ -41,6 +45,13 @@ type Player {
     stats(timeFrame: String): [Stat!]
     gameCountThisWeek: Int
     injury: Injury
+}
+
+type FantasyLeague {
+    id: ID!
+    name: String!
+    admin: User!
+    members: [User!]!
 }
 
 type Injury {

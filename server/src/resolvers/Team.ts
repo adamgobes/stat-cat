@@ -13,19 +13,17 @@ export function owner(parent, args, context): GQLUser {
 // resolves User.team.players
 export function players(parent): Array<Promise<GQLPlayer>> {
     return parent.players.map(playerId =>
-        sportsFeedRequest(`players.json?player=${playerId}`)
-            .then(res => res.json())
-            .then(json => {
-                const { player } = json.players[0]
+        sportsFeedRequest(`players.json?player=${playerId}`).then(json => {
+            const { player } = json.players[0]
 
-                return {
-                    ...extractBasicInfo(player),
-                    injury: player.currentInjury
-                        ? {
-                              ...extractInjuryInfo(player),
-                          }
-                        : null,
-                }
-            })
+            return {
+                ...extractBasicInfo(player),
+                injury: player.currentInjury
+                    ? {
+                          ...extractInjuryInfo(player),
+                      }
+                    : null,
+            }
+        })
     )
 }

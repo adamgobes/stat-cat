@@ -1,4 +1,5 @@
-import { GQLInjury } from '../generated/gqlTypes'
+import { GQLInjury, GQLStat } from '../generated/gqlTypes'
+import { sportsFeedRequest, season, statCategories } from './api'
 
 export function extractBasicInfo(sportsFeedPlayerObj) {
     return {
@@ -23,6 +24,15 @@ export function extractInjuryInfo(sportsFeedPlayerObj): GQLInjury {
         description,
         playingProbability,
     }
+}
+
+export function fetchPlayerStats(playerId: string): Promise<GQLStat[]> {
+    return sportsFeedRequest(`${season}/player_stats_totals.json?player=${playerId}`).then(json => {
+        return statCategories.map(c => ({
+            category: c.categoryName,
+            value: c.selector(json),
+        }))
+    })
 }
 
 export function parseDate(date: Date): string {

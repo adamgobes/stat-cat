@@ -1,58 +1,64 @@
 type Query {
-	me: User!
-	myTeam: Team!
-	allPlayers(filter: String): [Player!]!
+    me: User!
+    myTeam: Team!
+    allPlayers(filter: String): [Player!]!
+    leagueLeaders(timeFrame: String): [LeagueLeader!]!
 }
 
 type Mutation {
-	register(name: String!, email: String!, password: String!): AuthPayLoad
-	login(email: String!, password: String!): AuthPayLoad
-	saveTeam(playerIds: [ID!]!): Team
+    register(name: String!, email: String!, password: String!): AuthPayLoad
+    login(email: String!, password: String!): AuthPayLoad
+    saveTeam(playerIds: [ID!]!): Team
 }
 
 type User {
-	id: ID!,
-	email: String!,
-	name: String!,
-	team: Team!
+    id: ID!
+    email: String!
+    name: String!
+    team: Team!
 }
 
 type AuthPayLoad {
-	token: String,
-	user: User
+    token: String
+    user: User
 }
 
 type Team {
-	id: ID!,
-	name: String!,
-	owner: User!,
-	players: [Player!]!
+    id: ID!
+    name: String!
+    owner: User!
+    players: [Player!]!
 }
 
 type Player {
-	id: ID!,
-	firstName: String!,
-	lastName: String!,
-	fullName: String!,
-	position: String!,
-	currentTeam: NbaTeam,
-	imageSrc: String
-	stats(timeFrame: String): [Stat!]!
-	gameCountThisWeek: Int!
-	injury: Injury
+    id: ID!
+    firstName: String!
+    lastName: String!
+    fullName: String!
+    position: String!
+    currentTeam: NbaTeam
+    imageSrc: String
+    stats(timeFrame: String): [Stat!]
+    gameCountThisWeek: Int
+    injury: Injury
 }
 
 type Injury {
-	playingProbability: String!,
-	description: String!
+    playingProbability: String!
+    description: String!
 }
 
 type Stat {
-	category: String!,
-	value: Float!
+    category: String!
+    value: Float!
 }
 
 type NbaTeam {
-	id: ID!,
-	abbreviation: String!
+    id: ID!
+    abbreviation: String!
+}
+
+type LeagueLeader {
+    stat: String!
+    leaders: [Player!]!
 }

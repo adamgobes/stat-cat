@@ -59,6 +59,6 @@ type NbaTeam {
 }
 
 type LeagueLeader {
-    stat: Stat!
-    leader: Player!
+    stat: String!
+    leaders: [Player!]!
 }

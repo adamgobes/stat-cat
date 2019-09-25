@@ -5,7 +5,7 @@ import { sportsFeedPassword, sportsFeedUrl, sportsFeedUsername } from '../config
 
 export const season: string = '2018-2019-regular'
 
-export function sportsFeedRequest(path): Promise<any> {
+export function sportsFeedRequest(path: string): Promise<any> {
     const pass = base64.encode(`${sportsFeedUsername}:${sportsFeedPassword}`)
     const config = {
         headers: { Authorization: `Basic ${pass}` },

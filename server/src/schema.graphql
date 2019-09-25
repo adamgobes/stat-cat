@@ -51,7 +51,7 @@ type FantasyLeague {
     id: ID!
     name: String!
     admin: User!
-    members: [User!]!
+    members: [Team!]!
 }
 
 type Injury {

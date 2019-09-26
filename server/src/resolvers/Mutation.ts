@@ -63,16 +63,39 @@ export async function saveTeam(parent, args, context): Promise<GQLTeam> {
     })
 }
 
-export async function createLeague(parent, args, context): Promise<GQLFantasyLeague> {
+export async function createLeague(parent, args, context): Promise<boolean> {
     const userId: string = getUserId(context)
     const teamId: string = await context.prisma // get user's team based on their id
         .user({ id: userId })
         .team()
         .id()
 
-    return context.prisma.createFantasyLeague({
+    const createdLeague = await context.prisma.createFantasyLeague({
         name: args.name,
         admin: { connect: { id: userId } },
         members: { connect: [{ id: teamId }] },
     })
+
+    return true
+}
+
+export async function addLeagueMember(parent, args, context): Promise<boolean> {
+    const userId: string = getUserId(context)
+    const leagueMembers = await context.prisma.fantasyLeague({ id: args.leagueId }).members()
+
+    await context.prisma.updateFantasyLeague({
+        data: {
+            members: {
+                connect: [
+                    ...leagueMembers.map(id => {
+                        id
+                    }),
+                    { id: args.teamId },
+                ],
+            },
+        },
+        where: { id: args.leagueId },
+    })
+
+    return true
 }

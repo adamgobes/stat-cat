@@ -9,7 +9,7 @@ type Mutation {
     register(name: String!, email: String!, password: String!): AuthPayLoad
     login(email: String!, password: String!): AuthPayLoad
     saveTeam(playerIds: [ID!]!): Team
-    createLeague(name: String!): Boolean
+    createFantasyLeague(name: String!): Boolean
     addLeagueMember(leagueId: ID!, teamId: ID!): Boolean
     removeLeagueMember(leagueId: ID!, teamId: ID!): Boolean
 }

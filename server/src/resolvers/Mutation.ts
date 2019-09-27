@@ -63,7 +63,7 @@ export async function saveTeam(parent, args, context): Promise<GQLTeam> {
     })
 }
 
-export async function createLeague(parent, args, context): Promise<boolean> {
+export async function createFantasyLeague(parent, args, context): Promise<boolean> {
     const userId: string = getUserId(context)
     const teamId: string = await context.prisma // get user's team based on their id
         .user({ id: userId })

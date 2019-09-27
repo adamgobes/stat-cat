@@ -3,7 +3,7 @@ import * as jwt from 'jsonwebtoken'
 
 import { APP_SECRET } from '../config'
 import { getUserId } from '../utils'
-import { GQLAuthPayLoad, GQLTeam } from '../generated/gqlTypes'
+import { GQLAuthPayLoad, GQLTeam, GQLFantasyLeague, GQLUser } from '../generated/gqlTypes'
 
 export async function register(parents, args, context, info): Promise<GQLAuthPayLoad> {
     const password = await bcrypt.hash(args.password, 10)
@@ -61,4 +61,61 @@ export async function saveTeam(parent, args, context): Promise<GQLTeam> {
         },
         where: { id: teamId },
     })
+}
+
+export async function createFantasyLeague(parent, args, context): Promise<GQLFantasyLeague> {
+    const userId: string = getUserId(context)
+
+    const teamId: string = await context.prisma // get user's team based on their id
+        .user({ id: userId })
+        .team()
+        .id()
+
+    const createdLeague: GQLFantasyLeague = await context.prisma.createFantasyLeague({
+        name: args.name,
+        admin: { connect: { id: userId } },
+        teams: { connect: [{ id: teamId }] },
+    })
+
+    return createdLeague
+}
+
+export async function addFantasyLeagueMember(parent, args, context): Promise<boolean> {
+    const userId: string = getUserId(context)
+
+    const leagueName: string = await context.prisma.fantasyLeague({ id: args.leagueId }).name()
+
+    const leagueTeams: GQLTeam[] = await context.prisma.fantasyLeague({ id: args.leagueId }).teams()
+
+    const leagueTeamsIds: string[] = leagueTeams.map(t => t.id)
+
+    if (leagueTeamsIds.includes(args.teamId)) {
+        throw new Error(`This team is already in the ${leagueName} league`)
+    }
+
+    await context.prisma.updateFantasyLeague({
+        data: {
+            teams: {
+                connect: [{ id: args.teamId }],
+            },
+        },
+        where: { id: args.leagueId },
+    })
+
+    return true
+}
+
+export async function removeFantasyLeagueMember(parent, args, context): Promise<boolean> {
+    const userId: string = getUserId(context)
+
+    await context.prisma.updateFantasyLeague({
+        data: {
+            teams: {
+                disconnect: { id: args.teamId },
+            },
+        },
+        where: { id: args.leagueId },
+    })
+
+    return true
 }

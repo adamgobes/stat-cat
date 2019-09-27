@@ -3,12 +3,19 @@ type User {
     name: String!
     email: String! @unique
     password: String!
-	team: Team
+    team: Team
 }
 
 type Team {
-	id: ID! @unique
-	name: String!
-	owner: User!
-	players: [ID!]!
+    id: ID! @unique
+    name: String!
+    owner: User!
+    players: [ID!]!
+}
+
+type FantasyLeague {
+    id: ID! @unique
+    name: String!
+    admin: User!
+    teams: [Team!]!
 }

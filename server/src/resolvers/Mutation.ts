@@ -3,7 +3,7 @@ import * as jwt from 'jsonwebtoken'
 
 import { APP_SECRET } from '../config'
 import { getUserId } from '../utils'
-import { GQLAuthPayLoad, GQLTeam, GQLFantasyLeague } from '../generated/gqlTypes'
+import { GQLAuthPayLoad, GQLTeam, GQLFantasyLeague, GQLUser } from '../generated/gqlTypes'
 
 export async function register(parents, args, context, info): Promise<GQLAuthPayLoad> {
     const password = await bcrypt.hash(args.password, 10)
@@ -79,17 +79,28 @@ export async function createFantasyLeague(parent, args, context): Promise<boolea
     return true
 }
 
-export async function addLeagueMember(parent, args, context): Promise<boolean> {
+export async function addFantasyLeagueMember(parent, args, context): Promise<boolean> {
     const userId: string = getUserId(context)
-    const leagueMembers = await context.prisma.fantasyLeague({ id: args.leagueId }).members()
+
+    const leagueName: string = await context.prisma.fantasyLeague({ id: args.leagueId }).name()
+
+    const leagueMembers: GQLUser[] = await context.prisma
+        .fantasyLeague({ id: args.leagueId })
+        .members()
+
+    const leagueMemberIds: string[] = leagueMembers.map(m => m.id)
+
+    if (leagueMemberIds.includes(args.teamId)) {
+        throw new Error(`This team is already in the ${leagueName} league`)
+    }
 
     await context.prisma.updateFantasyLeague({
         data: {
             members: {
                 connect: [
-                    ...leagueMembers.map(id => {
-                        id
-                    }),
+                    ...leagueMembers.map(m => ({
+                        id: m.id,
+                    })),
                     { id: args.teamId },
                 ],
             },

@@ -10,7 +10,7 @@ type Mutation {
     login(email: String!, password: String!): AuthPayLoad
     saveTeam(playerIds: [ID!]!): Team
     createFantasyLeague(name: String!): Boolean
-    addLeagueMember(leagueId: ID!, teamId: ID!): Boolean
+    addFantasyLeagueMember(leagueId: ID!, teamId: ID!): Boolean
     removeLeagueMember(leagueId: ID!, teamId: ID!): Boolean
 }
 

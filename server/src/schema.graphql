@@ -19,7 +19,6 @@ type User {
     email: String!
     name: String!
     team: Team!
-    leaguesEnrolled: [FantasyLeague!]
 }
 
 type AuthPayLoad {

@@ -11,7 +11,7 @@ type Mutation {
     saveTeam(playerIds: [ID!]!): Team
     createFantasyLeague(name: String!): Boolean
     addFantasyLeagueMember(leagueId: ID!, teamId: ID!): Boolean
-    removeLeagueMember(leagueId: ID!, teamId: ID!): Boolean
+    removeFantasyLeagueMember(leagueId: ID!, teamId: ID!): Boolean
 }
 
 type User {
@@ -51,7 +51,7 @@ type FantasyLeague {
     id: ID!
     name: String!
     admin: User!
-    members: [Team!]!
+    teams: [Team!]!
 }
 
 type Injury {

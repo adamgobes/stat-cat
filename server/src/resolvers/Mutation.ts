@@ -73,7 +73,7 @@ export async function createFantasyLeague(parent, args, context): Promise<boolea
     const createdLeague = await context.prisma.createFantasyLeague({
         name: args.name,
         admin: { connect: { id: userId } },
-        members: { connect: [{ id: teamId }] },
+        teams: { connect: [{ id: teamId }] },
     })
 
     return true
@@ -84,25 +84,33 @@ export async function addFantasyLeagueMember(parent, args, context): Promise<boo
 
     const leagueName: string = await context.prisma.fantasyLeague({ id: args.leagueId }).name()
 
-    const leagueMembers: GQLUser[] = await context.prisma
-        .fantasyLeague({ id: args.leagueId })
-        .members()
+    const leagueTeams: GQLTeam[] = await context.prisma.fantasyLeague({ id: args.leagueId }).teams()
 
-    const leagueMemberIds: string[] = leagueMembers.map(m => m.id)
+    const leagueTeamsIds: string[] = leagueTeams.map(t => t.id)
 
-    if (leagueMemberIds.includes(args.teamId)) {
+    if (leagueTeamsIds.includes(args.teamId)) {
         throw new Error(`This team is already in the ${leagueName} league`)
     }
 
     await context.prisma.updateFantasyLeague({
         data: {
-            members: {
-                connect: [
-                    ...leagueMembers.map(m => ({
-                        id: m.id,
-                    })),
-                    { id: args.teamId },
-                ],
+            teams: {
+                connect: [{ id: args.teamId }],
+            },
+        },
+        where: { id: args.leagueId },
+    })
+
+    return true
+}
+
+export async function removeFantasyLeagueMember(parent, args, context): Promise<boolean> {
+    const userId: string = getUserId(context)
+
+    await context.prisma.updateFantasyLeague({
+        data: {
+            teams: {
+                disconnect: { id: args.teamId },
             },
         },
         where: { id: args.leagueId },

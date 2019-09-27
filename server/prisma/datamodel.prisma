@@ -17,5 +17,5 @@ type FantasyLeague {
     id: ID! @unique
     name: String!
     admin: User!
-    members: [Team!]!
+    teams: [Team!]!
 }

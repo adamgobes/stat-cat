@@ -1,7 +1,6 @@
 import * as bcrypt from 'bcryptjs'
 import * as jwt from 'jsonwebtoken'
 
-import { APP_SECRET } from '../config'
 import { getUserId } from '../utils'
 import { GQLAuthPayLoad, GQLTeam, GQLFantasyLeague, GQLUser } from '../generated/gqlTypes'
 
@@ -18,7 +17,7 @@ export async function register(parents, args, context, info): Promise<GQLAuthPay
 
     await context.prisma.createTeam({ ...initialTeam })
 
-    const token: string = jwt.sign({ userId: user.id }, APP_SECRET)
+    const token: string = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
 
     return {
         token,
@@ -37,7 +36,7 @@ export async function login(parent, args, context, info): Promise<GQLAuthPayLoad
         throw new Error('Invalid password')
     }
 
-    const token: string = jwt.sign({ userId: user.id }, APP_SECRET)
+    const token: string = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
 
     return {
         token,

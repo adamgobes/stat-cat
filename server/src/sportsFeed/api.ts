@@ -1,16 +1,16 @@
 import * as base64 from 'base-64'
 import t from 'typy'
 
-import { sportsFeedPassword, sportsFeedUrl, sportsFeedUsername } from '../config'
-
 export const season: string = '2018-2019-regular'
 
 export function sportsFeedRequest(path: string): Promise<any> {
-    const pass = base64.encode(`${sportsFeedUsername}:${sportsFeedPassword}`)
+    const pass = base64.encode(
+        `${process.env.sportsFeedUsername}:${process.env.sportsFeedPassword}`
+    )
     const config = {
         headers: { Authorization: `Basic ${pass}` },
     }
-    return fetch(`${sportsFeedUrl}/${path}`, config).then(res => res.json())
+    return fetch(`${process.env.sportsFeedUrl}/${path}`, config).then(res => res.json())
 }
 
 const fieldGoalSelector = 'playerStatsTotals[0].stats.fieldGoals'

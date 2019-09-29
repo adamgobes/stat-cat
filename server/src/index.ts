@@ -1,4 +1,6 @@
 import { GraphQLServer } from 'graphql-yoga'
+import * as dotenv from 'dotenv'
+
 import { prisma } from './generated/prisma-client'
 
 import * as Mutation from './resolvers/Mutation'
@@ -6,6 +8,8 @@ import * as Player from './resolvers/Player'
 import * as Query from './resolvers/Query'
 import * as Team from './resolvers/Team'
 import * as User from './resolvers/User'
+
+dotenv.config()
 
 const resolvers = {
     Mutation,
@@ -22,4 +26,4 @@ const server = new GraphQLServer({
     resolvers,
     typeDefs,
 })
-server.start(() => console.log('Server is running on http://localhost:4000'))
+server.start(() => console.log('Server running...'))

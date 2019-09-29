@@ -4,9 +4,9 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "postinstall": "tsc",
         "start": "ts-node src/index.ts",
-        "build-types": "ts-node src/generateTypes.ts"
+        "build-types": "ts-node src/generateTypes.ts",
+        "heroku-postbuild": "tsc"
     },
     "dependencies": {
         "base-64": "^0.1.0",

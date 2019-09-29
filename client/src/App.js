@@ -19,8 +19,13 @@ export const theme = {
             height: '20px',
         },
         colors: {
-            brand: '#E17E62',
-            secondary: '#E9C547',
+            brand: '#4433F3',
+            secondary: 'black',
+        },
+        focus: {
+            border: {
+                color: 'none',
+            },
         },
     },
 }

@@ -17,7 +17,7 @@ export async function register(parents, args, context, info): Promise<GQLAuthPay
 
     await context.prisma.createTeam({ ...initialTeam })
 
-    const token: string = jwt.sign({ userId: user.id }, APP_SECRET)
+    const token: string = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
 
     return {
         token,

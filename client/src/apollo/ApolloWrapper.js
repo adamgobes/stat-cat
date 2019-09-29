@@ -11,7 +11,10 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import cookie from 'react-cookies'
 
 const httpLink = createHttpLink({
-    uri: 'http://localhost:4000',
+    uri:
+        process.env.NODE_ENV === 'development'
+            ? 'http://localhost:4000'
+            : 'https://stat-cat-api.herokuapp.com/',
 })
 
 // link to attach auth header to each request

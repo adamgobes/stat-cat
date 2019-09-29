@@ -5,8 +5,9 @@
     "license": "MIT",
     "scripts": {
         "start": "ts-node src/index.ts",
-        "build-types": "ts-node src/generateTypes.ts",
-        "heroku-postbuild": "tsc"
+        "compile-ts": "tsc",
+        "heroku-postbuild": "yarn compile-ts",
+        "build-types": "ts-node src/generateTypes.ts"
     },
     "dependencies": {
         "base-64": "^0.1.0",

@@ -1,9 +1,5 @@
 /node_modules/
 
-/src/config.js
-
-/src/generated/
-
 /.vscode/
 
 /dist/

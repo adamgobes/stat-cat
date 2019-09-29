@@ -33,7 +33,7 @@ const NavigationContainer = styled(Box)`
     width: ${({ isNavOpen }) => (isNavOpen ? '250px' : '0')};
     z-index: 1;
     padding: ${({ isNavOpen }) => (isNavOpen ? '60px 0 60px 10px' : '0')};
-    border-right: ${({ isNavOpen }) => (isNavOpen ? '1px solid black' : 'none')};
+    border-right: ${({ isNavOpen }) => (isNavOpen ? '2px solid black' : 'none')};
     overflow-x: hidden;
     transition: 0.3s;
 `
@@ -45,7 +45,7 @@ const ToggleNavButton = styled(Box)`
     width: 40px;
     height: 40px;
     border-radius: 100%;
-    border: 1px solid black;
+    border: 2px solid black;
     transition: 0.3s;
 `
 
@@ -155,7 +155,7 @@ function Nav({ history, isNavOpen, setNavOpen }) {
                     <NavIconWrapper direction="column" justify="center" align="center">
                         <CircleInformation size="medium" color="black" />
                     </NavIconWrapper>
-                    <h3>About StatCat</h3>
+                    <h3>About</h3>
                 </NavListItem>
                 <NavListItem direction="row" align="center">
                     <NavIconWrapper direction="column" justify="center" align="center">

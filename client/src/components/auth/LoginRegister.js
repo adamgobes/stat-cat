@@ -71,7 +71,11 @@ function LoginRegister({ history }) {
         )
     }
 
-    const submitForm = useCallback(() => (isLogin ? loginUser() : registerUser()), [isLogin])
+    const submitForm = useCallback(() => (isLogin ? loginUser() : registerUser()), [
+        isLogin,
+        loginUser,
+        registerUser,
+    ])
 
     const submitButtonString = useMemo(() => (isLogin ? 'Login' : 'Register'), [isLogin])
 

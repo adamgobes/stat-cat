@@ -7,9 +7,8 @@ import NoImagePlayer from '../../assets/images/player.png'
 const ImageWrapper = styled.div`
     width: ${props => (props.size === 'S' ? '70px' : '100px')};
     height: ${props => (props.size === 'S' ? '70px' : '100px')};
-    border: 1px solid;
     border-radius: 100%;
-    border: 1px solid ${props => props.theme.global.colors.brand};
+    border: 2px solid ${props => props.theme.global.colors.brand};
     overflow: hidden;
 `
 

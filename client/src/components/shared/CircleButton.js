@@ -15,7 +15,7 @@ const CircleButtonWrapper = styled(Box)`
         background: white;
         color: ${props => props.theme.global.colors.brand};
         transition: 0.2s ease;
-        border: 1px solid ${props => props.theme.global.colors.brand};
+        border: 2px solid ${props => props.theme.global.colors.brand};
     }
 `
 

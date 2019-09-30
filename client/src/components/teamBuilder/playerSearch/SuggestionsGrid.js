@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box, Grid } from 'grommet'
 
-import AddRemovePlayerButton from '../shared/CircleButton'
-import Loader from '../shared/Loader'
-import PlayerImage from '../shared/PlayerImage'
+import AddRemovePlayerButton from '../AddRemovePlayerButton'
+import Loader from '../../shared/Loader'
+import PlayerImage from '../../shared/PlayerImage'
 
 const StyledBox = styled(Box)`
     margin-top: 40px;

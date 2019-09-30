@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 
-import CircleButton from '../shared/CircleButton'
+import AddRemovePlayerButton from './AddRemovePlayerButton'
 import PlayerImage from '../shared/PlayerImage'
 
 const PlayerContainer = styled(Box)`
@@ -16,7 +16,7 @@ const PlayerElement = styled(Box)`
     margin: 0 10px;
 `
 
-const RemovePlayerButton = styled(CircleButton)`
+const RemovePlayerButton = styled(AddRemovePlayerButton)`
     cursor: pointer;
     position: absolute;
     right: 220px;

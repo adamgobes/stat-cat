@@ -16,8 +16,8 @@ import {
     removePlayer,
     setTeam,
 } from './TeamBuilderContext'
-import AddPlayerInput from './AddPlayerInput'
-import SuggestionsGrid from './SuggestionsGrid'
+import AddPlayerInput from './playerSearch/AddPlayerInput'
+import SuggestionsGrid from './playerSearch/SuggestionsGrid'
 
 const Header = styled.h2`
     text-align: center;

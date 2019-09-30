@@ -10,9 +10,11 @@ import { SAVE_TEAM_MUTATION } from '../../apollo/mutations'
 import { DASHBOARD_QUERY, MY_TEAM_QUERY, SEARCH_PLAYERS_QUERY } from '../../apollo/queries'
 import {
     TeamBuilderContext,
-    setTeam,
+    addPlayer,
     setWarningMessage,
     setPlayerInput,
+    removePlayer,
+    setTeam,
 } from './TeamBuilderContext'
 import AddPlayerInput from './AddPlayerInput'
 import SuggestionsGrid from './SuggestionsGrid'
@@ -64,17 +66,16 @@ function TeamBuilder() {
         dispatch(setPlayerInput(val))
     }
 
-    function handleAddPlayer(addedPlayer) {
-        if (team.map(p => p.id).includes(addedPlayer.id)) {
+    function handleAddPlayer(player) {
+        if (team.map(p => p.id).includes(player.id)) {
             dispatch(setWarningMessage('Oops, looks like you already have that player!'))
         } else {
-            dispatch(setTeam([...team, addedPlayer]))
-            dispatch(setWarningMessage(''))
+            dispatch(addPlayer(player))
         }
     }
 
     function onRemovePlayer(player) {
-        setTeam(team.filter(p => player.id !== p.id))
+        removePlayer(player)
     }
 
     // given players, return array of their ids to persist to server

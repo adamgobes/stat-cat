@@ -2,6 +2,8 @@ import React, { createContext, useReducer, useMemo } from 'react'
 
 const SET_PLAYER_INPUT = 'SET_PLAYER_INPUT'
 const SET_TEAM = 'SET_TEAM'
+const ADD_PLAYER = 'ADD_PLAYER'
+const REMOVE_PLAYER = 'REMOVE_PLAYER'
 const SET_WARNING_MESSAGE = 'SET_WARNING_MESSAGE'
 
 const TeamBuilderContext = createContext()
@@ -22,7 +24,19 @@ export default function reducer(state, action) {
         case SET_TEAM:
             return {
                 ...state,
-                team: action.value,
+                team: action.team,
+            }
+        case ADD_PLAYER:
+            return {
+                ...state,
+                playerInput: '',
+                warningMessage: '',
+                team: [...state.team, action.player],
+            }
+        case REMOVE_PLAYER:
+            return {
+                ...state,
+                team: state.team.filter(p => p.id !== action.player.id),
             }
         case SET_WARNING_MESSAGE:
             return {
@@ -42,10 +56,24 @@ export function setPlayerInput(value) {
     }
 }
 
-export function setTeam(value) {
+export function setTeam(team) {
     return {
         type: SET_TEAM,
-        value,
+        team,
+    }
+}
+
+export function addPlayer(player) {
+    return {
+        type: ADD_PLAYER,
+        player,
+    }
+}
+
+export function removePlayer(player) {
+    return {
+        type: REMOVE_PLAYER,
+        player,
     }
 }
 

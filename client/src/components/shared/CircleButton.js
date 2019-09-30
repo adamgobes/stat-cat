@@ -19,14 +19,8 @@ const CircleButtonWrapper = styled(Box)`
     }
 `
 
-const CircleButton = ({ className, children, handleClick }) => (
-    <CircleButtonWrapper
-        className={`${className} container`}
-        direction="column"
-        align="center"
-        justify="center"
-        onClick={handleClick}
-    >
+const CircleButton = ({ children, handleClick }) => (
+    <CircleButtonWrapper direction="column" align="center" justify="center" onClick={handleClick}>
         <div style={{ margin: '0 0 2px 1px' }}>{children}</div>
     </CircleButtonWrapper>
 )

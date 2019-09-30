@@ -8,18 +8,20 @@ const AddPlayer = styled(TextInput)`
     border-color: ${props => props.theme.global.colors.secondary};
 `
 
-const AddPlayerInput = ({ playerInput, handlePlayerInputChange }) => (
-    <Box direction="row" justify="center">
-        <Box>
-            <AddPlayer
-                size="medium"
-                value={playerInput}
-                onChange={handlePlayerInputChange}
-                placeholder="Search for Players"
-                focusIndicator={false}
-            />
+const AddPlayerInput = ({ inputValue, onPlayerInputChange }) => {
+    return (
+        <Box direction="row" justify="center">
+            <Box>
+                <AddPlayer
+                    size="medium"
+                    value={inputValue}
+                    onChange={onPlayerInputChange}
+                    placeholder="Search for Players"
+                    focusIndicator={false}
+                />
+            </Box>
         </Box>
-    </Box>
-)
+    )
+}
 
 export default AddPlayerInput

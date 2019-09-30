@@ -1,26 +1,31 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Box, Grid } from 'grommet'
-import { useQuery } from '@apollo/react-hooks'
 
-import PlayerSelectable from './PlayerSelectable'
-import { SEARCH_PLAYERS_QUERY } from '../../apollo/queries'
+import AddRemovePlayerButton from '../shared/CircleButton'
 import Loader from '../shared/Loader'
+import PlayerImage from '../shared/PlayerImage'
 
 const StyledBox = styled(Box)`
     margin-top: 40px;
     overflow: scroll;
 `
 
-const SuggestionsGrid = ({ filter, onAddPlayer }) => {
-    const { data, loading } = useQuery(SEARCH_PLAYERS_QUERY, {
-        variables: { filter },
-    })
+const PlayerName = styled.h3`
+    margin-top: -18px;
+    text-align: center;
+`
 
-    if (loading) return <Loader size={50} />
+const AddPlayerButton = styled(AddRemovePlayerButton)`
+    position: relative;
+    left: 40px;
+    bottom: 94px;
+`
 
-    return (
-        <StyledBox width="large">
+const SuggestionsGrid = ({ players, loading, onAddPlayer }) => (
+    <StyledBox width="large">
+        {loading && <Loader size={50} />}
+        {!loading && (
             <Grid
                 columns={{
                     count: 3,
@@ -28,12 +33,16 @@ const SuggestionsGrid = ({ filter, onAddPlayer }) => {
                 }}
                 gap={{ row: 'medium', column: 'none' }}
             >
-                {data.allPlayers.slice(0, 6).map(p => (
-                    <PlayerSelectable key={p.id} player={p} handleAddPlayer={onAddPlayer} />
+                {players.slice(0, 6).map(p => (
+                    <Box direction="column" align="center" key={p.id}>
+                        <PlayerImage src={p.imageSrc} name={p.fullName} />
+                        <AddPlayerButton handleClick={() => onAddPlayer(p)}>+</AddPlayerButton>
+                        <PlayerName>{p.fullName}</PlayerName>
+                    </Box>
                 ))}
             </Grid>
-        </StyledBox>
-    )
-}
+        )}
+    </StyledBox>
+)
 
 export default SuggestionsGrid

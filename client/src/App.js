@@ -10,6 +10,7 @@ import ApolloWrapper from './apollo/ApolloWrapper'
 import Dashboard from './components/dashboard/Dashboard'
 import Nav from './components/general/Nav'
 import { AppContext, TOGGLE_NAV } from './components/general/AppContext'
+import { TeamBuilderContextProvider } from './components/teamBuilder/TeamBuilderContext'
 
 export const theme = {
     global: {
@@ -32,9 +33,6 @@ export const theme = {
 
 const isLoggedIn = () => !!cookie.load('authToken')
 
-const renderComponentOrRedirect = (history, Component) =>
-    isLoggedIn() ? <Component history={history} /> : <Redirect to="/auth" />
-
 const App = () => {
     const { appContext, dispatch } = useContext(AppContext)
 
@@ -55,25 +53,27 @@ const App = () => {
                     <Route
                         exact
                         path="/"
-                        render={({ history }) =>
-                            isLoggedIn() ? (
-                                <Redirect to="/teambuilder" />
-                            ) : (
-                                <Home history={history} />
-                            )
-                        }
+                        render={() => (isLoggedIn() ? <Redirect to="/teambuilder" /> : <Home />)}
                     />
                     <Route exact path="/auth" component={LoginRegister} />
 
                     <Route
                         exact
                         path="/dashboard"
-                        render={({ history }) => renderComponentOrRedirect(history, Dashboard)}
+                        render={() => (isLoggedIn() ? <Dashboard /> : <Redirect to="/auth" />)}
                     />
                     <Route
                         exact
                         path="/teambuilder"
-                        render={({ history }) => renderComponentOrRedirect(history, TeamBuilder)}
+                        render={() =>
+                            isLoggedIn() ? (
+                                <TeamBuilderContextProvider>
+                                    <TeamBuilder />
+                                </TeamBuilderContextProvider>
+                            ) : (
+                                <Redirect to="/auth" />
+                            )
+                        }
                     />
                 </Grommet>
             </Router>

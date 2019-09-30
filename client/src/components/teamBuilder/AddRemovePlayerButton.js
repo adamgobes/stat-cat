@@ -2,7 +2,7 @@ import React from 'react'
 import { Box } from 'grommet'
 import styled from 'styled-components'
 
-const CircleButtonWrapper = styled(Box)`
+const ButtonWrapper = styled(Box)`
     cursor: pointer;
     width: 26px;
     height: 26px;
@@ -19,16 +19,16 @@ const CircleButtonWrapper = styled(Box)`
     }
 `
 
-const CircleButton = ({ className, children, handleClick }) => (
-    <CircleButtonWrapper
-        className={`${className} container`}
+const AddRemovePlayerButton = ({ className, children, handleClick }) => (
+    <ButtonWrapper
+        className={className}
         direction="column"
         align="center"
         justify="center"
         onClick={handleClick}
     >
         <div style={{ margin: '0 0 2px 1px' }}>{children}</div>
-    </CircleButtonWrapper>
+    </ButtonWrapper>
 )
 
-export default CircleButton
+export default AddRemovePlayerButton

@@ -1,15 +1,23 @@
-import React, { useState, useMemo } from 'react'
+import React, { useMemo, useContext } from 'react'
 import { Box, Grid, Button } from 'grommet'
 import styled from 'styled-components'
 
 import { useQuery, useMutation } from '@apollo/react-hooks'
-import AddPlayerInput from './AddPlayerInput'
 import TeamTable from './TeamTable'
-import SuggestionsGrid from './SuggestionsGrid'
 import Logo from '../general/Logo'
 import Loader from '../shared/Loader'
 import { SAVE_TEAM_MUTATION } from '../../apollo/mutations'
-import { DASHBOARD_QUERY, MY_TEAM_QUERY } from '../../apollo/queries'
+import { DASHBOARD_QUERY, MY_TEAM_QUERY, SEARCH_PLAYERS_QUERY } from '../../apollo/queries'
+import {
+    TeamBuilderContext,
+    addPlayer,
+    setWarningMessage,
+    setPlayerInput,
+    removePlayer,
+    setTeam,
+} from './TeamBuilderContext'
+import AddPlayerInput from './playerSearch/AddPlayerInput'
+import SuggestionsGrid from './playerSearch/SuggestionsGrid'
 
 const Header = styled.h2`
     text-align: center;
@@ -24,48 +32,50 @@ const SaveButton = styled(Button)`
 `
 
 function TeamBuilder() {
-    const [playerInput, setPlayerInput] = useState('')
-    const [team, setTeam] = useState([])
-    const [warningMessage, setWarningMessage] = useState('')
+    const {
+        teamBuilderContext: { playerInput, team, warningMessage },
+        dispatch,
+    } = useContext(TeamBuilderContext)
 
-    const { data, loading: initLoading } = useQuery(MY_TEAM_QUERY)
+    const { data: myTeamData, loading: myTeamLoading } = useQuery(MY_TEAM_QUERY)
 
     const [mutateTeam, { loading: saveTeamLoading }] = useMutation(SAVE_TEAM_MUTATION, {
         refetchQueries: () => [{ query: DASHBOARD_QUERY }],
     })
 
-    useMemo(
-        () => {
-            if (data && data.myTeam) {
-                setTeam(data.myTeam.players)
-            }
-        },
-        [data]
-    )
+    const { data: searchData, loading: searchLoading } = useQuery(SEARCH_PLAYERS_QUERY, {
+        variables: { filter: playerInput },
+        skip: playerInput.length < 3,
+    })
 
-    function onAddPlayer(player) {
-        if (team.map(p => p.id).includes(player.id)) {
-            setWarningMessage('Oops, looks like you already have that player!')
+    useMemo(() => {
+        if (myTeamData && myTeamData.myTeam) {
+            dispatch(setTeam(myTeamData.myTeam.players))
+        }
+    }, [myTeamData, dispatch])
+
+    function handlePlayerInputChange(e) {
+        const val = e.target.value
+
+        if (!!val && val.length < 3) {
+            dispatch(setWarningMessage('Psst... Type in at least 3 characters'))
         } else {
-            setTeam([...team, player])
-            setWarningMessage('')
+            dispatch(setWarningMessage(''))
+        }
+
+        dispatch(setPlayerInput(val))
+    }
+
+    function handleAddPlayer(player) {
+        if (team.map(p => p.id).includes(player.id)) {
+            dispatch(setWarningMessage('Oops, looks like you already have that player!'))
+        } else {
+            dispatch(addPlayer(player))
         }
     }
 
     function onRemovePlayer(player) {
-        setTeam(team.filter(p => player.id !== p.id))
-    }
-
-    function onPlayerInputChange(e) {
-        const val = e.target.value
-
-        if (!!val && val.length < 3) {
-            setWarningMessage('Psst... Type in at least 3 characters')
-        } else {
-            setWarningMessage('')
-        }
-
-        setPlayerInput(val)
+        removePlayer(player)
     }
 
     // given players, return array of their ids to persist to server
@@ -73,7 +83,7 @@ function TeamBuilder() {
         return playersArr.map(p => p.id)
     }
 
-    if (initLoading) return <Loader size={80} />
+    if (myTeamLoading) return <Loader size={80} />
 
     return (
         <Box>
@@ -87,18 +97,21 @@ function TeamBuilder() {
                 rows={['flex']}
                 gap="small"
             >
-                <Box gridArea="search" style={{ borderRight: '1px solid black' }}>
+                <Box gridArea="search">
                     <Header>Team Builder</Header>
                     <AddPlayerInput
-                        playerInput={playerInput}
-                        handleAddPlayer={onAddPlayer}
-                        handlePlayerInputChange={onPlayerInputChange}
+                        onPlayerInputChange={handlePlayerInputChange}
+                        inputValue={playerInput}
                     />
                     {!!warningMessage && (
                         <h3 style={{ marginTop: '50px', textAlign: 'center' }}>{warningMessage}</h3>
                     )}
                     {playerInput.length >= 3 && (
-                        <SuggestionsGrid filter={playerInput} onAddPlayer={onAddPlayer} />
+                        <SuggestionsGrid
+                            players={!searchLoading && searchData.allPlayers}
+                            loading={searchLoading}
+                            onAddPlayer={handleAddPlayer}
+                        />
                     )}
                 </Box>
                 <Box gridArea="team">

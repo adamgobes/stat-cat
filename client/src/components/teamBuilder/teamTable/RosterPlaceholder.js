@@ -3,11 +3,10 @@ import styled from 'styled-components'
 import { Box } from 'grommet'
 
 const PlaceholderWrapper = styled(Box)`
-    width: 400px;
+    width: 260px;
     height: 150px;
     background: white;
     border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
 `
 
 const ImageWrapper = styled(Box)`
@@ -15,28 +14,28 @@ const ImageWrapper = styled(Box)`
 `
 
 const FillerCircle = styled.div`
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     border-radius: 100%;
     background: #7781f7;
 `
 
 const FillerName = styled.div`
-    width: 150px;
+    width: 120px;
     height: 25px;
     border-radius: 10px;
     background: #7781f7;
 `
 
 const FillerTeam = styled.div`
-    width: 100px;
+    width: 80px;
     height: 20px;
     border-radius: 10px;
     background: #7781f7;
 `
 
 const FillerPosition = styled.div`
-    width: 60px;
+    width: 40px;
     height: 20px;
     border-radius: 10px;
     background: #7781f7;
@@ -44,18 +43,16 @@ const FillerPosition = styled.div`
 
 function RosterPlaceholder() {
     return (
-        <div style={{ width: '100%', height: '100%', background: '#FAFAFA' }}>
-            <PlaceholderWrapper direction="row" justify="evenly" align="center">
-                <ImageWrapper>
-                    <FillerCircle />
-                </ImageWrapper>
-                <Box direction="column" justify="evenly" style={{ height: '80%' }}>
-                    <FillerName />
-                    <FillerTeam />
-                    <FillerPosition />
-                </Box>
-            </PlaceholderWrapper>
-        </div>
+        <PlaceholderWrapper direction="row" justify="evenly" align="center">
+            <ImageWrapper>
+                <FillerCircle />
+            </ImageWrapper>
+            <Box direction="column" justify="evenly" style={{ height: '80%' }}>
+                <FillerName />
+                <FillerTeam />
+                <FillerPosition />
+            </Box>
+        </PlaceholderWrapper>
     )
 }
 

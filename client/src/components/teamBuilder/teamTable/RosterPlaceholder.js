@@ -2,11 +2,18 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 
+import PlayerImage from '../../shared/PlayerImage'
+
 const PlaceholderWrapper = styled(Box)`
     width: 260px;
     height: 150px;
     background: white;
     border-radius: 10px;
+    &:hover {
+        box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px
+        z-index: 1000;
+    }
+    transition: 0.5s;
 `
 
 const ImageWrapper = styled(Box)`
@@ -41,16 +48,41 @@ const FillerPosition = styled.div`
     background: #7781f7;
 `
 
-function RosterPlaceholder() {
+const PlayerName = styled.div`
+    font-size: 1.6em;
+    font-weight: bold;
+`
+
+const PlayerTeam = styled.div`
+    font-size: 1.2em;
+`
+
+const PlayerPosition = styled.div`
+    font-size: 1.2em;
+`
+
+function RosterPlaceholder({ selected, playerData }) {
     return (
         <PlaceholderWrapper direction="row" justify="evenly" align="center">
             <ImageWrapper>
-                <FillerCircle />
+                {!selected && <FillerCircle />}
+                {selected && <PlayerImage size="S" src={playerData.imageSrc} />}
             </ImageWrapper>
             <Box direction="column" justify="evenly" style={{ height: '80%' }}>
-                <FillerName />
-                <FillerTeam />
-                <FillerPosition />
+                {!selected && (
+                    <>
+                        <FillerName />
+                        <FillerTeam />
+                        <FillerPosition />
+                    </>
+                )}
+                {selected && (
+                    <>
+                        <PlayerName>{playerData.fullName}</PlayerName>
+                        <PlayerTeam>{playerData.currentTeam.full}</PlayerTeam>
+                        <PlayerPosition>{playerData.position}</PlayerPosition>
+                    </>
+                )}
             </Box>
         </PlaceholderWrapper>
     )

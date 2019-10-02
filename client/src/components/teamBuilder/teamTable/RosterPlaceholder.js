@@ -4,16 +4,20 @@ import { Box } from 'grommet'
 
 import PlayerImage from '../../shared/PlayerImage'
 
+const hover = `
+	&:hover {
+		box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px
+		z-index: 1000;
+	}
+	transition: 0.5s;
+`
+
 const PlaceholderWrapper = styled(Box)`
     width: 260px;
     height: 150px;
     background: white;
     border-radius: 10px;
-    &:hover {
-        box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px
-        z-index: 1000;
-    }
-    transition: 0.5s;
+    ${props => (props.filled ? hover : '')}
 `
 
 const ImageWrapper = styled(Box)`
@@ -29,21 +33,21 @@ const FillerCircle = styled.div`
 
 const FillerName = styled.div`
     width: 120px;
-    height: 25px;
+    height: 20px;
     border-radius: 10px;
     background: #7781f7;
 `
 
 const FillerTeam = styled.div`
     width: 80px;
-    height: 20px;
+    height: 15px;
     border-radius: 10px;
     background: #7781f7;
 `
 
 const FillerPosition = styled.div`
     width: 40px;
-    height: 20px;
+    height: 12px;
     border-radius: 10px;
     background: #7781f7;
 `
@@ -61,22 +65,23 @@ const PlayerPosition = styled.div`
     font-size: 1.2em;
 `
 
-function RosterPlaceholder({ selected, playerData }) {
+function RosterPlaceholder({ playerData }) {
+    const filled = !!playerData
     return (
-        <PlaceholderWrapper direction="row" justify="evenly" align="center">
+        <PlaceholderWrapper direction="row" justify="evenly" align="center" filled={filled}>
             <ImageWrapper>
-                {!selected && <FillerCircle />}
-                {selected && <PlayerImage size="S" src={playerData.imageSrc} />}
+                {!filled && <FillerCircle />}
+                {filled && <PlayerImage size="S" src={playerData.imageSrc} />}
             </ImageWrapper>
             <Box direction="column" justify="evenly" style={{ height: '80%' }}>
-                {!selected && (
+                {!filled && (
                     <>
                         <FillerName />
                         <FillerTeam />
                         <FillerPosition />
                     </>
                 )}
-                {selected && (
+                {filled && (
                     <>
                         <PlayerName>{playerData.fullName}</PlayerName>
                         <PlayerTeam>{playerData.currentTeam.full}</PlayerTeam>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 
@@ -67,8 +67,17 @@ const PlayerPosition = styled.div`
 
 function RosterPlaceholder({ playerData }) {
     const filled = !!playerData
+    const [isHovered, setIsHovered] = useState(false)
+
     return (
-        <PlaceholderWrapper direction="row" justify="evenly" align="center" filled={filled}>
+        <PlaceholderWrapper
+            direction="row"
+            justify="evenly"
+            align="center"
+            filled={filled}
+            onMouseEnter={() => setIsHovered(!isHovered)}
+            onMouseLeave={() => setIsHovered(!isHovered)}
+        >
             <ImageWrapper>
                 {!filled && <FillerCircle />}
                 {filled && <PlayerImage size="S" src={playerData.imageSrc} />}

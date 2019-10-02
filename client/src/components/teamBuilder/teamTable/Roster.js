@@ -10,8 +10,8 @@ function Roster({ players }) {
     return (
         <Box style={{ width: '100%', height: '100%', background: '#FAFAFA' }} justify="center">
             <Box direction="row" justify="center" wrap>
-                {team.map(player => (
-                    <RosterPlaceholder playerData={player} />
+                {team.map((player, i) => (
+                    <RosterPlaceholder playerData={player} key={i} />
                 ))}
             </Box>
         </Box>

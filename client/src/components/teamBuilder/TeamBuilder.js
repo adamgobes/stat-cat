@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import TeamTable from './TeamTable'
 import Logo from '../general/Logo'
+import Roster from './teamTable/Roster'
 import Loader from '../shared/Loader'
 import { SAVE_TEAM_MUTATION } from '../../apollo/mutations'
 import { DASHBOARD_QUERY, MY_TEAM_QUERY, SEARCH_PLAYERS_QUERY } from '../../apollo/queries'
@@ -93,7 +94,7 @@ function TeamBuilder() {
                     { name: 'search', start: [0, 0], end: [0, 0] },
                     { name: 'team', start: [1, 0], end: [1, 0] },
                 ]}
-                columns={['1/2', 'flex']}
+                columns={['1/3', 'flex']}
                 rows={['flex']}
                 gap="small"
             >
@@ -116,15 +117,7 @@ function TeamBuilder() {
                 </Box>
                 <Box gridArea="team">
                     <Header>Your Team</Header>
-                    {team.length !== 0 && (
-                        <TeamTable team={team} handleRemovePlayer={onRemovePlayer} />
-                    )}
-                    {team.length === 0 && (
-                        <Box align="center" pad="large" justify="center">
-                            <Logo />
-                            <h2>Add players using the form to the left!</h2>
-                        </Box>
-                    )}
+                    <Roster players={team} />
                 </Box>
             </Grid>
             <Box direction="row" justify="center">

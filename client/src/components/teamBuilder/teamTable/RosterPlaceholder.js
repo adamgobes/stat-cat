@@ -16,7 +16,6 @@ const PlaceholderWrapper = styled(Box)`
     width: 24%;
     height: 150px;
     background: white;
-    border-radius: 10px;
     ${props => (props.filled ? hover : '')}
 `
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
-import { FormUp } from 'grommet-icons'
+import { FormUp, FormDown } from 'grommet-icons'
 
 import RosterPlaceholder from './RosterPlaceholder'
 import PlayerImage from '../../shared/PlayerImage'
@@ -41,7 +41,8 @@ function Roster({ players }) {
                 align="center"
                 onClick={() => setIsExpanded(!isExpanded)}
             >
-                <FormUp size="medium" color="#7781f7" />
+                {!isExpanded && <FormUp size="medium" color="#7781f7" />}
+                {isExpanded && <FormDown size="medium" color="#7781f7" />}
             </ExpandButton>
             {!isExpanded &&
                 players.map(p => (

@@ -35,6 +35,7 @@ const rosterData = [
             abbreviation: 'BKN',
             full: 'Brooklyn Nets',
         },
+        position: 'SF, PF',
         imageSrc:
             'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201142.png',
         description: 'ruptured right achilles tendon',
@@ -46,6 +47,7 @@ const rosterData = [
             abbreviation: 'GSW',
             full: 'Golden State Warriors',
         },
+        position: 'PF',
         imageSrc:
             'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1626172.png',
         description: 'costal cartilage fracture',
@@ -57,6 +59,7 @@ const rosterData = [
             abbreviation: 'GSW',
             full: 'Golden State Warriors',
         },
+        position: 'SF',
         imageSrc:
             'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202691.png',
         description: 'torn ACL',

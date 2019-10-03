@@ -29,6 +29,39 @@ const rosterData = [
             'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203463.png',
         __typename: 'Player',
     },
+    {
+        fullName: 'Kevin Durant',
+        currentTeam: {
+            abbreviation: 'BKN',
+            full: 'Brooklyn Nets',
+        },
+        imageSrc:
+            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201142.png',
+        description: 'ruptured right achilles tendon',
+        playingProbability: 'OUT',
+    },
+    {
+        fullName: 'Kevon Looney',
+        currentTeam: {
+            abbreviation: 'GSW',
+            full: 'Golden State Warriors',
+        },
+        imageSrc:
+            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1626172.png',
+        description: 'costal cartilage fracture',
+        playingProbability: 'PROBABLE',
+    },
+    {
+        fullName: 'Klay Thompson',
+        currentTeam: {
+            abbreviation: 'GSW',
+            full: 'Golden State Warriors',
+        },
+        imageSrc:
+            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202691.png',
+        description: 'torn ACL',
+        playingProbability: 'OUT',
+    },
 ]
 
 storiesOf('Team Builder/Roster', module).add('default', () => <Roster players={rosterData} />)

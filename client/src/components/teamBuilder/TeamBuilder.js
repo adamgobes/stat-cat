@@ -1,5 +1,5 @@
 import React, { useMemo, useContext } from 'react'
-import { Box, Grid, Button } from 'grommet'
+import { Box, Button } from 'grommet'
 import styled from 'styled-components'
 
 import { useQuery, useMutation } from '@apollo/react-hooks'
@@ -88,38 +88,24 @@ function TeamBuilder() {
 
     return (
         <Box>
-            <Grid
-                fill
-                areas={[
-                    { name: 'search', start: [0, 0], end: [0, 0] },
-                    { name: 'team', start: [1, 0], end: [1, 0] },
-                ]}
-                columns={['1/3', 'flex']}
-                rows={['flex']}
-                gap="small"
-            >
-                <Box gridArea="search">
-                    <Header>Team Builder</Header>
-                    <AddPlayerInput
-                        onPlayerInputChange={handlePlayerInputChange}
-                        inputValue={playerInput}
+            <Box>
+                <Header>Team Builder</Header>
+                <AddPlayerInput
+                    onPlayerInputChange={handlePlayerInputChange}
+                    inputValue={playerInput}
+                />
+                {!!warningMessage && (
+                    <h3 style={{ marginTop: '50px', textAlign: 'center' }}>{warningMessage}</h3>
+                )}
+                {playerInput.length >= 3 && (
+                    <SuggestionsGrid
+                        players={!searchLoading && searchData.allPlayers}
+                        loading={searchLoading}
+                        onAddPlayer={handleAddPlayer}
                     />
-                    {!!warningMessage && (
-                        <h3 style={{ marginTop: '50px', textAlign: 'center' }}>{warningMessage}</h3>
-                    )}
-                    {playerInput.length >= 3 && (
-                        <SuggestionsGrid
-                            players={!searchLoading && searchData.allPlayers}
-                            loading={searchLoading}
-                            onAddPlayer={handleAddPlayer}
-                        />
-                    )}
-                </Box>
-                <Box gridArea="team">
-                    <Header>Your Team</Header>
-                    <Roster players={team} />
-                </Box>
-            </Grid>
+                )}
+            </Box>
+            <Roster players={team} />
             <Box direction="row" justify="center">
                 <SaveButton
                     label={saveTeamLoading ? <Loader size={20} /> : 'Save Team'}

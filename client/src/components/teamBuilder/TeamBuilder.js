@@ -3,8 +3,6 @@ import { Box, Button } from 'grommet'
 import styled from 'styled-components'
 
 import { useQuery, useMutation } from '@apollo/react-hooks'
-import TeamTable from './TeamTable'
-import Logo from '../general/Logo'
 import Roster from './teamTable/Roster'
 import Loader from '../shared/Loader'
 import { SAVE_TEAM_MUTATION } from '../../apollo/mutations'
@@ -88,7 +86,7 @@ function TeamBuilder() {
 
     return (
         <Box>
-            <Box>
+            <Box direction="column" align="center">
                 <Header>Team Builder</Header>
                 <AddPlayerInput
                     onPlayerInputChange={handlePlayerInputChange}

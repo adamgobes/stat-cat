@@ -13,7 +13,7 @@ const hover = `
 `
 
 const PlaceholderWrapper = styled(Box)`
-    width: 260px;
+    width: 24%;
     height: 150px;
     background: white;
     border-radius: 10px;

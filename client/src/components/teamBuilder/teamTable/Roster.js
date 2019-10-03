@@ -12,7 +12,7 @@ const MiniRosterWrapper = styled(Box)`
     left: 0;
     bottom: 0;
     background-color: #7781f7;
-    padding: 20px 0;
+    padding: 30px 0;
     border-radius: 10px;
 `
 

@@ -1,70 +1,74 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Box } from 'grommet'
-import { FormUp, FormDown } from 'grommet-icons'
-
-import RosterPlaceholder from './RosterPlaceholder'
+import { Box, Grid, Button } from 'grommet'
 import PlayerImage from '../../shared/PlayerImage'
 import NoImagePlayer from '../../../assets/images/player.png'
+import AddRemovePlayerButton from '../AddRemovePlayerButton'
 
-const RosterWrapper = styled(Box)`
-    position: fixed;
-    width: 100%;
-    left: 0;
-    bottom: 0;
-    background-color: #7781f7;
-    padding: 30px 0;
-    border-radius: 10px;
+const MyTeamHeader = styled.h1`
+    font-size: 2.6em;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    margin: 40px 0;
 `
 
-const ExpandButton = styled(Box)`
-    position: absolute;
-    top: -20px;
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
-    border: 2px solid #7781f7;
+const MiniRosterImage = styled(Box)``
+
+const PlayerName = styled.h3`
+    color: white;
+    text-align: center;
+`
+
+const RemovePlayerButton = styled(AddRemovePlayerButton)`
+	position: relative;
+	left: 82px;
+	bottom: 140px;
+	visibility: ${props => (props.hidden ? 'hidden' : 'visible')}
     background: white;
-    transition: 0.3s;
-    cursor: pointer;
+    border: 2px solid ${props => props.theme.global.colors.brand};
+    color: #7781f7;
 `
 
 const ROSTER_SIZE = 12
 
-function Roster({ players }) {
+function Roster({ players, onRemovePlayer }) {
     const team = [...players, ...new Array(ROSTER_SIZE - players.length)]
-    const [isExpanded, setIsExpanded] = useState(false)
+
     return (
-        <RosterWrapper direction="row" justify="center">
-            <ExpandButton
-                direction="column"
-                justify="center"
-                align="center"
-                onClick={() => setIsExpanded(!isExpanded)}
+        <>
+            <MyTeamHeader>My Team</MyTeamHeader>
+            <Grid
+                columns={{
+                    count: 4,
+                    size: 'auto',
+                }}
+                gap={{ row: 'small', column: 'medium' }}
+                style={{ marginTop: '20px' }}
             >
-                {!isExpanded && <FormUp size="medium" color="#7781f7" />}
-                {isExpanded && <FormDown size="medium" color="#7781f7" />}
-            </ExpandButton>
-            {!isExpanded &&
-                team.map(p => (
-                    <Box style={{ margin: '0 20px' }}>
-                        <PlayerImage
-                            size="S"
-                            src={p ? p.imageSrc : NoImagePlayer}
-                            borderColor="white"
-                        />
+                {team.map(p => (
+                    <Box style={{ minHeight: '170px', minWidth: '130px' }}>
+                        <MiniRosterImage align="center" justify="center">
+                            <PlayerImage
+                                size="M"
+                                src={p ? p.imageSrc : NoImagePlayer}
+                                borderColor="white"
+                            />
+                        </MiniRosterImage>
+                        {p && (
+                            <PlayerName>
+                                {`${p.firstName.substring(0, 1)}. ${p.lastName}`}
+                            </PlayerName>
+                        )}
+                        {p && (
+                            <RemovePlayerButton handleClick={() => onRemovePlayer(p)}>
+                                -
+                            </RemovePlayerButton>
+                        )}
                     </Box>
                 ))}
-            {isExpanded && (
-                <Box style={{ width: '100%', height: '100%' }} justify="center">
-                    <Box direction="row" justify="center" wrap>
-                        {team.map((player, i) => (
-                            <RosterPlaceholder playerData={player} key={i} />
-                        ))}
-                    </Box>
-                </Box>
-            )}
-        </RosterWrapper>
+            </Grid>
+        </>
     )
 }
 

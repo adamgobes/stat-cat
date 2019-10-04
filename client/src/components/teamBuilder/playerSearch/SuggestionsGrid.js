@@ -7,6 +7,7 @@ import Loader from '../../shared/Loader'
 import PlayerImage from '../../shared/PlayerImage'
 
 const StyledBox = styled(Box)`
+    width: 80%;
     margin-top: 40px;
     overflow: scroll;
     padding: 20px;

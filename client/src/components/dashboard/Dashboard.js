@@ -24,27 +24,7 @@ const SomeBox = styled(Box)`
 
 const Dashboard = () => (
     <Box>
-        <Grid
-            style={{ margin: '0 40px' }}
-            rows={['1/2', '1/2']}
-            columns={['2/5', 'flex']}
-            gap="small"
-            areas={[
-                { name: 'weeklyReport', start: [0, 0], end: [0, 1] },
-                { name: 'projections', start: [1, 0], end: [1, 0] },
-                { name: 'topPerformers', start: [1, 1], end: [1, 1] },
-            ]}
-        >
-            <WeeklyReportWrapper gridArea="weeklyReport">
-                <SomeBox />
-            </WeeklyReportWrapper>
-            <ProjectionTableWrapper gridArea="projections">
-                <SomeBox />
-            </ProjectionTableWrapper>
-            <TopPerformersWrapper gridArea="topPerformers">
-                <SomeBox />
-            </TopPerformersWrapper>
-        </Grid>
+        <h1>Dashboard</h1>
     </Box>
 )
 

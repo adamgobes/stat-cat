@@ -17,6 +17,10 @@ import {
 } from './TeamBuilderContext'
 import AddPlayerInput from './playerSearch/AddPlayerInput'
 import SuggestionsGrid from './playerSearch/SuggestionsGrid'
+import { ReactComponent as SearchPlaceholderGraphic } from '../../assets/images/undraw_search_placeholder.svg'
+import { ReactComponent as NotEnoughCharsGraphic } from '../../assets/images/search_hint.svg'
+
+const NOT_ENOUGH_CHARS = 'Psst... Type in at least 3 characters'
 
 const Header = styled.h2`
     text-align: center;
@@ -28,6 +32,12 @@ const SaveButton = styled(Button)`
     color: ${props => props.theme.global.colors.brand};
     margin-top: 20px;
     border-radius: 0;
+`
+
+const SVGWrapper = styled(Box)`
+    width: 260px;
+    height: 260px;
+    margin: 40px;
 `
 
 function TeamBuilder() {
@@ -57,7 +67,7 @@ function TeamBuilder() {
         const val = e.target.value
 
         if (!!val && val.length < 3) {
-            dispatch(setWarningMessage('Psst... Type in at least 3 characters'))
+            dispatch(setWarningMessage(NOT_ENOUGH_CHARS))
         } else {
             dispatch(setWarningMessage(''))
         }
@@ -92,8 +102,21 @@ function TeamBuilder() {
                     onPlayerInputChange={handlePlayerInputChange}
                     inputValue={playerInput}
                 />
+                {!warningMessage && playerInput.length === 0 && (
+                    <SVGWrapper>
+                        <SearchPlaceholderGraphic />
+                    </SVGWrapper>
+                )}
                 {!!warningMessage && (
-                    <h3 style={{ marginTop: '50px', textAlign: 'center' }}>{warningMessage}</h3>
+                    <>
+                        <h3 style={{ marginTop: '50px', textAlign: 'center' }}>{warningMessage}</h3>
+
+                        {warningMessage === NOT_ENOUGH_CHARS && (
+                            <SVGWrapper>
+                                <NotEnoughCharsGraphic />
+                            </SVGWrapper>
+                        )}
+                    </>
                 )}
                 {playerInput.length >= 3 && (
                     <SuggestionsGrid

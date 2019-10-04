@@ -40,7 +40,7 @@ const SVGWrapper = styled(Box)`
     margin: ${props => props.margin}px;
 `
 
-function TeamBuilder() {
+function TeamBuilder({ history }) {
     const {
         teamBuilderContext: { playerInput, team, warningMessage },
         dispatch,
@@ -50,6 +50,7 @@ function TeamBuilder() {
 
     const [mutateTeam, { loading: saveTeamLoading }] = useMutation(SAVE_TEAM_MUTATION, {
         refetchQueries: () => [{ query: DASHBOARD_QUERY }],
+        onCompleted: () => history.push('/dashboard'),
     })
 
     const { data: searchData, loading: searchLoading } = useQuery(SEARCH_PLAYERS_QUERY, {

@@ -43,7 +43,7 @@ function Roster({ players, onRemovePlayer }) {
                     count: 4,
                     size: 'auto',
                 }}
-                gap={{ row: 'small', column: 'medium' }}
+                gap={{ row: 'none', column: 'medium' }}
                 style={{ marginTop: '20px' }}
             >
                 {team.map(p => (

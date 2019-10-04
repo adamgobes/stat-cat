@@ -4,9 +4,15 @@ import styled from 'styled-components'
 
 import NoImagePlayer from '../../assets/images/player.png'
 
+const sizeToPixelMap = {
+    S: '70',
+    M: '85',
+    L: '100',
+}
+
 const ImageWrapper = styled.div`
-    width: ${props => (props.size === 'S' ? '70px' : '100px')};
-    height: ${props => (props.size === 'S' ? '70px' : '100px')};
+    width: ${props => `${sizeToPixelMap[props.size]}px`};
+    height: ${props => `${sizeToPixelMap[props.size]}px`};
     border-radius: 100%;
     border: 2px solid
         ${props => (props.borderColor ? props.borderColor : props.theme.global.colors.brand)};
@@ -14,7 +20,7 @@ const ImageWrapper = styled.div`
     background: white;
 `
 
-const PlayerImage = ({ src, name, size, borderColor }) => (
+const PlayerImage = ({ src, name, size = 'M', borderColor }) => (
     <ImageWrapper size={size} borderColor={borderColor}>
         <Box align="center" justify="center" className="container" style={{ marginTop: '10px' }}>
             {(src && <img src={src} height="80%" width="100%" alt={name} />) ||

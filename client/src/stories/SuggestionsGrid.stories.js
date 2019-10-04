@@ -85,6 +85,6 @@ const SuggestionsGridData = [
     },
 ]
 
-storiesOf('Team Builder/Suggestions Grid', module)
-    .add('loading', () => <SuggestionsGrid players={undefined} loading />)
-    .add('not loading', () => <SuggestionsGrid players={SuggestionsGridData} loading={false} />)
+storiesOf('Team Builder/Suggestions Grid', module).add('default', () => (
+    <SuggestionsGrid players={SuggestionsGridData} loading={false} />
+))

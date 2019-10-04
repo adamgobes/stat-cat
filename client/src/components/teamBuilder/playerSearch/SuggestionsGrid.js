@@ -10,9 +10,6 @@ const StyledBox = styled(Box)`
     margin-top: 40px;
     overflow: scroll;
     padding: 20px;
-    border-radius: 10px;
-    min-height: 290px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
 `
 
 const PlayerName = styled.h3`

@@ -12,7 +12,6 @@ import {
     addPlayer,
     setWarningMessage,
     setPlayerInput,
-    removePlayer,
     setTeam,
 } from './TeamBuilderContext'
 import AddPlayerInput from './playerSearch/AddPlayerInput'
@@ -20,7 +19,8 @@ import SuggestionsGrid from './playerSearch/SuggestionsGrid'
 import { ReactComponent as SearchPlaceholderGraphic } from '../../assets/images/undraw_search_placeholder.svg'
 import { ReactComponent as NotEnoughCharsGraphic } from '../../assets/images/search_hint.svg'
 
-const NOT_ENOUGH_CHARS = 'Psst... Type in at least 3 characters'
+const MIN_CHARS = 4
+const NOT_ENOUGH_CHARS = `Psst... Type in at least ${MIN_CHARS} characters`
 
 const Header = styled.h2`
     text-align: center;
@@ -55,7 +55,7 @@ function TeamBuilder({ history }) {
 
     const { data: searchData, loading: searchLoading } = useQuery(SEARCH_PLAYERS_QUERY, {
         variables: { filter: playerInput },
-        skip: playerInput.length < 3,
+        skip: playerInput.length < MIN_CHARS,
     })
 
     useMemo(() => {
@@ -67,7 +67,7 @@ function TeamBuilder({ history }) {
     function handlePlayerInputChange(e) {
         const val = e.target.value
 
-        if (!!val && val.length < 3) {
+        if (!!val && val.length < MIN_CHARS) {
             dispatch(setWarningMessage(NOT_ENOUGH_CHARS))
         } else {
             dispatch(setWarningMessage(''))
@@ -82,10 +82,6 @@ function TeamBuilder({ history }) {
         } else {
             dispatch(addPlayer(player))
         }
-    }
-
-    function onRemovePlayer(player) {
-        removePlayer(player)
     }
 
     // given players, return array of their ids to persist to server
@@ -119,7 +115,7 @@ function TeamBuilder({ history }) {
                         )}
                     </>
                 )}
-                {playerInput.length >= 3 && (
+                {playerInput.length >= MIN_CHARS && (
                     <SuggestionsGrid
                         players={!searchLoading && searchData.allPlayers}
                         loading={searchLoading}
@@ -127,7 +123,7 @@ function TeamBuilder({ history }) {
                     />
                 )}
             </Box>
-            <Roster players={team} />
+            {team.length > 0 && <Roster players={team} />}
             <Box direction="row" justify="center">
                 <SaveButton
                     label={saveTeamLoading ? <Loader size={20} /> : 'Save Team'}

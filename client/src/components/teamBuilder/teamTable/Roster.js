@@ -5,8 +5,9 @@ import { FormUp, FormDown } from 'grommet-icons'
 
 import RosterPlaceholder from './RosterPlaceholder'
 import PlayerImage from '../../shared/PlayerImage'
+import NoImagePlayer from '../../../assets/images/player.png'
 
-const MiniRosterWrapper = styled(Box)`
+const RosterWrapper = styled(Box)`
     position: fixed;
     width: 100%;
     left: 0;
@@ -34,7 +35,7 @@ function Roster({ players }) {
     const team = [...players, ...new Array(ROSTER_SIZE - players.length)]
     const [isExpanded, setIsExpanded] = useState(false)
     return (
-        <MiniRosterWrapper direction="row" justify="center">
+        <RosterWrapper direction="row" justify="center">
             <ExpandButton
                 direction="column"
                 justify="center"
@@ -45,9 +46,13 @@ function Roster({ players }) {
                 {isExpanded && <FormDown size="medium" color="#7781f7" />}
             </ExpandButton>
             {!isExpanded &&
-                players.map(p => (
+                team.map(p => (
                     <Box style={{ margin: '0 20px' }}>
-                        <PlayerImage size="S" src={p.imageSrc} borderColor="white" />
+                        <PlayerImage
+                            size="S"
+                            src={p ? p.imageSrc : NoImagePlayer}
+                            borderColor="white"
+                        />
                     </Box>
                 ))}
             {isExpanded && (
@@ -59,7 +64,7 @@ function Roster({ players }) {
                     </Box>
                 </Box>
             )}
-        </MiniRosterWrapper>
+        </RosterWrapper>
     )
 }
 

@@ -29,7 +29,6 @@ export default function reducer(state, action) {
         case ADD_PLAYER:
             return {
                 ...state,
-                playerInput: '',
                 warningMessage: '',
                 team: [...state.team, action.player],
             }

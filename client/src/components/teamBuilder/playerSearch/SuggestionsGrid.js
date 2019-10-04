@@ -11,6 +11,7 @@ const StyledBox = styled(Box)`
     overflow: scroll;
     padding: 20px;
     border-radius: 10px;
+    min-height: 290px;
     box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
 `
 
@@ -26,7 +27,7 @@ const AddPlayerButton = styled(AddRemovePlayerButton)`
 `
 
 const SuggestionsGrid = ({ players, loading, onAddPlayer }) => (
-    <StyledBox width="large">
+    <StyledBox width="large" justify={loading ? 'center' : ''}>
         {loading && <Loader size={50} />}
         {!loading && (
             <Grid

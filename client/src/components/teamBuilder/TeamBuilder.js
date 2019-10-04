@@ -37,7 +37,7 @@ const SaveButton = styled(Button)`
 const SVGWrapper = styled(Box)`
     width: 260px;
     height: 260px;
-    margin: 40px;
+    margin: ${props => props.margin}px;
 `
 
 function TeamBuilder() {
@@ -103,7 +103,7 @@ function TeamBuilder() {
                     inputValue={playerInput}
                 />
                 {!warningMessage && playerInput.length === 0 && (
-                    <SVGWrapper>
+                    <SVGWrapper margin="40">
                         <SearchPlaceholderGraphic />
                     </SVGWrapper>
                 )}
@@ -112,7 +112,7 @@ function TeamBuilder() {
                         <h3 style={{ marginTop: '50px', textAlign: 'center' }}>{warningMessage}</h3>
 
                         {warningMessage === NOT_ENOUGH_CHARS && (
-                            <SVGWrapper>
+                            <SVGWrapper margin="0">
                                 <NotEnoughCharsGraphic />
                             </SVGWrapper>
                         )}

@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useCallback } from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 
+import { TeamBuilderContext, removePlayer } from '../TeamBuilderContext'
 import PlayerImage from '../../shared/PlayerImage'
 
 const hover = `
@@ -68,6 +69,18 @@ function RosterPlaceholder({ playerData }) {
     const filled = !!playerData
     const [isHovered, setIsHovered] = useState(false)
 
+    const { teamBuilderContext, dispatch } = useContext(TeamBuilderContext)
+
+    const handleRemovePlayer = useCallback(
+        player => {
+            if (filled) {
+                return dispatch(removePlayer(player))
+            }
+            return undefined
+        },
+        [filled, dispatch]
+    )
+
     return (
         <PlaceholderWrapper
             direction="row"
@@ -76,6 +89,7 @@ function RosterPlaceholder({ playerData }) {
             filled={filled}
             onMouseEnter={() => setIsHovered(!isHovered)}
             onMouseLeave={() => setIsHovered(!isHovered)}
+            onClick={() => handleRemovePlayer(playerData)}
         >
             <ImageWrapper>
                 {!filled && <FillerCircle />}

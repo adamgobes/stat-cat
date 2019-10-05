@@ -6,7 +6,7 @@ import AddRemovePlayerButton from '../AddRemovePlayerButton'
 import Loader from '../../shared/Loader'
 import PlayerImage from '../../shared/PlayerImage'
 
-const StyledBox = styled(Box)`
+const SuggestionsGridWrapper = styled(Box)`
     width: 80%;
     margin-top: 40px;
     overflow: scroll;
@@ -25,7 +25,7 @@ const AddPlayerButton = styled(AddRemovePlayerButton)`
 `
 
 const SuggestionsGrid = ({ players, loading, onAddPlayer }) => (
-    <StyledBox width="large" justify={loading ? 'center' : ''}>
+    <SuggestionsGridWrapper width="large" justify={loading ? 'center' : 'stretch'}>
         {loading && <Loader size={50} />}
         {!loading && (
             <Grid
@@ -44,7 +44,7 @@ const SuggestionsGrid = ({ players, loading, onAddPlayer }) => (
                 ))}
             </Grid>
         )}
-    </StyledBox>
+    </SuggestionsGridWrapper>
 )
 
 export default SuggestionsGrid

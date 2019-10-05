@@ -14,14 +14,14 @@ import {
     setPlayerInput,
     setTeam,
     removePlayer,
+    MIN_CHARS,
+    NOT_ENOUGH_CHARS_WARNING,
+    DUP_PLAYER_WARNING,
 } from './TeamBuilderContext'
 import AddPlayerInput from './playerSearch/AddPlayerInput'
 import SuggestionsGrid from './playerSearch/SuggestionsGrid'
 import { ReactComponent as SearchPlaceholderGraphic } from '../../assets/images/undraw_search_placeholder.svg'
 import { ReactComponent as NotEnoughCharsGraphic } from '../../assets/images/search_hint.svg'
-
-const MIN_CHARS = 4
-const NOT_ENOUGH_CHARS = `Psst... Type in at least ${MIN_CHARS} characters`
 
 const Header = styled.h1`
     font-size: 2.6em;
@@ -33,6 +33,11 @@ const Header = styled.h1`
 const RosterWrapper = styled(Box)`
     background-color: #7781f7;
     border-radius: 10px;
+`
+
+const WarningMessage = styled.h3`
+    margin-top: 50px;
+    text-align: center;
 `
 
 const SaveTeamButton = styled(Button)`
@@ -79,7 +84,7 @@ function TeamBuilder({ history }) {
         const val = e.target.value
 
         if (!!val && val.length < MIN_CHARS) {
-            dispatch(setWarningMessage(NOT_ENOUGH_CHARS))
+            dispatch(setWarningMessage(NOT_ENOUGH_CHARS_WARNING))
         } else {
             dispatch(setWarningMessage(''))
         }
@@ -89,7 +94,7 @@ function TeamBuilder({ history }) {
 
     function handleAddPlayer(player) {
         if (team.map(p => p.id).includes(player.id)) {
-            dispatch(setWarningMessage('Oops, looks like you already have that player!'))
+            dispatch(setWarningMessage(DUP_PLAYER_WARNING))
         } else {
             dispatch(addPlayer(player))
         }
@@ -130,9 +135,9 @@ function TeamBuilder({ history }) {
                 )}
                 {!!warningMessage && (
                     <>
-                        <h3 style={{ marginTop: '50px', textAlign: 'center' }}>{warningMessage}</h3>
+                        <WarningMessage>{warningMessage}</WarningMessage>
 
-                        {warningMessage === NOT_ENOUGH_CHARS && (
+                        {warningMessage === NOT_ENOUGH_CHARS_WARNING && (
                             <SVGWrapper margin="0">
                                 <NotEnoughCharsGraphic />
                             </SVGWrapper>

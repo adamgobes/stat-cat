@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box, Grid, Button } from 'grommet'
+import { Box } from 'grommet'
+
 import PlayerImage from '../../shared/PlayerImage'
 import NoImagePlayer from '../../../assets/images/player.png'
 import AddRemovePlayerButton from '../AddRemovePlayerButton'
+import { ROSTER_SIZE } from '../TeamBuilderContext'
 
 const RosterGrid = styled(Box)`
     margin-top: 20px;
@@ -28,16 +30,13 @@ const PlayerName = styled.h3`
 `
 
 const RemovePlayerButton = styled(AddRemovePlayerButton)`
-	position: absolute;
-	margin-left: 38px;
-	margin-top: -24px;
-	visibility: ${props => (props.hidden ? 'hidden' : 'visible')}
+    position: absolute;
+    margin-left: 38px;
+    margin-top: -24px;
     background: white;
     border: 2px solid ${props => props.theme.global.colors.brand};
     color: #7781f7;
 `
-
-const Row = styled(Box)``
 
 const RosterItem = styled(Box)`
     flex-basis: 25%;
@@ -48,8 +47,6 @@ const RosterItem = styled(Box)`
     }
 `
 
-const ROSTER_SIZE = 12
-
 function Roster({ players, onRemovePlayer }) {
     const team = [...players, ...new Array(ROSTER_SIZE - players.length)]
 
@@ -57,9 +54,9 @@ function Roster({ players, onRemovePlayer }) {
         <>
             <MyTeamHeader>My Team</MyTeamHeader>
             <RosterGrid>
-                <Row direction="row" justify="start" wrap>
-                    {team.map(p => (
-                        <RosterItem style={{}}>
+                <Box direction="row" justify="start" wrap>
+                    {team.map((p, i) => (
+                        <RosterItem key={p ? p.id : i}>
                             <MiniRosterImage align="center" justify="center">
                                 <PlayerImage
                                     size="M"
@@ -79,7 +76,7 @@ function Roster({ players, onRemovePlayer }) {
                             )}
                         </RosterItem>
                     ))}
-                </Row>
+                </Box>
             </RosterGrid>
         </>
     )

@@ -1,5 +1,11 @@
 import React, { createContext, useReducer, useMemo } from 'react'
 
+export const MIN_CHARS = 4
+export const NOT_ENOUGH_CHARS_WARNING = `Psst... Type in at least ${MIN_CHARS} characters`
+export const DUP_PLAYER_WARNING = 'Oops, looks like you already have that player!'
+
+export const ROSTER_SIZE = 12
+
 const SET_PLAYER_INPUT = 'SET_PLAYER_INPUT'
 const SET_TEAM = 'SET_TEAM'
 const ADD_PLAYER = 'ADD_PLAYER'

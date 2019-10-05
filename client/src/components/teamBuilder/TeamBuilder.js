@@ -37,7 +37,7 @@ const RosterWrapper = styled(Box)`
 
 const SaveTeamButton = styled(Button)`
     width: 140px;
-    border-radius: 10px;
+    border-radius: 20px;
     background: white;
     color: #7781f7;
     padding: 10px;
@@ -150,7 +150,7 @@ function TeamBuilder({ history }) {
             <RosterWrapper align="center">
                 <Roster players={team} onRemovePlayer={handleRemovePlayer} />
                 <SaveTeamButton
-                    label={saveTeamLoading ? <Loader size={20} /> : 'Save Team'}
+                    label={saveTeamLoading ? <Loader size={20} /> : <b>Save Team</b>}
                     onClick={() => {
                         mutateTeam({
                             variables: { playerIds: extractIds(team) },

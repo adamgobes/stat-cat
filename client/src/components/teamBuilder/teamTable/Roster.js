@@ -5,6 +5,11 @@ import PlayerImage from '../../shared/PlayerImage'
 import NoImagePlayer from '../../../assets/images/player.png'
 import AddRemovePlayerButton from '../AddRemovePlayerButton'
 
+const RosterGrid = styled(Box)`
+    margin-top: 20px;
+    width: 90%;
+`
+
 const MyTeamHeader = styled.h1`
     font-size: 2.6em;
     text-align: center;
@@ -34,7 +39,14 @@ const RemovePlayerButton = styled(AddRemovePlayerButton)`
 
 const Row = styled(Box)``
 
-const RosterItem = styled(Box)``
+const RosterItem = styled(Box)`
+    flex-basis: 25%;
+    min-height: 170px;
+    @media (max-width: 1110px) {
+        flex-basis: 33%;
+        min-height: 146px;
+    }
+`
 
 const ROSTER_SIZE = 12
 
@@ -44,10 +56,10 @@ function Roster({ players, onRemovePlayer }) {
     return (
         <>
             <MyTeamHeader>My Team</MyTeamHeader>
-            <Box style={{ marginTop: '20px', width: '90%' }}>
+            <RosterGrid>
                 <Row direction="row" justify="start" wrap>
                     {team.map(p => (
-                        <RosterItem style={{ minHeight: '170px' }} basis="1/4">
+                        <RosterItem style={{}}>
                             <MiniRosterImage align="center" justify="center">
                                 <PlayerImage
                                     size="M"
@@ -68,7 +80,7 @@ function Roster({ players, onRemovePlayer }) {
                         </RosterItem>
                     ))}
                 </Row>
-            </Box>
+            </RosterGrid>
         </>
     )
 }

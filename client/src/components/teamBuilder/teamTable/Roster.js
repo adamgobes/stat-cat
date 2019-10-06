@@ -1,11 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box } from 'grommet'
+import { Box, Button } from 'grommet'
 
 import PlayerImage from '../../shared/PlayerImage'
 import NoImagePlayer from '../../../assets/images/player.png'
 import AddRemovePlayerButton from '../AddRemovePlayerButton'
 import { ROSTER_SIZE } from '../TeamBuilderContext'
+import Loader from '../../shared/Loader'
+
+const RosterWrapper = styled(Box)`
+    background-color: #7781f7;
+    border-radius: 10px;
+`
 
 const RosterGrid = styled(Box)`
     margin-top: 20px;
@@ -38,6 +44,16 @@ const RemovePlayerButton = styled(AddRemovePlayerButton)`
     color: #7781f7;
 `
 
+const SaveTeamButton = styled(Button)`
+    width: 140px;
+    border-radius: 20px;
+    background: white;
+    color: #7781f7;
+    padding: 10px;
+    text-align: center;
+    border: 2px solid white;
+`
+
 const RosterItem = styled(Box)`
     flex-basis: 25%;
     min-height: 170px;
@@ -47,11 +63,11 @@ const RosterItem = styled(Box)`
     }
 `
 
-function Roster({ players, onRemovePlayer }) {
+function Roster({ players, onRemovePlayer, onSaveTeam, saveTeamLoading }) {
     const team = [...players, ...new Array(ROSTER_SIZE - players.length)]
 
     return (
-        <>
+        <RosterWrapper align="center">
             <MyTeamHeader>My Team</MyTeamHeader>
             <RosterGrid>
                 <Box direction="row" justify="start" wrap>
@@ -78,7 +94,11 @@ function Roster({ players, onRemovePlayer }) {
                     ))}
                 </Box>
             </RosterGrid>
-        </>
+            <SaveTeamButton
+                label={saveTeamLoading ? <Loader size={20} /> : <b>Save Team</b>}
+                onClick={onSaveTeam}
+            />
+        </RosterWrapper>
     )
 }
 

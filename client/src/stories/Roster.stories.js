@@ -7,6 +7,8 @@ const rosterData = [
     {
         id: '10087',
         fullName: 'Ben Simmons',
+        firstName: 'Ben',
+        lastName: 'Simmons',
         currentTeam: {
             abbreviation: 'PHI',
             full: 'Philadelphia 76ers',
@@ -19,6 +21,8 @@ const rosterData = [
     {
         id: '9458',
         fullName: 'Ben McLemore',
+        firstName: 'Ben',
+        lastName: 'McLemore',
         currentTeam: {
             abbreviation: 'SAC',
             full: 'Sacremento Kings',
@@ -31,6 +35,8 @@ const rosterData = [
     },
     {
         fullName: 'Kevin Durant',
+        firstName: 'Kevin',
+        lastName: 'Durant',
         currentTeam: {
             abbreviation: 'BKN',
             full: 'Brooklyn Nets',
@@ -43,6 +49,8 @@ const rosterData = [
     },
     {
         fullName: 'Kevon Looney',
+        firstName: 'Kevon',
+        lastName: 'Looney',
         currentTeam: {
             abbreviation: 'GSW',
             full: 'Golden State Warriors',
@@ -55,6 +63,8 @@ const rosterData = [
     },
     {
         fullName: 'Klay Thompson',
+        firstName: 'Klay',
+        lastName: 'Thompson',
         currentTeam: {
             abbreviation: 'GSW',
             full: 'Golden State Warriors',

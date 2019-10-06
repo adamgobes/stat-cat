@@ -1,5 +1,5 @@
 import React, { useMemo, useContext } from 'react'
-import { Box, Button, Grid } from 'grommet'
+import { Box, Grid } from 'grommet'
 import styled from 'styled-components'
 
 import { useQuery, useMutation } from '@apollo/react-hooks'
@@ -30,24 +30,9 @@ const Header = styled.h1`
     margin: 40px 0;
 `
 
-const RosterWrapper = styled(Box)`
-    background-color: #7781f7;
-    border-radius: 10px;
-`
-
 const WarningMessage = styled.h3`
     margin-top: 50px;
     text-align: center;
-`
-
-const SaveTeamButton = styled(Button)`
-    width: 140px;
-    border-radius: 20px;
-    background: white;
-    color: #7781f7;
-    padding: 10px;
-    text-align: center;
-    border: 2px solid white;
 `
 
 const SVGWrapper = styled(Box)`
@@ -65,7 +50,7 @@ function TeamBuilder({ history }) {
     const { data: myTeamData, loading: myTeamLoading } = useQuery(MY_TEAM_QUERY)
 
     const [mutateTeam, { loading: saveTeamLoading }] = useMutation(SAVE_TEAM_MUTATION, {
-        refetchQueries: () => [{ query: DASHBOARD_QUERY }],
+        refetchQueries: () => [{ query: DASHBOARD_QUERY }, { query: MY_TEAM_QUERY }],
         onCompleted: () => history.push('/dashboard'),
     })
 
@@ -92,6 +77,12 @@ function TeamBuilder({ history }) {
         dispatch(setPlayerInput(val))
     }
 
+    function handleSaveTeam() {
+        mutateTeam({
+            variables: { playerIds: team.map(p => p.id) },
+        })
+    }
+
     function handleAddPlayer(player) {
         if (team.map(p => p.id).includes(player.id)) {
             dispatch(setWarningMessage(DUP_PLAYER_WARNING))
@@ -102,11 +93,6 @@ function TeamBuilder({ history }) {
 
     function handleRemovePlayer(player) {
         dispatch(removePlayer(player))
-    }
-
-    // given players, return array of their ids to persist to server
-    function extractIds(playersArr) {
-        return playersArr.map(p => p.id)
     }
 
     if (myTeamLoading) return <Loader size={80} />
@@ -152,17 +138,13 @@ function TeamBuilder({ history }) {
                     />
                 )}
             </Box>
-            <RosterWrapper align="center">
-                <Roster players={team} onRemovePlayer={handleRemovePlayer} />
-                <SaveTeamButton
-                    label={saveTeamLoading ? <Loader size={20} /> : <b>Save Team</b>}
-                    onClick={() => {
-                        mutateTeam({
-                            variables: { playerIds: extractIds(team) },
-                        })
-                    }}
-                />
-            </RosterWrapper>
+
+            <Roster
+                players={team}
+                onRemovePlayer={handleRemovePlayer}
+                onSaveTeam={handleSaveTeam}
+                saveTeamLoading={saveTeamLoading}
+            />
         </Grid>
     )
 }

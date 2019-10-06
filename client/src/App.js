@@ -65,10 +65,10 @@ const App = () => {
                     <Route
                         exact
                         path="/teambuilder"
-                        render={() =>
+                        render={({ history }) =>
                             isLoggedIn() ? (
                                 <TeamBuilderContextProvider>
-                                    <TeamBuilder />
+                                    <TeamBuilder history={history} />
                                 </TeamBuilderContextProvider>
                             ) : (
                                 <Redirect to="/auth" />

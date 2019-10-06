@@ -1,10 +1,9 @@
 import React, { useMemo, useContext } from 'react'
-import { Box, Grid, Button } from 'grommet'
+import { Box, Grid } from 'grommet'
 import styled from 'styled-components'
 
 import { useQuery, useMutation } from '@apollo/react-hooks'
-import TeamTable from './TeamTable'
-import Logo from '../general/Logo'
+import Roster from './teamTable/Roster'
 import Loader from '../shared/Loader'
 import { SAVE_TEAM_MUTATION } from '../../apollo/mutations'
 import { DASHBOARD_QUERY, MY_TEAM_QUERY, SEARCH_PLAYERS_QUERY } from '../../apollo/queries'
@@ -13,25 +12,36 @@ import {
     addPlayer,
     setWarningMessage,
     setPlayerInput,
-    removePlayer,
     setTeam,
+    removePlayer,
+    MIN_CHARS,
+    NOT_ENOUGH_CHARS_WARNING,
+    DUP_PLAYER_WARNING,
 } from './TeamBuilderContext'
 import AddPlayerInput from './playerSearch/AddPlayerInput'
 import SuggestionsGrid from './playerSearch/SuggestionsGrid'
+import { ReactComponent as SearchPlaceholderGraphic } from '../../assets/images/undraw_search_placeholder.svg'
+import { ReactComponent as NotEnoughCharsGraphic } from '../../assets/images/search_hint.svg'
 
-const Header = styled.h2`
+const Header = styled.h1`
+    font-size: 2.6em;
     text-align: center;
+    font-weight: bold;
     margin: 40px 0;
 `
 
-const SaveButton = styled(Button)`
-    background: white;
-    color: ${props => props.theme.global.colors.brand};
-    margin-top: 20px;
-    border-radius: 0;
+const WarningMessage = styled.h3`
+    margin-top: 50px;
+    text-align: center;
 `
 
-function TeamBuilder() {
+const SVGWrapper = styled(Box)`
+    width: 260px;
+    height: 260px;
+    margin: ${props => props.margin}px;
+`
+
+function TeamBuilder({ history }) {
     const {
         teamBuilderContext: { playerInput, team, warningMessage },
         dispatch,
@@ -40,12 +50,13 @@ function TeamBuilder() {
     const { data: myTeamData, loading: myTeamLoading } = useQuery(MY_TEAM_QUERY)
 
     const [mutateTeam, { loading: saveTeamLoading }] = useMutation(SAVE_TEAM_MUTATION, {
-        refetchQueries: () => [{ query: DASHBOARD_QUERY }],
+        refetchQueries: () => [{ query: DASHBOARD_QUERY }, { query: MY_TEAM_QUERY }],
+        onCompleted: () => history.push('/dashboard'),
     })
 
     const { data: searchData, loading: searchLoading } = useQuery(SEARCH_PLAYERS_QUERY, {
         variables: { filter: playerInput },
-        skip: playerInput.length < 3,
+        skip: playerInput.length < MIN_CHARS,
     })
 
     useMemo(() => {
@@ -57,8 +68,8 @@ function TeamBuilder() {
     function handlePlayerInputChange(e) {
         const val = e.target.value
 
-        if (!!val && val.length < 3) {
-            dispatch(setWarningMessage('Psst... Type in at least 3 characters'))
+        if (!!val && val.length < MIN_CHARS) {
+            dispatch(setWarningMessage(NOT_ENOUGH_CHARS_WARNING))
         } else {
             dispatch(setWarningMessage(''))
         }
@@ -66,78 +77,75 @@ function TeamBuilder() {
         dispatch(setPlayerInput(val))
     }
 
+    function handleSaveTeam() {
+        mutateTeam({
+            variables: { playerIds: team.map(p => p.id) },
+        })
+    }
+
     function handleAddPlayer(player) {
         if (team.map(p => p.id).includes(player.id)) {
-            dispatch(setWarningMessage('Oops, looks like you already have that player!'))
+            dispatch(setWarningMessage(DUP_PLAYER_WARNING))
         } else {
             dispatch(addPlayer(player))
         }
     }
 
-    function onRemovePlayer(player) {
-        removePlayer(player)
-    }
-
-    // given players, return array of their ids to persist to server
-    function extractIds(playersArr) {
-        return playersArr.map(p => p.id)
+    function handleRemovePlayer(player) {
+        dispatch(removePlayer(player))
     }
 
     if (myTeamLoading) return <Loader size={80} />
 
     return (
-        <Box>
-            <Grid
-                fill
-                areas={[
-                    { name: 'search', start: [0, 0], end: [0, 0] },
-                    { name: 'team', start: [1, 0], end: [1, 0] },
-                ]}
-                columns={['1/2', 'flex']}
-                rows={['flex']}
-                gap="small"
-            >
-                <Box gridArea="search">
-                    <Header>Team Builder</Header>
-                    <AddPlayerInput
-                        onPlayerInputChange={handlePlayerInputChange}
-                        inputValue={playerInput}
-                    />
-                    {!!warningMessage && (
-                        <h3 style={{ marginTop: '50px', textAlign: 'center' }}>{warningMessage}</h3>
-                    )}
-                    {playerInput.length >= 3 && (
-                        <SuggestionsGrid
-                            players={!searchLoading && searchData.allPlayers}
-                            loading={searchLoading}
-                            onAddPlayer={handleAddPlayer}
-                        />
-                    )}
-                </Box>
-                <Box gridArea="team">
-                    <Header>Your Team</Header>
-                    {team.length !== 0 && (
-                        <TeamTable team={team} handleRemovePlayer={onRemovePlayer} />
-                    )}
-                    {team.length === 0 && (
-                        <Box align="center" pad="large" justify="center">
-                            <Logo />
-                            <h2>Add players using the form to the left!</h2>
-                        </Box>
-                    )}
-                </Box>
-            </Grid>
-            <Box direction="row" justify="center">
-                <SaveButton
-                    label={saveTeamLoading ? <Loader size={20} /> : 'Save Team'}
-                    onClick={() => {
-                        mutateTeam({
-                            variables: { playerIds: extractIds(team) },
-                        })
-                    }}
+        <Grid
+            fill
+            areas={[
+                { name: 'search', start: [0, 0], end: [0, 0] },
+                { name: 'team', start: [1, 0], end: [1, 0] },
+            ]}
+            columns={['1/2', 'flex']}
+            rows={['flex']}
+            gap="small"
+        >
+            <Box direction="column" align="center">
+                <Header>Team Builder</Header>
+                <AddPlayerInput
+                    onPlayerInputChange={handlePlayerInputChange}
+                    inputValue={playerInput}
                 />
+                {!warningMessage && playerInput.length === 0 && (
+                    <SVGWrapper margin="40">
+                        <SearchPlaceholderGraphic />
+                    </SVGWrapper>
+                )}
+                {!!warningMessage && (
+                    <>
+                        <WarningMessage>{warningMessage}</WarningMessage>
+
+                        {warningMessage === NOT_ENOUGH_CHARS_WARNING && (
+                            <SVGWrapper margin="0">
+                                <NotEnoughCharsGraphic />
+                            </SVGWrapper>
+                        )}
+                    </>
+                )}
+                {playerInput.length >= MIN_CHARS && (
+                    <SuggestionsGrid
+                        players={!searchLoading && searchData.allPlayers}
+                        loading={searchLoading}
+                        onAddPlayer={handleAddPlayer}
+                    />
+                )}
             </Box>
-        </Box>
+
+            <Roster
+                players={team}
+                onRemovePlayer={handleRemovePlayer}
+                onSaveTeam={handleSaveTeam}
+                saveTeamLoading={saveTeamLoading}
+            />
+        </Grid>
     )
 }
 

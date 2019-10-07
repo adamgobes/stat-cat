@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 
 import Roster from '../teamTable/Roster'
 
@@ -79,6 +80,10 @@ const rosterData = [
 
 storiesOf('Team Builder/Roster', module).add('default', () => (
     <div style={{ width: '50%', height: '100%' }}>
-        <Roster players={rosterData} />
+        <Roster
+            players={rosterData}
+            onRemovePlayer={action('Player Removed!')}
+            onSaveTeam={action('Team Saved!')}
+        />
     </div>
 ))

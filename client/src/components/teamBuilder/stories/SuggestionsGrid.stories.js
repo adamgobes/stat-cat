@@ -86,10 +86,10 @@ const SuggestionsGridData = [
     },
 ]
 
+const actions = {
+    onAddPlayer: action('onAddPlayer'),
+}
+
 storiesOf('Team Builder/Suggestions Grid', module).add('default', () => (
-    <SuggestionsGrid
-        players={SuggestionsGridData}
-        loading={false}
-        onAddPlayer={action('Player Added!')}
-    />
+    <SuggestionsGrid players={SuggestionsGridData} loading={false} {...actions} />
 ))

@@ -78,12 +78,13 @@ const rosterData = [
     },
 ]
 
+const actions = {
+    onRemovePlayer: action('onRemovePlayer'),
+    onSaveTeam: action('onSaveTeam'),
+}
+
 storiesOf('Team Builder/Roster', module).add('default', () => (
     <div style={{ width: '50%', height: '100%' }}>
-        <Roster
-            players={rosterData}
-            onRemovePlayer={action('Player Removed!')}
-            onSaveTeam={action('Team Saved!')}
-        />
+        <Roster players={rosterData} {...actions} />
     </div>
 ))

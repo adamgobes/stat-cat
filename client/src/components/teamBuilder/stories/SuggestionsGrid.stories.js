@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 
 import SuggestionsGrid from '../playerSearch/SuggestionsGrid'
 
@@ -86,5 +87,9 @@ const SuggestionsGridData = [
 ]
 
 storiesOf('Team Builder/Suggestions Grid', module).add('default', () => (
-    <SuggestionsGrid players={SuggestionsGridData} loading={false} />
+    <SuggestionsGrid
+        players={SuggestionsGridData}
+        loading={false}
+        onAddPlayer={action('Player Added!')}
+    />
 ))

@@ -11,6 +11,8 @@ import Loader from '../../shared/Loader'
 const RosterWrapper = styled(Box)`
     background-color: #7781f7;
     border-radius: 10px;
+    height: 100%;
+    overflow-y: scroll;
 `
 
 const RosterGrid = styled(Box)`

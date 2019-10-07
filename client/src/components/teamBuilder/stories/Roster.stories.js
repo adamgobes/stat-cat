@@ -77,4 +77,8 @@ const rosterData = [
     },
 ]
 
-storiesOf('Team Builder/Roster', module).add('default', () => <Roster players={rosterData} />)
+storiesOf('Team Builder/Roster', module).add('default', () => (
+    <div style={{ width: '50%', height: '100%' }}>
+        <Roster players={rosterData} />
+    </div>
+))

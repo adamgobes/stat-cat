@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { storiesOf } from '@storybook/react'
-import PlayerImage from '../components/shared/PlayerImage'
+import PlayerImage from '../PlayerImage'
 
 storiesOf('Shared/Player Image', module).add('default', () => (
     <PlayerImage

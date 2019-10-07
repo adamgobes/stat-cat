@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import Roster from '../components/teamBuilder/teamTable/Roster'
+import Roster from '../teamTable/Roster'
 
 const rosterData = [
     {

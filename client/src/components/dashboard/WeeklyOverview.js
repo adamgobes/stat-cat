@@ -24,8 +24,6 @@ const TableRow = styled(Box)`
     border-radius: 10px;
 `
 
-const TableHeader = styled(Box)``
-
 const Table = styled(Box)`
     position: relative;
     width: 96%;
@@ -82,11 +80,11 @@ function WeeklyOverview({ data }) {
                 <h1>Weekly Overview</h1>
                 <TableRow direction="row" style={{ margin: '14px 0' }}>
                     <Box basis="small">
-                        <TableHeader />
+                        <Box />
                     </Box>
 
                     <Box direction="row" justify="start" basis="small">
-                        <TableHeader>Player Name</TableHeader>
+                        <Box>Player Name</Box>
                     </Box>
                     <Box
                         direction="row"
@@ -94,13 +92,13 @@ function WeeklyOverview({ data }) {
                         basis="small"
                         style={{ marginRight: '20px' }}
                     >
-                        <TableHeader>Injury</TableHeader>
+                        <Box>Injury</Box>
                     </Box>
                     <Box direction="row" justify="start" basis="small">
-                        <TableHeader>Playing Probability</TableHeader>
+                        <Box>Playing Probability</Box>
                     </Box>
                     <Box direction="row" justify="start" basis="small">
-                        <TableHeader>Games This Week</TableHeader>
+                        <Box>Games This Week</Box>
                     </Box>
                 </TableRow>
                 <Entries direction="column">

@@ -8,7 +8,7 @@ import PlayerImage from '../shared/PlayerImage'
 const WeeklyOverviewWrapper = styled(Box)`
     width: 800px;
     height: 400px;
-    background: #eff1f3;
+    background: #f9fafe;
 `
 
 const TableRow = styled(Box)`
@@ -17,6 +17,7 @@ const TableRow = styled(Box)`
     background: white;
     padding: 10px;
     margin: 4px 0;
+    border-radius: 10px;
 `
 
 const TableHeader = styled(Box)``
@@ -39,7 +40,7 @@ function WeeklyOverview({ data }) {
             <ReactTooltip />
             <Table>
                 <h1>Weekly Overview</h1>
-                <TableRow direction="row">
+                <TableRow direction="row" style={{ margin: '14px 0' }}>
                     <Box basis="small">
                         <TableHeader />
                     </Box>
@@ -65,7 +66,7 @@ function WeeklyOverview({ data }) {
                 <Entries direction="column">
                     {data.map(p => (
                         <TableRow direction="row" align="center">
-                            <Box direction="row" justify="start" basis="small">
+                            <Box direction="row" justify="center" basis="small">
                                 <PlayerImage src={p.imageSrc} size="XS" />
                             </Box>
                             <Box direction="row" justify="start" basis="small">

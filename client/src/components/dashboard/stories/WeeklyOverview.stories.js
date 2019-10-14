@@ -31,6 +31,20 @@ const WeeklyOverviewData = [
         description: 'torn ACL',
         playingProbability: 'OUT',
     },
+    {
+        fullName: 'Ben Simmons',
+        description: 'torn ACL',
+        playingProbability: 'OUT',
+        imageSrc:
+            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1627732.png',
+    },
+    {
+        fullName: 'Ben McLemore',
+        description: 'torn ACL',
+        playingProbability: 'OUT',
+        imageSrc:
+            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203463.png',
+    },
 ]
 
 storiesOf(`${storyPath}`, module).add('default', () => (

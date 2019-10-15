@@ -8,6 +8,12 @@ import PlayerImage from '../shared/PlayerImage'
 
 const MAX_PER_PAGE = 3
 
+const playingProbToColor = {
+    OUT: '#EB604B',
+    PROBABLE: '#F4BA40',
+    HEALTHY: '#7FCF86',
+}
+
 const WeeklyOverviewWrapper = styled(Box)`
     position: relative;
     width: 800px;
@@ -108,7 +114,7 @@ function WeeklyOverview({ data }) {
                                 <PlayerImage src={p.imageSrc} size="XS" />
                             </Box>
                             <Box direction="row" justify="start" basis="small">
-                                {p.fullName}
+                                <b>{p.fullName}</b>
                             </Box>
                             <Box
                                 direction="row"
@@ -119,10 +125,17 @@ function WeeklyOverview({ data }) {
                                 <Truncated data-tip={p.description}>{p.description}</Truncated>
                             </Box>
                             <Box direction="row" justify="start" basis="small">
-                                {p.playingProbability}
+                                <span
+                                    style={{
+                                        color: playingProbToColor[p.playingProbability],
+                                        fontWeight: 'bold',
+                                    }}
+                                >
+                                    {p.playingProbability}
+                                </span>
                             </Box>
                             <Box direction="row" justify="start" basis="small">
-                                2
+                                {Math.floor(Math.random() * 3) + 1}
                             </Box>
                         </TableRow>
                     ))}

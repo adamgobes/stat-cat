@@ -45,6 +45,13 @@ const WeeklyOverviewData = [
         imageSrc:
             'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203463.png',
     },
+    {
+        fullName: 'Dragan Bender',
+        description: 'N/A',
+        playingProbability: 'HEALTHY',
+        imageSrc:
+            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1627733.png',
+    },
 ]
 
 storiesOf(`${storyPath}`, module).add('default', () => (

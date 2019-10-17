@@ -16,7 +16,7 @@ const playingProbToColor = {
 
 const WeeklyOverviewWrapper = styled(Box)`
     position: relative;
-    width: 800px;
+    width: 740px;
     min-height: 420px;
     background: #f9fafe;
 `
@@ -84,47 +84,47 @@ function WeeklyOverview({ data }) {
             <ReactTooltip />
             <Table>
                 <h1>Weekly Overview</h1>
-                <TableRow direction="row" style={{ margin: '14px 0' }}>
-                    <Box basis="small">
+                <TableRow direction="row" justify="center" style={{ margin: '14px 0' }}>
+                    <Box basis="xsmall">
                         <Box />
                     </Box>
 
-                    <Box direction="row" justify="start" basis="small">
+                    <Box direction="row" justify="center" basis="small">
                         <Box>Player Name</Box>
                     </Box>
                     <Box
                         direction="row"
-                        justify="start"
+                        justify="center"
                         basis="small"
                         style={{ marginRight: '20px' }}
                     >
                         <Box>Injury</Box>
                     </Box>
-                    <Box direction="row" justify="start" basis="small">
+                    <Box direction="row" justify="center" basis="small">
                         <Box>Playing Probability</Box>
                     </Box>
-                    <Box direction="row" justify="start" basis="small">
+                    <Box direction="row" justify="center" basis="small">
                         <Box>Games This Week</Box>
                     </Box>
                 </TableRow>
                 <Entries direction="column">
                     {data.slice((page - 1) * MAX_PER_PAGE, page * MAX_PER_PAGE).map(p => (
                         <TableRow direction="row" align="center">
-                            <Box direction="row" justify="center" basis="small">
+                            <Box direction="row" justify="center" basis="xsmall">
                                 <PlayerImage src={p.imageSrc} size="XS" />
                             </Box>
-                            <Box direction="row" justify="start" basis="small">
+                            <Box direction="row" justify="center" basis="small">
                                 <b>{p.fullName}</b>
                             </Box>
                             <Box
                                 direction="row"
-                                justify="start"
+                                justify="center"
                                 basis="small"
                                 style={{ marginRight: '20px' }}
                             >
                                 <Truncated data-tip={p.description}>{p.description}</Truncated>
                             </Box>
-                            <Box direction="row" justify="start" basis="small">
+                            <Box direction="row" justify="center" basis="small">
                                 <span
                                     style={{
                                         color: playingProbToColor[p.playingProbability],
@@ -134,7 +134,7 @@ function WeeklyOverview({ data }) {
                                     {p.playingProbability}
                                 </span>
                             </Box>
-                            <Box direction="row" justify="start" basis="small">
+                            <Box direction="row" justify="center" basis="small">
                                 {Math.floor(Math.random() * 3) + 1}
                             </Box>
                         </TableRow>

@@ -5,6 +5,8 @@ import ReactTooltip from 'react-tooltip'
 import { Previous, Next } from 'grommet-icons'
 
 import PlayerImage from '../shared/PlayerImage'
+import usePagination from '../../utils/customHooks'
+import Pagination from '../shared/Pagination'
 
 const MAX_PER_PAGE = 3
 
@@ -43,41 +45,8 @@ const Truncated = styled.span`
     text-overflow: ellipsis;
 `
 
-export const PaginationComponent = styled(Box)`
-    position: absolute;
-    bottom: 8px;
-    right: 20px;
-    width: 100px;
-    border-radius: 10px;
-    background: white;
-`
-
-export const PaginationButton = styled(Box)`
-    width: 50%;
-    height: 100%;
-    border-radius: 10px;
-    padding: 10px 0;
-    &:hover {
-        box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
-        transition: 0.2s;
-    }
-`
-
 function WeeklyOverview({ data }) {
-    const [page, setPage] = useState(1)
-
-    function incrementPage() {
-        const maxPages = Math.ceil(data.length / MAX_PER_PAGE)
-        if (page < maxPages) {
-            setPage(page + 1)
-        }
-    }
-
-    function decrementPage() {
-        if (page > 1) {
-            setPage(page - 1)
-        }
-    }
+    const { page, incrementPage, decrementPage } = usePagination(data.length, MAX_PER_PAGE)
 
     return (
         <WeeklyOverviewWrapper align="center">
@@ -131,14 +100,7 @@ function WeeklyOverview({ data }) {
                     ))}
                 </Entries>
             </Table>
-            <PaginationComponent direction="row" justify="evenly">
-                <PaginationButton align="center" onClick={decrementPage}>
-                    <Previous size="small" />
-                </PaginationButton>
-                <PaginationButton align="center" onClick={incrementPage}>
-                    <Next size="small" />
-                </PaginationButton>
-            </PaginationComponent>
+            <Pagination increment={incrementPage} decrement={decrementPage} />
         </WeeklyOverviewWrapper>
     )
 }

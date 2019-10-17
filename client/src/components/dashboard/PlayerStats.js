@@ -1,11 +1,11 @@
 import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
 import { Box, Select, Button } from 'grommet'
-import { Previous, Next } from 'grommet-icons'
 
 import PlayerImage from '../shared/PlayerImage'
 import { allStats } from '../../utils/computeHelpers'
-import { PaginationComponent, PaginationButton } from './WeeklyOverview'
+import Pagination from '../shared/Pagination'
+import usePagination from '../../utils/customHooks'
 
 const MAX_PER_PAGE = 4
 
@@ -51,20 +51,7 @@ const findStat = (statsArray, stat) => statsArray.find(s => s.category === stat)
 function PlayerStats({ data }) {
     const [selectedStat, setSelectedStat] = useState('PPG')
     const [selectedTimeFrame, setSelectedTimeFrame] = useState(timeFrames[0])
-    const [page, setPage] = useState(1)
-
-    function incrementPage() {
-        const maxPages = Math.ceil(data.length / MAX_PER_PAGE)
-        if (page < maxPages) {
-            setPage(page + 1)
-        }
-    }
-
-    function decrementPage() {
-        if (page > 1) {
-            setPage(page - 1)
-        }
-    }
+    const { page, incrementPage, decrementPage } = usePagination(data.length, MAX_PER_PAGE)
 
     const sortedData = useMemo(
         () =>
@@ -132,14 +119,7 @@ function PlayerStats({ data }) {
                         ))}
                 </Box>
             </Table>
-            <PaginationComponent direction="row" justify="evenly">
-                <PaginationButton align="center" onClick={decrementPage}>
-                    <Previous size="small" />
-                </PaginationButton>
-                <PaginationButton align="center" onClick={incrementPage}>
-                    <Next size="small" />
-                </PaginationButton>
-            </PaginationComponent>
+            <Pagination increment={incrementPage} decrement={decrementPage} />
         </PlayerStatsWrapper>
     )
 }

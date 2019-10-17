@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
-import { Box, Select } from 'grommet'
+import { Box, Select, Button } from 'grommet'
 import { Previous, Next } from 'grommet-icons'
 
 import PlayerImage from '../shared/PlayerImage'
@@ -9,10 +9,12 @@ import { PaginationComponent, PaginationButton } from './WeeklyOverview'
 
 const MAX_PER_PAGE = 4
 
+const timeFrames = ['All', 'Week', 'Month']
+
 const PlayerStatsWrapper = styled(Box)`
     position: relative;
     width: 540px;
-    min-height: 540px;
+    min-height: 600px;
     background: #f9fafe;
 `
 
@@ -36,11 +38,19 @@ const StatDropdownContainer = styled.div`
     border-radius: 10px;
 `
 
+const TimeFrameButton = styled(Button)`
+    background: ${props => (props.selected ? props.theme.global.colors.brand : 'white')};
+    border: 1px solid ${props => props.theme.global.colors.brand};
+    color: ${props => (!props.selected ? props.theme.global.colors.brand : 'white')};
+    font-weight: bold;
+    padding: 4px 10px;
+`
+
 const findStat = (statsArray, stat) => statsArray.find(s => s.category === stat).value
 
 function PlayerStats({ data }) {
     const [selectedStat, setSelectedStat] = useState('PPG')
-
+    const [selectedTimeFrame, setSelectedTimeFrame] = useState(timeFrames[0])
     const [page, setPage] = useState(1)
 
     function incrementPage() {
@@ -70,6 +80,18 @@ function PlayerStats({ data }) {
     return (
         <PlayerStatsWrapper align="center">
             <h1>Player Stats</h1>
+            <Box direction="row" style={{ width: '40%', margin: '20px 0' }}>
+                {timeFrames.map(t => (
+                    <Box basis="1/3">
+                        <TimeFrameButton
+                            onClick={() => setSelectedTimeFrame(t)}
+                            selected={t === selectedTimeFrame}
+                        >
+                            {t}
+                        </TimeFrameButton>
+                    </Box>
+                ))}
+            </Box>
             <Table>
                 <TableRow style={{ margin: '14px 0' }}>
                     <Box basis="xsmall">

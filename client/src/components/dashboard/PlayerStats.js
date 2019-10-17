@@ -64,7 +64,7 @@ function PlayerStats({ data }) {
 
                 return stat2 - stat1
             }),
-        [selectedStat]
+        [selectedStat, data]
     )
 
     return (

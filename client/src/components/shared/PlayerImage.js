@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import NoImagePlayer from '../../assets/images/player.png'
 
 const sizeToPixelMap = {
+    XS: '50',
     S: '70',
     M: '85',
     L: '100',

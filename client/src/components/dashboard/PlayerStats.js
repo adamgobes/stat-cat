@@ -6,6 +6,7 @@ import PlayerImage from '../shared/PlayerImage'
 import { allStats } from '../../utils/computeHelpers'
 import Pagination from '../shared/Pagination'
 import usePagination from '../../utils/customHooks'
+import DashboardTableHeader, { TableRow } from './DashboardTable'
 
 const MAX_PER_PAGE = 4
 
@@ -21,15 +22,6 @@ const PlayerStatsWrapper = styled(Box)`
 const Table = styled(Box)`
     position: relative;
     width: 96%;
-`
-
-const TableRow = styled(Box)`
-    flex-direction: row;
-    align-items: center;
-    background: white;
-    padding: 10px;
-    margin: 4px 0;
-    border-radius: 10px;
 `
 
 const StatDropdownContainer = styled.div`
@@ -64,6 +56,20 @@ function PlayerStats({ data }) {
         [selectedStat, data]
     )
 
+    const StatDropdown = () => (
+        <Box>
+            <StatDropdownContainer>
+                <Select
+                    options={allStats}
+                    value={selectedStat}
+                    onChange={option => setSelectedStat(option.value)}
+                    size="small"
+                    plain
+                />
+            </StatDropdownContainer>
+        </Box>
+    )
+
     return (
         <PlayerStatsWrapper align="center">
             <h1>Player Stats</h1>
@@ -80,27 +86,10 @@ function PlayerStats({ data }) {
                 ))}
             </Box>
             <Table>
-                <TableRow style={{ margin: '14px 0' }}>
-                    <Box basis="xsmall">
-                        <Box />
-                    </Box>
-                    <Box direction="row" justify="center" basis="small">
-                        <Box>Player</Box>
-                    </Box>
-                    <Box direction="row" justify="center" basis="small">
-                        <Box>
-                            <StatDropdownContainer>
-                                <Select
-                                    options={allStats}
-                                    value={selectedStat}
-                                    onChange={option => setSelectedStat(option.value)}
-                                    size="small"
-                                    plain
-                                />
-                            </StatDropdownContainer>
-                        </Box>
-                    </Box>
-                </TableRow>
+                <DashboardTableHeader
+                    sizes={['xsmall', 'small', 'small']}
+                    headers={['', 'Player Name', <StatDropdown />]}
+                />
                 <Box>
                     {sortedData
                         .slice((page - 1) * MAX_PER_PAGE, page * MAX_PER_PAGE)

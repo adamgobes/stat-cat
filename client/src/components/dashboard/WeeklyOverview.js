@@ -7,6 +7,7 @@ import { Previous, Next } from 'grommet-icons'
 import PlayerImage from '../shared/PlayerImage'
 import usePagination from '../../utils/customHooks'
 import Pagination from '../shared/Pagination'
+import DashboardTableHeader, { TableRow } from './DashboardTable'
 
 const MAX_PER_PAGE = 3
 
@@ -21,15 +22,6 @@ const WeeklyOverviewWrapper = styled(Box)`
     width: 740px;
     min-height: 420px;
     background: #f9fafe;
-`
-
-const TableRow = styled(Box)`
-    flex-direction: row;
-    align-items: center;
-    background: white;
-    padding: 10px;
-    margin: 4px 0;
-    border-radius: 10px;
 `
 
 const Table = styled(Box)`
@@ -53,24 +45,16 @@ function WeeklyOverview({ data }) {
             <ReactTooltip />
             <Table>
                 <h1>Weekly Overview</h1>
-                <TableRow style={{ margin: '14px 0' }}>
-                    <Box basis="xsmall">
-                        <Box />
-                    </Box>
-
-                    <Box direction="row" justify="center" basis="small">
-                        <Box>Player Name</Box>
-                    </Box>
-                    <Box direction="row" justify="center" basis="small">
-                        <Box>Injury</Box>
-                    </Box>
-                    <Box direction="row" justify="center" basis="small">
-                        <Box>Playing Probability</Box>
-                    </Box>
-                    <Box direction="row" justify="center" basis="small">
-                        <Box>Games This Week</Box>
-                    </Box>
-                </TableRow>
+                <DashboardTableHeader
+                    sizes={['xsmall', 'small', 'small', 'small', 'small']}
+                    headers={[
+                        '',
+                        'Player Name',
+                        'Injury',
+                        'Playing Probability',
+                        'Games This Week',
+                    ]}
+                />
                 <Entries direction="column">
                     {data.slice((page - 1) * MAX_PER_PAGE, page * MAX_PER_PAGE).map(p => (
                         <TableRow>

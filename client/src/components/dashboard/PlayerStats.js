@@ -7,12 +7,12 @@ import PlayerImage from '../shared/PlayerImage'
 import { allStats } from '../../utils/computeHelpers'
 import { PaginationComponent, PaginationButton } from './WeeklyOverview'
 
-const MAX_PER_PAGE = 3
+const MAX_PER_PAGE = 4
 
 const PlayerStatsWrapper = styled(Box)`
     position: relative;
     width: 540px;
-    min-height: 460px;
+    min-height: 540px;
     background: #f9fafe;
 `
 

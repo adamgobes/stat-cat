@@ -43,7 +43,7 @@ const Truncated = styled.span`
     text-overflow: ellipsis;
 `
 
-const PaginationComponent = styled(Box)`
+export const PaginationComponent = styled(Box)`
     position: absolute;
     bottom: 8px;
     right: 20px;
@@ -52,7 +52,7 @@ const PaginationComponent = styled(Box)`
     background: white;
 `
 
-const PaginationButton = styled(Box)`
+export const PaginationButton = styled(Box)`
     width: 50%;
     height: 100%;
     border-radius: 10px;
@@ -92,12 +92,7 @@ function WeeklyOverview({ data }) {
                     <Box direction="row" justify="center" basis="small">
                         <Box>Player Name</Box>
                     </Box>
-                    <Box
-                        direction="row"
-                        justify="center"
-                        basis="small"
-                        style={{ marginRight: '20px' }}
-                    >
+                    <Box direction="row" justify="center" basis="small">
                         <Box>Injury</Box>
                     </Box>
                     <Box direction="row" justify="center" basis="small">
@@ -116,12 +111,7 @@ function WeeklyOverview({ data }) {
                             <Box direction="row" justify="center" basis="small">
                                 <b>{p.fullName}</b>
                             </Box>
-                            <Box
-                                direction="row"
-                                justify="center"
-                                basis="small"
-                                style={{ marginRight: '20px' }}
-                            >
+                            <Box direction="row" justify="center" basis="small">
                                 <Truncated data-tip={p.description}>{p.description}</Truncated>
                             </Box>
                             <Box direction="row" justify="center" basis="small">

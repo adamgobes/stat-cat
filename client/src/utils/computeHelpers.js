@@ -1,4 +1,4 @@
-export const allStats = ['RPG', 'APG', 'PPG', 'SPG', 'BPG', 'TPG']
+export const allStats = ['PPG', 'APG', 'RPG', 'SPG', 'BPG', 'TPG']
 
 function computeStatProjection(stat, players) {
     return players

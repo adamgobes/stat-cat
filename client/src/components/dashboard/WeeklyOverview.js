@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Box, Button } from 'grommet'
+import { Box } from 'grommet'
 import ReactTooltip from 'react-tooltip'
 import { Previous, Next } from 'grommet-icons'
 
@@ -84,7 +84,7 @@ function WeeklyOverview({ data }) {
             <ReactTooltip />
             <Table>
                 <h1>Weekly Overview</h1>
-                <TableRow direction="row" justify="center" style={{ margin: '14px 0' }}>
+                <TableRow style={{ margin: '14px 0' }}>
                     <Box basis="xsmall">
                         <Box />
                     </Box>
@@ -109,7 +109,7 @@ function WeeklyOverview({ data }) {
                 </TableRow>
                 <Entries direction="column">
                     {data.slice((page - 1) * MAX_PER_PAGE, page * MAX_PER_PAGE).map(p => (
-                        <TableRow direction="row" align="center">
+                        <TableRow>
                             <Box direction="row" justify="center" basis="xsmall">
                                 <PlayerImage src={p.imageSrc} size="XS" />
                             </Box>

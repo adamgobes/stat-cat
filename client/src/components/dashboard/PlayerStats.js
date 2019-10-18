@@ -6,7 +6,7 @@ import PlayerImage from '../shared/PlayerImage'
 import { allStats } from '../../utils/computeHelpers'
 import Pagination from '../shared/Pagination'
 import usePagination from '../../utils/customHooks'
-import DashboardTableHeader, { TableRow } from './DashboardTable'
+import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
 
 const MAX_PER_PAGE = 4
 

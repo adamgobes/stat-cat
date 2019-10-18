@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 import ReactTooltip from 'react-tooltip'
-import { Previous, Next } from 'grommet-icons'
 
 import PlayerImage from '../shared/PlayerImage'
 import usePagination from '../../utils/customHooks'
 import Pagination from '../shared/Pagination'
-import DashboardTableHeader, { TableRow } from './DashboardTable'
+import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
 
 const MAX_PER_PAGE = 3
 

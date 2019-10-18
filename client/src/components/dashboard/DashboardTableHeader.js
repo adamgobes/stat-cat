@@ -15,7 +15,7 @@ export default function DashboardTableHeader({ headers, sizes }) {
     return (
         <TableRow style={{ margin: '14px 0' }}>
             {headers.map((header, i) => (
-                <Box direction="row" justify="center" basis={sizes[i]}>
+                <Box direction="row" justify="center" basis={sizes[i]} id={i}>
                     <Box>{header}</Box>
                 </Box>
             ))}

@@ -49,7 +49,6 @@ const statsData = [
 
 storiesOf(`${storyPath}`, module).add('default', () => (
     <div style={{ textAlign: 'center' }}>
-        {' '}
         <TeamStats stats={statsData} />
     </div>
 ))

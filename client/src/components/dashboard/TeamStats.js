@@ -79,10 +79,18 @@ function CountingNumberElement({ category, value }) {
 function EfficiencyNumberElement({ category, attempted, made }) {
     return (
         <TableRow>
-            <Box direction="column" justify="start" align="start" basis="medium">
-                <b>{statsAbbreviationToFull[category]}</b>
-                <div>{`Made: ${made}`}</div>
-                <div>{`Attempted: ${attempted}`}</div>
+            <Box direction="row" align="center" basis="medium">
+                {category in statToIcon && (
+                    <IconWrapper>
+                        <Box align="center" justify="center">
+                            <img src={statToIcon[category]} width="100%" height="100%" alt="PPG" />
+                        </Box>
+                    </IconWrapper>
+                )}
+                <Box direction="column" align="start">
+                    <b>{statsAbbreviationToFull[category]}</b>
+                    <b>{`${made}/${attempted}`}</b>
+                </Box>
             </Box>
             <Box direction="row" justify="start" basis="medium">
                 <b>{`${Math.round((made * 100) / attempted)}%`}</b>
@@ -127,11 +135,16 @@ export default function TeamStats({ stats }) {
                                     countingNumbers.indexOf(s2.category)
                             )
                             .map(s => (
-                                <CountingNumberElement category={s.category} value={s.value} />
+                                <CountingNumberElement
+                                    key={s.category}
+                                    category={s.category}
+                                    value={s.value}
+                                />
                             ))}
                     {page === 2 &&
                         Object.keys(efficiencyObjects).map(s => (
                             <EfficiencyNumberElement
+                                key={s.category}
                                 category={s}
                                 attempted={efficiencyObjects[s].attempted}
                                 made={efficiencyObjects[s].made}

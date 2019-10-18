@@ -11,11 +11,11 @@ export const TableRow = styled(Box)`
     border-radius: 10px;
 `
 
-export default function DashboardTableHeader({ headers, sizes }) {
+export default function DashboardTableHeader({ headers, sizes, justify = 'center' }) {
     return (
         <TableRow style={{ margin: '14px 0' }}>
             {headers.map((header, i) => (
-                <Box direction="row" justify="center" basis={sizes[i]} key={i}>
+                <Box direction="row" justify={justify} basis={sizes[i]} key={i}>
                     <Box>{header}</Box>
                 </Box>
             ))}

@@ -33,7 +33,7 @@ const TeamStatsWrapper = styled(Box)`
 
 const Table = styled(Box)`
     position: relative;
-    width: 96%;
+    width: 80%;
 `
 
 const IconWrapper = styled.div`

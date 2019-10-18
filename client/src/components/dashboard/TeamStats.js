@@ -27,7 +27,7 @@ const statToIcon = {
 const TeamStatsWrapper = styled(Box)`
     position: relative;
     width: 380px;
-    min-height: 480px;
+    min-height: 500px;
     background: #f9fafe;
 `
 

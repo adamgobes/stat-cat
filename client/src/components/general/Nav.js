@@ -47,6 +47,7 @@ const ToggleNavButton = styled(Box)`
     border-radius: 100%;
     border: 2px solid black;
     transition: 0.3s;
+    z-index: 1000;
 `
 
 const NavIconWrapper = styled(Box)`

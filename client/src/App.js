@@ -42,7 +42,7 @@ const App = () => {
                 <Grommet
                     theme={theme}
                     style={{
-                        marginLeft: appContext.isNavOpen ? '250px' : '0',
+                        marginLeft: appContext.isNavOpen ? '380px' : '0',
                         transition: 'margin-left 0.3s',
                     }}
                 >
@@ -60,7 +60,9 @@ const App = () => {
                     <Route
                         exact
                         path="/dashboard"
-                        render={() => (isLoggedIn() ? <Dashboard /> : <Redirect to="/auth" />)}
+                        render={({ history }) =>
+                            isLoggedIn() ? <Dashboard history={history} /> : <Redirect to="/auth" />
+                        }
                     />
                     <Route
                         exact

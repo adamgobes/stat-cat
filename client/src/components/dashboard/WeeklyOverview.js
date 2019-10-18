@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 import ReactTooltip from 'react-tooltip'
-import { Previous, Next } from 'grommet-icons'
 
 import PlayerImage from '../shared/PlayerImage'
+import usePagination from '../../utils/customHooks'
+import Pagination from '../shared/Pagination'
+import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
 
 const MAX_PER_PAGE = 3
 
@@ -21,15 +23,6 @@ const WeeklyOverviewWrapper = styled(Box)`
     background: #f9fafe;
 `
 
-const TableRow = styled(Box)`
-    flex-direction: row;
-    align-items: center;
-    background: white;
-    padding: 10px;
-    margin: 4px 0;
-    border-radius: 10px;
-`
-
 const Table = styled(Box)`
     position: relative;
     width: 96%;
@@ -43,65 +36,24 @@ const Truncated = styled.span`
     text-overflow: ellipsis;
 `
 
-export const PaginationComponent = styled(Box)`
-    position: absolute;
-    bottom: 8px;
-    right: 20px;
-    width: 100px;
-    border-radius: 10px;
-    background: white;
-`
-
-export const PaginationButton = styled(Box)`
-    width: 50%;
-    height: 100%;
-    border-radius: 10px;
-    padding: 10px 0;
-    &:hover {
-        box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
-        transition: 0.2s;
-    }
-`
-
 function WeeklyOverview({ data }) {
-    const [page, setPage] = useState(1)
-
-    function incrementPage() {
-        const maxPages = Math.ceil(data.length / MAX_PER_PAGE)
-        if (page < maxPages) {
-            setPage(page + 1)
-        }
-    }
-
-    function decrementPage() {
-        if (page > 1) {
-            setPage(page - 1)
-        }
-    }
+    const { page, incrementPage, decrementPage } = usePagination(data.length, MAX_PER_PAGE)
 
     return (
         <WeeklyOverviewWrapper align="center">
             <ReactTooltip />
             <Table>
                 <h1>Weekly Overview</h1>
-                <TableRow style={{ margin: '14px 0' }}>
-                    <Box basis="xsmall">
-                        <Box />
-                    </Box>
-
-                    <Box direction="row" justify="center" basis="small">
-                        <Box>Player Name</Box>
-                    </Box>
-                    <Box direction="row" justify="center" basis="small">
-                        <Box>Injury</Box>
-                    </Box>
-                    <Box direction="row" justify="center" basis="small">
-                        <Box>Playing Probability</Box>
-                    </Box>
-                    <Box direction="row" justify="center" basis="small">
-                        <Box>Games This Week</Box>
-                    </Box>
-                </TableRow>
+                <DashboardTableHeader
+                    sizes={['xsmall', 'small', 'small', 'small', 'small']}
+                    headers={[
+                        '',
+                        'Player Name',
+                        'Injury',
+                        'Playing Probability',
+                        'Games This Week',
+                    ]}
+                />
                 <Entries direction="column">
                     {data.slice((page - 1) * MAX_PER_PAGE, page * MAX_PER_PAGE).map(p => (
                         <TableRow>
@@ -131,14 +83,7 @@ function WeeklyOverview({ data }) {
                     ))}
                 </Entries>
             </Table>
-            <PaginationComponent direction="row" justify="evenly">
-                <PaginationButton align="center" onClick={decrementPage}>
-                    <Previous size="small" />
-                </PaginationButton>
-                <PaginationButton align="center" onClick={incrementPage}>
-                    <Next size="small" />
-                </PaginationButton>
-            </PaginationComponent>
+            <Pagination increment={incrementPage} decrement={decrementPage} />
         </WeeklyOverviewWrapper>
     )
 }

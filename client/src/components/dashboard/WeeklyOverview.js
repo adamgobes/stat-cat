@@ -18,7 +18,7 @@ const playingProbToColor = {
 const WeeklyOverviewWrapper = styled(Box)`
     position: relative;
     width: 540px;
-    min-height: 460px;
+    min-height: 450px;
     background: white;
     border-radius: 10px;
 `

@@ -24,14 +24,6 @@ const statToIcon = {
     '3PM': threeIcon,
 }
 
-const TeamStatsWrapper = styled(Box)`
-    position: relative;
-    width: 480px;
-    min-height: 460px;
-    background: white;
-    border-radius: 10px;
-`
-
 const Table = styled(Box)`
     position: relative;
     width: 80%;
@@ -101,12 +93,6 @@ function EfficiencyNumberElement({ category, attempted, made }) {
 }
 
 export default function TeamStats({ stats }) {
-    console.log({ stats })
-    const { page, incrementPage, decrementPage } = usePagination(
-        stats.length,
-        countingNumbers.length
-    )
-
     const efficiencyObjects = {
         FG: {
             attempted: stats.find(s => s.category === 'FGA').value,
@@ -126,32 +112,29 @@ export default function TeamStats({ stats }) {
                 justify="start"
             />
             <Box>
-                {page === 1 &&
-                    stats
-                        .filter(s => countingNumbers.includes(s.category))
-                        .sort(
-                            (s1, s2) =>
-                                countingNumbers.indexOf(s1.category) -
-                                countingNumbers.indexOf(s2.category)
-                        )
-                        .map(s => (
-                            <CountingNumberElement
-                                key={s.category}
-                                category={s.category}
-                                value={s.value}
-                            />
-                        ))}
-                {page === 2 &&
-                    Object.keys(efficiencyObjects).map(s => (
-                        <EfficiencyNumberElement
+                {stats
+                    .filter(s => countingNumbers.includes(s.category))
+                    .sort(
+                        (s1, s2) =>
+                            countingNumbers.indexOf(s1.category) -
+                            countingNumbers.indexOf(s2.category)
+                    )
+                    .map(s => (
+                        <CountingNumberElement
                             key={s.category}
-                            category={s}
-                            attempted={efficiencyObjects[s].attempted}
-                            made={efficiencyObjects[s].made}
+                            category={s.category}
+                            value={s.value}
                         />
                     ))}
+                {Object.keys(efficiencyObjects).map(s => (
+                    <EfficiencyNumberElement
+                        key={s.category}
+                        category={s}
+                        attempted={efficiencyObjects[s].attempted}
+                        made={efficiencyObjects[s].made}
+                    />
+                ))}
             </Box>
-            <Pagination increment={incrementPage} decrement={decrementPage} />
         </Table>
     )
 }

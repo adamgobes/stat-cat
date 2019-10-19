@@ -10,17 +10,18 @@ const timeFrames = ['All', '7d', '1m']
 const MyStatsWrapper = styled(Box)`
     position: relative;
     width: 540px;
-    min-height: 550px;
+    min-height: 600px;
     background: white;
     border-radius: 10px;
 `
 
-const PlayerStatsWrapper = styled(Box)`
+const StatsTableWrapper = styled(Box)`
     position: relative;
     width: 540px;
     min-height: 400px;
     background: white;
     border-radius: 10px;
+    overflow: auto;
 `
 
 const TimeFrameButton = styled(Button)`
@@ -73,11 +74,10 @@ export default function MyStats({ playerStats }) {
                     ))}
                 </Box>
             </Box>
-            <PlayerStatsWrapper align="center">
-                {console.log({ teamAverages })}
+            <StatsTableWrapper align="center">
                 {statType === 'Team' && <TeamStats stats={teamAverages} />}
                 {statType === 'Player' && <PlayerStats stats={playerStats} />}
-            </PlayerStatsWrapper>
+            </StatsTableWrapper>
         </MyStatsWrapper>
     )
 }

@@ -1,25 +1,14 @@
 import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
-import { Box, Select, Button } from 'grommet'
+import { Box, Select } from 'grommet'
 
 import PlayerImage from '../shared/PlayerImage'
 import { allStats } from '../../utils/computeHelpers'
-import Pagination from '../shared/Pagination'
-import usePagination from '../../utils/customHooks'
 import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
 
-const MAX_PER_PAGE = 4
-
-const PlayerStatsWrapper = styled(Box)`
-    position: relative;
-    width: 540px;
-    min-height: 500px;
-    background: white;
-    border-radius: 10px;
-`
-
 const Table = styled(Box)`
-    position: relative;
+    max-height: 500px;
+    sposition: relative;
     width: 96%;
 `
 
@@ -33,8 +22,6 @@ const findStat = (statsArray, stat) => statsArray.find(s => s.category === stat)
 
 function PlayerStats({ stats }) {
     const [selectedStat, setSelectedStat] = useState('PPG')
-
-    const { page, incrementPage, decrementPage } = usePagination(stats.length, MAX_PER_PAGE)
 
     const sortedData = useMemo(
         () =>
@@ -67,9 +54,9 @@ function PlayerStats({ stats }) {
                 sizes={['xsmall', 'small', 'small']}
                 headers={['', 'Player Name', <StatDropdown />]}
             />
-            <Box>
-                {sortedData.slice((page - 1) * MAX_PER_PAGE, page * MAX_PER_PAGE).map(player => (
-                    <TableRow>
+            <Box style={{ overflow: 'hidden', overflowY: 'scroll' }}>
+                {sortedData.map(player => (
+                    <TableRow flex={false}>
                         <Box direction="row" justify="center" basis="xsmall">
                             <PlayerImage src={player.imageSrc} size="XS" />
                         </Box>
@@ -82,7 +69,6 @@ function PlayerStats({ stats }) {
                     </TableRow>
                 ))}
             </Box>
-            <Pagination increment={incrementPage} decrement={decrementPage} />
         </Table>
     )
 }

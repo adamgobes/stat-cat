@@ -13,6 +13,8 @@ import fgIcon from '../../assets/images/effiency.png'
 import spgIcon from '../../assets/images/lock.png'
 import threeIcon from '../../assets/images/three-pointer.png'
 import ftIcon from '../../assets/images/money-bag.png'
+import turnoverIcon from '../../assets/images/turnover.png'
+import blocksIcon from '../../assets/images/block.png'
 
 const statToIcon = {
     PPG: basketball,
@@ -21,6 +23,8 @@ const statToIcon = {
     SPG: spgIcon,
     FG: fgIcon,
     FT: ftIcon,
+    TPG: turnoverIcon,
+    BPG: blocksIcon,
     '3PM': threeIcon,
 }
 

@@ -13,14 +13,14 @@ const MAX_PER_PAGE = 4
 const playingProbToColor = {
     OUT: '#EB604B',
     PROBABLE: '#F4BA40',
-    HEALTHY: '#7FCF86',
 }
 
 const WeeklyOverviewWrapper = styled(Box)`
     position: relative;
     width: 740px;
-    min-height: 500px;
-    background: #f9fafe;
+    min-height: 530px;
+    background: white;
+    border-radius: 10px;
 `
 
 const Table = styled(Box)`
@@ -43,7 +43,7 @@ function WeeklyOverview({ data }) {
         <WeeklyOverviewWrapper align="center">
             <ReactTooltip />
             <Table>
-                <h1>Weekly Overview</h1>
+                <h1 style={{ margin: '40px' }}>Weekly Overview</h1>
                 <DashboardTableHeader
                     sizes={['xsmall', 'small', 'small', 'small', 'small']}
                     headers={[
@@ -64,16 +64,24 @@ function WeeklyOverview({ data }) {
                                 <b>{p.fullName}</b>
                             </Box>
                             <Box direction="row" justify="center" basis="small">
-                                <Truncated data-tip={p.description}>{p.description}</Truncated>
+                                {!p.injury && <b>N/A</b>}
+                                {p.injury && (
+                                    <Truncated data-tip={p.injury.description}>
+                                        {p.injury.description}
+                                    </Truncated>
+                                )}
                             </Box>
                             <Box direction="row" justify="center" basis="small">
                                 <span
                                     style={{
-                                        color: playingProbToColor[p.playingProbability],
+                                        color: p.injury
+                                            ? playingProbToColor[p.injury.playingProbability]
+                                            : '#7FCFC6',
                                         fontWeight: 'bold',
                                     }}
                                 >
-                                    {p.playingProbability}
+                                    {p.injury && p.injury.playingProbability}
+                                    {!p.injury && 'Healthy'}
                                 </span>
                             </Box>
                             <Box direction="row" justify="center" basis="small">

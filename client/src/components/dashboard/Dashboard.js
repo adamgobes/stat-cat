@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import styled from 'styled-components'
 import { Box } from 'grommet'
@@ -6,13 +6,12 @@ import { Box } from 'grommet'
 import Loader from '../shared/Loader'
 import { DASHBOARD_QUERY } from '../../apollo/queries'
 import WeeklyOverview from './WeeklyOverview'
-import TeamStats from './TeamStats'
-import PlayerStats from './PlayerStats'
-import { computeTeamStatsAverages } from '../../utils/computeHelpers'
+import MyStats from './MyStats'
 
 const DashboardWrapper = styled(Box)`
     position: relative;
     background: #eff1f3;
+    height: 100%;
     overflow: scroll;
 `
 
@@ -23,27 +22,17 @@ const DashboardComponentWrapper = styled(Box)`
 export default function Dashboard() {
     const { data: dashboardData, loading: dashboardLoading } = useQuery(DASHBOARD_QUERY)
 
-    const teamAverages = useMemo(() => {
-        const averages =
-            dashboardData &&
-            computeTeamStatsAverages(dashboardData.myTeam.players.map(p => p.stats))
-        return averages
-    }, [dashboardData])
-
     if (dashboardLoading) return <Loader size={80} />
 
     return (
-        <DashboardWrapper align="center">
+        <DashboardWrapper align="center" justify="start">
             <h1>Dashboard</h1>
-            <Box direction="row" justify="center" align="center">
+            <Box direction="row" justify="center" align="start">
                 <DashboardComponentWrapper>
                     <WeeklyOverview data={dashboardData.myTeam.players} />
                 </DashboardComponentWrapper>
                 <DashboardComponentWrapper>
-                    <TeamStats stats={teamAverages} />
-                </DashboardComponentWrapper>
-                <DashboardComponentWrapper>
-                    <PlayerStats data={dashboardData.myTeam.players} />
+                    <MyStats playerStats={dashboardData.myTeam.players} />
                 </DashboardComponentWrapper>
             </Box>
         </DashboardWrapper>

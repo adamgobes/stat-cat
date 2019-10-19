@@ -101,6 +101,7 @@ function EfficiencyNumberElement({ category, attempted, made }) {
 }
 
 export default function TeamStats({ stats }) {
+    console.log({ stats })
     const { page, incrementPage, decrementPage } = usePagination(
         stats.length,
         countingNumbers.length
@@ -118,42 +119,39 @@ export default function TeamStats({ stats }) {
     }
 
     return (
-        <TeamStatsWrapper align="center">
-            <Table>
-                <h1 style={{ margin: '20px' }}>Team Stats</h1>
-                <DashboardTableHeader
-                    headers={['Statistic', 'Avg Per Game']}
-                    sizes={['medium', 'medium']}
-                    justify="start"
-                />
-                <Box>
-                    {page === 1 &&
-                        stats
-                            .filter(s => countingNumbers.includes(s.category))
-                            .sort(
-                                (s1, s2) =>
-                                    countingNumbers.indexOf(s1.category) -
-                                    countingNumbers.indexOf(s2.category)
-                            )
-                            .map(s => (
-                                <CountingNumberElement
-                                    key={s.category}
-                                    category={s.category}
-                                    value={s.value}
-                                />
-                            ))}
-                    {page === 2 &&
-                        Object.keys(efficiencyObjects).map(s => (
-                            <EfficiencyNumberElement
+        <Table>
+            <DashboardTableHeader
+                headers={['Statistic', 'Avg Per Game']}
+                sizes={['medium', 'medium']}
+                justify="start"
+            />
+            <Box>
+                {page === 1 &&
+                    stats
+                        .filter(s => countingNumbers.includes(s.category))
+                        .sort(
+                            (s1, s2) =>
+                                countingNumbers.indexOf(s1.category) -
+                                countingNumbers.indexOf(s2.category)
+                        )
+                        .map(s => (
+                            <CountingNumberElement
                                 key={s.category}
-                                category={s}
-                                attempted={efficiencyObjects[s].attempted}
-                                made={efficiencyObjects[s].made}
+                                category={s.category}
+                                value={s.value}
                             />
                         ))}
-                </Box>
-            </Table>
+                {page === 2 &&
+                    Object.keys(efficiencyObjects).map(s => (
+                        <EfficiencyNumberElement
+                            key={s.category}
+                            category={s}
+                            attempted={efficiencyObjects[s].attempted}
+                            made={efficiencyObjects[s].made}
+                        />
+                    ))}
+            </Box>
             <Pagination increment={incrementPage} decrement={decrementPage} />
-        </TeamStatsWrapper>
+        </Table>
     )
 }

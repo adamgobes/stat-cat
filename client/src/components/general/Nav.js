@@ -41,7 +41,7 @@ const NavigationContainer = styled(Box)`
 const ToggleNavButton = styled(Box)`
     position: absolute;
     left: ${({ isNavOpen }) => (isNavOpen ? '290px' : '40px')};
-    top: 40px;
+    top: 30px;
     width: 40px;
     height: 40px;
     border-radius: 100%;

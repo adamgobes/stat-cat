@@ -1,4 +1,4 @@
-export const allStats = ['PPG', 'APG', 'RPG', 'SPG', 'BPG', 'TPG']
+export const allStats = ['PPG', 'APG', 'RPG', 'SPG', 'BPG', 'TPG', 'FGA', 'FGM', 'FTA', 'FTM']
 
 function computeStatProjection(stat, players) {
     return players
@@ -12,6 +12,16 @@ export function computeProjections(players) {
         value: computeStatProjection(stat, players),
     }))
 }
+
+export const computeTeamStatsAverages = players =>
+    allStats.map(stat => ({
+        category: stat,
+        value: parseFloat(
+            players.reduce((a, b) => a + b.find(s => s.category === stat).value, 0) /
+                players.length,
+            0
+        ).toFixed(1),
+    }))
 
 export function computeBestAndAverage(players) {
     const bestAndAverage = allStats.map(stat => {

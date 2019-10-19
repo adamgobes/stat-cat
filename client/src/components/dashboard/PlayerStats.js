@@ -10,13 +10,14 @@ import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
 
 const MAX_PER_PAGE = 4
 
-const timeFrames = ['All', 'Week', 'Month']
+const timeFrames = ['All', '7d', '1m']
 
 const PlayerStatsWrapper = styled(Box)`
     position: relative;
     width: 540px;
-    min-height: 600px;
-    background: #f9fafe;
+    min-height: 500px;
+    background: white;
+    border-radius: 10px;
 `
 
 const Table = styled(Box)`
@@ -35,7 +36,7 @@ const TimeFrameButton = styled(Button)`
     border: 1px solid ${props => props.theme.global.colors.brand};
     color: ${props => (!props.selected ? props.theme.global.colors.brand : 'white')};
     font-weight: bold;
-    padding: 4px 10px;
+    padding: 4px 4px;
 `
 
 const findStat = (statsArray, stat) => statsArray.find(s => s.category === stat).value
@@ -70,32 +71,35 @@ function PlayerStats({ data }) {
         </Box>
     )
 
+    const TimeFrameSelector = () => (
+        <Box direction="row">
+            {timeFrames.map(t => (
+                <Box style={{ width: '400px' }}>
+                    <TimeFrameButton
+                        onClick={() => setSelectedTimeFrame(t)}
+                        selected={t === selectedTimeFrame}
+                    >
+                        {t}
+                    </TimeFrameButton>
+                </Box>
+            ))}
+        </Box>
+    )
+
     return (
         <PlayerStatsWrapper align="center">
             <h1>Player Stats</h1>
-            <Box direction="row" style={{ width: '40%', margin: '20px 0' }}>
-                {timeFrames.map(t => (
-                    <Box basis="1/3">
-                        <TimeFrameButton
-                            onClick={() => setSelectedTimeFrame(t)}
-                            selected={t === selectedTimeFrame}
-                        >
-                            {t}
-                        </TimeFrameButton>
-                    </Box>
-                ))}
-            </Box>
             <Table>
                 <DashboardTableHeader
-                    sizes={['xsmall', 'small', 'small']}
-                    headers={['', 'Player Name', <StatDropdown />]}
+                    sizes={['small', 'small', 'small']}
+                    headers={[<TimeFrameSelector />, 'Player Name', <StatDropdown />]}
                 />
                 <Box>
                     {sortedData
                         .slice((page - 1) * MAX_PER_PAGE, page * MAX_PER_PAGE)
                         .map(player => (
                             <TableRow>
-                                <Box direction="row" justify="center" basis="xsmall">
+                                <Box direction="row" justify="center" basis="small">
                                     <PlayerImage src={player.imageSrc} size="XS" />
                                 </Box>
                                 <Box direction="row" justify="center" basis="small">

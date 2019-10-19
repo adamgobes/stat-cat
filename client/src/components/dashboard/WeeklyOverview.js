@@ -17,8 +17,8 @@ const playingProbToColor = {
 
 const WeeklyOverviewWrapper = styled(Box)`
     position: relative;
-    width: 740px;
-    min-height: 530px;
+    width: 540px;
+    min-height: 460px;
     background: white;
     border-radius: 10px;
 `
@@ -43,7 +43,7 @@ function WeeklyOverview({ data }) {
         <WeeklyOverviewWrapper align="center">
             <ReactTooltip />
             <Table>
-                <h1 style={{ margin: '40px' }}>Weekly Overview</h1>
+                <h1 style={{ margin: '20px' }}>Weekly Overview</h1>
                 <DashboardTableHeader
                     sizes={['xsmall', 'small', 'small', 'small', 'small']}
                     headers={[
@@ -61,7 +61,7 @@ function WeeklyOverview({ data }) {
                                 <PlayerImage src={p.imageSrc} size="XS" />
                             </Box>
                             <Box direction="row" justify="center" basis="small">
-                                <b>{p.fullName}</b>
+                                <b>{`${p.firstName.charAt(0)}. ${p.lastName}`}</b>
                             </Box>
                             <Box direction="row" justify="center" basis="small">
                                 {!p.injury && <b>N/A</b>}

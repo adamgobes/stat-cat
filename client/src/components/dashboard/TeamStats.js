@@ -26,9 +26,10 @@ const statToIcon = {
 
 const TeamStatsWrapper = styled(Box)`
     position: relative;
-    width: 380px;
-    min-height: 500px;
-    background: #f9fafe;
+    width: 480px;
+    min-height: 460px;
+    background: white;
+    border-radius: 10px;
 `
 
 const Table = styled(Box)`
@@ -119,7 +120,7 @@ export default function TeamStats({ stats }) {
     return (
         <TeamStatsWrapper align="center">
             <Table>
-                <h1>Team Stats</h1>
+                <h1 style={{ margin: '20px' }}>Team Stats</h1>
                 <DashboardTableHeader
                     headers={['Statistic', 'Avg Per Game']}
                     sizes={['medium', 'medium']}

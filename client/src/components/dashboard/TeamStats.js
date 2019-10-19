@@ -30,7 +30,7 @@ const statToIcon = {
 
 const Table = styled(Box)`
     position: relative;
-    width: 80%;
+    width: 90%;
 `
 
 const IconWrapper = styled.div`

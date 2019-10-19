@@ -10,7 +10,7 @@ const timeFrames = ['All', '7d', '1m']
 const MyStatsWrapper = styled(Box)`
     position: relative;
     width: 540px;
-    min-height: 600px;
+    height: 600px;
     background: white;
     border-radius: 10px;
 `

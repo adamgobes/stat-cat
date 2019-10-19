@@ -14,7 +14,7 @@ const Table = styled(Box)`
 
 const StatDropdownContainer = styled.div`
     width: 104px;
-    border: 1px solid ${props => props.theme.global.colors.brand};
+    border: 1px solid white;
     border-radius: 10px;
 `
 

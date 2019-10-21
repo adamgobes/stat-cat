@@ -124,8 +124,8 @@ function TeamBuilder({ history }) {
                         <WarningMessage>{warningMessage}</WarningMessage>
 
                         {warningMessage === NOT_ENOUGH_CHARS_WARNING && (
-                            <SVGWrapper margin="0">
-                                <NotEnoughCharsGraphic />
+                            <SVGWrapper margin="40">
+                                <SearchPlaceholderGraphic />
                             </SVGWrapper>
                         )}
                     </>

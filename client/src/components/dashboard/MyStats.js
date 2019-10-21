@@ -31,6 +31,7 @@ const TimeFrameDropdownContainer = styled(Button)`
 `
 
 const StatTypeHeader = styled.h2`
+    cursor: pointer;
     width: fit-content;
     padding-bottom: 6px;
     border-bottom: ${props => (props.selected ? '2px solid #7781f7' : '')};

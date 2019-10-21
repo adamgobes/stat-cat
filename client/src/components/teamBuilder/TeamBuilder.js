@@ -21,7 +21,6 @@ import {
 import AddPlayerInput from './playerSearch/AddPlayerInput'
 import SuggestionsGrid from './playerSearch/SuggestionsGrid'
 import { ReactComponent as SearchPlaceholderGraphic } from '../../assets/images/undraw_search_placeholder.svg'
-import { ReactComponent as NotEnoughCharsGraphic } from '../../assets/images/search_hint.svg'
 
 const Header = styled.h1`
     font-size: 2.6em;

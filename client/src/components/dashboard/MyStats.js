@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
-import { Box, Button } from 'grommet'
+import { Box, Button, Select } from 'grommet'
 import TeamStats from './TeamStats'
 import PlayerStats from './PlayerStats'
 import { computeTeamStatsAverages } from '../../utils/computeHelpers'
@@ -9,7 +9,7 @@ const timeFrames = ['All', '7d', '1m']
 
 const MyStatsWrapper = styled(Box)`
     position: relative;
-    width: 540px;
+    width: 440px;
     height: 600px;
     background: white;
     border-radius: 10px;
@@ -24,13 +24,16 @@ const StatsTableWrapper = styled(Box)`
     overflow: auto;
 `
 
-const TimeFrameButton = styled(Button)`
-    background: ${props => (props.selected ? props.theme.global.colors.brand : 'white')};
-    border: 1px solid ${props => props.theme.global.colors.brand};
-    color: ${props => (!props.selected ? props.theme.global.colors.brand : 'white')};
-    font-weight: bold;
-    padding: 4px 4px;
-    text-align: center;
+const TimeFrameDropdownContainer = styled(Button)`
+    width: 104px;
+    border: 1px solid #7781f7;
+    border-radius: 10px;
+`
+
+const StatTypeHeader = styled.h2`
+    width: fit-content;
+    padding-bottom: 6px;
+    border-bottom: ${props => (props.selected ? '2px solid #7781f7' : '')};
 `
 
 export default function MyStats({ playerStats }) {
@@ -44,34 +47,37 @@ export default function MyStats({ playerStats }) {
     }, [playerStats])
 
     return (
-        <MyStatsWrapper align="center">
-            <h1>My Stats</h1>
-            <Box direction="row" style={{ width: '100%' }} justify="evenly" align="center">
-                <Box
-                    onClick={() => setStatType('Team')}
-                    style={{ borderBottom: statType === 'Team' ? '1px solid black' : '' }}
-                    basis="xsmall"
-                >
-                    <h2>Team</h2>
-                </Box>
-                <Box
-                    onClick={() => setStatType('Player')}
-                    style={{ borderBottom: statType === 'Player' ? '1px solid black' : '' }}
-                    basis="xsmall"
-                >
-                    <h2>Player</h2>
-                </Box>
-                <Box direction="row" basis="small">
-                    {timeFrames.map(t => (
-                        <Box basis="1/3">
-                            <TimeFrameButton
-                                onClick={() => setSelectedTimeFrame(t)}
-                                selected={t === selectedTimeFrame}
-                            >
-                                {t}
-                            </TimeFrameButton>
-                        </Box>
-                    ))}
+        <MyStatsWrapper>
+            <h1 style={{ margin: '20px' }}>My Stats</h1>
+            <Box align="center">
+                <Box direction="row" style={{ width: '100%' }} justify="center" align="center">
+                    <Box
+                        direction="row"
+                        onClick={() => setStatType('Team')}
+                        justify="center"
+                        basis="small"
+                    >
+                        <StatTypeHeader selected={statType === 'Team'}>Team</StatTypeHeader>
+                    </Box>
+                    <Box
+                        direction="row"
+                        onClick={() => setStatType('Player')}
+                        justify="center"
+                        basis="small"
+                    >
+                        <StatTypeHeader selected={statType === 'Player'}>Player</StatTypeHeader>
+                    </Box>
+                    <Box direction="row" justify="center" basis="small">
+                        <TimeFrameDropdownContainer>
+                            <Select
+                                options={timeFrames}
+                                value={selectedTimeFrame}
+                                onChange={option => setSelectedTimeFrame(option.value)}
+                                size="small"
+                                plain
+                            />
+                        </TimeFrameDropdownContainer>
+                    </Box>
                 </Box>
             </Box>
             <StatsTableWrapper align="center">

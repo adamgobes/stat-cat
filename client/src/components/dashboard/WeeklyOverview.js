@@ -12,7 +12,7 @@ const MAX_PER_PAGE = 4
 
 const playingProbToColor = {
     OUT: '#EB604B',
-    PROBABLE: '#F4BA40',
+    QUESTIONABLE: '#F4BA40',
 }
 
 const WeeklyOverviewWrapper = styled(Box)`
@@ -46,13 +46,7 @@ function WeeklyOverview({ data }) {
                 <h1 style={{ margin: '20px' }}>Weekly Overview</h1>
                 <DashboardTableHeader
                     sizes={['xsmall', 'small', 'small', 'small', 'small']}
-                    headers={[
-                        '',
-                        'Player Name',
-                        'Injury',
-                        'Playing Probability',
-                        'Games This Week',
-                    ]}
+                    headers={['', 'Player Name', 'Injury', 'Playing Probability', 'Games']}
                 />
                 <Entries direction="column">
                     {data.slice((page - 1) * MAX_PER_PAGE, page * MAX_PER_PAGE).map(p => (

@@ -14,7 +14,7 @@ export const TableRow = styled(Box)`
 export default function DashboardTableHeader({ headers, sizes, justify = 'center' }) {
     return (
         <TableRow
-            style={{ margin: '12px 0', background: '#7781f7', color: 'white', fontWeight: 'bold' }}
+            style={{ margin: '12px 0', background: 'white', color: '#7781f7', fontWeight: 'bold' }}
         >
             {headers.map((header, i) => (
                 <Box direction="row" justify={justify} basis={sizes[i]} key={i}>

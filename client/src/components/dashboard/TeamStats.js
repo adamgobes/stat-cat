@@ -13,6 +13,8 @@ import fgIcon from '../../assets/images/effiency.png'
 import spgIcon from '../../assets/images/lock.png'
 import threeIcon from '../../assets/images/three-pointer.png'
 import ftIcon from '../../assets/images/money-bag.png'
+import turnoverIcon from '../../assets/images/turnover.png'
+import blocksIcon from '../../assets/images/block.png'
 
 const statToIcon = {
     PPG: basketball,
@@ -21,19 +23,14 @@ const statToIcon = {
     SPG: spgIcon,
     FG: fgIcon,
     FT: ftIcon,
+    TPG: turnoverIcon,
+    BPG: blocksIcon,
     '3PM': threeIcon,
 }
 
-const TeamStatsWrapper = styled(Box)`
-    position: relative;
-    width: 380px;
-    min-height: 500px;
-    background: #f9fafe;
-`
-
 const Table = styled(Box)`
     position: relative;
-    width: 80%;
+    width: 90%;
 `
 
 const IconWrapper = styled.div`
@@ -100,11 +97,6 @@ function EfficiencyNumberElement({ category, attempted, made }) {
 }
 
 export default function TeamStats({ stats }) {
-    const { page, incrementPage, decrementPage } = usePagination(
-        stats.length,
-        countingNumbers.length
-    )
-
     const efficiencyObjects = {
         FG: {
             attempted: stats.find(s => s.category === 'FGA').value,
@@ -117,42 +109,36 @@ export default function TeamStats({ stats }) {
     }
 
     return (
-        <TeamStatsWrapper align="center">
-            <Table>
-                <h1>Team Stats</h1>
-                <DashboardTableHeader
-                    headers={['Statistic', 'Avg Per Game']}
-                    sizes={['medium', 'medium']}
-                    justify="start"
-                />
-                <Box>
-                    {page === 1 &&
-                        stats
-                            .filter(s => countingNumbers.includes(s.category))
-                            .sort(
-                                (s1, s2) =>
-                                    countingNumbers.indexOf(s1.category) -
-                                    countingNumbers.indexOf(s2.category)
-                            )
-                            .map(s => (
-                                <CountingNumberElement
-                                    key={s.category}
-                                    category={s.category}
-                                    value={s.value}
-                                />
-                            ))}
-                    {page === 2 &&
-                        Object.keys(efficiencyObjects).map(s => (
-                            <EfficiencyNumberElement
-                                key={s.category}
-                                category={s}
-                                attempted={efficiencyObjects[s].attempted}
-                                made={efficiencyObjects[s].made}
-                            />
-                        ))}
-                </Box>
-            </Table>
-            <Pagination increment={incrementPage} decrement={decrementPage} />
-        </TeamStatsWrapper>
+        <Table>
+            <DashboardTableHeader
+                headers={['Statistic', 'Avg Per Game']}
+                sizes={['medium', 'medium']}
+                justify="start"
+            />
+            <Box>
+                {stats
+                    .filter(s => countingNumbers.includes(s.category))
+                    .sort(
+                        (s1, s2) =>
+                            countingNumbers.indexOf(s1.category) -
+                            countingNumbers.indexOf(s2.category)
+                    )
+                    .map(s => (
+                        <CountingNumberElement
+                            key={s.category}
+                            category={s.category}
+                            value={s.value}
+                        />
+                    ))}
+                {Object.keys(efficiencyObjects).map(s => (
+                    <EfficiencyNumberElement
+                        key={s.category}
+                        category={s}
+                        attempted={efficiencyObjects[s].attempted}
+                        made={efficiencyObjects[s].made}
+                    />
+                ))}
+            </Box>
+        </Table>
     )
 }

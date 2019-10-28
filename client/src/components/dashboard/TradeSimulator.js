@@ -1,9 +1,8 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Box, Text } from 'grommet'
+import { Box } from 'grommet'
 
 import PlayerImage from '../shared/PlayerImage'
-import AddPlayerInput from '../teamBuilder/playerSearch/AddPlayerInput'
 import TradeSearch from './TradeSearch'
 
 const TradeSimulatorWrapper = styled(Box)`
@@ -23,39 +22,6 @@ const ImageWrapper = styled(Box)`
 
 export default function TradeSimulator({ searchResults }) {
     const [addInputValue, setAddInputValue] = useState('')
-    const [suggestionsOpen, setSuggestionsOpen] = useState(false)
-    const searchRef = useRef()
-
-    const handleInputChange = e => {
-        const val = e.target.value
-        if (!val.trim()) {
-            setSuggestionsOpen(false)
-        } else {
-            setSuggestionsOpen(true)
-        }
-        setAddInputValue(val)
-    }
-
-    const renderSuggestions = () =>
-        suggestionsOpen
-            ? searchResults.slice(0, 3).map(({ fullName, imageSrc }, index, list) => ({
-                  label: (
-                      <Box
-                          direction="row"
-                          align="center"
-                          gap="small"
-                          border={index < list.length - 1 ? 'bottom' : undefined}
-                          pad="small"
-                      >
-                          <PlayerImage src={imageSrc} size="XS" />
-                          <Text>
-                              <strong>{fullName}</strong>
-                          </Text>
-                      </Box>
-                  ),
-                  value: fullName,
-              }))
-            : []
 
     return (
         <TradeSimulatorWrapper>
@@ -65,7 +31,7 @@ export default function TradeSimulator({ searchResults }) {
                     <TradeSearch
                         searchValue={addInputValue}
                         suggestions={searchResults}
-                        handleInputChange={handleInputChange}
+                        handleInputChange={e => setAddInputValue(e.target.value)}
                     />
                 </SearchWrapper>
                 <Box direction="column" align="center" basis="2/4">

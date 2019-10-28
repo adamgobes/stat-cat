@@ -20,13 +20,14 @@ const SearchIconWrapper = styled(Box)`
     margin-left: 12px;
 `
 
-const AddPlayerInput = ({ inputValue, onPlayerInputChange, width = 300 }) => (
+const AddPlayerInput = ({ inputValue, onPlayerInputChange, width = 300, ...otherProps }) => (
     <Box direction="row" justify="center">
         <AddPlayerInputWrapper direction="row" width={width}>
             <SearchIconWrapper justify="center">
                 <FormSearch size="medium" />
             </SearchIconWrapper>
             <AddPlayer
+                {...otherProps}
                 size="medium"
                 width={width}
                 value={inputValue}

@@ -1,10 +1,11 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import TradeSimulator from '../TradeSimulator'
 
-const storyPath = 'Dashboard/Trade Simulator'
+import TradeSearch from '../TradeSearch'
 
-const searchResults = [
+const storyPath = 'Dashboard/Trade Search'
+
+const suggestions = [
     {
         id: '10143',
         fullName: 'Dragan Bender',
@@ -53,7 +54,5 @@ const searchResults = [
 ]
 
 storiesOf(`${storyPath}`, module).add('default', () => (
-    <div style={{ background: '#eff1f3', height: '100%' }}>
-        <TradeSimulator searchResults={searchResults} />
-    </div>
+    <TradeSearch suggestions={suggestions} searchValue="Dra" />
 ))

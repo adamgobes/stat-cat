@@ -8,6 +8,7 @@ import TeamBuilder from './components/teamBuilder/TeamBuilder'
 import LoginRegister from './components/auth/LoginRegister'
 import ApolloWrapper from './apollo/ApolloWrapper'
 import Dashboard from './components/dashboard/Dashboard'
+import TradeSimulator from './components/dashboard/TradeSimulator'
 import Nav from './components/general/Nav'
 import { AppContext, TOGGLE_NAV } from './components/general/AppContext'
 import { TeamBuilderContextProvider } from './components/teamBuilder/TeamBuilderContext'
@@ -72,6 +73,17 @@ const App = () => {
                                 <TeamBuilderContextProvider>
                                     <TeamBuilder history={history} />
                                 </TeamBuilderContextProvider>
+                            ) : (
+                                <Redirect to="/auth" />
+                            )
+                        }
+                    />
+                    <Route
+                        exact
+                        path="/trade"
+                        render={({ history }) =>
+                            isLoggedIn() ? (
+                                <TradeSimulator history={history} />
                             ) : (
                                 <Redirect to="/auth" />
                             )

@@ -1,14 +1,15 @@
-import React, { useState, useRef } from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { Box, Text } from 'grommet'
 import PlayerImage from '../shared/PlayerImage'
 import AddPlayerInput from '../teamBuilder/playerSearch/AddPlayerInput'
+import Loader from '../shared/Loader'
 
-export default function TradeSearch({ searchValue, suggestions, handleInputChange }) {
+export default function TradeSearch({ searchValue, suggestions, handleInputChange, loading }) {
     const searchRef = useRef()
 
     const renderSuggestions = () =>
-        searchValue.trim()
+        searchValue.trim() && suggestions
             ? suggestions.slice(0, 3).map(({ fullName, imageSrc }, index, list) => ({
                   label: (
                       <Box
@@ -32,7 +33,7 @@ export default function TradeSearch({ searchValue, suggestions, handleInputChang
         <Box
             ref={searchRef}
             width="250"
-            direction="row"
+            direction="column"
             align="center"
             pad={{ horizontal: 'small', vertical: 'xsmall' }}
             round="small"
@@ -44,6 +45,7 @@ export default function TradeSearch({ searchValue, suggestions, handleInputChang
                 suggestions={renderSuggestions()}
                 dropTarget={searchRef.current}
             />
+            {loading && <Loader size={50} />}
         </Box>
     )
 }

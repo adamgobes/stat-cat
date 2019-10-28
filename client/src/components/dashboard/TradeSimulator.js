@@ -1,72 +1,42 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
+import { useQuery } from '@apollo/react-hooks'
 
-import PlayerImage from '../shared/PlayerImage'
 import TradeSearch from './TradeSearch'
+import { MIN_CHARS } from '../teamBuilder/TeamBuilderContext'
+import { SEARCH_PLAYERS_QUERY } from '../../apollo/queries'
 
 const TradeSimulatorWrapper = styled(Box)`
     position: relative;
-    width: 600px;
-    min-height: 450px;
-    background: white;
-    border-radius: 10px;
+    background: #eff1f3;
+    height: 100%;
+    overflow: scroll;
 `
 
-const SentReceived = styled(Box)``
-const SearchWrapper = styled(Box)``
+export default function TradeSimulator() {
+    const [playerInput, setPlayerInput] = useState('')
 
-const ImageWrapper = styled(Box)`
-    margin: 10px;
-`
-
-export default function TradeSimulator({ searchResults }) {
-    const [addInputValue, setAddInputValue] = useState('')
+    const { data: searchData, loading: searchLoading } = useQuery(SEARCH_PLAYERS_QUERY, {
+        variables: { filter: playerInput },
+        skip: playerInput.length < MIN_CHARS,
+    })
 
     return (
-        <TradeSimulatorWrapper>
-            <h1 style={{ margin: '20px' }}>Trade Simulator</h1>
-            <Box direction="row" align="start" justify="center">
-                <SearchWrapper direction="column" justify="center" align="center" basis="2/4">
+        <TradeSimulatorWrapper align="center" justify="start">
+            <h1>Trade Simulator</h1>
+            <Box direction="row" justify="center" align="start">
+                <Box direction="column" justify="center" align="center">
                     <TradeSearch
-                        searchValue={addInputValue}
-                        suggestions={searchResults}
-                        handleInputChange={e => setAddInputValue(e.target.value)}
+                        searchValue={playerInput}
+                        suggestions={
+                            !searchLoading &&
+                            playerInput.length >= MIN_CHARS &&
+                            searchData.allPlayers
+                        }
+                        handleInputChange={e => setPlayerInput(e.target.value)}
+                        loading={searchLoading}
                     />
-                </SearchWrapper>
-                <Box direction="column" align="center" basis="2/4">
-                    <SentReceived direction="column" justify="center" basis="1/2">
-                        <Box>
-                            <h3>You Send</h3>
-                        </Box>
-                        <ImageWrapper>
-                            <PlayerImage
-                                src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201142.png"
-                                size="XS"
-                            />
-                        </ImageWrapper>
-                        <ImageWrapper>
-                            <PlayerImage
-                                src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201142.png"
-                                size="XS"
-                            />
-                        </ImageWrapper>
-                    </SentReceived>
-                    <SentReceived direction="column" justify="center" basis="1/2">
-                        <h3>You Receive</h3>
-                        <ImageWrapper>
-                            <PlayerImage
-                                src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201142.png"
-                                size="XS"
-                            />
-                        </ImageWrapper>
-                        <ImageWrapper>
-                            <PlayerImage
-                                src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201142.png"
-                                size="XS"
-                            />
-                        </ImageWrapper>
-                    </SentReceived>
                 </Box>
             </Box>
         </TradeSimulatorWrapper>

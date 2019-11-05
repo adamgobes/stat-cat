@@ -32,7 +32,7 @@ export default function Dashboard() {
                     <WeeklyOverview data={dashboardData.myTeam.players} />
                 </DashboardComponentWrapper>
                 <DashboardComponentWrapper>
-                    <MyStats playerStats={dashboardData.myTeam.players} />
+                    <MyStats myPlayers={dashboardData.myTeam.players} />
                 </DashboardComponentWrapper>
             </Box>
         </DashboardWrapper>

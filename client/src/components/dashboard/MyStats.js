@@ -37,22 +37,22 @@ const StatTypeHeader = styled.h2`
     border-bottom: ${props => (props.selected ? '2px solid #7781f7' : '')};
 `
 
-export default function MyStats({ playerStats, postTradeStats = [] }) {
+export default function MyStats({ myPlayers, postTradePlayers = [] }) {
     const [selectedTimeFrame, setSelectedTimeFrame] = useState(timeFrames[0])
     const [statType, setStatType] = useState('Team')
 
     const myTeamAverages = useMemo(() => {
         const averages =
-            playerStats && computeTeamStatsAverages(playerStats.map(player => player.stats))
+            myPlayers && computeTeamStatsAverages(myPlayers.map(player => player.stats))
         return averages
-    }, [playerStats])
+    }, [myPlayers])
 
     const postTradeAverages = useMemo(() => {
         const averages =
-            postTradeStats.length > 0 &&
-            computeTeamStatsAverages(postTradeStats.map(player => player.stats))
+            postTradePlayers.length > 0 &&
+            computeTeamStatsAverages(postTradePlayers.map(player => player.stats))
         return averages
-    }, [postTradeStats])
+    }, [postTradePlayers])
 
     const combinedStats = useMemo(() => {
         const combinedAverages = myTeamAverages.map((stat, i) => ({
@@ -98,7 +98,7 @@ export default function MyStats({ playerStats, postTradeStats = [] }) {
             </Box>
             <StatsTableWrapper align="center">
                 {statType === 'Team' && <TeamStats stats={combinedStats} />}
-                {statType === 'Player' && <PlayerStats stats={playerStats} />}
+                {statType === 'Player' && <PlayerStats stats={myPlayers} />}
             </StatsTableWrapper>
         </MyStatsWrapper>
     )

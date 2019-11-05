@@ -76,8 +76,8 @@ export default function TradeSimulator() {
                 </Box>
                 <Box basis="large" align="center">
                     <MyStats
-                        playerStats={dashboardData.myTeam.players}
-                        postTradeStats={postTradeTeam}
+                        myPlayers={dashboardData.myTeam.players}
+                        postTradePlayers={postTradeTeam}
                     />
                 </Box>
             </Box>

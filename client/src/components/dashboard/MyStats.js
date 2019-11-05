@@ -59,7 +59,7 @@ export default function MyStats({ myPlayers, postTradePlayers = [] }) {
     const combinedStats = useMemo(() => {
         const combinedAverages = myTeamAverages.map((stat, i) => ({
             category: stat.category,
-            values: [stat.value, ...(postTradeAverages[i] ? [postTradeAverages[i].value] : [])],
+            values: [stat, postTradeAverages[i]].filter(e => !!e).map(s => s.value),
         }))
         return combinedAverages
     }, [myTeamAverages, postTradeAverages])

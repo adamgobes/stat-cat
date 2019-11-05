@@ -105,7 +105,7 @@ function EfficiencyNumberElement({ category, attempted, made }) {
     )
 }
 
-export default function TeamStats({ stats }) {
+export default function TeamStats({ stats, isTradeSimulated }) {
     const efficiencyObjects = {
         FG: {
             attempted: [...stats.find(s => s.category === 'FGA').values],
@@ -116,8 +116,6 @@ export default function TeamStats({ stats }) {
             made: [...stats.find(s => s.category === 'FTM').values],
         },
     }
-
-    const isTradeSimulated = stats[0].values.length > 1
 
     return (
         <Table>

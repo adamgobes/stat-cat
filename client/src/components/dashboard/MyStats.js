@@ -99,7 +99,9 @@ export default function MyStats({ myPlayers, postTradePlayers = [] }) {
                 </Box>
             </Box>
             <StatsTableWrapper align="center">
-                {statType === 'Team' && <TeamStats stats={combinedStats} />}
+                {statType === 'Team' && (
+                    <TeamStats stats={combinedStats} isTradeSimulated={isTradeSimulated} />
+                )}
                 {statType === 'Player' && (
                     <PlayerStats players={isTradeSimulated ? postTradePlayers : myPlayers} />
                 )}

@@ -47,10 +47,10 @@ const App = () => {
                         transition: 'margin-left 0.3s',
                     }}
                 >
-                    <Nav
+                    {/* <Nav
                         setNavOpen={() => dispatch({ type: TOGGLE_NAV })}
                         isNavOpen={appContext.isNavOpen}
-                    />
+                    /> */}
                     <Route
                         exact
                         path="/"

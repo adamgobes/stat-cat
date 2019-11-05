@@ -28,6 +28,9 @@ const statToIcon = {
     '3PM': threeIcon,
 }
 
+const headers = ['Statistic', 'Avg Per Game']
+const tradeHeaders = ['Statistic', 'Before', 'After']
+
 const Table = styled(Box)`
     position: relative;
     width: 90%;
@@ -53,7 +56,7 @@ const statsAbbreviationToFull = {
     FT: 'Free Throw',
 }
 
-function CountingNumberElement({ category, value }) {
+function CountingNumberElement({ category, values }) {
     return (
         <TableRow>
             <Box direction="row" justify="start" basis="medium">
@@ -66,9 +69,11 @@ function CountingNumberElement({ category, value }) {
                 )}
                 <b>{statsAbbreviationToFull[category]}</b>
             </Box>
-            <Box direction="row" justify="start" basis="medium">
-                <b>{value}</b>
-            </Box>
+            {values.map(value => (
+                <Box direction="row" justify="start" basis="medium">
+                    <b>{value}</b>
+                </Box>
+            ))}
         </TableRow>
     )
 }
@@ -84,14 +89,18 @@ function EfficiencyNumberElement({ category, attempted, made }) {
                         </Box>
                     </IconWrapper>
                 )}
-                <Box direction="column" align="start">
-                    <b>{statsAbbreviationToFull[category]}</b>
-                    <b>{`${made}/${attempted}`}</b>
+                <b>{statsAbbreviationToFull[category]}</b>
+            </Box>
+            {attempted.map((_, i) => (
+                <Box basis="medium">
+                    <Box direction="row" justify="start">
+                        <b>{`${Math.round((made[i] * 100) / attempted[i])}%`}</b>
+                    </Box>
+                    <Box direction="column" align="start">
+                        <b>{`${made[i]}/${attempted[i]}`}</b>
+                    </Box>
                 </Box>
-            </Box>
-            <Box direction="row" justify="start" basis="medium">
-                <b>{`${Math.round((made * 100) / attempted)}%`}</b>
-            </Box>
+            ))}
         </TableRow>
     )
 }
@@ -99,20 +108,22 @@ function EfficiencyNumberElement({ category, attempted, made }) {
 export default function TeamStats({ stats }) {
     const efficiencyObjects = {
         FG: {
-            attempted: stats.find(s => s.category === 'FGA').value,
-            made: stats.find(s => s.category === 'FGM').value,
+            attempted: [...stats.find(s => s.category === 'FGA').values],
+            made: [...stats.find(s => s.category === 'FGM').values],
         },
         FT: {
-            attempted: stats.find(s => s.category === 'FTA').value,
-            made: stats.find(s => s.category === 'FTM').value,
+            attempted: [...stats.find(s => s.category === 'FTA').values],
+            made: [...stats.find(s => s.category === 'FTM').values],
         },
     }
+
+    const isTradeSimulated = stats[0].values.length > 1
 
     return (
         <Table>
             <DashboardTableHeader
-                headers={['Statistic', 'Avg Per Game']}
-                sizes={['medium', 'medium']}
+                headers={isTradeSimulated ? tradeHeaders : headers}
+                sizes={isTradeSimulated ? ['small', 'small', 'small'] : ['medium', 'medium']}
                 justify="start"
             />
             <Box>
@@ -127,7 +138,7 @@ export default function TeamStats({ stats }) {
                         <CountingNumberElement
                             key={s.category}
                             category={s.category}
-                            value={s.value}
+                            values={s.values}
                         />
                     ))}
                 {Object.keys(efficiencyObjects).map(s => (

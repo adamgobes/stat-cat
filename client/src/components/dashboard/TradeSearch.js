@@ -1,16 +1,31 @@
 import React, { useRef } from 'react'
 import styled from 'styled-components'
-import { Box, Text } from 'grommet'
+import { Box, Text, Button } from 'grommet'
 import PlayerImage from '../shared/PlayerImage'
 import AddPlayerInput from '../teamBuilder/playerSearch/AddPlayerInput'
 import Loader from '../shared/Loader'
 
-export default function TradeSearch({ searchValue, suggestions, handleInputChange, loading }) {
+const AddRemoveButton = styled(Button)`
+    border: 1px solid white;
+    background: #7781f7;
+    border-radius: 5px;
+    color: white;
+    padding: 4px;
+`
+
+export default function TradeSearch({
+    searchValue,
+    suggestions,
+    handleInputChange,
+    loading,
+    onSendPlayer,
+    onReceivePlayer,
+}) {
     const searchRef = useRef()
 
     const renderSuggestions = () =>
         searchValue.trim() && suggestions
-            ? suggestions.slice(0, 3).map(({ fullName, imageSrc }, index, list) => ({
+            ? suggestions.slice(0, 3).map((player, index, list) => ({
                   label: (
                       <Box
                           direction="row"
@@ -19,20 +34,27 @@ export default function TradeSearch({ searchValue, suggestions, handleInputChang
                           border={index < list.length - 1 ? 'bottom' : undefined}
                           pad="small"
                       >
-                          <PlayerImage src={imageSrc} size="XS" />
+                          <PlayerImage src={player.imageSrc} size="XS" />
                           <Text>
-                              <strong>{fullName}</strong>
+                              <strong>
+                                  {`${player.firstName.substring(0, 1)}. ${player.lastName}`}
+                              </strong>
                           </Text>
+                          <AddRemoveButton onClick={() => onSendPlayer(player)}>
+                              Send
+                          </AddRemoveButton>
+                          <AddRemoveButton onClick={() => onReceivePlayer(player)}>
+                              Receive
+                          </AddRemoveButton>
                       </Box>
                   ),
-                  value: fullName,
+                  value: player.id,
               }))
             : []
 
     return (
         <Box
             ref={searchRef}
-            width="250"
             direction="column"
             align="center"
             pad={{ horizontal: 'small', vertical: 'xsmall' }}

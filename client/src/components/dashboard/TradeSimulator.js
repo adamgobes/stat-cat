@@ -19,6 +19,16 @@ const TradeSimulatorWrapper = styled(Box)`
     overflow: scroll;
 `
 
+const SimulateTradeButton = styled(Button)`
+    width: 140px;
+    border-radius: 20px;
+    background: white;
+    color: #7781f7;
+    padding: 10px;
+    text-align: center;
+    border: 2px solid white;
+`
+
 export default function TradeSimulator() {
     const [playerInput, setPlayerInput] = useState('')
     const [sentPlayers, setSentPlayers] = useState([])
@@ -72,7 +82,7 @@ export default function TradeSimulator() {
                 <Box direction="column" justify="center" basis="small">
                     <SentAndReceived title="You Send" players={sentPlayers} basis="1/2" />
                     <SentAndReceived title="You Receive" players={receivedPlayers} basis="1/2" />
-                    <Button onClick={onSimulateTrade}>Simulate</Button>
+                    <SimulateTradeButton onClick={onSimulateTrade}>Simulate</SimulateTradeButton>
                 </Box>
                 <Box basis="large" align="center">
                     <MyStats

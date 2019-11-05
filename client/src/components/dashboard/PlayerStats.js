@@ -20,18 +20,18 @@ const StatDropdownContainer = styled.div`
 
 const findStat = (statsArray, stat) => statsArray.find(s => s.category === stat).value
 
-function PlayerStats({ stats }) {
+function PlayerStats({ players }) {
     const [selectedStat, setSelectedStat] = useState('PPG')
 
     const sortedData = useMemo(
         () =>
-            stats.sort((player1, player2) => {
+            players.sort((player1, player2) => {
                 const stat1 = findStat(player1.stats, selectedStat)
                 const stat2 = findStat(player2.stats, selectedStat)
 
                 return stat2 - stat1
             }),
-        [selectedStat, stats]
+        [selectedStat, players]
     )
 
     const StatDropdown = () => (

@@ -41,6 +41,8 @@ export default function MyStats({ myPlayers, postTradePlayers = [] }) {
     const [selectedTimeFrame, setSelectedTimeFrame] = useState(timeFrames[0])
     const [statType, setStatType] = useState('Team')
 
+    const isTradeSimulated = postTradePlayers.length > 0
+
     const myTeamAverages = useMemo(() => {
         const averages =
             myPlayers && computeTeamStatsAverages(myPlayers.map(player => player.stats))
@@ -49,7 +51,7 @@ export default function MyStats({ myPlayers, postTradePlayers = [] }) {
 
     const postTradeAverages = useMemo(() => {
         const averages =
-            postTradePlayers.length > 0 &&
+            isTradeSimulated &&
             computeTeamStatsAverages(postTradePlayers.map(player => player.stats))
         return averages
     }, [postTradePlayers])
@@ -98,7 +100,9 @@ export default function MyStats({ myPlayers, postTradePlayers = [] }) {
             </Box>
             <StatsTableWrapper align="center">
                 {statType === 'Team' && <TeamStats stats={combinedStats} />}
-                {statType === 'Player' && <PlayerStats stats={myPlayers} />}
+                {statType === 'Player' && (
+                    <PlayerStats players={isTradeSimulated ? postTradePlayers : myPlayers} />
+                )}
             </StatsTableWrapper>
         </MyStatsWrapper>
     )

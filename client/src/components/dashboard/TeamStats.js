@@ -1,10 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
-import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
+import { LinkUp, LinkDown } from 'grommet-icons'
 
-import Pagination from '../shared/Pagination'
-import usePagination from '../../utils/customHooks'
+import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
 
 import basketball from '../../assets/images/basketball.png'
 import assistIcon from '../../assets/images/assist-icon.png'
@@ -43,6 +42,10 @@ const IconWrapper = styled.div`
     overflow: hidden;
 `
 
+const Percentage = styled.b`
+    color: ${props => (props.positive ? 'green' : 'red')};
+`
+
 const countingNumbers = ['PPG', 'APG', 'RPG', 'SPG', 'BPG', 'TPG']
 
 const statsAbbreviationToFull = {
@@ -56,7 +59,35 @@ const statsAbbreviationToFull = {
     FT: 'Free Throw',
 }
 
-function CountingNumberElement({ category, values }) {
+function computePercentage(attempted, made) {
+    return Math.round((made * 100) / attempted)
+}
+
+function PercentageChangeIndicator({ currentValue, tradeValue }) {
+    const percentageChange = Math.abs(
+        (parseFloat(tradeValue - currentValue) / parseFloat(currentValue)).toFixed(2)
+    )
+
+    return (
+        <Box direction="row">
+            <Percentage positive={tradeValue > currentValue}>
+                {percentageChange !== 0 && `${percentageChange}%`}
+            </Percentage>
+            {tradeValue > currentValue && (
+                <IconWrapper>
+                    <LinkUp color="green" size="XS" />
+                </IconWrapper>
+            )}
+            {tradeValue < currentValue && (
+                <IconWrapper>
+                    <LinkDown color="red" size="XS" />
+                </IconWrapper>
+            )}
+        </Box>
+    )
+}
+
+function CountingNumberElement({ category, values, isTradeSimulated }) {
     return (
         <TableRow>
             <Box direction="row" justify="start" basis="medium">
@@ -69,16 +100,19 @@ function CountingNumberElement({ category, values }) {
                 )}
                 <b>{statsAbbreviationToFull[category]}</b>
             </Box>
-            {values.map(value => (
-                <Box direction="row" justify="start" basis="medium">
+            {values.map((value, i) => (
+                <Box direction="column" justify="start" basis="medium">
                     <b>{value}</b>
+                    {i === 1 && isTradeSimulated && (
+                        <PercentageChangeIndicator currentValue={values[0]} tradeValue={value} />
+                    )}
                 </Box>
             ))}
         </TableRow>
     )
 }
 
-function EfficiencyNumberElement({ category, attempted, made }) {
+function EfficiencyNumberElement({ category, attempted, made, isTradeSimulated }) {
     return (
         <TableRow>
             <Box direction="row" align="center" basis="medium">
@@ -94,10 +128,16 @@ function EfficiencyNumberElement({ category, attempted, made }) {
             {attempted.map((_, i) => (
                 <Box basis="medium">
                     <Box direction="row" justify="start">
-                        <b>{`${Math.round((made[i] * 100) / attempted[i])}%`}</b>
+                        <b>{`${computePercentage(attempted[i], made[i])}%`}</b>
                     </Box>
                     <Box direction="column" align="start">
                         <b>{`${made[i]}/${attempted[i]}`}</b>
+                        {i === 1 && isTradeSimulated && (
+                            <PercentageChangeIndicator
+                                currentValue={computePercentage(attempted[0], made[0])}
+                                tradeValue={computePercentage(attempted[1], attempted[1])}
+                            />
+                        )}
                     </Box>
                 </Box>
             ))}
@@ -137,6 +177,7 @@ export default function TeamStats({ stats, isTradeSimulated }) {
                             key={s.category}
                             category={s.category}
                             values={s.values}
+                            isTradeSimulated={isTradeSimulated}
                         />
                     ))}
                 {Object.keys(efficiencyObjects).map(s => (
@@ -145,6 +186,7 @@ export default function TeamStats({ stats, isTradeSimulated }) {
                         category={s}
                         attempted={efficiencyObjects[s].attempted}
                         made={efficiencyObjects[s].made}
+                        isTradeSimulated={isTradeSimulated}
                     />
                 ))}
             </Box>

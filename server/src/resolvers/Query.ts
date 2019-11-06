@@ -61,3 +61,7 @@ export async function leagueLeaders(parent, args): Promise<GQLLeagueLeader[]> {
         }
     })
 }
+
+export function getPlayerStats(parent, args): Promise<GQLStat[]> {
+    return fetchPlayerStats(args.playerId)
+}

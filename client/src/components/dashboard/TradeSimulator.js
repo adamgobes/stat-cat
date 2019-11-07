@@ -58,7 +58,9 @@ export default function TradeSimulator() {
     const [
         getPlayerStats,
         { data: playerStatsData, loading: getPlayerStatsLoading },
-    ] = useLazyQuery(GET_PLAYER_STATS_QUERY)
+    ] = useLazyQuery(GET_PLAYER_STATS_QUERY, {
+        fetchPolicy: 'network-only',
+    })
 
     useEffect(() => {
         if (playerStatsData && playerStatsData.getPlayerStats) {

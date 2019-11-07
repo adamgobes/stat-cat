@@ -41,48 +41,49 @@ export default function MyStats({ players, averages, isTradeSimulated = false })
     const [selectedTimeFrame, setSelectedTimeFrame] = useState(timeFrames[0])
     const [statType, setStatType] = useState('Team')
 
-    console.log({ players, averages })
-
-    return (
-        <MyStatsWrapper>
-            <h1 style={{ margin: '20px' }}>My Stats</h1>
-            <Box align="center">
-                <Box direction="row" style={{ width: '100%' }} justify="center" align="center">
-                    <Box
-                        direction="row"
-                        onClick={() => setStatType('Team')}
-                        justify="center"
-                        basis="small"
-                    >
-                        <StatTypeHeader selected={statType === 'Team'}>Team</StatTypeHeader>
-                    </Box>
-                    <Box
-                        direction="row"
-                        onClick={() => setStatType('Player')}
-                        justify="center"
-                        basis="small"
-                    >
-                        <StatTypeHeader selected={statType === 'Player'}>Player</StatTypeHeader>
-                    </Box>
-                    <Box direction="row" justify="center" basis="small">
-                        <TimeFrameDropdownContainer>
-                            <Select
-                                options={timeFrames}
-                                value={selectedTimeFrame}
-                                onChange={option => setSelectedTimeFrame(option.value)}
-                                size="small"
-                                plain
-                            />
-                        </TimeFrameDropdownContainer>
+    return useMemo(
+        () => (
+            <MyStatsWrapper>
+                <h1 style={{ margin: '20px' }}>My Stats</h1>
+                <Box align="center">
+                    <Box direction="row" style={{ width: '100%' }} justify="center" align="center">
+                        <Box
+                            direction="row"
+                            onClick={() => setStatType('Team')}
+                            justify="center"
+                            basis="small"
+                        >
+                            <StatTypeHeader selected={statType === 'Team'}>Team</StatTypeHeader>
+                        </Box>
+                        <Box
+                            direction="row"
+                            onClick={() => setStatType('Player')}
+                            justify="center"
+                            basis="small"
+                        >
+                            <StatTypeHeader selected={statType === 'Player'}>Player</StatTypeHeader>
+                        </Box>
+                        <Box direction="row" justify="center" basis="small">
+                            <TimeFrameDropdownContainer>
+                                <Select
+                                    options={timeFrames}
+                                    value={selectedTimeFrame}
+                                    onChange={option => setSelectedTimeFrame(option.value)}
+                                    size="small"
+                                    plain
+                                />
+                            </TimeFrameDropdownContainer>
+                        </Box>
                     </Box>
                 </Box>
-            </Box>
-            <StatsTableWrapper align="center">
-                {statType === 'Team' && (
-                    <TeamStats stats={averages} isTradeSimulated={isTradeSimulated} />
-                )}
-                {statType === 'Player' && <PlayerStats players={players} />}
-            </StatsTableWrapper>
-        </MyStatsWrapper>
+                <StatsTableWrapper align="center">
+                    {statType === 'Team' && (
+                        <TeamStats stats={averages} isTradeSimulated={isTradeSimulated} />
+                    )}
+                    {statType === 'Player' && <PlayerStats players={players} />}
+                </StatsTableWrapper>
+            </MyStatsWrapper>
+        ),
+        [players, averages, selectedTimeFrame, statType]
     )
 }

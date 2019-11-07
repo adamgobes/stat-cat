@@ -11,7 +11,6 @@ function calculateGameCount(teamId: string, startDate: string, endDate: string):
 }
 
 export function stats(parent, args): Promise<GQLStat[]> {
-    console.log({ parent })
     return fetchPlayerStats(parent.id)
 }
 

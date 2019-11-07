@@ -38,7 +38,6 @@ const StatTypeHeader = styled.h2`
 `
 
 export default function MyStats({ myPlayers, postTradePlayers = [] }) {
-    console.log({ postTradePlayers })
     const [selectedTimeFrame, setSelectedTimeFrame] = useState(timeFrames[0])
     const [statType, setStatType] = useState('Team')
 

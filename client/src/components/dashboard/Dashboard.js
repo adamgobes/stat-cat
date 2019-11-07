@@ -26,7 +26,12 @@ export default function Dashboard() {
     const myTeamAverages = useMemo(() => {
         const averages =
             dashboardData &&
-            computeTeamStatsAverages(dashboardData.myTeam.players.map(player => player.stats))
+            computeTeamStatsAverages(dashboardData.myTeam.players.map(player => player.stats)).map(
+                stat => ({
+                    category: stat.category,
+                    values: [stat.value],
+                })
+            )
         return averages
     }, [dashboardData])
 
@@ -40,7 +45,7 @@ export default function Dashboard() {
                     <WeeklyOverview data={dashboardData.myTeam.players} />
                 </DashboardComponentWrapper>
                 <DashboardComponentWrapper>
-                    <MyStats myPlayers={dashboardData.myTeam.players} averages={myTeamAverages} />
+                    <MyStats players={dashboardData.myTeam.players} averages={myTeamAverages} />
                 </DashboardComponentWrapper>
             </Box>
         </DashboardWrapper>

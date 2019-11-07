@@ -5,8 +5,9 @@ import PlayerImage from '../shared/PlayerImage'
 
 const ComponentWrapper = styled(Box)`
     min-height: 300px;
+    width: 50%;
     background: white;
-    margin: 10px 0;
+    margin: 10px 10px;
     border-radius: 10px;
 `
 

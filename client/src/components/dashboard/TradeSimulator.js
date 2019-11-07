@@ -65,7 +65,7 @@ export default function TradeSimulator() {
         <TradeSimulatorWrapper align="center">
             <h1>Trade Simulator</h1>
             <Box direction="row" align="start" style={{ width: '90%' }}>
-                <Box direction="column" justify="center" align="center" basis="medium">
+                <Box direction="column" justify="center" align="center" basis="1/2">
                     <TradeSearch
                         searchValue={playerInput}
                         suggestions={
@@ -78,13 +78,19 @@ export default function TradeSimulator() {
                         onSendPlayer={onSendPlayer}
                         onReceivePlayer={onReceivePlayer}
                     />
+                    <Box
+                        direction="row"
+                        justify="center"
+                        style={{ marginTop: '236px', width: '100%' }}
+                    >
+                        <SentAndReceived title="You Send" players={sentPlayers} />
+                        <SentAndReceived title="You Receive" players={receivedPlayers} />
+                        {/* <SimulateTradeButton onClick={onSimulateTrade}>
+                            Simulate
+                        </SimulateTradeButton> */}
+                    </Box>
                 </Box>
-                <Box direction="column" justify="center" basis="small">
-                    <SentAndReceived title="You Send" players={sentPlayers} basis="1/2" />
-                    <SentAndReceived title="You Receive" players={receivedPlayers} basis="1/2" />
-                    <SimulateTradeButton onClick={onSimulateTrade}>Simulate</SimulateTradeButton>
-                </Box>
-                <Box basis="large" align="center">
+                <Box basis="1/2" align="center">
                     <MyStats
                         myPlayers={dashboardData.myTeam.players}
                         postTradePlayers={postTradeTeam}

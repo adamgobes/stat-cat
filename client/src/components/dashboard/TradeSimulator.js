@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 import { Box, Button } from 'grommet'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
@@ -9,6 +9,8 @@ import { SEARCH_PLAYERS_QUERY, DASHBOARD_QUERY, GET_PLAYER_STATS_QUERY } from '.
 import SentAndReceived from './SentAndReceived'
 import MyStats from './MyStats'
 import Loader from '../shared/Loader'
+import { computeTeamStatsAverages } from '../../utils/computeHelpers'
+import { ReactComponent as TradePlaceholderGraphic } from '../../assets/images/trade_placeholder.svg'
 
 export const MAX_PLAYERS_TRADED = 4
 
@@ -32,6 +34,12 @@ const SimulateTradeButton = styled(Button)`
 const TradedPlayers = styled(Box)`
     margin-top: 236px;
     width: 100%;
+`
+
+const SVGWrapper = styled(Box)`
+    width: 360px;
+    height: 360px;
+    margin: 100px 0 0 100px;
 `
 
 export default function TradeSimulator() {
@@ -62,6 +70,26 @@ export default function TradeSimulator() {
             ])
         }
     }, [playerStatsData])
+
+    const myTeamAverages = useMemo(() => {
+        const averages =
+            dashboardData &&
+            computeTeamStatsAverages(dashboardData.myTeam.players.map(player => player.stats))
+        return averages
+    }, [dashboardData])
+
+    const combinedStats = useMemo(() => {
+        const postTradeAverages =
+            postTradeTeam.length > 0 &&
+            computeTeamStatsAverages(postTradeTeam.map(player => player.stats))
+        const combinedAverages =
+            postTradeTeam.length > 0 &&
+            myTeamAverages.map((stat, i) => ({
+                category: stat.category,
+                values: [stat, postTradeAverages[i]].filter(e => !!e).map(s => s.value),
+            }))
+        return combinedAverages
+    }, [postTradeTeam])
 
     function onSendPlayer(player) {
         setSentPlayers([...sentPlayers, player])
@@ -108,10 +136,19 @@ export default function TradeSimulator() {
                     />
                 </Box>
                 <Box basis="1/2" align="center">
-                    <MyStats
-                        myPlayers={dashboardData.myTeam.players}
-                        postTradePlayers={postTradeTeam}
-                    />
+                    {postTradeTeam.length > 0 && (
+                        <MyStats
+                            players={postTradeTeam}
+                            averages={combinedStats}
+                            isTradeSimulated
+                        />
+                    )}
+                    {postTradeTeam.length === 0 && (
+                        <SVGWrapper>
+                            <TradePlaceholderGraphic />
+                            <h2 style={{ textAlign: 'center' }}>Start searching and get trading</h2>
+                        </SVGWrapper>
+                    )}
                 </Box>
             </Box>
         </TradeSimulatorWrapper>

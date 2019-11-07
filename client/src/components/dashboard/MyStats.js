@@ -37,32 +37,11 @@ const StatTypeHeader = styled.h2`
     border-bottom: ${props => (props.selected ? '2px solid #7781f7' : '')};
 `
 
-export default function MyStats({ myPlayers, postTradePlayers = [] }) {
+export default function MyStats({ players, averages, isTradeSimulated = false }) {
     const [selectedTimeFrame, setSelectedTimeFrame] = useState(timeFrames[0])
     const [statType, setStatType] = useState('Team')
 
-    const isTradeSimulated = postTradePlayers.length > 0
-
-    const myTeamAverages = useMemo(() => {
-        const averages =
-            myPlayers && computeTeamStatsAverages(myPlayers.map(player => player.stats))
-        return averages
-    }, [myPlayers])
-
-    const postTradeAverages = useMemo(() => {
-        const averages =
-            isTradeSimulated &&
-            computeTeamStatsAverages(postTradePlayers.map(player => player.stats))
-        return averages
-    }, [postTradePlayers])
-
-    const combinedStats = useMemo(() => {
-        const combinedAverages = myTeamAverages.map((stat, i) => ({
-            category: stat.category,
-            values: [stat, postTradeAverages[i]].filter(e => !!e).map(s => s.value),
-        }))
-        return combinedAverages
-    }, [myTeamAverages, postTradeAverages])
+    console.log({ players, averages })
 
     return (
         <MyStatsWrapper>
@@ -100,11 +79,9 @@ export default function MyStats({ myPlayers, postTradePlayers = [] }) {
             </Box>
             <StatsTableWrapper align="center">
                 {statType === 'Team' && (
-                    <TeamStats stats={combinedStats} isTradeSimulated={isTradeSimulated} />
+                    <TeamStats stats={averages} isTradeSimulated={isTradeSimulated} />
                 )}
-                {statType === 'Player' && (
-                    <PlayerStats players={isTradeSimulated ? postTradePlayers : myPlayers} />
-                )}
+                {statType === 'Player' && <PlayerStats players={players} />}
             </StatsTableWrapper>
         </MyStatsWrapper>
     )

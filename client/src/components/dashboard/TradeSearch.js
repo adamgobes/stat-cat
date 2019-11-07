@@ -66,6 +66,7 @@ export default function TradeSearch({
                 value={searchValue}
                 suggestions={renderSuggestions()}
                 dropTarget={searchRef.current}
+                loading={loading}
             />
         </Box>
     )

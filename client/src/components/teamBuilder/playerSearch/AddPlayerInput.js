@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, TextInput } from 'grommet'
 import styled from 'styled-components'
 import { FormSearch } from 'grommet-icons'
+import Loader from '../../shared/Loader'
 
 const AddPlayerInputWrapper = styled(Box)`
     width: ${props => props.width}px;
@@ -20,12 +21,30 @@ const SearchIconWrapper = styled(Box)`
     margin-left: 12px;
 `
 
-const AddPlayerInput = ({ inputValue, onPlayerInputChange, width = 300, ...otherProps }) => (
+const SearchLoaderWrapper = styled.div`
+    position: relative;
+    left: 12px;
+`
+
+const AddPlayerInput = ({
+    inputValue,
+    onPlayerInputChange,
+    width = 300,
+    loading = false,
+    ...otherProps
+}) => (
     <Box direction="row" justify="center">
         <AddPlayerInputWrapper direction="row" width={width}>
-            <SearchIconWrapper justify="center">
-                <FormSearch size="medium" />
-            </SearchIconWrapper>
+            {!loading && (
+                <SearchIconWrapper justify="center">
+                    <FormSearch size="medium" />
+                </SearchIconWrapper>
+            )}
+            {loading && (
+                <SearchLoaderWrapper>
+                    <Loader size="20" />
+                </SearchLoaderWrapper>
+            )}
             <AddPlayer
                 {...otherProps}
                 size="medium"

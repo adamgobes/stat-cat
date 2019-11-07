@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Box, Button } from 'grommet'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 
 import TradeSearch from './TradeSearch'
 import { MIN_CHARS } from '../teamBuilder/TeamBuilderContext'
-import { SEARCH_PLAYERS_QUERY, DASHBOARD_QUERY, MY_TEAM_QUERY } from '../../apollo/queries'
+import { SEARCH_PLAYERS_QUERY, DASHBOARD_QUERY, GET_PLAYER_STATS_QUERY } from '../../apollo/queries'
 import SentAndReceived from './SentAndReceived'
 import MyStats from './MyStats'
 import Loader from '../shared/Loader'
@@ -42,6 +42,19 @@ export default function TradeSimulator() {
 
     const { data: dashboardData, loading: dashboardLoading } = useQuery(DASHBOARD_QUERY)
 
+    const [getPlayerStats, { data: playerStatsData }] = useLazyQuery(GET_PLAYER_STATS_QUERY)
+
+    useEffect(() => {
+        if (playerStatsData && playerStatsData.getPlayerStats) {
+            const sentPlayersIds = sentPlayers.map(p => p.id)
+
+            setPostTradeTeam([
+                ...dashboardData.myTeam.players.filter(p => !sentPlayersIds.includes(p.id)),
+                ...playerStatsData.getPlayerStats,
+            ])
+        }
+    }, [playerStatsData])
+
     function onSendPlayer(player) {
         setSentPlayers([...sentPlayers, player])
     }
@@ -51,12 +64,7 @@ export default function TradeSimulator() {
     }
 
     function onSimulateTrade() {
-        const sentPlayersIds = sentPlayers.map(p => p.id)
-
-        setPostTradeTeam([
-            ...receivedPlayers,
-            ...dashboardData.myTeam.players.filter(p => !sentPlayersIds.includes(p.id)),
-        ])
+        getPlayerStats({ variables: { playerIds: receivedPlayers.map(p => p.id) } })
     }
 
     if (dashboardLoading) return <Loader size="100" />
@@ -85,9 +93,9 @@ export default function TradeSimulator() {
                     >
                         <SentAndReceived title="You Send" players={sentPlayers} />
                         <SentAndReceived title="You Receive" players={receivedPlayers} />
-                        {/* <SimulateTradeButton onClick={onSimulateTrade}>
+                        <SimulateTradeButton onClick={onSimulateTrade}>
                             Simulate
-                        </SimulateTradeButton> */}
+                        </SimulateTradeButton>
                     </Box>
                 </Box>
                 <Box basis="1/2" align="center">

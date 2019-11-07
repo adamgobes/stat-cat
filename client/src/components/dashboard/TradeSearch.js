@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { Box, Text, Button } from 'grommet'
 import PlayerImage from '../shared/PlayerImage'
 import AddPlayerInput from '../teamBuilder/playerSearch/AddPlayerInput'
-import Loader from '../shared/Loader'
 
 const AddRemoveButton = styled(Button)`
     border: 1px solid white;

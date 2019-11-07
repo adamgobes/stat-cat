@@ -26,7 +26,12 @@ const SimulateTradeButton = styled(Button)`
     color: #7781f7;
     padding: 10px;
     text-align: center;
-    border: 2px solid white;
+    margin-top: 12px;
+`
+
+const TradedPlayers = styled(Box)`
+    margin-top: 236px;
+    width: 100%;
 `
 
 export default function TradeSimulator() {
@@ -42,7 +47,10 @@ export default function TradeSimulator() {
 
     const { data: dashboardData, loading: dashboardLoading } = useQuery(DASHBOARD_QUERY)
 
-    const [getPlayerStats, { data: playerStatsData }] = useLazyQuery(GET_PLAYER_STATS_QUERY)
+    const [
+        getPlayerStats,
+        { data: playerStatsData, loading: getPlayerStatsLoading },
+    ] = useLazyQuery(GET_PLAYER_STATS_QUERY)
 
     useEffect(() => {
         if (playerStatsData && playerStatsData.getPlayerStats) {
@@ -86,17 +94,18 @@ export default function TradeSimulator() {
                         onSendPlayer={onSendPlayer}
                         onReceivePlayer={onReceivePlayer}
                     />
-                    <Box
+                    <TradedPlayers
                         direction="row"
                         justify="center"
                         style={{ marginTop: '236px', width: '100%' }}
                     >
                         <SentAndReceived title="You Send" players={sentPlayers} />
                         <SentAndReceived title="You Receive" players={receivedPlayers} />
-                        <SimulateTradeButton onClick={onSimulateTrade}>
-                            Simulate
-                        </SimulateTradeButton>
-                    </Box>
+                    </TradedPlayers>
+                    <SimulateTradeButton
+                        label={getPlayerStatsLoading ? <Loader size={20} /> : <b>Simulate Trade</b>}
+                        onClick={onSimulateTrade}
+                    />
                 </Box>
                 <Box basis="1/2" align="center">
                     <MyStats

@@ -101,6 +101,14 @@ export default function TradeSimulator() {
         setReceivedPlayers([...receivedPlayers, player])
     }
 
+    function onRemoveSentPlayer(player) {
+        setSentPlayers([...sentPlayers.filter(p => p.id !== player.id)])
+    }
+
+    function onRemoveReceivedPlayer(player) {
+        setReceivedPlayers([...receivedPlayers.filter(p => p.id !== player.id)])
+    }
+
     function onSimulateTrade() {
         getPlayerStats({ variables: { playerIds: receivedPlayers.map(p => p.id) } })
     }
@@ -129,8 +137,16 @@ export default function TradeSimulator() {
                         justify="center"
                         style={{ marginTop: '236px', width: '100%' }}
                     >
-                        <SentAndReceived title="You Send" players={sentPlayers} />
-                        <SentAndReceived title="You Receive" players={receivedPlayers} />
+                        <SentAndReceived
+                            title="You Send"
+                            players={sentPlayers}
+                            onRemovePlayer={onRemoveSentPlayer}
+                        />
+                        <SentAndReceived
+                            title="You Receive"
+                            players={receivedPlayers}
+                            onRemovePlayer={onRemoveReceivedPlayer}
+                        />
                     </TradedPlayers>
                     <SimulateTradeButton
                         label={getPlayerStatsLoading ? <Loader size={20} /> : <b>Simulate Trade</b>}

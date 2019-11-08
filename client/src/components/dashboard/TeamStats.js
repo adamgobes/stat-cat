@@ -135,7 +135,7 @@ function EfficiencyNumberElement({ category, attempted, made, isTradeSimulated }
                         {i === 1 && isTradeSimulated && (
                             <PercentageChangeIndicator
                                 currentValue={computePercentage(attempted[0], made[0])}
-                                tradeValue={computePercentage(attempted[1], attempted[1])}
+                                tradeValue={computePercentage(attempted[1], made[1])}
                             />
                         )}
                     </Box>

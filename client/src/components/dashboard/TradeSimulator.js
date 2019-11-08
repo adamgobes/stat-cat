@@ -76,7 +76,12 @@ export default function TradeSimulator() {
     const myTeamAverages = useMemo(() => {
         const averages =
             dashboardData &&
-            computeTeamStatsAverages(dashboardData.myTeam.players.map(player => player.stats))
+            computeTeamStatsAverages(dashboardData.myTeam.players.map(player => player.stats)).map(
+                stat => ({
+                    category: stat.category,
+                    values: [stat.value],
+                })
+            )
         return averages
     }, [dashboardData])
 
@@ -88,7 +93,7 @@ export default function TradeSimulator() {
             postTradeTeam.length > 0 &&
             myTeamAverages.map((stat, i) => ({
                 category: stat.category,
-                values: [stat, postTradeAverages[i]].filter(e => !!e).map(s => s.value),
+                values: [stat.values[0], postTradeAverages[i].value].filter(e => !!e),
             }))
         return combinedAverages
     }, [postTradeTeam, myTeamAverages])
@@ -154,13 +159,16 @@ export default function TradeSimulator() {
                     />
                 </Box>
                 <Box basis="1/2" align="center">
-                    {postTradeTeam.length > 0 && (
-                        <MyStats
-                            players={postTradeTeam}
-                            averages={combinedStats}
-                            isTradeSimulated
-                        />
-                    )}
+                    <MyStats
+                        players={
+                            postTradeTeam.length === 0
+                                ? dashboardData.myTeam.players
+                                : postTradeTeam
+                        }
+                        averages={postTradeTeam.length === 0 ? myTeamAverages : combinedStats}
+                        isTradeSimulated={postTradeTeam.length > 0}
+                    />
+
                     {postTradeTeam.length === 0 && (
                         <SVGWrapper>
                             <TradePlaceholderGraphic />

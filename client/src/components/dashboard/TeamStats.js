@@ -101,7 +101,7 @@ function CountingNumberElement({ category, values, isTradeSimulated }) {
                 <b>{statsAbbreviationToFull[category]}</b>
             </Box>
             {values.map((value, i) => (
-                <Box direction="column" justify="start" basis="medium">
+                <Box direction="column" justify="start" basis="medium" key={i}>
                     <b>{value}</b>
                     {i === 1 && isTradeSimulated && (
                         <PercentageChangeIndicator currentValue={values[0]} tradeValue={value} />
@@ -126,7 +126,7 @@ function EfficiencyNumberElement({ category, attempted, made, isTradeSimulated }
                 <b>{statsAbbreviationToFull[category]}</b>
             </Box>
             {attempted.map((_, i) => (
-                <Box basis="medium">
+                <Box basis="medium" key={i}>
                     <Box direction="row" justify="start">
                         <b>{`${computePercentage(attempted[i], made[i])}%`}</b>
                     </Box>
@@ -182,7 +182,7 @@ export default function TeamStats({ stats, isTradeSimulated }) {
                     ))}
                 {Object.keys(efficiencyObjects).map(s => (
                     <EfficiencyNumberElement
-                        key={s.category}
+                        key={s}
                         category={s}
                         attempted={efficiencyObjects[s].attempted}
                         made={efficiencyObjects[s].made}

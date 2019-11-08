@@ -71,7 +71,7 @@ export default function TradeSimulator() {
                 ...playerStatsData.getPlayerStats,
             ])
         }
-    }, [playerStatsData])
+    }, [playerStatsData, dashboardData])
 
     const myTeamAverages = useMemo(() => {
         const averages =
@@ -91,7 +91,7 @@ export default function TradeSimulator() {
                 values: [stat, postTradeAverages[i]].filter(e => !!e).map(s => s.value),
             }))
         return combinedAverages
-    }, [postTradeTeam])
+    }, [postTradeTeam, myTeamAverages])
 
     function onSendPlayer(player) {
         setSentPlayers([...sentPlayers, player])

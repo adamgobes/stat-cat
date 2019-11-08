@@ -40,7 +40,7 @@ export default function SentAndReceived({ title, players, onRemovePlayer }) {
         <ComponentWrapper direction="column">
             <h2 style={{ margin: '12px' }}>{title}</h2>
             {players.map(player => (
-                <PlayerWrapper direction="row" align="center" basis="1/2">
+                <PlayerWrapper direction="row" align="center" basis="1/2" key={player.id}>
                     <PlayerImage src={player.imageSrc} size="XS" />
                     <Truncated>
                         {`${player.firstName.substring(0, 1)}. ${player.lastName}`}

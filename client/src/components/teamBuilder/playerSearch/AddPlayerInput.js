@@ -5,7 +5,7 @@ import { FormSearch } from 'grommet-icons'
 import Loader from '../../shared/Loader'
 
 const AddPlayerInputWrapper = styled(Box)`
-    width: ${props => props.width}px;
+    width: ${props => props.inputWidth}px;
     background: white;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
@@ -34,7 +34,7 @@ const AddPlayerInput = ({
     ...otherProps
 }) => (
     <Box direction="row" justify="center">
-        <AddPlayerInputWrapper direction="row" width={width}>
+        <AddPlayerInputWrapper direction="row" inputWidth={width}>
             {!loading && (
                 <SearchIconWrapper justify="center">
                     <FormSearch size="medium" />

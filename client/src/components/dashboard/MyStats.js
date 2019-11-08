@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { Box, Button, Select } from 'grommet'
 import TeamStats from './TeamStats'
 import PlayerStats from './PlayerStats'
-import { computeTeamStatsAverages } from '../../utils/computeHelpers'
 
 const timeFrames = ['All', '7d', '1m']
 
@@ -24,7 +23,7 @@ const StatsTableWrapper = styled(Box)`
     overflow: auto;
 `
 
-const TimeFrameDropdownContainer = styled(Button)`
+const TimeFrameDropdownContainer = styled(Box)`
     width: 104px;
     border: 1px solid #7781f7;
     border-radius: 10px;

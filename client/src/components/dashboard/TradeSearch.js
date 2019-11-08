@@ -4,7 +4,7 @@ import { Box, Text, Button } from 'grommet'
 import PlayerImage from '../shared/PlayerImage'
 import AddPlayerInput from '../teamBuilder/playerSearch/AddPlayerInput'
 
-const AddRemoveButton = styled(Button)`
+const AddRemoveButton = styled(Box)`
     border: 1px solid white;
     background: #7781f7;
     border-radius: 5px;

@@ -56,7 +56,7 @@ function PlayerStats({ players }) {
             />
             <Box style={{ overflow: 'hidden', overflowY: 'scroll' }}>
                 {sortedData.map(player => (
-                    <TableRow flex={false}>
+                    <TableRow flex={false} key={player.id}>
                         <Box direction="row" justify="center" basis="xsmall">
                             <PlayerImage src={player.imageSrc} size="XS" />
                         </Box>

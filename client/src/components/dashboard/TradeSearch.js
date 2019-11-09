@@ -4,6 +4,8 @@ import { Box, Text, Button } from 'grommet'
 import PlayerImage from '../shared/PlayerImage'
 import AddPlayerInput from '../teamBuilder/playerSearch/AddPlayerInput'
 
+const TRADE_SEARCH_WIDTH = 320
+
 const AddRemoveButton = styled(Box)`
     border: 1px solid white;
     background: #7781f7;
@@ -41,7 +43,7 @@ export default function TradeSearch({
                           align="center"
                           border={index < list.length - 1 ? 'bottom' : undefined}
                           pad="small"
-                          style={{ maxWidth: '320px' }}
+                          style={{ maxWidth: `${TRADE_SEARCH_WIDTH}px` }}
                       >
                           <PlayerImage src={player.imageSrc} size="XS" />
                           <Truncated>
@@ -65,7 +67,7 @@ export default function TradeSearch({
         <Box ref={searchRef} direction="column" align="center" round="small">
             <AddPlayerInput
                 onPlayerInputChange={handleInputChange}
-                width={320}
+                width={TRADE_SEARCH_WIDTH}
                 value={searchValue}
                 suggestions={renderSuggestions()}
                 dropTarget={searchRef.current}

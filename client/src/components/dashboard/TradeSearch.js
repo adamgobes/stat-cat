@@ -29,6 +29,7 @@ export default function TradeSearch({
     loading,
     onSendPlayer,
     onReceivePlayer,
+    sendablePlayers,
 }) {
     const searchRef = useRef()
     const [suggestionOpen, setSuggestionOpen] = useState(false)
@@ -51,12 +52,16 @@ export default function TradeSearch({
                                   {`${player.firstName.substring(0, 1)}. ${player.lastName}`}
                               </strong>
                           </Truncated>
-                          <AddRemoveButton onClick={() => onSendPlayer(player)}>
-                              Send
-                          </AddRemoveButton>
-                          <AddRemoveButton onClick={() => onReceivePlayer(player)}>
-                              Receive
-                          </AddRemoveButton>
+                          {sendablePlayers.includes(player.id) && (
+                              <AddRemoveButton onClick={() => onSendPlayer(player)}>
+                                  Send
+                              </AddRemoveButton>
+                          )}
+                          {!sendablePlayers.includes(player.id) && (
+                              <AddRemoveButton onClick={() => onReceivePlayer(player)}>
+                                  Receive
+                              </AddRemoveButton>
+                          )}
                       </Box>
                   ),
                   value: player.id,

@@ -136,6 +136,7 @@ export default function TradeSimulator() {
                         loading={searchLoading}
                         onSendPlayer={onSendPlayer}
                         onReceivePlayer={onReceivePlayer}
+                        sendablePlayers={dashboardData.myTeam.players.map(p => p.id)}
                     />
                     <TradedPlayers direction="row" justify="center">
                         <SentAndReceived

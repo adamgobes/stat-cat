@@ -9,6 +9,8 @@ const AddPlayerInputWrapper = styled(Box)`
     background: white;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
+    ${props => (props.suggestionsOpen ? 'border-bottom-left-radius: 0px' : '')}
+    ${props => (props.suggestionsOpen ? 'border-bottom-right-radius: 0px' : '')}
 `
 
 const AddPlayer = styled(TextInput)`
@@ -34,7 +36,11 @@ const AddPlayerInput = ({
     ...otherProps
 }) => (
     <Box direction="row" justify="center">
-        <AddPlayerInputWrapper direction="row" inputWidth={width}>
+        <AddPlayerInputWrapper
+            direction="row"
+            inputWidth={width}
+            suggestionsOpen={otherProps.suggestionsOpen}
+        >
             {!loading && (
                 <SearchIconWrapper justify="center">
                     <FormSearch size="medium" />

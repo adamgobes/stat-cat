@@ -9,8 +9,7 @@ import LoginRegister from './components/auth/LoginRegister'
 import ApolloWrapper from './apollo/ApolloWrapper'
 import Dashboard from './components/dashboard/Dashboard'
 import TradeSimulator from './components/dashboard/TradeSimulator'
-import Nav from './components/general/Nav'
-import { AppContext, TOGGLE_NAV } from './components/general/AppContext'
+import { AppContext } from './components/general/AppContext'
 import { TeamBuilderContextProvider } from './components/teamBuilder/TeamBuilderContext'
 
 export const theme = {
@@ -28,6 +27,15 @@ export const theme = {
             border: {
                 color: 'none',
             },
+        },
+        drop: {
+            shadowSize: 'medium',
+            extend: `
+				border-bottom-left-radius: 12px;
+				border-bottom-right-radius: 12px;
+		
+				overflow: hidden;
+			  `,
         },
     },
 }

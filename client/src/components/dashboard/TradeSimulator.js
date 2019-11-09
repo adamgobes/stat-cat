@@ -32,7 +32,7 @@ const SimulateTradeButton = styled(Button)`
 `
 
 const TradedPlayers = styled(Box)`
-    margin-top: 236px;
+	margin-top: 28px
     width: 100%;
 `
 
@@ -124,7 +124,13 @@ export default function TradeSimulator() {
         <TradeSimulatorWrapper align="center">
             <h1>Trade Simulator</h1>
             <Box direction="row" align="start" style={{ width: '90%' }}>
-                <Box direction="column" justify="center" align="center" basis="1/2">
+                <Box
+                    direction="column"
+                    justify="center"
+                    align="center"
+                    basis="1/2"
+                    style={{ marginTop: '100px' }}
+                >
                     <TradeSearch
                         searchValue={playerInput}
                         suggestions={
@@ -137,11 +143,7 @@ export default function TradeSimulator() {
                         onSendPlayer={onSendPlayer}
                         onReceivePlayer={onReceivePlayer}
                     />
-                    <TradedPlayers
-                        direction="row"
-                        justify="center"
-                        style={{ marginTop: '236px', width: '100%' }}
-                    >
+                    <TradedPlayers direction="row" justify="center">
                         <SentAndReceived
                             title="You Send"
                             players={sentPlayers}

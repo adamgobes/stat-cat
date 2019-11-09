@@ -10,7 +10,6 @@ import SentAndReceived from './SentAndReceived'
 import MyStats from './MyStats'
 import Loader from '../shared/Loader'
 import { computeTeamStatsAverages } from '../../utils/computeHelpers'
-import { ReactComponent as TradePlaceholderGraphic } from '../../assets/images/trade_placeholder.svg'
 
 export const MAX_PLAYERS_TRADED = 4
 
@@ -34,12 +33,6 @@ const SimulateTradeButton = styled(Button)`
 const TradedPlayers = styled(Box)`
 	margin-top: 28px
     width: 100%;
-`
-
-const SVGWrapper = styled(Box)`
-    width: 360px;
-    height: 360px;
-    margin: 100px 0 0 100px;
 `
 
 export default function TradeSimulator() {
@@ -131,6 +124,7 @@ export default function TradeSimulator() {
                     basis="1/2"
                     style={{ marginTop: '100px' }}
                 >
+                    <h2 style={{ textAlign: 'center' }}>Start searching and get trading</h2>
                     <TradeSearch
                         searchValue={playerInput}
                         suggestions={
@@ -170,13 +164,6 @@ export default function TradeSimulator() {
                         averages={postTradeTeam.length === 0 ? myTeamAverages : combinedStats}
                         isTradeSimulated={postTradeTeam.length > 0}
                     />
-
-                    {postTradeTeam.length === 0 && (
-                        <SVGWrapper>
-                            <TradePlaceholderGraphic />
-                            <h2 style={{ textAlign: 'center' }}>Start searching and get trading</h2>
-                        </SVGWrapper>
-                    )}
                 </Box>
             </Box>
         </TradeSimulatorWrapper>

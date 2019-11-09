@@ -15,8 +15,7 @@ const ComponentWrapper = styled(Box)`
 
 const PlayerWrapper = styled(Box)`
     background: white;
-    margin: 2px 10px;
-    padding: 10px;
+    margin: 10px;
     border-radius: 10px;
 `
 
@@ -31,6 +30,7 @@ const Truncated = styled.h3`
 const RemovePlayerButton = styled(AddRemovePlayerButton)`
     position: relative;
     background: white;
+    right: 10px;
     border: 2px solid ${props => props.theme.global.colors.brand};
     color: #7781f7;
 `
@@ -40,7 +40,7 @@ export default function SentAndReceived({ title, players, onRemovePlayer }) {
         <ComponentWrapper direction="column">
             <h2 style={{ margin: '12px' }}>{title}</h2>
             {players.map(player => (
-                <PlayerWrapper direction="row" align="center" basis="1/2" key={player.id}>
+                <PlayerWrapper direction="row" align="center" key={player.id}>
                     <PlayerImage src={player.imageSrc} size="XS" />
                     <Truncated>
                         {`${player.firstName.substring(0, 1)}. ${player.lastName}`}

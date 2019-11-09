@@ -109,7 +109,7 @@ function TeamBuilder({ history }) {
         >
             <Box direction="column" align="center">
                 <Header>Team Builder</Header>
-                <AddPlayerInput onChange={handlePlayerInputChange} value={playerInput} />
+                <AddPlayerInput onPlayerInputChange={handlePlayerInputChange} value={playerInput} />
                 {!warningMessage && playerInput.length === 0 && (
                     <SVGWrapper margin="40">
                         <SearchPlaceholderGraphic />

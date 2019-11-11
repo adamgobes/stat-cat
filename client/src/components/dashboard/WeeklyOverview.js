@@ -79,7 +79,7 @@ function WeeklyOverview({ data }) {
                                 </span>
                             </Box>
                             <Box direction="row" justify="center" basis="small">
-                                {Math.floor(Math.random() * 3) + 1}
+                                {p.gameCountThisWeek}
                             </Box>
                         </TableRow>
                     ))}

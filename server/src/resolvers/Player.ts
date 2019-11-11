@@ -8,7 +8,6 @@ import {
 } from '../sportsFeed/helpers'
 
 function calculateGameCount(teamId: string, startDate: string, endDate: string): Promise<number> {
-    console.log(startDate, endDate)
     return sportsFeedRequest(
         `${season}/games.json?team=${teamId}&date=from-${startDate}-to-${endDate}`
     )

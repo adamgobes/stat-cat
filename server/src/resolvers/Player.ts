@@ -4,9 +4,9 @@ import { getEndDate, getStartDate, parseDate, fetchPlayerStats } from '../sports
 
 function calculateGameCount(teamId: string, startDate: string, endDate: string): Promise<number> {
     return sportsFeedRequest(
-        `${season}/team_gamelogs.json?team=${teamId}&date=from-${startDate}-to-${endDate}`
+        `${season}/games.json?team=${teamId}&date=from-${startDate}-to-${endDate}`
     )
-        .then(json => json.gamelogs.length)
+        .then(json => json.games.length)
         .catch(err => 2)
 }
 

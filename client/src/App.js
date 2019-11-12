@@ -11,34 +11,7 @@ import Dashboard from './components/dashboard/Dashboard'
 import TradeSimulator from './components/dashboard/TradeSimulator'
 import { AppContext } from './components/general/AppContext'
 import { TeamBuilderContextProvider } from './components/teamBuilder/TeamBuilderContext'
-
-export const theme = {
-    global: {
-        font: {
-            family: 'Thasadith',
-            size: '14px',
-            height: '20px',
-        },
-        colors: {
-            brand: '#4433F3',
-            secondary: 'black',
-        },
-        focus: {
-            border: {
-                color: 'none',
-            },
-        },
-        drop: {
-            shadowSize: 'medium',
-            extend: `
-				border-bottom-left-radius: 12px;
-				border-bottom-right-radius: 12px;
-		
-				overflow: hidden;
-			  `,
-        },
-    },
-}
+import theme from './theme'
 
 const isLoggedIn = () => !!cookie.load('authToken')
 

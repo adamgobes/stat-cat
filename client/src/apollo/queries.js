@@ -41,3 +41,14 @@ export const SEARCH_PLAYERS_QUERY = gql`
         }
     }
 `
+
+export const GET_PLAYER_STATS_QUERY = gql`
+    query getPlayerStatsQuery($playerIds: [ID!]!) {
+        getPlayerStats(playerIds: $playerIds) {
+            stats {
+                category
+                value
+            }
+        }
+    }
+`

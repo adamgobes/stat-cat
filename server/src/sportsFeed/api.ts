@@ -1,7 +1,7 @@
 import * as base64 from 'base-64'
 import t from 'typy'
 
-export const season: string = '2018-2019-regular'
+export const season: string = '2019-2020-regular'
 
 export function sportsFeedRequest(path: string): Promise<any> {
     const pass = base64.encode(
@@ -22,11 +22,11 @@ const defenseSelector = 'playerStatsTotals[0].stats.defense'
 export const statCategories = [
     {
         categoryName: 'FGA',
-        selector: json => t(json, `${fieldGoalSelector}.fg2PtAttPerGame`).safeNumber,
+        selector: json => t(json, `${fieldGoalSelector}.fgAttPerGame`).safeNumber,
     },
     {
         categoryName: 'FGM',
-        selector: json => t(json, `${fieldGoalSelector}.fg2PtMadePerGame`).safeNumber,
+        selector: json => t(json, `${fieldGoalSelector}.fgMadePerGame`).safeNumber,
     },
     {
         categoryName: 'FTA',

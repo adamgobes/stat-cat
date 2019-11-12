@@ -1,10 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
-import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
+import { LinkUp, LinkDown } from 'grommet-icons'
 
-import Pagination from '../shared/Pagination'
-import usePagination from '../../utils/customHooks'
+import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
 
 import basketball from '../../assets/images/basketball.png'
 import assistIcon from '../../assets/images/assist-icon.png'
@@ -28,6 +27,9 @@ const statToIcon = {
     '3PM': threeIcon,
 }
 
+const headers = ['Statistic', 'Avg Per Game']
+const tradeHeaders = ['Statistic', 'Before', 'After']
+
 const Table = styled(Box)`
     position: relative;
     width: 90%;
@@ -38,6 +40,10 @@ const IconWrapper = styled.div`
     height: 20px;
     margin: 0 10px 0 0;
     overflow: hidden;
+`
+
+const Percentage = styled.b`
+    color: ${props => (props.positive ? 'green' : 'red')};
 `
 
 const countingNumbers = ['PPG', 'APG', 'RPG', 'SPG', 'BPG', 'TPG']
@@ -53,7 +59,35 @@ const statsAbbreviationToFull = {
     FT: 'Free Throw',
 }
 
-function CountingNumberElement({ category, value }) {
+function computePercentage(attempted, made) {
+    return Math.round((made * 100) / attempted)
+}
+
+function PercentageChangeIndicator({ currentValue, tradeValue }) {
+    const percentageChange = Math.abs(
+        (parseFloat(tradeValue - currentValue) / parseFloat(currentValue)).toFixed(2)
+    )
+
+    return (
+        <Box direction="row">
+            <Percentage positive={tradeValue > currentValue}>
+                {percentageChange !== 0 && `${percentageChange}%`}
+            </Percentage>
+            {tradeValue > currentValue && (
+                <IconWrapper>
+                    <LinkUp color="green" size="XS" />
+                </IconWrapper>
+            )}
+            {tradeValue < currentValue && (
+                <IconWrapper>
+                    <LinkDown color="red" size="XS" />
+                </IconWrapper>
+            )}
+        </Box>
+    )
+}
+
+function CountingNumberElement({ category, values, isTradeSimulated }) {
     return (
         <TableRow>
             <Box direction="row" justify="start" basis="medium">
@@ -66,14 +100,19 @@ function CountingNumberElement({ category, value }) {
                 )}
                 <b>{statsAbbreviationToFull[category]}</b>
             </Box>
-            <Box direction="row" justify="start" basis="medium">
-                <b>{value}</b>
-            </Box>
+            {values.map((value, i) => (
+                <Box direction="column" justify="start" basis="medium" key={i}>
+                    <b>{value}</b>
+                    {i === 1 && isTradeSimulated && (
+                        <PercentageChangeIndicator currentValue={values[0]} tradeValue={value} />
+                    )}
+                </Box>
+            ))}
         </TableRow>
     )
 }
 
-function EfficiencyNumberElement({ category, attempted, made }) {
+function EfficiencyNumberElement({ category, attempted, made, isTradeSimulated }) {
     return (
         <TableRow>
             <Box direction="row" align="center" basis="medium">
@@ -84,35 +123,45 @@ function EfficiencyNumberElement({ category, attempted, made }) {
                         </Box>
                     </IconWrapper>
                 )}
-                <Box direction="column" align="start">
-                    <b>{statsAbbreviationToFull[category]}</b>
-                    <b>{`${made}/${attempted}`}</b>
+                <b>{statsAbbreviationToFull[category]}</b>
+            </Box>
+            {attempted.map((_, i) => (
+                <Box basis="medium" key={i}>
+                    <Box direction="row" justify="start">
+                        <b>{`${computePercentage(attempted[i], made[i])}%`}</b>
+                    </Box>
+                    <Box direction="column" align="start">
+                        <b>{`${made[i]}/${attempted[i]}`}</b>
+                        {i === 1 && isTradeSimulated && (
+                            <PercentageChangeIndicator
+                                currentValue={computePercentage(attempted[0], made[0])}
+                                tradeValue={computePercentage(attempted[1], made[1])}
+                            />
+                        )}
+                    </Box>
                 </Box>
-            </Box>
-            <Box direction="row" justify="start" basis="medium">
-                <b>{`${Math.round((made * 100) / attempted)}%`}</b>
-            </Box>
+            ))}
         </TableRow>
     )
 }
 
-export default function TeamStats({ stats }) {
+export default function TeamStats({ stats, isTradeSimulated }) {
     const efficiencyObjects = {
         FG: {
-            attempted: stats.find(s => s.category === 'FGA').value,
-            made: stats.find(s => s.category === 'FGM').value,
+            attempted: [...stats.find(s => s.category === 'FGA').values],
+            made: [...stats.find(s => s.category === 'FGM').values],
         },
         FT: {
-            attempted: stats.find(s => s.category === 'FTA').value,
-            made: stats.find(s => s.category === 'FTM').value,
+            attempted: [...stats.find(s => s.category === 'FTA').values],
+            made: [...stats.find(s => s.category === 'FTM').values],
         },
     }
 
     return (
         <Table>
             <DashboardTableHeader
-                headers={['Statistic', 'Avg Per Game']}
-                sizes={['medium', 'medium']}
+                headers={isTradeSimulated ? tradeHeaders : headers}
+                sizes={isTradeSimulated ? ['small', 'small', 'small'] : ['medium', 'medium']}
                 justify="start"
             />
             <Box>
@@ -127,15 +176,17 @@ export default function TeamStats({ stats }) {
                         <CountingNumberElement
                             key={s.category}
                             category={s.category}
-                            value={s.value}
+                            values={s.values}
+                            isTradeSimulated={isTradeSimulated}
                         />
                     ))}
                 {Object.keys(efficiencyObjects).map(s => (
                     <EfficiencyNumberElement
-                        key={s.category}
+                        key={s}
                         category={s}
                         attempted={efficiencyObjects[s].attempted}
                         made={efficiencyObjects[s].made}
+                        isTradeSimulated={isTradeSimulated}
                     />
                 ))}
             </Box>

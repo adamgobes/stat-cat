@@ -3,6 +3,7 @@ type Query {
     myTeam: Team!
     allPlayers(filter: String): [Player!]!
     leagueLeaders(timeFrame: String): [LeagueLeader!]!
+    getPlayerStats(playerIds: [ID!]!): [Player!]!
 }
 
 type Mutation {

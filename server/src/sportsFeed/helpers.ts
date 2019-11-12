@@ -1,3 +1,5 @@
+import * as moment from 'moment'
+
 import { GQLInjury, GQLStat } from '../generated/gqlTypes'
 import { sportsFeedRequest, season, statCategories } from './api'
 
@@ -35,28 +37,14 @@ export function fetchPlayerStats(playerId: string): Promise<GQLStat[]> {
     })
 }
 
-export function parseDate(date: Date): string {
-    const year = date.getFullYear()
-    const month = date.getMonth() > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`
-    const day = date.getDate() > 9 ? date.getDate() + 1 : `0${date.getDate() + 1}`
-
-    return `${year}${month}${day}`
+export function parseDate(date: moment.Moment): string {
+    return moment(date).format('YYYYMMDD')
 }
 
-export function getStartDate(): Date {
-    const date = new Date()
-    const day = date.getDay()
-    let prevMonday
-    if (date.getDay() === 0) {
-        prevMonday = new Date().setDate(date.getDate() - 7)
-    } else {
-        prevMonday = new Date().setDate(date.getDate() - day)
-    }
-
-    return new Date(prevMonday)
+export function getFirstDayOfWeek(): moment.Moment {
+    return moment().startOf('isoWeek')
 }
 
-export function getEndDate(startDate: Date): Date {
-    const endDate = new Date().setDate(startDate.getDate() + 7)
-    return new Date(endDate)
+export function getLastDayOfWeek(startDate: moment.Moment): moment.Moment {
+    return moment(startDate).add(6, 'days')
 }

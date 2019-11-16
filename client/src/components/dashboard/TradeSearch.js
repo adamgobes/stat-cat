@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Box, Text, Button } from 'grommet'
 import PlayerImage from '../shared/PlayerImage'
 import AddPlayerInput from '../teamBuilder/playerSearch/AddPlayerInput'
+import { getFirstLastShortened, getPlayerImage } from '../../apollo/dataSelectors'
 
 const TRADE_SEARCH_WIDTH = 320
 
@@ -46,11 +47,9 @@ export default function TradeSearch({
                           pad="small"
                           style={{ maxWidth: `${TRADE_SEARCH_WIDTH}px` }}
                       >
-                          <PlayerImage src={player.imageSrc} size="XS" />
+                          <PlayerImage src={getPlayerImage(player)} size="XS" />
                           <Truncated>
-                              <strong>
-                                  {`${player.firstName.substring(0, 1)}. ${player.lastName}`}
-                              </strong>
+                              <strong>{getFirstLastShortened(player)}</strong>
                           </Truncated>
                           {sendablePlayers.includes(player.id) && (
                               <AddRemoveButton onClick={() => onSendPlayer(player)}>

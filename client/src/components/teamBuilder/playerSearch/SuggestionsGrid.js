@@ -5,6 +5,7 @@ import { Box, Grid } from 'grommet'
 import AddRemovePlayerButton from '../AddRemovePlayerButton'
 import Loader from '../../shared/Loader'
 import PlayerImage from '../../shared/PlayerImage'
+import { getPlayerImage, getFullName } from '../../../apollo/dataSelectors'
 
 const SuggestionsGridWrapper = styled(Box)`
     width: 80%;
@@ -37,9 +38,9 @@ const SuggestionsGrid = ({ players, loading, onAddPlayer }) => (
             >
                 {players.slice(0, 6).map(p => (
                     <Box direction="column" align="center" key={p.id}>
-                        <PlayerImage src={p.imageSrc} name={p.fullName} />
+                        <PlayerImage src={getPlayerImage(p)} name={getFullName(p)} />
                         <AddPlayerButton handleClick={() => onAddPlayer(p)}>+</AddPlayerButton>
-                        <PlayerName>{p.fullName}</PlayerName>
+                        <PlayerName>{getFullName(p)}</PlayerName>
                     </Box>
                 ))}
             </Grid>

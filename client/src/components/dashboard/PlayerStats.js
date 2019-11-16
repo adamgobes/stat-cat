@@ -5,6 +5,7 @@ import { Box, Select } from 'grommet'
 import PlayerImage from '../shared/PlayerImage'
 import { allStats } from '../../utils/computeHelpers'
 import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
+import { getFullName, getPlayerImage } from '../../apollo/dataSelectors'
 
 const Table = styled(Box)`
     max-height: 500px;
@@ -58,10 +59,10 @@ function PlayerStats({ players }) {
                 {sortedData.map(player => (
                     <TableRow flex={false} key={player.id}>
                         <Box direction="row" justify="center" basis="xsmall">
-                            <PlayerImage src={player.imageSrc} size="XS" />
+                            <PlayerImage src={getPlayerImage(player)} size="XS" />
                         </Box>
                         <Box direction="row" justify="center" basis="small">
-                            <b>{player.fullName}</b>
+                            <b>{getFullName(player)}</b>
                         </Box>
                         <Box direction="row" justify="center" basis="small">
                             {findStat(player.stats, selectedStat)}

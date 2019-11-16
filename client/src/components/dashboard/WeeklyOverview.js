@@ -7,6 +7,14 @@ import PlayerImage from '../shared/PlayerImage'
 import usePagination from '../../utils/customHooks'
 import Pagination from '../shared/Pagination'
 import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
+import {
+    getPlayerImage,
+    getIsInjured,
+    getPlayerInjuryDescription,
+    getPlayingProb,
+    getGameCount,
+    getFirstLastShortened,
+} from '../../apollo/dataSelectors'
 
 const MAX_PER_PAGE = 4
 
@@ -49,40 +57,43 @@ function WeeklyOverview({ data }) {
                     headers={['', 'Player Name', 'Injury', 'Playing Probability', 'Games']}
                 />
                 <Entries direction="column">
-                    {data.slice((page - 1) * MAX_PER_PAGE, page * MAX_PER_PAGE).map(p => (
-                        <TableRow>
-                            <Box direction="row" justify="center" basis="xsmall">
-                                <PlayerImage src={p.imageSrc} size="XS" />
-                            </Box>
-                            <Box direction="row" justify="center" basis="small">
-                                <b>{`${p.firstName.charAt(0)}. ${p.lastName}`}</b>
-                            </Box>
-                            <Box direction="row" justify="center" basis="small">
-                                {!p.injury && <b>N/A</b>}
-                                {p.injury && (
-                                    <Truncated data-tip={p.injury.description}>
-                                        {p.injury.description}
-                                    </Truncated>
-                                )}
-                            </Box>
-                            <Box direction="row" justify="center" basis="small">
-                                <span
-                                    style={{
-                                        color: p.injury
-                                            ? playingProbToColor[p.injury.playingProbability]
-                                            : '#7FCFC6',
-                                        fontWeight: 'bold',
-                                    }}
-                                >
-                                    {p.injury && p.injury.playingProbability}
-                                    {!p.injury && 'Healthy'}
-                                </span>
-                            </Box>
-                            <Box direction="row" justify="center" basis="small">
-                                {p.gameCountThisWeek}
-                            </Box>
-                        </TableRow>
-                    ))}
+                    {data.slice((page - 1) * MAX_PER_PAGE, page * MAX_PER_PAGE).map(p => {
+                        const isInjured = getIsInjured(p)
+                        return (
+                            <TableRow>
+                                <Box direction="row" justify="center" basis="xsmall">
+                                    <PlayerImage src={getPlayerImage(p)} size="XS" />
+                                </Box>
+                                <Box direction="row" justify="center" basis="small">
+                                    <b>{getFirstLastShortened(p)}</b>
+                                </Box>
+                                <Box direction="row" justify="center" basis="small">
+                                    {!isInjured && <b>N/A</b>}
+                                    {isInjured && (
+                                        <Truncated data-tip={getPlayerInjuryDescription(p)}>
+                                            {getPlayerInjuryDescription(p)}
+                                        </Truncated>
+                                    )}
+                                </Box>
+                                <Box direction="row" justify="center" basis="small">
+                                    <span
+                                        style={{
+                                            color: isInjured
+                                                ? playingProbToColor[getPlayingProb(p)]
+                                                : '#7FCFC6',
+                                            fontWeight: 'bold',
+                                        }}
+                                    >
+                                        {isInjured && getPlayingProb(p)}
+                                        {!isInjured && 'Healthy'}
+                                    </span>
+                                </Box>
+                                <Box direction="row" justify="center" basis="small">
+                                    {getGameCount(p)}
+                                </Box>
+                            </TableRow>
+                        )
+                    })}
                 </Entries>
             </Table>
             <Pagination increment={incrementPage} decrement={decrementPage} />

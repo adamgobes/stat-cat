@@ -13,6 +13,7 @@ import {
     getPlayerInjuryDescription,
     getPlayingProb,
     getGameCount,
+    getFirstLastShortened,
 } from '../../apollo/dataSelectors'
 
 const MAX_PER_PAGE = 4
@@ -64,7 +65,7 @@ function WeeklyOverview({ data }) {
                                     <PlayerImage src={getPlayerImage(p)} size="XS" />
                                 </Box>
                                 <Box direction="row" justify="center" basis="small">
-                                    <b>{`${p.firstName.charAt(0)}. ${p.lastName}`}</b>
+                                    <b>{getFirstLastShortened(p)}</b>
                                 </Box>
                                 <Box direction="row" justify="center" basis="small">
                                     {!isInjured && <b>N/A</b>}

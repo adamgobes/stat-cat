@@ -7,6 +7,7 @@ import NoImagePlayer from '../../../assets/images/player.png'
 import AddRemovePlayerButton from '../AddRemovePlayerButton'
 import { ROSTER_SIZE } from '../TeamBuilderContext'
 import Loader from '../../shared/Loader'
+import { getFirstLastShortened, getPlayerImage } from '../../../apollo/dataSelectors'
 
 const RosterWrapper = styled(Box)`
     background-color: #7781f7;
@@ -78,7 +79,7 @@ function Roster({ players, onRemovePlayer, onSaveTeam, saveTeamLoading }) {
                             <MiniRosterImage align="center" justify="center">
                                 <PlayerImage
                                     size="M"
-                                    src={p ? p.imageSrc : NoImagePlayer}
+                                    src={p ? getPlayerImage(p) : NoImagePlayer}
                                     borderColor="white"
                                 />
                                 {p && (
@@ -87,11 +88,7 @@ function Roster({ players, onRemovePlayer, onSaveTeam, saveTeamLoading }) {
                                     </RemovePlayerButton>
                                 )}
                             </MiniRosterImage>
-                            {p && (
-                                <PlayerName>
-                                    {`${p.firstName.substring(0, 1)}. ${p.lastName}`}
-                                </PlayerName>
-                            )}
+                            {p && <PlayerName>{getFirstLastShortened(p)}</PlayerName>}
                         </RosterItem>
                     ))}
                 </Box>

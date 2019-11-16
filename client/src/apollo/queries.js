@@ -43,8 +43,10 @@ export const SEARCH_PLAYERS_QUERY = gql`
 `
 
 export const GET_PLAYER_STATS_QUERY = gql`
+    ${BasicPlayerInfoFragment}
     query getPlayerStatsQuery($playerIds: [ID!]!) {
         getPlayerStats(playerIds: $playerIds) {
+            ...BasicPlayerInfo
             stats {
                 category
                 value

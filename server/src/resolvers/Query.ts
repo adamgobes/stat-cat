@@ -63,7 +63,13 @@ export async function leagueLeaders(parent, args): Promise<GQLLeagueLeader[]> {
 }
 
 export function getPlayerStats(parent, args) {
-    return args.playerIds.map(id => ({
-        id,
-    }))
+    return args.playerIds.map(playerId =>
+        sportsFeedRequest(`players.json?player=${playerId}`).then(json => {
+            const { player } = json.players[0]
+
+            return {
+                ...extractBasicInfo(player),
+            }
+        })
+    )
 }

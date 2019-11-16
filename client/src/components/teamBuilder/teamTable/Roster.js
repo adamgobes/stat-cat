@@ -19,6 +19,10 @@ const RosterWrapper = styled(Box)`
 const RosterGrid = styled(Box)`
     margin-top: 20px;
     width: 90%;
+    @media (max-width: 1110px) {
+        overflow-y: scroll;
+        height: 80%;
+    }
 `
 
 const MyTeamHeader = styled.h1`
@@ -60,10 +64,10 @@ const SaveTeamButton = styled(Button)`
 
 const RosterItem = styled(Box)`
     flex-basis: 25%;
-    min-height: 140px;
+    min-height: 18vh;
     @media (max-width: 1110px) {
         flex-basis: 33%;
-        min-height: 130px;
+        min-height: 20vh;
     }
 `
 
@@ -76,7 +80,7 @@ function Roster({ players, onRemovePlayer, onSaveTeam, saveTeamLoading }) {
             <RosterGrid>
                 <Box direction="row" justify="start" wrap>
                     {team.map((p, i) => (
-                        <RosterItem key={p ? p.id : i}>
+                        <RosterItem key={p ? p.id : i} flex="shrink">
                             <MiniRosterImage align="center" justify="center">
                                 <PlayerImage
                                     size="M"

@@ -26,7 +26,7 @@ const MyTeamHeader = styled.h1`
     text-align: center;
     font-weight: bold;
     color: white;
-    margin: 40px 0;
+    margin: 30px 0;
 `
 
 const MiniRosterImage = styled(Box)`
@@ -36,6 +36,7 @@ const MiniRosterImage = styled(Box)`
 const PlayerName = styled.h3`
     color: white;
     text-align: center;
+    margin-top: 6px;
 `
 
 const RemovePlayerButton = styled(AddRemovePlayerButton)`
@@ -59,10 +60,10 @@ const SaveTeamButton = styled(Button)`
 
 const RosterItem = styled(Box)`
     flex-basis: 25%;
-    min-height: 170px;
+    min-height: 140px;
     @media (max-width: 1110px) {
         flex-basis: 33%;
-        min-height: 146px;
+        min-height: 130px;
     }
 `
 

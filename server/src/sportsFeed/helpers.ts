@@ -48,3 +48,7 @@ export function getFirstDayOfWeek(): moment.Moment {
 export function getLastDayOfWeek(startDate: moment.Moment): moment.Moment {
     return moment(startDate).add(6, 'days')
 }
+
+export function isActive(player): boolean {
+    return player.currentRosterStatus === 'ROSTER'
+}

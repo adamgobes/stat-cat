@@ -1,6 +1,6 @@
 import { GQLPlayer, GQLUser, GQLTeam, GQLLeagueLeader, GQLStat } from '../generated/gqlTypes'
 import { sportsFeedRequest, season, statCategories } from '../sportsFeed/api'
-import { extractBasicInfo, fetchPlayerStats } from '../sportsFeed/helpers'
+import { extractBasicInfo, fetchPlayerStats, isActive } from '../sportsFeed/helpers'
 import { getUserId } from '../utils'
 
 function containsFilter(playerObj, filter: string): boolean {
@@ -22,6 +22,7 @@ export function me(parent, args, context): GQLUser {
 export function allPlayers(parent, args): Promise<GQLPlayer[]> {
     return sportsFeedRequest('players.json').then(json =>
         json.players
+            .filter(p => isActive(p.player))
             .map(p => extractBasicInfo(p.player))
             .filter(pObj => (args.filter ? containsFilter(pObj, args.filter) : true))
     )

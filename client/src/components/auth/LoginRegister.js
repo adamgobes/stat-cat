@@ -38,7 +38,7 @@ function LoginRegister({ history }) {
             history.push('/teambuilder')
         },
         onError: error => {
-            dispatch(setErrorMessage(error.message))
+            dispatch(setErrorMessage(error.graphQLErrors[0].message))
         },
     })
 
@@ -52,6 +52,9 @@ function LoginRegister({ history }) {
             const { token } = data.register
             cookie.save('authToken', token, { path: '/' })
             history.push('/teambuilder')
+        },
+        onError: error => {
+            dispatch(setErrorMessage(error.graphQLErrors[0].message))
         },
     })
 
@@ -96,6 +99,7 @@ function LoginRegister({ history }) {
             className="container"
             onKeyDown={handleEnterClicked}
         >
+            <h1>{`${isLogin ? 'Welcome Back' : 'Create an Account'}`}</h1>
             {errorMessage && <h1>{errorMessage}</h1>}
             <Box pad="small">
                 {!isLogin && (

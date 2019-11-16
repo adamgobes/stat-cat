@@ -7,6 +7,12 @@ import { GQLAuthPayLoad, GQLTeam, GQLFantasyLeague, GQLUser } from '../generated
 export async function register(parents, args, context, info): Promise<GQLAuthPayLoad> {
     const password = await bcrypt.hash(args.password, 10)
 
+    const doesUserExist = await context.prisma.user({ email: args.email })
+
+    if (doesUserExist) {
+        throw new Error('A user with that email has already registered!')
+    }
+
     const user = await context.prisma.createUser({ ...args, password })
 
     // initialize user's team when they create an account
@@ -28,7 +34,7 @@ export async function register(parents, args, context, info): Promise<GQLAuthPay
 export async function login(parent, args, context, info): Promise<GQLAuthPayLoad> {
     const user = await context.prisma.user({ email: args.email })
     if (!user) {
-        throw new Error('No such user found')
+        throw new Error('No user with that email was found!')
     }
 
     const valid: boolean = await bcrypt.compare(args.password, user.password)

@@ -19,3 +19,19 @@ export function getFirstLastShortened(player) {
 export function getPlayerImage(player) {
     return player.imageSrc
 }
+
+export function getIsInjured(player) {
+    return !!player.injury
+}
+
+export function getPlayerInjuryDescription(player) {
+    return player.injury.description
+}
+
+export function getPlayingProb(player) {
+    return player.injury.playingProbability
+}
+
+export function getGameCount(player) {
+    return player.gameCountThisWeek
+}

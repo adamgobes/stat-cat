@@ -1,5 +1,3 @@
-import NoPlayerImage from '../assets/images/player.png'
-
 export function getFullName(player) {
     return player.fullName
 }

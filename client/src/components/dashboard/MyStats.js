@@ -23,10 +23,15 @@ const StatsTableWrapper = styled(Box)`
     overflow: auto;
 `
 
-const TimeFrameDropdownContainer = styled(Box)`
-    width: 104px;
+const TimeFrameButton = styled(Box)`
+    width: 33%;
+    height: 50%;
     border: 1px solid #7781f7;
-    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    color: ${props => (props.selected ? 'white' : '#7781f7')};
+    background: ${props => (props.selected ? '#7781f7' : 'white')};
+    cursor: pointer;
 `
 
 const StatTypeHeader = styled.h2`
@@ -43,7 +48,23 @@ export default function MyStats({ players, averages, isTradeSimulated = false })
     return useMemo(
         () => (
             <MyStatsWrapper>
-                <h1 style={{ margin: '20px' }}>My Stats</h1>
+                <Box direction="row">
+                    <Box basis="1/2" justify="start">
+                        <h1 style={{ margin: '20px' }}>My Stats</h1>
+                    </Box>
+                    <Box direction="row" basis="1/2" align="center" style={{ marginRight: '20px' }}>
+                        {timeFrames.map(tf => (
+                            <TimeFrameButton
+                                justify="center"
+                                onClick={() => setSelectedTimeFrame(tf)}
+                                selected={tf === selectedTimeFrame}
+                            >
+                                {tf}
+                            </TimeFrameButton>
+                        ))}
+                    </Box>
+                </Box>
+
                 <Box align="center">
                     <Box direction="row" style={{ width: '100%' }} justify="center" align="center">
                         <Box
@@ -61,17 +82,6 @@ export default function MyStats({ players, averages, isTradeSimulated = false })
                             basis="small"
                         >
                             <StatTypeHeader selected={statType === 'Player'}>Player</StatTypeHeader>
-                        </Box>
-                        <Box direction="row" justify="center" basis="small">
-                            <TimeFrameDropdownContainer>
-                                <Select
-                                    options={timeFrames}
-                                    value={selectedTimeFrame}
-                                    onChange={option => setSelectedTimeFrame(option.value)}
-                                    size="small"
-                                    plain
-                                />
-                            </TimeFrameDropdownContainer>
                         </Box>
                     </Box>
                 </Box>

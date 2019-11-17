@@ -28,7 +28,7 @@ const statToIcon = {
 }
 
 const headers = ['Statistic', 'Avg Per Game']
-const tradeHeaders = ['Statistic', 'Before', 'After']
+const tradeHeaders = ['Statistic', 'Before', 'After', 'Delta']
 
 const Table = styled(Box)`
     position: relative;
@@ -90,7 +90,7 @@ function PercentageChangeIndicator({ currentValue, tradeValue }) {
 function CountingNumberElement({ category, values, isTradeSimulated }) {
     return (
         <TableRow>
-            <Box direction="row" justify="start" basis="medium">
+            <Box direction="row" justify="center" basis="small">
                 {category in statToIcon && (
                     <IconWrapper>
                         <Box align="center" justify="center">
@@ -101,13 +101,15 @@ function CountingNumberElement({ category, values, isTradeSimulated }) {
                 <b>{statsAbbreviationToFull[category]}</b>
             </Box>
             {values.map((value, i) => (
-                <Box direction="column" justify="start" basis="medium" key={i}>
+                <Box direction="row" justify="center" basis="small" key={i}>
                     <b>{value}</b>
-                    {i === 1 && isTradeSimulated && (
-                        <PercentageChangeIndicator currentValue={values[0]} tradeValue={value} />
-                    )}
                 </Box>
             ))}
+            {isTradeSimulated && (
+                <Box direction="row" basis="small" justify="center">
+                    <PercentageChangeIndicator currentValue={values[0]} tradeValue={values[1]} />
+                </Box>
+            )}
         </TableRow>
     )
 }
@@ -115,7 +117,7 @@ function CountingNumberElement({ category, values, isTradeSimulated }) {
 function EfficiencyNumberElement({ category, attempted, made, isTradeSimulated }) {
     return (
         <TableRow>
-            <Box direction="row" align="center" basis="medium">
+            <Box direction="row" align="center" justify="center" basis="small">
                 {category in statToIcon && (
                     <IconWrapper>
                         <Box align="center" justify="center">
@@ -126,21 +128,23 @@ function EfficiencyNumberElement({ category, attempted, made, isTradeSimulated }
                 <b>{statsAbbreviationToFull[category]}</b>
             </Box>
             {attempted.map((_, i) => (
-                <Box basis="medium" key={i}>
+                <Box basis="small" align="center" key={i}>
                     <Box direction="row" justify="start">
                         <b>{`${computePercentage(attempted[i], made[i])}%`}</b>
                     </Box>
                     <Box direction="column" align="start">
                         <b>{`${made[i]}/${attempted[i]}`}</b>
-                        {i === 1 && isTradeSimulated && (
-                            <PercentageChangeIndicator
-                                currentValue={computePercentage(attempted[0], made[0])}
-                                tradeValue={computePercentage(attempted[1], made[1])}
-                            />
-                        )}
                     </Box>
                 </Box>
             ))}
+            {isTradeSimulated && (
+                <Box direction="row" basis="small" justify="center">
+                    <PercentageChangeIndicator
+                        currentValue={computePercentage(attempted[0], made[0])}
+                        tradeValue={computePercentage(attempted[1], made[1])}
+                    />
+                </Box>
+            )}
         </TableRow>
     )
 }
@@ -161,8 +165,10 @@ export default function TeamStats({ stats, isTradeSimulated }) {
         <Table>
             <DashboardTableHeader
                 headers={isTradeSimulated ? tradeHeaders : headers}
-                sizes={isTradeSimulated ? ['small', 'small', 'small'] : ['medium', 'medium']}
-                justify="start"
+                sizes={
+                    isTradeSimulated ? ['small', 'small', 'small', 'small'] : ['medium', 'medium']
+                }
+                justify="center"
             />
             <Box>
                 {stats

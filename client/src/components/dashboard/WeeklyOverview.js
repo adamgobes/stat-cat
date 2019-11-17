@@ -19,8 +19,10 @@ import {
 const MAX_PER_PAGE = 4
 
 const playingProbToColor = {
-    OUT: '#EB604B',
-    QUESTIONABLE: '#F4BA40',
+    healthy: '#7FCFC6',
+    out: '#EB604B',
+    questionable: '#F4BA40',
+    probable: '#F4BA40',
 }
 
 const WeeklyOverviewWrapper = styled(Box)`
@@ -43,6 +45,12 @@ const Truncated = styled.span`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+`
+
+const PlayingProbSpan = styled.span`
+    color: ${props => playingProbToColor[props.playingProb]};
+    font-weight: bold;
+    text-transform: capitalize;
 `
 
 function WeeklyOverview({ data }) {
@@ -80,17 +88,12 @@ function WeeklyOverview({ data }) {
                                     )}
                                 </Box>
                                 <Box direction="row" justify="center" basis="small">
-                                    <span
-                                        style={{
-                                            color: isInjured
-                                                ? playingProbToColor[getPlayingProb(p)]
-                                                : '#7FCFC6',
-                                            fontWeight: 'bold',
-                                        }}
+                                    <PlayingProbSpan
+                                        playingProb={isInjured ? getPlayingProb(p) : 'healthy'}
                                     >
                                         {isInjured && getPlayingProb(p)}
-                                        {!isInjured && 'Healthy'}
-                                    </span>
+                                        {!isInjured && 'healthy'}
+                                    </PlayingProbSpan>
                                 </Box>
                                 <Box direction="row" justify="center" basis="small">
                                     {getGameCount(p)}

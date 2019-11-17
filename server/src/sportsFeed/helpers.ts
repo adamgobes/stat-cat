@@ -24,7 +24,7 @@ export function extractInjuryInfo(sportsFeedPlayerObj): GQLInjury {
     const { playingProbability, description } = sportsFeedPlayerObj.currentInjury
     return {
         description,
-        playingProbability,
+        playingProbability: playingProbability.toLowerCase(),
     }
 }
 

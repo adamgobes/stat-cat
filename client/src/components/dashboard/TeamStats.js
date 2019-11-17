@@ -65,7 +65,7 @@ function computePercentage(attempted, made) {
 
 function PercentageChangeIndicator({ currentValue, tradeValue }) {
     const percentageChange = Math.abs(
-        (parseFloat(tradeValue - currentValue) / parseFloat(currentValue)).toFixed(2)
+        (parseFloat((tradeValue - currentValue) * 100) / parseFloat(currentValue)).toFixed(2)
     )
 
     return (

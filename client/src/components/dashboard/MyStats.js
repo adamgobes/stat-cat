@@ -72,6 +72,7 @@ export default function MyStats({ players, averages, isTradeSimulated = false })
                             onClick={() => setStatType('Team')}
                             justify="center"
                             basis="small"
+                            style={{ margin: '-12px' }}
                         >
                             <StatTypeHeader selected={statType === 'Team'}>Team</StatTypeHeader>
                         </Box>
@@ -80,6 +81,7 @@ export default function MyStats({ players, averages, isTradeSimulated = false })
                             onClick={() => setStatType('Player')}
                             justify="center"
                             basis="small"
+                            style={{ margin: '-12px' }}
                         >
                             <StatTypeHeader selected={statType === 'Player'}>Player</StatTypeHeader>
                         </Box>

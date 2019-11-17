@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Box, Button } from 'grommet'
 
 import PlayerImage from '../../shared/PlayerImage'
-import NoImagePlayer from '../../../assets/images/player.png'
+import RosterPlaceHolderImage from '../../../assets/images/roster-placeholder.png'
 import AddRemovePlayerButton from '../AddRemovePlayerButton'
 import { ROSTER_SIZE } from '../TeamBuilderContext'
 import Loader from '../../shared/Loader'
@@ -84,7 +84,7 @@ function Roster({ players, onRemovePlayer, onSaveTeam, saveTeamLoading }) {
                             <MiniRosterImage align="center" justify="center">
                                 <PlayerImage
                                     size="M"
-                                    src={p ? getPlayerImage(p) : NoImagePlayer}
+                                    src={p ? getPlayerImage(p) : RosterPlaceHolderImage}
                                     borderColor="white"
                                 />
                                 {p && (

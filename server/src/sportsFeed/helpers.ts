@@ -28,13 +28,28 @@ export function extractInjuryInfo(sportsFeedPlayerObj): GQLInjury {
     }
 }
 
-export function fetchPlayerStats(playerId: string): Promise<GQLStat[]> {
-    return sportsFeedRequest(`${season}/player_stats_totals.json?player=${playerId}`).then(json => {
+export function fetchPlayerStats(playerId: string, timeFrame?: string): Promise<GQLStat[]> {
+    const timeString = constructTimeString(timeFrame)
+
+    return sportsFeedRequest(
+        `${season}/player_stats_totals.json?player=${playerId}${timeString}`
+    ).then(json => {
         return statCategories.map(c => ({
             category: c.categoryName,
             value: c.selector(json),
         }))
     })
+}
+
+export function constructTimeString(timeFrame: string): string {
+    switch (timeFrame) {
+        case '7D':
+            return '?date=since-7-days-ago'
+        case '1M':
+            return '?date=since-30-days-ago'
+        default:
+            return ''
+    }
 }
 
 export function parseDate(date: moment.Moment): string {

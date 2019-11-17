@@ -26,7 +26,7 @@ const Header = styled.h1`
     font-size: 2.6em;
     text-align: center;
     font-weight: bold;
-    margin: 40px 0;
+    margin: 30px 0;
 `
 
 const WarningMessage = styled.h3`

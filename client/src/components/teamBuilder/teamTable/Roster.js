@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Box, Button } from 'grommet'
 
 import PlayerImage from '../../shared/PlayerImage'
-import NoImagePlayer from '../../../assets/images/player.png'
+import RosterPlaceHolderImage from '../../../assets/images/roster-placeholder.png'
 import AddRemovePlayerButton from '../AddRemovePlayerButton'
 import { ROSTER_SIZE } from '../TeamBuilderContext'
 import Loader from '../../shared/Loader'
@@ -19,6 +19,10 @@ const RosterWrapper = styled(Box)`
 const RosterGrid = styled(Box)`
     margin-top: 20px;
     width: 90%;
+    @media (max-width: 1110px) {
+        overflow-y: scroll;
+        height: 80%;
+    }
 `
 
 const MyTeamHeader = styled.h1`
@@ -26,7 +30,7 @@ const MyTeamHeader = styled.h1`
     text-align: center;
     font-weight: bold;
     color: white;
-    margin: 40px 0;
+    margin: 30px 0;
 `
 
 const MiniRosterImage = styled(Box)`
@@ -36,6 +40,7 @@ const MiniRosterImage = styled(Box)`
 const PlayerName = styled.h3`
     color: white;
     text-align: center;
+    margin-top: 6px;
 `
 
 const RemovePlayerButton = styled(AddRemovePlayerButton)`
@@ -59,10 +64,10 @@ const SaveTeamButton = styled(Button)`
 
 const RosterItem = styled(Box)`
     flex-basis: 25%;
-    min-height: 170px;
+    min-height: 18vh;
     @media (max-width: 1110px) {
         flex-basis: 33%;
-        min-height: 146px;
+        min-height: 20vh;
     }
 `
 
@@ -75,11 +80,11 @@ function Roster({ players, onRemovePlayer, onSaveTeam, saveTeamLoading }) {
             <RosterGrid>
                 <Box direction="row" justify="start" wrap>
                     {team.map((p, i) => (
-                        <RosterItem key={p ? p.id : i}>
+                        <RosterItem key={p ? p.id : i} flex="shrink">
                             <MiniRosterImage align="center" justify="center">
                                 <PlayerImage
                                     size="M"
-                                    src={p ? getPlayerImage(p) : NoImagePlayer}
+                                    src={p ? getPlayerImage(p) : RosterPlaceHolderImage}
                                     borderColor="white"
                                 />
                                 {p && (

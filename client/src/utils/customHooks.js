@@ -2,9 +2,9 @@ import { useState } from 'react'
 
 export default function usePagination(totalElements, elementsPerPage) {
     const [page, setPage] = useState(1)
+    const maxPages = Math.ceil(totalElements / elementsPerPage)
 
     function incrementPage() {
-        const maxPages = Math.ceil(totalElements / elementsPerPage)
         if (page < maxPages) {
             setPage(page + 1)
         }
@@ -16,5 +16,5 @@ export default function usePagination(totalElements, elementsPerPage) {
         }
     }
 
-    return { page, incrementPage, decrementPage }
+    return { page, incrementPage, decrementPage, maxPages }
 }

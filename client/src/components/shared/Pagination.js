@@ -7,13 +7,13 @@ const PaginationComponent = styled(Box)`
     position: absolute;
     bottom: 8px;
     right: 20px;
-    width: 100px;
+    width: 30%;
     border-radius: 10px;
     background: white;
 `
 
 export const PaginationButton = styled(Box)`
-    width: 50%;
+    width: 35%;
     height: 100%;
     border-radius: 10px;
     padding: 4px 0;
@@ -23,9 +23,16 @@ export const PaginationButton = styled(Box)`
     }
 `
 
-export default function Pagination({ increment, decrement }) {
+const PageIndicator = styled(Box)`
+    width: 30%;
+`
+
+export default function Pagination({ increment, decrement, page, totalPages }) {
     return (
         <PaginationComponent direction="row" justify="evenly">
+            <PageIndicator>
+                <span>{`${page} of ${totalPages}`}</span>
+            </PageIndicator>
             <PaginationButton align="center" onClick={decrement}>
                 <Previous size="small" />
             </PaginationButton>

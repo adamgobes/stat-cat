@@ -34,6 +34,7 @@ const WeeklyOverviewWrapper = styled(Box)`
 const Table = styled(Box)`
     position: relative;
     width: 96%;
+    margin-bottom: 20px;
 `
 
 const Entries = styled(Box)``
@@ -45,7 +46,10 @@ const Truncated = styled.span`
 `
 
 function WeeklyOverview({ data }) {
-    const { page, incrementPage, decrementPage } = usePagination(data.length, MAX_PER_PAGE)
+    const { page, incrementPage, decrementPage, maxPages } = usePagination(
+        data.length,
+        MAX_PER_PAGE
+    )
 
     return (
         <WeeklyOverviewWrapper align="center">
@@ -96,7 +100,12 @@ function WeeklyOverview({ data }) {
                     })}
                 </Entries>
             </Table>
-            <Pagination increment={incrementPage} decrement={decrementPage} />
+            <Pagination
+                increment={incrementPage}
+                decrement={decrementPage}
+                page={page}
+                totalPages={maxPages}
+            />
         </WeeklyOverviewWrapper>
     )
 }

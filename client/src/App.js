@@ -9,10 +9,11 @@ import LoginRegister from './components/auth/LoginRegister'
 import ApolloWrapper from './apollo/ApolloWrapper'
 import Dashboard from './components/dashboard/Dashboard'
 import TradeSimulator from './components/dashboard/TradeSimulator'
-import { AppContext } from './components/general/AppContext'
+import { AppContext, TOGGLE_NAV } from './components/general/AppContext'
 import { TeamBuilderContextProvider } from './components/teamBuilder/TeamBuilderContext'
 import theme from './theme'
 import { useWindowDimensions } from './utils/customHooks'
+import Nav from './components/general/Nav'
 import ResponsiveFallback from './components/general/ResponsiveFallback'
 
 const isLoggedIn = () => !!cookie.load('authToken')
@@ -29,20 +30,23 @@ const App = () => {
         )
     }
 
+    const isNavOpen = width < 900 ? appContext.isNavOpen : true
+
     return (
         <ApolloWrapper>
             <Router>
                 <Grommet
                     theme={theme}
                     style={{
-                        marginLeft: appContext.isNavOpen ? '380px' : '0',
+                        marginLeft: isNavOpen ? '180px' : '0',
                         transition: 'margin-left 0.3s',
                     }}
                 >
-                    {/* <Nav
+                    <Nav
                         setNavOpen={() => dispatch({ type: TOGGLE_NAV })}
-                        isNavOpen={appContext.isNavOpen}
-                    /> */}
+                        isNavOpen={isNavOpen}
+                        isWidthTooSmall={width < 900}
+                    />
                     <Route
                         exact
                         path="/"

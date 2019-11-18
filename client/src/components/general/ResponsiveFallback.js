@@ -8,7 +8,7 @@ export default function ResponsiveFallback() {
     return (
         <Box style={{ height: '100%' }} align="center" justify="center">
             <StatCatLogo />
-            <h1>Oops! StatCat does not a screen size that small yet!</h1>
+            <h1>Oops! StatCat does not support a screen size that small yet!</h1>
         </Box>
     )
 }

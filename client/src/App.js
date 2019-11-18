@@ -12,11 +12,17 @@ import TradeSimulator from './components/dashboard/TradeSimulator'
 import { AppContext } from './components/general/AppContext'
 import { TeamBuilderContextProvider } from './components/teamBuilder/TeamBuilderContext'
 import theme from './theme'
+import { useWindowDimensions } from './utils/customHooks'
 
 const isLoggedIn = () => !!cookie.load('authToken')
 
 const App = () => {
     const { appContext, dispatch } = useContext(AppContext)
+    const { height, width } = useWindowDimensions()
+
+    if (width < 800 || height < 600) {
+        return <div>hi</div>
+    }
 
     return (
         <ApolloWrapper>

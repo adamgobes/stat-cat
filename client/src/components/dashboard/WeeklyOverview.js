@@ -4,7 +4,7 @@ import { Box } from 'grommet'
 import ReactTooltip from 'react-tooltip'
 
 import PlayerImage from '../shared/PlayerImage'
-import usePagination from '../../utils/customHooks'
+import { usePagination } from '../../utils/customHooks'
 import Pagination from '../shared/Pagination'
 import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
 import {

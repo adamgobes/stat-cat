@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-export default function usePagination(totalElements, elementsPerPage) {
+export function usePagination(totalElements, elementsPerPage) {
     const [page, setPage] = useState(1)
     const maxPages = Math.ceil(totalElements / elementsPerPage)
 
@@ -17,4 +17,27 @@ export default function usePagination(totalElements, elementsPerPage) {
     }
 
     return { page, incrementPage, decrementPage, maxPages }
+}
+
+function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window
+    return {
+        width,
+        height,
+    }
+}
+
+export function useWindowDimensions() {
+    const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions())
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions())
+        }
+
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
+
+    return windowDimensions
 }

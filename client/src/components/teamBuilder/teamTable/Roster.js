@@ -10,7 +10,7 @@ import Loader from '../../shared/Loader'
 import { getFirstLastShortened, getPlayerImage } from '../../../apollo/dataSelectors'
 
 const RosterWrapper = styled(Box)`
-    background-color: #7781f7;
+    background-color: ${props => props.theme.global.colors.brand};
     border-radius: 10px;
     min-height: 100%;
     overflow-y: scroll;
@@ -49,14 +49,14 @@ const RemovePlayerButton = styled(AddRemovePlayerButton)`
     margin-top: -24px;
     background: white;
     border: 2px solid ${props => props.theme.global.colors.brand};
-    color: #7781f7;
+    color: ${props => props.theme.global.colors.brand};
 `
 
 const SaveTeamButton = styled(Button)`
     width: 140px;
     border-radius: 20px;
     background: white;
-    color: #7781f7;
+    color: ${props => props.theme.global.colors.brand};
     padding: 10px;
     text-align: center;
     border: 2px solid white;

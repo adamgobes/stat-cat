@@ -24,7 +24,7 @@ const SimulateTradeButton = styled(Button)`
     width: 140px;
     border-radius: 20px;
     background: white;
-    color: #7781f7;
+    color: ${props => props.theme.global.colors.brand};
     padding: 10px;
     text-align: center;
     margin-top: 12px;

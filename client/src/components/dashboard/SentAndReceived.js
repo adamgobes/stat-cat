@@ -32,7 +32,7 @@ const RemovePlayerButton = styled(AddRemovePlayerButton)`
     background: white;
     right: 10px;
     border: 2px solid ${props => props.theme.global.colors.brand};
-    color: #7781f7;
+    color: ${props => props.theme.global.colors.brand};
 `
 
 export default function SentAndReceived({ title, players, onRemovePlayer }) {

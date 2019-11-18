@@ -12,7 +12,7 @@ export default {
             height: '20px',
         },
         colors: {
-            brand: '#4433F3',
+            brand: '#7781f7',
             secondary: 'black',
         },
         focus: {

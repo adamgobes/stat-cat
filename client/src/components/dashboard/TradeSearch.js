@@ -9,7 +9,7 @@ const TRADE_SEARCH_WIDTH = 320
 
 const AddRemoveButton = styled(Box)`
     border: 1px solid white;
-    background: #7781f7;
+    background: ${props => props.theme.global.colors.brand};
     border-radius: 5px;
     color: white;
     padding: 4px;

@@ -27,7 +27,7 @@ const LogoContainer = styled(Box)`
 `
 
 const NavigationContainer = styled(Box)`
-    background: #7781f7;
+    background: ${props => props.theme.global.colors.brand};
     color: white;
     position: fixed;
     top: 0;

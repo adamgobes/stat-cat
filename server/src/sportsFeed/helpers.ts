@@ -31,22 +31,46 @@ export function extractInjuryInfo(sportsFeedPlayerObj): GQLInjury {
 export function fetchPlayerStats(playerId: string, timeFrame?: string): Promise<GQLStat[]> {
     const timeString = constructTimeString(timeFrame)
 
-    return sportsFeedRequest(
-        `${season}/player_stats_totals.json?player=${playerId}${timeString}`
-    ).then(json => {
-        return statCategories.map(c => ({
-            category: c.categoryName,
-            value: c.selector(json),
-        }))
-    })
+    if (timeString.length === 0) {
+        return sportsFeedRequest(`${season}/player_stats_totals.json?player=${playerId}`).then(
+            json => {
+                const statsObject = json.playerStatsTotals[0]
+                return statCategories.map(c => ({
+                    category: c.categoryName,
+                    value: c.selector(statsObject),
+                }))
+            }
+        )
+    } else {
+        return sportsFeedRequest(`${season}/player_gamelogs.json?player=${playerId}&${timeString}`)
+            .then(json => {
+                return statCategories.map(c => ({
+                    category: c.categoryName,
+                    value: computeAverageFromGameLogs(json.gamelogs, c),
+                }))
+            })
+            .catch(err =>
+                statCategories.map(c => ({
+                    category: c.categoryName,
+                    value: 0,
+                }))
+            )
+    }
+}
+
+export function computeAverageFromGameLogs(gamelogs, category): number {
+    const total = gamelogs.reduce((sum, gamelog) => {
+        return sum + category.selector(gamelog)
+    }, 0)
+    return parseFloat((total / gamelogs.length).toFixed(1))
 }
 
 export function constructTimeString(timeFrame: string): string {
     switch (timeFrame) {
         case '7D':
-            return '?date=since-7-days-ago'
+            return 'date=since-7-days-ago'
         case '1M':
-            return '?date=since-30-days-ago'
+            return 'date=since-30-days-ago'
         default:
             return ''
     }

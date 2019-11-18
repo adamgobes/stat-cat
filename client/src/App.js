@@ -20,7 +20,7 @@ const App = () => {
     const { appContext, dispatch } = useContext(AppContext)
     const { height, width } = useWindowDimensions()
 
-    if (width < 800 || height < 500) {
+    if (width < 800 || height < 550) {
         return <div>hi</div>
     }
 

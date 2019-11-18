@@ -8,7 +8,7 @@ import Loader from '../shared/Loader'
 import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../apollo/mutations'
 import loginRegisterReducer, {
     changeInput,
-    initialState,
+    createInitialState,
     setErrorMessage,
     changeIsLogin,
 } from './reducer'
@@ -24,10 +24,10 @@ const StyledButton = styled(Button)`
     color: white;
 `
 
-function LoginRegister({ history }) {
+function LoginRegister({ history, location }) {
     const [{ name, email, password, secondPassword, errorMessage, isLogin }, dispatch] = useReducer(
         loginRegisterReducer,
-        initialState
+        createInitialState(location.state.isLogin)
     )
 
     const [loginUser, { loading: loginLoading }] = useMutation(LOGIN_MUTATION, {

@@ -22,6 +22,8 @@ const Description = styled.h1`
 
 const HomeButton = styled(Button)`
     margin: 0 10px;
+    color: white;
+    font-weight: bold;
 `
 
 const Header = styled.h1`
@@ -44,12 +46,25 @@ const Home = () => (
         </Box>
         <Box align="center" justify="center">
             <Box direction="row" align="center">
-                <StyledLink to="/auth">
-                    <HomeButton
-                        label="Sign Up"
-                        primary
-                        style={{ color: 'white', fontWeight: 'bold' }}
-                    />
+                <StyledLink
+                    to={{
+                        pathname: '/auth',
+                        state: {
+                            isLogin: false,
+                        },
+                    }}
+                >
+                    <HomeButton label="Sign Up" primary />
+                </StyledLink>
+                <StyledLink
+                    to={{
+                        pathname: '/auth',
+                        state: {
+                            isLogin: true,
+                        },
+                    }}
+                >
+                    <HomeButton label="Log In" primary />
                 </StyledLink>
             </Box>
         </Box>

@@ -14,6 +14,7 @@ import {
     Help,
     Logout,
     FormPreviousLink,
+    ShareOption,
 } from 'grommet-icons'
 import Toggle from '../shared/Toggle'
 
@@ -85,6 +86,10 @@ function Nav({ history, isNavOpen, setNavOpen, isWidthTooSmall }) {
         mapUrlToPage(window.location.pathname.substring(1))
     )
 
+    function handleNavLinkClick(path) {
+        history.push(path)
+    }
+
     const allPages = [
         {
             label: DASHBOARD,
@@ -130,7 +135,12 @@ function Nav({ history, isNavOpen, setNavOpen, isWidthTooSmall }) {
                 justify="evenly"
                 isNavOpen={isNavOpen}
             >
-                <NavListItem direction="row" align="center" style={{ marginBottom: '12px' }}>
+                <NavListItem
+                    direction="row"
+                    align="center"
+                    style={{ marginBottom: '12px' }}
+                    onClick={() => handleNavLinkClick('/')}
+                >
                     <LogoContainer justify="center">
                         <img src={StatLogo} alt="Stat Logo" height="100%" width="100%" />
                     </LogoContainer>
@@ -138,30 +148,48 @@ function Nav({ history, isNavOpen, setNavOpen, isWidthTooSmall }) {
                         <h1>StatCat</h1>
                     </Box>
                 </NavListItem>
-                <NavListItem direction="row" align="center">
+                <NavListItem
+                    direction="row"
+                    align="center"
+                    onClick={() => handleNavLinkClick('/teambuilder')}
+                >
                     <NavIconWrapper direction="column" justify="center" align="center">
                         <Group size="medium" color="white" />
                     </NavIconWrapper>
                     <h3>Team Builder</h3>
                 </NavListItem>
-                <NavListItem direction="row" align="center">
+                <NavListItem
+                    direction="row"
+                    align="center"
+                    onClick={() => handleNavLinkClick('/dashboard')}
+                >
                     <NavIconWrapper direction="column" justify="center" align="center">
                         <Dashboard size="medium" color="white" />
                     </NavIconWrapper>
                     <h3>Dashboard</h3>
                 </NavListItem>
-                <NavListItem direction="row" align="center">
+                <NavListItem
+                    direction="row"
+                    align="center"
+                    onClick={() => handleNavLinkClick('/trade')}
+                >
+                    <NavIconWrapper direction="column" justify="center" align="center">
+                        <ShareOption size="medium" color="white" />
+                    </NavIconWrapper>
+                    <h3>Trade Simulator</h3>
+                </NavListItem>
+                {/* <NavListItem direction="row" align="center" >
                     <NavIconWrapper direction="column" justify="center" align="center">
                         <Trophy size="medium" color="white" />
                     </NavIconWrapper>
                     <h3>My League</h3>
-                </NavListItem>
-                <NavListItem direction="row" align="center">
+                </NavListItem> */}
+                {/* <NavListItem direction="row" align="center">
                     <NavIconWrapper direction="column" justify="center" align="center">
                         <Configure size="medium" color="white" />
                     </NavIconWrapper>
                     <h3>Settings</h3>
-                </NavListItem>
+                </NavListItem> */}
                 <NavListItem direction="row" align="center">
                     <NavIconWrapper direction="column" justify="center" align="center">
                         <Info size="medium" color="white" />
@@ -187,7 +215,14 @@ function Nav({ history, isNavOpen, setNavOpen, isWidthTooSmall }) {
 
                 <Box style={{ height: '100px' }} />
 
-                <NavListItem direction="row" align="center">
+                <NavListItem
+                    direction="row"
+                    align="center"
+                    onClick={() => {
+                        cookie.remove('authToken')
+                        history.push('/')
+                    }}
+                >
                     <NavIconWrapper direction="column" justify="center" align="center">
                         <Logout size="medium" color="white" />
                     </NavIconWrapper>

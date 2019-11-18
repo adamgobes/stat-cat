@@ -67,9 +67,9 @@ export function computeAverageFromGameLogs(gamelogs, category): number {
 
 export function constructTimeString(timeFrame: string): string {
     switch (timeFrame) {
-        case '7D':
+        case '7d':
             return 'date=since-7-days-ago'
-        case '1M':
+        case '1m':
             return 'date=since-30-days-ago'
         default:
             return ''

@@ -116,14 +116,8 @@ export default function TradeSimulator() {
     return (
         <TradeSimulatorWrapper align="center">
             <h1>Trade Simulator</h1>
-            <Box direction="row" align="start" style={{ width: '90%' }}>
-                <Box
-                    direction="column"
-                    justify="center"
-                    align="center"
-                    basis="1/2"
-                    style={{ marginTop: '100px' }}
-                >
+            <Box direction="row" align="center" style={{ width: '90%' }}>
+                <Box direction="column" justify="center" align="center" basis="1/2">
                     <h2 style={{ textAlign: 'center' }}>Start searching and get trading</h2>
                     <TradeSearch
                         searchValue={playerInput}

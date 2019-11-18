@@ -9,9 +9,12 @@ const timeFrames = ['All', '7d', '1m']
 const MyStatsWrapper = styled(Box)`
     position: relative;
     width: 440px;
-    height: 600px;
+    height: 80vh;
     background: white;
     border-radius: 10px;
+    @media (max-height: 600px) {
+        height: 90vh;
+    }
 `
 
 const StatsTableWrapper = styled(Box)`

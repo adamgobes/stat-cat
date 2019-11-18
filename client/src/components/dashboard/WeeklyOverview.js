@@ -4,7 +4,7 @@ import { Box } from 'grommet'
 import ReactTooltip from 'react-tooltip'
 
 import PlayerImage from '../shared/PlayerImage'
-import usePagination from '../../utils/customHooks'
+import { usePagination, useWindowDimensions } from '../../utils/customHooks'
 import Pagination from '../shared/Pagination'
 import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
 import {
@@ -16,8 +16,6 @@ import {
     getFirstLastShortened,
 } from '../../apollo/dataSelectors'
 
-const MAX_PER_PAGE = 4
-
 const playingProbToColor = {
     healthy: '#7FCFC6',
     out: '#EB604B',
@@ -28,7 +26,7 @@ const playingProbToColor = {
 const WeeklyOverviewWrapper = styled(Box)`
     position: relative;
     width: 540px;
-    min-height: 450px;
+    height: 62vh;
     background: white;
     border-radius: 10px;
 `
@@ -54,6 +52,9 @@ const PlayingProbSpan = styled.span`
 `
 
 function WeeklyOverview({ data }) {
+    const { height } = useWindowDimensions()
+    const MAX_PER_PAGE = height < 650 ? 3 : 4
+
     const { page, incrementPage, decrementPage, maxPages } = usePagination(
         data.length,
         MAX_PER_PAGE

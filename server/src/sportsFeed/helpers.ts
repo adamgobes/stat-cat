@@ -24,17 +24,56 @@ export function extractInjuryInfo(sportsFeedPlayerObj): GQLInjury {
     const { playingProbability, description } = sportsFeedPlayerObj.currentInjury
     return {
         description,
-        playingProbability,
+        playingProbability: playingProbability.toLowerCase(),
     }
 }
 
-export function fetchPlayerStats(playerId: string): Promise<GQLStat[]> {
-    return sportsFeedRequest(`${season}/player_stats_totals.json?player=${playerId}`).then(json => {
-        return statCategories.map(c => ({
-            category: c.categoryName,
-            value: c.selector(json),
-        }))
-    })
+export function fetchPlayerStats(playerId: string, timeFrame?: string): Promise<GQLStat[]> {
+    const timeString = constructTimeString(timeFrame)
+
+    if (timeString.length === 0) {
+        return sportsFeedRequest(`${season}/player_stats_totals.json?player=${playerId}`).then(
+            json => {
+                const statsObject = json.playerStatsTotals[0]
+                return statCategories.map(c => ({
+                    category: c.categoryName,
+                    value: c.selector(statsObject),
+                }))
+            }
+        )
+    } else {
+        return sportsFeedRequest(`${season}/player_gamelogs.json?player=${playerId}&${timeString}`)
+            .then(json => {
+                return statCategories.map(c => ({
+                    category: c.categoryName,
+                    value: computeAverageFromGameLogs(json.gamelogs, c),
+                }))
+            })
+            .catch(err => {
+                return statCategories.map(c => ({
+                    category: c.categoryName,
+                    value: 0,
+                }))
+            })
+    }
+}
+
+export function computeAverageFromGameLogs(gamelogs, category): number {
+    const total = gamelogs.reduce((sum, gamelog) => {
+        return sum + category.selector(gamelog)
+    }, 0)
+    return parseFloat((total / gamelogs.length).toFixed(1))
+}
+
+export function constructTimeString(timeFrame: string): string {
+    switch (timeFrame) {
+        case '7d':
+            return 'date=since-7-days-ago'
+        case '1m':
+            return 'date=since-30-days-ago'
+        default:
+            return ''
+    }
 }
 
 export function parseDate(date: moment.Moment): string {

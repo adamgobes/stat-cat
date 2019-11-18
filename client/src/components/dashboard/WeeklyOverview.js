@@ -19,8 +19,10 @@ import {
 const MAX_PER_PAGE = 4
 
 const playingProbToColor = {
-    OUT: '#EB604B',
-    QUESTIONABLE: '#F4BA40',
+    healthy: '#7FCFC6',
+    out: '#EB604B',
+    questionable: '#F4BA40',
+    probable: '#F4BA40',
 }
 
 const WeeklyOverviewWrapper = styled(Box)`
@@ -34,6 +36,7 @@ const WeeklyOverviewWrapper = styled(Box)`
 const Table = styled(Box)`
     position: relative;
     width: 96%;
+    margin-bottom: 20px;
 `
 
 const Entries = styled(Box)``
@@ -44,8 +47,17 @@ const Truncated = styled.span`
     text-overflow: ellipsis;
 `
 
+const PlayingProbSpan = styled.span`
+    color: ${props => playingProbToColor[props.playingProb]};
+    font-weight: bold;
+    text-transform: capitalize;
+`
+
 function WeeklyOverview({ data }) {
-    const { page, incrementPage, decrementPage } = usePagination(data.length, MAX_PER_PAGE)
+    const { page, incrementPage, decrementPage, maxPages } = usePagination(
+        data.length,
+        MAX_PER_PAGE
+    )
 
     return (
         <WeeklyOverviewWrapper align="center">
@@ -76,17 +88,12 @@ function WeeklyOverview({ data }) {
                                     )}
                                 </Box>
                                 <Box direction="row" justify="center" basis="small">
-                                    <span
-                                        style={{
-                                            color: isInjured
-                                                ? playingProbToColor[getPlayingProb(p)]
-                                                : '#7FCFC6',
-                                            fontWeight: 'bold',
-                                        }}
+                                    <PlayingProbSpan
+                                        playingProb={isInjured ? getPlayingProb(p) : 'healthy'}
                                     >
                                         {isInjured && getPlayingProb(p)}
-                                        {!isInjured && 'Healthy'}
-                                    </span>
+                                        {!isInjured && 'healthy'}
+                                    </PlayingProbSpan>
                                 </Box>
                                 <Box direction="row" justify="center" basis="small">
                                     {getGameCount(p)}
@@ -96,7 +103,12 @@ function WeeklyOverview({ data }) {
                     })}
                 </Entries>
             </Table>
-            <Pagination increment={incrementPage} decrement={decrementPage} />
+            <Pagination
+                increment={incrementPage}
+                decrement={decrementPage}
+                page={page}
+                totalPages={maxPages}
+            />
         </WeeklyOverviewWrapper>
     )
 }

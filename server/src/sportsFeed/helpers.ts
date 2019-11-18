@@ -49,12 +49,12 @@ export function fetchPlayerStats(playerId: string, timeFrame?: string): Promise<
                     value: computeAverageFromGameLogs(json.gamelogs, c),
                 }))
             })
-            .catch(err =>
-                statCategories.map(c => ({
+            .catch(err => {
+                return statCategories.map(c => ({
                     category: c.categoryName,
                     value: 0,
                 }))
-            )
+            })
     }
 }
 

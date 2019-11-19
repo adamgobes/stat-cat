@@ -61,58 +61,15 @@ const NavIconWrapper = styled(Box)`
     margin: 0 2px;
 `
 
-const DASHBOARD = 'Dashboard'
-const TEAM_BUILDER = 'Team Builder'
-const LOGOUT = 'Logout'
-
-function mapUrlToPage(url) {
-    switch (url) {
-        case 'teambuilder':
-            return 'Team Builder'
-        case 'dashboard':
-            return 'Dashboard'
-        default:
-            return ''
-    }
-}
-
 const NavListItem = styled(Box)`
     cursor: pointer;
     margin: 0 10px;
 `
 
 function Nav({ history, isNavOpen, setNavOpen, isWidthTooSmall }) {
-    const [currentPage, setCurrentPage] = useState(
-        mapUrlToPage(window.location.pathname.substring(1))
-    )
-
     function handleNavLinkClick(path) {
         history.push(path)
     }
-
-    const allPages = [
-        {
-            label: DASHBOARD,
-            onClick: () => {
-                setCurrentPage(DASHBOARD)
-                history.push('/app/dashboard')
-            },
-        },
-        {
-            label: TEAM_BUILDER,
-            onClick: () => {
-                setCurrentPage(TEAM_BUILDER)
-                history.push('/app/teambuilder')
-            },
-        },
-        {
-            label: LOGOUT,
-            onClick: () => {
-                cookie.remove('authToken')
-                history.push('/')
-            },
-        },
-    ]
 
     return (
         <Box>

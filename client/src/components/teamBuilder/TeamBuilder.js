@@ -50,7 +50,7 @@ function TeamBuilder({ history }) {
 
     const [mutateTeam, { loading: saveTeamLoading }] = useMutation(SAVE_TEAM_MUTATION, {
         refetchQueries: () => [{ query: DASHBOARD_QUERY }, { query: MY_TEAM_QUERY }],
-        onCompleted: () => history.push('/dashboard'),
+        onCompleted: () => history.push('/app/dashboard'),
     })
 
     const { data: searchData, loading: searchLoading } = useQuery(SEARCH_PLAYERS_QUERY, {

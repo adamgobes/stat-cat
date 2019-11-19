@@ -35,7 +35,7 @@ function LoginRegister({ history, location }) {
         onCompleted: data => {
             const { token } = data.login
             cookie.save('authToken', token, { path: '/' })
-            history.push('/teambuilder')
+            history.push('/app/dashboard')
         },
         onError: error => {
             dispatch(setErrorMessage(error.graphQLErrors[0].message))
@@ -51,7 +51,7 @@ function LoginRegister({ history, location }) {
         onCompleted: data => {
             const { token } = data.register
             cookie.save('authToken', token, { path: '/' })
-            history.push('/teambuilder')
+            history.push('/app/teambuilder')
         },
         onError: error => {
             dispatch(setErrorMessage(error.graphQLErrors[0].message))

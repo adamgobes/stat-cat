@@ -95,14 +95,14 @@ function Nav({ history, isNavOpen, setNavOpen, isWidthTooSmall }) {
             label: DASHBOARD,
             onClick: () => {
                 setCurrentPage(DASHBOARD)
-                history.push('/dashboard')
+                history.push('/app/dashboard')
             },
         },
         {
             label: TEAM_BUILDER,
             onClick: () => {
                 setCurrentPage(TEAM_BUILDER)
-                history.push('teambuilder')
+                history.push('/app/teambuilder')
             },
         },
         {
@@ -151,7 +151,7 @@ function Nav({ history, isNavOpen, setNavOpen, isWidthTooSmall }) {
                 <NavListItem
                     direction="row"
                     align="center"
-                    onClick={() => handleNavLinkClick('/teambuilder')}
+                    onClick={() => handleNavLinkClick('/app/teambuilder')}
                 >
                     <NavIconWrapper direction="column" justify="center" align="center">
                         <Group size="medium" color="white" />
@@ -161,7 +161,7 @@ function Nav({ history, isNavOpen, setNavOpen, isWidthTooSmall }) {
                 <NavListItem
                     direction="row"
                     align="center"
-                    onClick={() => handleNavLinkClick('/dashboard')}
+                    onClick={() => handleNavLinkClick('/app/dashboard')}
                 >
                     <NavIconWrapper direction="column" justify="center" align="center">
                         <Dashboard size="medium" color="white" />
@@ -171,7 +171,7 @@ function Nav({ history, isNavOpen, setNavOpen, isWidthTooSmall }) {
                 <NavListItem
                     direction="row"
                     align="center"
-                    onClick={() => handleNavLinkClick('/trade')}
+                    onClick={() => handleNavLinkClick('/app/trade')}
                 >
                     <NavIconWrapper direction="column" justify="center" align="center">
                         <ShareOption size="medium" color="white" />
@@ -219,7 +219,7 @@ function Nav({ history, isNavOpen, setNavOpen, isWidthTooSmall }) {
                     direction="row"
                     align="center"
                     onClick={() => {
-                        cookie.remove('authToken')
+                        cookie.remove('authToken', { path: '/' })
                         history.push('/')
                     }}
                 >

@@ -10,6 +10,8 @@ import { TOGGLE_NAV, AppContext } from './AppContext'
 import { useWindowDimensions } from '../../utils/customHooks'
 import Nav from './Nav'
 
+const HIDE_NAV_WIDTH = 1100
+
 const StatCatAppWrapper = styled.div`
     height: 100%;
     margin-left: ${props => (props.isNavOpen ? '180px' : '0')};
@@ -22,14 +24,14 @@ export default function StatCatApp() {
 
     const { path } = useRouteMatch()
 
-    const isNavOpen = width < 900 ? appContext.isNavOpen : true
+    const isNavOpen = width < HIDE_NAV_WIDTH ? appContext.isNavOpen : true
 
     return (
         <StatCatAppWrapper isNavOpen={isNavOpen}>
             <Nav
                 setNavOpen={() => dispatch({ type: TOGGLE_NAV })}
                 isNavOpen={isNavOpen}
-                isWidthTooSmall={width < 900}
+                isWidthTooSmall={width < HIDE_NAV_WIDTH}
             />
             <Route
                 exact

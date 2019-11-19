@@ -8,7 +8,7 @@ import Loader from '../shared/Loader'
 import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../apollo/mutations'
 import loginRegisterReducer, {
     changeInput,
-    initialState,
+    createInitialState,
     setErrorMessage,
     changeIsLogin,
 } from './reducer'
@@ -24,10 +24,11 @@ const StyledButton = styled(Button)`
     color: white;
 `
 
-function LoginRegister({ history }) {
+function LoginRegister({ history, location }) {
+    const initialIsLogin = location.state ? location.state.isLogin : false
     const [{ name, email, password, secondPassword, errorMessage, isLogin }, dispatch] = useReducer(
         loginRegisterReducer,
-        initialState
+        createInitialState(initialIsLogin)
     )
 
     const [loginUser, { loading: loginLoading }] = useMutation(LOGIN_MUTATION, {
@@ -35,7 +36,7 @@ function LoginRegister({ history }) {
         onCompleted: data => {
             const { token } = data.login
             cookie.save('authToken', token, { path: '/' })
-            history.push('/teambuilder')
+            history.push('/app/dashboard')
         },
         onError: error => {
             dispatch(setErrorMessage(error.graphQLErrors[0].message))
@@ -51,7 +52,7 @@ function LoginRegister({ history }) {
         onCompleted: data => {
             const { token } = data.register
             cookie.save('authToken', token, { path: '/' })
-            history.push('/teambuilder')
+            history.push('/app/teambuilder')
         },
         onError: error => {
             dispatch(setErrorMessage(error.graphQLErrors[0].message))

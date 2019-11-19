@@ -2,14 +2,14 @@ const CHANGE_INPUT = 'CHANGE_INPUT'
 const CHANGE_IS_LOGIN = 'CHANGE_IS_LOGIN'
 const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
 
-export const initialState = {
+export const createInitialState = isLogin => ({
     name: '',
     email: '',
     password: '',
     secondPassword: '',
     errorMessage: null,
-    isLogin: false,
-}
+    isLogin,
+})
 
 export default function reducer(state, action) {
     switch (action.type) {
@@ -20,8 +20,7 @@ export default function reducer(state, action) {
             }
         case CHANGE_IS_LOGIN:
             return {
-                ...initialState,
-                isLogin: !state.isLogin,
+                ...createInitialState(!state.isLogin),
                 errorMessage: null,
             }
         case SET_ERROR_MESSAGE:

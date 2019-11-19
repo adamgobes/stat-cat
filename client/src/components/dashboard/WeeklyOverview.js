@@ -21,6 +21,7 @@ const playingProbToColor = {
     out: '#EB604B',
     questionable: '#F4BA40',
     probable: '#F4BA40',
+    doubtful: '#EB604B',
 }
 
 const WeeklyOverviewWrapper = styled(Box)`

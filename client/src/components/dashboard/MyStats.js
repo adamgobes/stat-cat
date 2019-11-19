@@ -29,11 +29,11 @@ const StatsTableWrapper = styled(Box)`
 const TimeFrameButton = styled(Box)`
     width: 33%;
     height: 50%;
-    border: 1px solid #7781f7;
+    border: 1px solid ${props => props.theme.global.colors.brand};
     text-align: center;
     font-weight: bold;
-    color: ${props => (props.selected ? 'white' : '#7781f7')};
-    background: ${props => (props.selected ? '#7781f7' : 'white')};
+    color: ${props => (props.selected ? 'white' : props.theme.global.colors.brand)};
+    background: ${props => (props.selected ? props.theme.global.colors.brand : 'white')};
     cursor: pointer;
 `
 
@@ -41,7 +41,8 @@ const StatTypeHeader = styled.h2`
     cursor: pointer;
     width: fit-content;
     padding-bottom: 6px;
-    border-bottom: ${props => (props.selected ? '2px solid #7781f7' : '')};
+    border-bottom: ${props =>
+        props.selected ? `2px solid ${props.theme.global.colors.brand}` : ''};
 `
 
 export default function MyStats({ players, averages, isTradeSimulated = false }) {

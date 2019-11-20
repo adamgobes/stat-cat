@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Box, Button, Select } from 'grommet'
 import TeamStats from './TeamStats'
 import PlayerStats from './PlayerStats'
+import Loader from '../shared/Loader'
 
 const timeFrames = ['All', '7d', '1m']
 
@@ -45,10 +46,20 @@ const StatTypeHeader = styled.h2`
         props.selected ? `2px solid ${props.theme.global.colors.brand}` : ''};
 `
 
-export default function MyStats({ players, averages, isTradeSimulated = false }) {
-    const [selectedTimeFrame, setSelectedTimeFrame] = useState(timeFrames[0])
+export default function MyStats({
+    players,
+    averages,
+    isTradeSimulated = false,
+    loading = false,
+    refetch,
+}) {
     const [statType, setStatType] = useState('Team')
+    const [selectedTimeFrame, setSelectedTimeFrame] = useState('All')
 
+    function handleTimeFrameChange(timeFrame) {
+        setSelectedTimeFrame(timeFrame)
+        refetch({ timeFrame })
+    }
     return useMemo(
         () => (
             <MyStatsWrapper>
@@ -60,7 +71,7 @@ export default function MyStats({ players, averages, isTradeSimulated = false })
                         {timeFrames.map(tf => (
                             <TimeFrameButton
                                 justify="center"
-                                onClick={() => setSelectedTimeFrame(tf)}
+                                onClick={() => handleTimeFrameChange(tf)}
                                 selected={tf === selectedTimeFrame}
                             >
                                 {tf}
@@ -91,12 +102,15 @@ export default function MyStats({ players, averages, isTradeSimulated = false })
                         </Box>
                     </Box>
                 </Box>
-                <StatsTableWrapper align="center">
-                    {statType === 'Team' && (
-                        <TeamStats stats={averages} isTradeSimulated={isTradeSimulated} />
-                    )}
-                    {statType === 'Player' && <PlayerStats players={players} />}
-                </StatsTableWrapper>
+                {loading && <Loader size={50} />}
+                {!loading && (
+                    <StatsTableWrapper align="center">
+                        {statType === 'Team' && (
+                            <TeamStats stats={averages} isTradeSimulated={isTradeSimulated} />
+                        )}
+                        {statType === 'Player' && <PlayerStats players={players} />}
+                    </StatsTableWrapper>
+                )}
             </MyStatsWrapper>
         ),
         [players, averages, selectedTimeFrame, statType]

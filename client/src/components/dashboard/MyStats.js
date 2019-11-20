@@ -1,11 +1,10 @@
 import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
-import { Box, Button, Select } from 'grommet'
+import { Box } from 'grommet'
 import TeamStats from './TeamStats'
 import PlayerStats from './PlayerStats'
 import Loader from '../shared/Loader'
-
-const timeFrames = ['All', '7d', '1m']
+import { timeFrames } from '../../utils/computeHelpers'
 
 const MyStatsWrapper = styled(Box)`
     position: relative;
@@ -51,16 +50,10 @@ export default function MyStats({
     averages,
     isTradeSimulated = false,
     loading = false,
-    refetch,
-    showTimeFrames,
+    timeFrames: { showTimeFrames, selectedTimeFrame, setSelectedTimeFrame },
 }) {
     const [statType, setStatType] = useState('Team')
-    const [selectedTimeFrame, setSelectedTimeFrame] = useState(timeFrames[0])
 
-    function handleTimeFrameChange(timeFrame) {
-        setSelectedTimeFrame(timeFrame)
-        refetch({ timeFrame })
-    }
     return useMemo(
         () => (
             <MyStatsWrapper>
@@ -78,7 +71,7 @@ export default function MyStats({
                             {timeFrames.map(tf => (
                                 <TimeFrameButton
                                     justify="center"
-                                    onClick={() => handleTimeFrameChange(tf)}
+                                    onClick={() => setSelectedTimeFrame(tf)}
                                     selected={tf === selectedTimeFrame}
                                 >
                                     {tf}

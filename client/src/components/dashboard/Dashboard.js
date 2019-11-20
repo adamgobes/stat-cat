@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import { Box } from 'grommet'
 
 import Loader from '../shared/Loader'
-import { DASHBOARD_QUERY, WEEKLY_OVERVIEW_QUERY, MY_STATS_QUERY } from '../../apollo/queries'
+import { WEEKLY_OVERVIEW_QUERY, MY_STATS_QUERY } from '../../apollo/queries'
 import WeeklyOverview from './WeeklyOverview'
 import MyStats from './MyStats'
-import { computeTeamStatsAverages } from '../../utils/computeHelpers'
+import { computeTeamStatsAverages, timeFrames } from '../../utils/computeHelpers'
 
 const DashboardWrapper = styled(Box)`
     position: relative;
@@ -21,10 +21,14 @@ const DashboardComponentWrapper = styled(Box)`
 `
 
 export default function Dashboard() {
+    const [selectedTimeFrame, setSelectedTimeFrame] = useState(timeFrames[0])
+
     const { data: weeklyOverviewData, loading: weeklyOverviewLoading } = useQuery(
         WEEKLY_OVERVIEW_QUERY
     )
-    const { data: statsData, loading: statsLoading, refetch } = useQuery(MY_STATS_QUERY)
+    const { data: statsData, loading: statsLoading } = useQuery(MY_STATS_QUERY, {
+        variables: { timeFrame: selectedTimeFrame },
+    })
 
     const myTeamAverages = useMemo(() => {
         const averages =
@@ -55,8 +59,11 @@ export default function Dashboard() {
                         players={!statsLoading && statsData.myTeam.players}
                         averages={myTeamAverages}
                         loading={statsLoading}
-                        refetch={refetch}
-                        showTimeFrames
+                        timeFrames={{
+                            showTimeFrames: true,
+                            selectedTimeFrame,
+                            setSelectedTimeFrame,
+                        }}
                     />
                 </DashboardComponentWrapper>
             </Box>

@@ -79,37 +79,52 @@ export default function MyStats({
                         ))}
                     </Box>
                 </Box>
-
-                <Box align="center">
-                    <Box direction="row" style={{ width: '100%' }} justify="center" align="center">
-                        <Box
-                            direction="row"
-                            onClick={() => setStatType('Team')}
-                            justify="center"
-                            basis="small"
-                            style={{ margin: '-12px' }}
-                        >
-                            <StatTypeHeader selected={statType === 'Team'}>Team</StatTypeHeader>
-                        </Box>
-                        <Box
-                            direction="row"
-                            onClick={() => setStatType('Player')}
-                            justify="center"
-                            basis="small"
-                            style={{ margin: '-12px' }}
-                        >
-                            <StatTypeHeader selected={statType === 'Player'}>Player</StatTypeHeader>
-                        </Box>
+                {loading && (
+                    <Box style={{ marginTop: '25vh' }}>
+                        <Loader size={50} />
                     </Box>
-                </Box>
-                {loading && <Loader size={50} />}
+                )}
                 {!loading && (
-                    <StatsTableWrapper align="center">
-                        {statType === 'Team' && (
-                            <TeamStats stats={averages} isTradeSimulated={isTradeSimulated} />
-                        )}
-                        {statType === 'Player' && <PlayerStats players={players} />}
-                    </StatsTableWrapper>
+                    <>
+                        <Box align="center">
+                            <Box
+                                direction="row"
+                                style={{ width: '100%' }}
+                                justify="center"
+                                align="center"
+                            >
+                                <Box
+                                    direction="row"
+                                    onClick={() => setStatType('Team')}
+                                    justify="center"
+                                    basis="small"
+                                    style={{ margin: '-12px' }}
+                                >
+                                    <StatTypeHeader selected={statType === 'Team'}>
+                                        Team
+                                    </StatTypeHeader>
+                                </Box>
+                                <Box
+                                    direction="row"
+                                    onClick={() => setStatType('Player')}
+                                    justify="center"
+                                    basis="small"
+                                    style={{ margin: '-12px' }}
+                                >
+                                    <StatTypeHeader selected={statType === 'Player'}>
+                                        Player
+                                    </StatTypeHeader>
+                                </Box>
+                            </Box>
+                        </Box>
+
+                        <StatsTableWrapper align="center">
+                            {statType === 'Team' && (
+                                <TeamStats stats={averages} isTradeSimulated={isTradeSimulated} />
+                            )}
+                            {statType === 'Player' && <PlayerStats players={players} />}
+                        </StatsTableWrapper>
+                    </>
                 )}
             </MyStatsWrapper>
         ),

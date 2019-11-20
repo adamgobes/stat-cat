@@ -158,6 +158,7 @@ export default function TradeSimulator() {
                         }
                         averages={postTradeTeam.length === 0 ? myTeamAverages : combinedStats}
                         isTradeSimulated={postTradeTeam.length > 0}
+                        showTimeFrames={false}
                     />
                 </Box>
             </Box>

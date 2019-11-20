@@ -54,6 +54,7 @@ export default function Dashboard() {
                         averages={myTeamAverages}
                         loading={statsLoading}
                         refetch={refetch}
+                        showTimeFrames
                     />
                 </DashboardComponentWrapper>
             </Box>

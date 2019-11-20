@@ -52,6 +52,7 @@ export default function MyStats({
     isTradeSimulated = false,
     loading = false,
     refetch,
+    showTimeFrames,
 }) {
     const [statType, setStatType] = useState('Team')
     const [selectedTimeFrame, setSelectedTimeFrame] = useState('All')
@@ -67,17 +68,24 @@ export default function MyStats({
                     <Box basis="1/2" justify="start">
                         <h1 style={{ margin: '20px' }}>My Stats</h1>
                     </Box>
-                    <Box direction="row" basis="1/2" align="center" style={{ marginRight: '20px' }}>
-                        {timeFrames.map(tf => (
-                            <TimeFrameButton
-                                justify="center"
-                                onClick={() => handleTimeFrameChange(tf)}
-                                selected={tf === selectedTimeFrame}
-                            >
-                                {tf}
-                            </TimeFrameButton>
-                        ))}
-                    </Box>
+                    {showTimeFrames && (
+                        <Box
+                            direction="row"
+                            basis="1/2"
+                            align="center"
+                            style={{ marginRight: '20px' }}
+                        >
+                            {timeFrames.map(tf => (
+                                <TimeFrameButton
+                                    justify="center"
+                                    onClick={() => handleTimeFrameChange(tf)}
+                                    selected={tf === selectedTimeFrame}
+                                >
+                                    {tf}
+                                </TimeFrameButton>
+                            ))}
+                        </Box>
+                    )}
                 </Box>
                 {loading && (
                     <Box style={{ marginTop: '25vh' }}>

@@ -51,37 +51,36 @@ export default function TradeSimulator() {
         skip: playerInput.length < MIN_CHARS,
     })
 
-    const { data: statsData, loading: statsLoading } = useQuery(MY_STATS_QUERY)
+    const { data: currentStatsData, loading: statsLoading } = useQuery(MY_STATS_QUERY)
 
-    const [
-        getPlayerStats,
-        { data: playerStatsData, loading: getPlayerStatsLoading },
-    ] = useLazyQuery(GET_PLAYER_STATS_QUERY, {
-        fetchPolicy: 'network-only', // need this to always trigger the useEffect below which sets state accordingly
-    })
+    function onGetPlayerStatsCompleted(data) {
+        const sentPlayersIds = sentPlayers.map(p => p.id)
 
-    useEffect(() => {
-        if (playerStatsData && playerStatsData.getPlayerStats) {
-            const sentPlayersIds = sentPlayers.map(p => p.id)
+        setPostTradeTeam([
+            ...currentStatsData.myTeam.players.filter(p => !sentPlayersIds.includes(p.id)),
+            ...data.getPlayerStats,
+        ])
+    }
 
-            setPostTradeTeam([
-                ...statsData.myTeam.players.filter(p => !sentPlayersIds.includes(p.id)),
-                ...playerStatsData.getPlayerStats,
-            ])
+    const [getPlayerStats, { loading: getPlayerStatsLoading }] = useLazyQuery(
+        GET_PLAYER_STATS_QUERY,
+        {
+            fetchPolicy: 'network-only',
+            onCompleted: onGetPlayerStatsCompleted,
         }
-    }, [playerStatsData, statsData])
+    )
 
     const myTeamAverages = useMemo(() => {
         const averages =
-            statsData &&
-            computeTeamStatsAverages(statsData.myTeam.players.map(player => player.stats)).map(
-                stat => ({
-                    category: stat.category,
-                    values: [stat.value],
-                })
-            )
+            currentStatsData &&
+            computeTeamStatsAverages(
+                currentStatsData.myTeam.players.map(player => player.stats)
+            ).map(stat => ({
+                category: stat.category,
+                values: [stat.value],
+            }))
         return averages
-    }, [statsData])
+    }, [currentStatsData])
 
     const combinedStats = useMemo(() => {
         const postTradeAverages =
@@ -135,7 +134,7 @@ export default function TradeSimulator() {
                         loading={searchLoading}
                         onSendPlayer={onSendPlayer}
                         onReceivePlayer={onReceivePlayer}
-                        sendablePlayers={statsData.myTeam.players.map(p => p.id)}
+                        sendablePlayers={currentStatsData.myTeam.players.map(p => p.id)}
                     />
                     <TradedPlayers direction="row" justify="center">
                         <SentAndReceived
@@ -157,7 +156,9 @@ export default function TradeSimulator() {
                 <Box basis="1/2" align="center">
                     <MyStats
                         players={
-                            postTradeTeam.length === 0 ? statsData.myTeam.players : postTradeTeam
+                            postTradeTeam.length === 0
+                                ? currentStatsData.myTeam.players
+                                : postTradeTeam
                         }
                         averages={postTradeTeam.length === 0 ? myTeamAverages : combinedStats}
                         isTradeSimulated={postTradeTeam.length > 0}

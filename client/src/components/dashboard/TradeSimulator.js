@@ -57,7 +57,7 @@ export default function TradeSimulator() {
         getPlayerStats,
         { data: playerStatsData, loading: getPlayerStatsLoading },
     ] = useLazyQuery(GET_PLAYER_STATS_QUERY, {
-        fetchPolicy: 'network-only',
+        fetchPolicy: 'network-only', // need this to always trigger the useEffect below which sets state accordingly
     })
 
     useEffect(() => {

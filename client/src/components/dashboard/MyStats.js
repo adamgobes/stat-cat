@@ -17,6 +17,10 @@ const MyStatsWrapper = styled(Box)`
     }
 `
 
+const MyStatsLoaderWrapper = styled(Box)`
+    margin-top: 25vh;
+`
+
 const StatsTableWrapper = styled(Box)`
     position: relative;
     width: 540px;
@@ -85,9 +89,9 @@ export default function MyStats({
                     )}
                 </Box>
                 {loading && (
-                    <Box style={{ marginTop: '25vh' }}>
+                    <MyStatsLoaderWrapper>
                         <Loader size={50} />
-                    </Box>
+                    </MyStatsLoaderWrapper>
                 )}
                 {!loading && (
                     <>

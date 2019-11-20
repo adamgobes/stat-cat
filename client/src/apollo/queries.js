@@ -55,7 +55,6 @@ export const MY_STATS_QUERY = gql`
         myTeam {
             players {
                 ...BasicPlayerInfo
-                gameCountThisWeek
                 stats(timeFrame: $timeFrame) {
                     category
                     value

@@ -37,6 +37,10 @@ const TimeFrameButton = styled(Box)`
     cursor: pointer;
 `
 
+const StatTypeHeaderWrapper = styled(Box)`
+    margin: -12px;
+`
+
 const StatTypeHeader = styled.h2`
     cursor: pointer;
     width: fit-content;
@@ -94,28 +98,26 @@ export default function MyStats({
                                 justify="center"
                                 align="center"
                             >
-                                <Box
+                                <StatTypeHeaderWrapper
                                     direction="row"
                                     onClick={() => setStatType('Team')}
                                     justify="center"
                                     basis="small"
-                                    style={{ margin: '-12px' }}
                                 >
                                     <StatTypeHeader selected={statType === 'Team'}>
                                         Team
                                     </StatTypeHeader>
-                                </Box>
-                                <Box
+                                </StatTypeHeaderWrapper>
+                                <StatTypeHeaderWrapper
                                     direction="row"
                                     onClick={() => setStatType('Player')}
                                     justify="center"
                                     basis="small"
-                                    style={{ margin: '-12px' }}
                                 >
                                     <StatTypeHeader selected={statType === 'Player'}>
                                         Player
                                     </StatTypeHeader>
-                                </Box>
+                                </StatTypeHeaderWrapper>
                             </Box>
                         </Box>
 

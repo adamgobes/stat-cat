@@ -38,6 +38,8 @@ export default function Dashboard() {
         return averages
     }, [statsData])
 
+    if (weeklyOverviewLoading && statsLoading) return <Loader size={80} />
+
     return (
         <DashboardWrapper align="center" justify="start">
             <h1>Dashboard</h1>

@@ -55,7 +55,7 @@ export default function MyStats({
     showTimeFrames,
 }) {
     const [statType, setStatType] = useState('Team')
-    const [selectedTimeFrame, setSelectedTimeFrame] = useState('All')
+    const [selectedTimeFrame, setSelectedTimeFrame] = useState(timeFrames[0])
 
     function handleTimeFrameChange(timeFrame) {
         setSelectedTimeFrame(timeFrame)

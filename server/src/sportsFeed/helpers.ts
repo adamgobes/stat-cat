@@ -71,7 +71,7 @@ export async function fetchPlayerStatsTimeFrame(
                     (c.selector(currentStatsObject) * currentGamesPlayed -
                         c.selector(oldStatsObject) * oldGamesPlayed) /
                     (currentGamesPlayed - oldGamesPlayed)
-                ).toFixed(2)
+                ).toFixed(1)
             ),
         }
     })

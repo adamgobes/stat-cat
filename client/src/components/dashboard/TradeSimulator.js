@@ -20,7 +20,7 @@ export const MAX_PLAYERS_TRADED = 4
 
 const TradeSimulatorWrapper = styled(Box)`
     position: relative;
-    background: #eff1f3;
+    background: ${props => props.theme.global.colors.backdrop};
     height: 100%;
     overflow: scroll;
 `

@@ -1,6 +1,6 @@
 import { GQLPlayer, GQLUser, GQLTeam, GQLLeagueLeader, GQLStat } from '../generated/gqlTypes'
 import { sportsFeedRequest, season, statCategories } from '../sportsFeed/api'
-import { extractBasicInfo, fetchPlayerStats, isActive } from '../sportsFeed/helpers'
+import { extractBasicInfo, fetchPlayerStatsSeason, isActive } from '../sportsFeed/helpers'
 import { getUserId } from '../utils'
 
 function containsFilter(playerObj, filter: string): boolean {
@@ -41,7 +41,7 @@ export async function leagueLeaders(parent, args): Promise<GQLLeagueLeader[]> {
         players.players.map(async p => {
             return {
                 ...extractBasicInfo(p.player),
-                stats: await fetchPlayerStats(p.player.id),
+                stats: await fetchPlayerStatsSeason(p.player.id),
             }
         })
     )

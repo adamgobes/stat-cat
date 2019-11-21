@@ -1,10 +1,10 @@
 import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
-import { Box, Button, Select } from 'grommet'
+import { Box } from 'grommet'
 import TeamStats from './TeamStats'
 import PlayerStats from './PlayerStats'
-
-const timeFrames = ['All', '7d', '1m']
+import Loader from '../shared/Loader'
+import { timeFrames } from '../../utils/computeHelpers'
 
 const MyStatsWrapper = styled(Box)`
     position: relative;
@@ -15,6 +15,10 @@ const MyStatsWrapper = styled(Box)`
     @media (max-height: 600px) {
         height: 90vh;
     }
+`
+
+const MyStatsLoaderWrapper = styled(Box)`
+    margin-top: 25vh;
 `
 
 const StatsTableWrapper = styled(Box)`
@@ -37,6 +41,10 @@ const TimeFrameButton = styled(Box)`
     cursor: pointer;
 `
 
+const StatTypeHeaderWrapper = styled(Box)`
+    margin: -12px;
+`
+
 const StatTypeHeader = styled.h2`
     cursor: pointer;
     width: fit-content;
@@ -45,8 +53,13 @@ const StatTypeHeader = styled.h2`
         props.selected ? `2px solid ${props.theme.global.colors.brand}` : ''};
 `
 
-export default function MyStats({ players, averages, isTradeSimulated = false }) {
-    const [selectedTimeFrame, setSelectedTimeFrame] = useState(timeFrames[0])
+export default function MyStats({
+    players,
+    averages,
+    isTradeSimulated = false,
+    loading = false,
+    timeFrames: { showTimeFrames, selectedTimeFrame, setSelectedTimeFrame },
+}) {
     const [statType, setStatType] = useState('Team')
 
     return useMemo(
@@ -56,47 +69,70 @@ export default function MyStats({ players, averages, isTradeSimulated = false })
                     <Box basis="1/2" justify="start">
                         <h1 style={{ margin: '20px' }}>My Stats</h1>
                     </Box>
-                    <Box direction="row" basis="1/2" align="center" style={{ marginRight: '20px' }}>
-                        {timeFrames.map(tf => (
-                            <TimeFrameButton
-                                justify="center"
-                                onClick={() => setSelectedTimeFrame(tf)}
-                                selected={tf === selectedTimeFrame}
-                            >
-                                {tf}
-                            </TimeFrameButton>
-                        ))}
-                    </Box>
-                </Box>
-
-                <Box align="center">
-                    <Box direction="row" style={{ width: '100%' }} justify="center" align="center">
+                    {showTimeFrames && (
                         <Box
                             direction="row"
-                            onClick={() => setStatType('Team')}
-                            justify="center"
-                            basis="small"
-                            style={{ margin: '-12px' }}
+                            basis="1/2"
+                            align="center"
+                            style={{ marginRight: '20px' }}
                         >
-                            <StatTypeHeader selected={statType === 'Team'}>Team</StatTypeHeader>
+                            {timeFrames.map(tf => (
+                                <TimeFrameButton
+                                    justify="center"
+                                    onClick={() => setSelectedTimeFrame(tf)}
+                                    selected={tf === selectedTimeFrame}
+                                >
+                                    {tf}
+                                </TimeFrameButton>
+                            ))}
                         </Box>
-                        <Box
-                            direction="row"
-                            onClick={() => setStatType('Player')}
-                            justify="center"
-                            basis="small"
-                            style={{ margin: '-12px' }}
-                        >
-                            <StatTypeHeader selected={statType === 'Player'}>Player</StatTypeHeader>
-                        </Box>
-                    </Box>
-                </Box>
-                <StatsTableWrapper align="center">
-                    {statType === 'Team' && (
-                        <TeamStats stats={averages} isTradeSimulated={isTradeSimulated} />
                     )}
-                    {statType === 'Player' && <PlayerStats players={players} />}
-                </StatsTableWrapper>
+                </Box>
+                {loading && (
+                    <MyStatsLoaderWrapper>
+                        <Loader size={50} />
+                    </MyStatsLoaderWrapper>
+                )}
+                {!loading && (
+                    <>
+                        <Box align="center">
+                            <Box
+                                direction="row"
+                                style={{ width: '100%' }}
+                                justify="center"
+                                align="center"
+                            >
+                                <StatTypeHeaderWrapper
+                                    direction="row"
+                                    onClick={() => setStatType('Team')}
+                                    justify="center"
+                                    basis="small"
+                                >
+                                    <StatTypeHeader selected={statType === 'Team'}>
+                                        Team
+                                    </StatTypeHeader>
+                                </StatTypeHeaderWrapper>
+                                <StatTypeHeaderWrapper
+                                    direction="row"
+                                    onClick={() => setStatType('Player')}
+                                    justify="center"
+                                    basis="small"
+                                >
+                                    <StatTypeHeader selected={statType === 'Player'}>
+                                        Player
+                                    </StatTypeHeader>
+                                </StatTypeHeaderWrapper>
+                            </Box>
+                        </Box>
+
+                        <StatsTableWrapper align="center">
+                            {statType === 'Team' && (
+                                <TeamStats stats={averages} isTradeSimulated={isTradeSimulated} />
+                            )}
+                            {statType === 'Player' && <PlayerStats players={players} />}
+                        </StatsTableWrapper>
+                    </>
+                )}
             </MyStatsWrapper>
         ),
         [players, averages, selectedTimeFrame, statType]

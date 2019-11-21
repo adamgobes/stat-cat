@@ -5,7 +5,12 @@ import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 
 import TradeSearch from './TradeSearch'
 import { MIN_CHARS } from '../teamBuilder/TeamBuilderContext'
-import { SEARCH_PLAYERS_QUERY, DASHBOARD_QUERY, GET_PLAYER_STATS_QUERY } from '../../apollo/queries'
+import {
+    SEARCH_PLAYERS_QUERY,
+    DASHBOARD_QUERY,
+    GET_PLAYER_STATS_QUERY,
+    MY_STATS_QUERY,
+} from '../../apollo/queries'
 import SentAndReceived from './SentAndReceived'
 import MyStats from './MyStats'
 import Loader from '../shared/Loader'
@@ -46,37 +51,36 @@ export default function TradeSimulator() {
         skip: playerInput.length < MIN_CHARS,
     })
 
-    const { data: dashboardData, loading: dashboardLoading } = useQuery(DASHBOARD_QUERY)
+    const { data: currentStatsData, loading: statsLoading } = useQuery(MY_STATS_QUERY)
 
-    const [
-        getPlayerStats,
-        { data: playerStatsData, loading: getPlayerStatsLoading },
-    ] = useLazyQuery(GET_PLAYER_STATS_QUERY, {
-        fetchPolicy: 'network-only',
-    })
+    function onGetPlayerStatsCompleted(data) {
+        const sentPlayersIds = sentPlayers.map(p => p.id)
 
-    useEffect(() => {
-        if (playerStatsData && playerStatsData.getPlayerStats) {
-            const sentPlayersIds = sentPlayers.map(p => p.id)
+        setPostTradeTeam([
+            ...currentStatsData.myTeam.players.filter(p => !sentPlayersIds.includes(p.id)),
+            ...data.getPlayerStats,
+        ])
+    }
 
-            setPostTradeTeam([
-                ...dashboardData.myTeam.players.filter(p => !sentPlayersIds.includes(p.id)),
-                ...playerStatsData.getPlayerStats,
-            ])
+    const [getPlayerStats, { loading: getPlayerStatsLoading }] = useLazyQuery(
+        GET_PLAYER_STATS_QUERY,
+        {
+            fetchPolicy: 'network-only',
+            onCompleted: onGetPlayerStatsCompleted,
         }
-    }, [playerStatsData, dashboardData])
+    )
 
     const myTeamAverages = useMemo(() => {
         const averages =
-            dashboardData &&
-            computeTeamStatsAverages(dashboardData.myTeam.players.map(player => player.stats)).map(
-                stat => ({
-                    category: stat.category,
-                    values: [stat.value],
-                })
-            )
+            currentStatsData &&
+            computeTeamStatsAverages(
+                currentStatsData.myTeam.players.map(player => player.stats)
+            ).map(stat => ({
+                category: stat.category,
+                values: [stat.value],
+            }))
         return averages
-    }, [dashboardData])
+    }, [currentStatsData])
 
     const combinedStats = useMemo(() => {
         const postTradeAverages =
@@ -111,7 +115,7 @@ export default function TradeSimulator() {
         getPlayerStats({ variables: { playerIds: receivedPlayers.map(p => p.id) } })
     }
 
-    if (dashboardLoading) return <Loader size="100" />
+    if (statsLoading) return <Loader size="100" />
 
     return (
         <TradeSimulatorWrapper align="center">
@@ -130,7 +134,7 @@ export default function TradeSimulator() {
                         loading={searchLoading}
                         onSendPlayer={onSendPlayer}
                         onReceivePlayer={onReceivePlayer}
-                        sendablePlayers={dashboardData.myTeam.players.map(p => p.id)}
+                        sendablePlayers={currentStatsData.myTeam.players.map(p => p.id)}
                     />
                     <TradedPlayers direction="row" justify="center">
                         <SentAndReceived
@@ -153,11 +157,14 @@ export default function TradeSimulator() {
                     <MyStats
                         players={
                             postTradeTeam.length === 0
-                                ? dashboardData.myTeam.players
+                                ? currentStatsData.myTeam.players
                                 : postTradeTeam
                         }
                         averages={postTradeTeam.length === 0 ? myTeamAverages : combinedStats}
                         isTradeSimulated={postTradeTeam.length > 0}
+                        timeFrames={{
+                            showTimeFrames: false,
+                        }}
                     />
                 </Box>
             </Box>

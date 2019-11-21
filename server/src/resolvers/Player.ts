@@ -4,7 +4,9 @@ import {
     getLastDayOfWeek,
     getFirstDayOfWeek,
     parseDate,
-    fetchPlayerStats,
+    fetchPlayerStatsSeason,
+    fetchPlayerStatsTimeFrame,
+    TIME_FRAMES,
 } from '../sportsFeed/helpers'
 
 function calculateGameCount(teamId: string, startDate: string, endDate: string): Promise<number> {
@@ -15,8 +17,11 @@ function calculateGameCount(teamId: string, startDate: string, endDate: string):
         .catch(err => 4)
 }
 
-export function stats(parent, args): Promise<GQLStat[]> {
-    return fetchPlayerStats(parent.id, args.timeFrame)
+export async function stats(parent, args, context): Promise<GQLStat[]> {
+    if (args.timeFrame && args.timeFrame !== TIME_FRAMES.ALL) {
+        return fetchPlayerStatsTimeFrame(parent.id, args.timeFrame)
+    }
+    return fetchPlayerStatsSeason(parent.id)
 }
 
 export function gameCountThisWeek(parent, args): Promise<number> {

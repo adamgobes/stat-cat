@@ -28,34 +28,53 @@ export function extractInjuryInfo(sportsFeedPlayerObj): GQLInjury {
     }
 }
 
-export function fetchPlayerStats(playerId: string, timeFrame?: string): Promise<GQLStat[]> {
+export function fetchPlayerStatsSeason(playerId: string): Promise<GQLStat[]> {
+    return sportsFeedRequest(`${season}/player_stats_totals.json?player=${playerId}`).then(json => {
+        const statsObject = json.playerStatsTotals[0]
+        return statCategories.map(c => ({
+            category: c.categoryName,
+            value: c.selector(statsObject),
+        }))
+    })
+}
+
+export async function fetchPlayerStatsTimeFrame(
+    playerId: string,
+    timeFrame: string
+): Promise<GQLStat[]> {
     const timeString = constructTimeString(timeFrame)
 
     if (timeString.length === 0) {
-        return sportsFeedRequest(`${season}/player_stats_totals.json?player=${playerId}`).then(
-            json => {
-                const statsObject = json.playerStatsTotals[0]
-                return statCategories.map(c => ({
-                    category: c.categoryName,
-                    value: c.selector(statsObject),
-                }))
-            }
-        )
-    } else {
-        return sportsFeedRequest(`${season}/player_gamelogs.json?player=${playerId}&${timeString}`)
-            .then(json => {
-                return statCategories.map(c => ({
-                    category: c.categoryName,
-                    value: computeAverageFromGameLogs(json.gamelogs, c),
-                }))
-            })
-            .catch(err => {
-                return statCategories.map(c => ({
-                    category: c.categoryName,
-                    value: 0,
-                }))
-            })
+        return fetchPlayerStatsSeason(playerId)
     }
+
+    const oldStats = await sportsFeedRequest(
+        `${season}/player_stats_totals.json?player=${playerId}&${timeString}`
+    )
+
+    const oldStatsObject = oldStats.playerStatsTotals[0]
+
+    const currentStats = await sportsFeedRequest(
+        `${season}/player_stats_totals.json?player=${playerId}`
+    )
+
+    const currentStatsObject = currentStats.playerStatsTotals[0]
+
+    return statCategories.map(c => {
+        const oldGamesPlayed = oldStatsObject.stats.gamesPlayed
+        const currentGamesPlayed = currentStatsObject.stats.gamesPlayed
+
+        return {
+            category: c.categoryName,
+            value: parseFloat(
+                (
+                    (c.selector(currentStatsObject) * currentGamesPlayed -
+                        c.selector(oldStatsObject) * oldGamesPlayed) /
+                    (currentGamesPlayed - oldGamesPlayed)
+                ).toFixed(1)
+            ),
+        }
+    })
 }
 
 export function computeAverageFromGameLogs(gamelogs, category): number {
@@ -67,10 +86,18 @@ export function computeAverageFromGameLogs(gamelogs, category): number {
 
 export function constructTimeString(timeFrame: string): string {
     switch (timeFrame) {
-        case '7d':
-            return 'date=since-7-days-ago'
-        case '1m':
-            return 'date=since-30-days-ago'
+        case TIME_FRAMES.WEEK:
+            const lastWeekDate = moment()
+                .subtract(8, 'days')
+                .format('YYYYMMDD')
+            return `date=${lastWeekDate}`
+        case TIME_FRAMES.MONTH:
+            const lastMonthDate = moment().subtract(1, 'months')
+
+            if (lastMonthDate.isBefore(moment('2019-10-22'))) {
+                return ''
+            }
+            return `date=${lastMonthDate}`
         default:
             return ''
     }
@@ -90,4 +117,10 @@ export function getLastDayOfWeek(startDate: moment.Moment): moment.Moment {
 
 export function isActive(player): boolean {
     return player.currentRosterStatus === 'ROSTER'
+}
+
+export const TIME_FRAMES = {
+    ALL: 'All',
+    WEEK: '7d',
+    MONTH: '1m',
 }

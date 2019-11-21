@@ -64,6 +64,13 @@ export async function fetchPlayerStatsTimeFrame(
         const oldGamesPlayed = oldStatsObject.stats.gamesPlayed
         const currentGamesPlayed = currentStatsObject.stats.gamesPlayed
 
+        if (oldGamesPlayed === currentGamesPlayed) {
+            return {
+                category: c.categoryName,
+                value: 0.0,
+            }
+        }
+
         return {
             category: c.categoryName,
             value: parseFloat(

@@ -86,12 +86,12 @@ export function computeAverageFromGameLogs(gamelogs, category): number {
 
 export function constructTimeString(timeFrame: string): string {
     switch (timeFrame) {
-        case '7d':
+        case TIME_FRAMES.WEEK:
             const lastWeekDate = moment()
                 .subtract(8, 'days')
                 .format('YYYYMMDD')
             return `date=${lastWeekDate}`
-        case '1m':
+        case TIME_FRAMES.MONTH:
             const lastMonthDate = moment().subtract(1, 'months')
 
             if (lastMonthDate.isBefore(moment('2019-10-22'))) {
@@ -117,4 +117,10 @@ export function getLastDayOfWeek(startDate: moment.Moment): moment.Moment {
 
 export function isActive(player): boolean {
     return player.currentRosterStatus === 'ROSTER'
+}
+
+export const TIME_FRAMES = {
+    ALL: 'All',
+    WEEK: '7d',
+    MONTH: '1m',
 }

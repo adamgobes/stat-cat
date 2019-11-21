@@ -6,6 +6,7 @@ import {
     parseDate,
     fetchPlayerStatsSeason,
     fetchPlayerStatsTimeFrame,
+    TIME_FRAMES,
 } from '../sportsFeed/helpers'
 
 function calculateGameCount(teamId: string, startDate: string, endDate: string): Promise<number> {
@@ -17,7 +18,7 @@ function calculateGameCount(teamId: string, startDate: string, endDate: string):
 }
 
 export async function stats(parent, args, context): Promise<GQLStat[]> {
-    if (args.timeFrame) {
+    if (args.timeFrame && args.timeFrame !== TIME_FRAMES.ALL) {
         return fetchPlayerStatsTimeFrame(parent.id, args.timeFrame)
     }
     return fetchPlayerStatsSeason(parent.id)

@@ -18,7 +18,6 @@ import {
     ShareOption,
 } from 'grommet-icons'
 
-import Toggle from '../shared/Toggle'
 import StatLogo from '../../assets/images/stat-logo.png'
 
 const LogoContainer = styled(Box)`

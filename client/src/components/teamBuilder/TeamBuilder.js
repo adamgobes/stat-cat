@@ -6,7 +6,12 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import Roster from './teamTable/Roster'
 import Loader from '../shared/Loader'
 import { SAVE_TEAM_MUTATION } from '../../apollo/mutations'
-import { DASHBOARD_QUERY, MY_TEAM_QUERY, SEARCH_PLAYERS_QUERY } from '../../apollo/queries'
+import {
+    MY_TEAM_QUERY,
+    SEARCH_PLAYERS_QUERY,
+    WEEKLY_OVERVIEW_QUERY,
+    MY_STATS_QUERY,
+} from '../../apollo/queries'
 import {
     TeamBuilderContext,
     addPlayer,
@@ -49,7 +54,7 @@ function TeamBuilder({ history }) {
     const { data: myTeamData, loading: myTeamLoading } = useQuery(MY_TEAM_QUERY)
 
     const [mutateTeam, { loading: saveTeamLoading }] = useMutation(SAVE_TEAM_MUTATION, {
-        refetchQueries: () => [{ query: DASHBOARD_QUERY }, { query: MY_TEAM_QUERY }],
+        refetchQueries: () => [{ query: WEEKLY_OVERVIEW_QUERY }, { query: MY_STATS_QUERY }],
         onCompleted: () => history.push('/app/dashboard'),
     })
 

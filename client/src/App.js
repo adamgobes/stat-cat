@@ -29,6 +29,7 @@ const App = () => {
             <Router>
                 <Grommet theme={theme}>
                     <Route
+                        exact
                         path="/"
                         render={() =>
                             isLoggedIn() ? (

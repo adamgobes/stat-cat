@@ -19,6 +19,7 @@ import {
 import Toggle from '../shared/Toggle'
 
 import StatLogo from '../../assets/images/stat-logo.png'
+import { useApolloClient } from '@apollo/react-hooks'
 
 const LogoContainer = styled(Box)`
     width: 40px;
@@ -67,6 +68,8 @@ const NavListItem = styled(Box)`
 `
 
 function Nav({ history, isNavOpen, setNavOpen, isWidthTooSmall }) {
+    const client = useApolloClient()
+
     function handleNavLinkClick(path) {
         history.push(path)
     }
@@ -177,6 +180,7 @@ function Nav({ history, isNavOpen, setNavOpen, isWidthTooSmall }) {
                     align="center"
                     onClick={() => {
                         cookie.remove('authToken', { path: '/' })
+                        client.cache.reset()
                         history.push('/')
                     }}
                 >

@@ -11,7 +11,7 @@ import { computeTeamStatsAverages, timeFrames } from '../../utils/computeHelpers
 
 const DashboardWrapper = styled(Box)`
     position: relative;
-    background: #eff1f3;
+    background: ${props => props.theme.global.colors.backdrop};
     height: 100%;
     overflow: scroll;
 `

@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import styled, { withTheme } from 'styled-components'
 import { Box } from 'grommet'
 import cookie from 'react-cookies'
+import { useApolloClient } from '@apollo/react-hooks'
 import {
     Menu,
     Group,
@@ -16,10 +17,9 @@ import {
     FormPreviousLink,
     ShareOption,
 } from 'grommet-icons'
-import Toggle from '../shared/Toggle'
 
+import Toggle from '../shared/Toggle'
 import StatLogo from '../../assets/images/stat-logo.png'
-import { useApolloClient } from '@apollo/react-hooks'
 
 const LogoContainer = styled(Box)`
     width: 40px;
@@ -71,9 +71,39 @@ const NavListItem = styled(Box)`
     color: ${props => (props.selected ? props.theme.global.colors.brand : 'white')};
 `
 
-const EnhancedNavListItem = WrappedComponent => ({ name, selected, handleClick }) => (
+const NavLinks = [
+    {
+        name: 'Team Builder',
+        path: '/app/teambuilder',
+        Icon: ({ color }) => (
+            <NavIconWrapper direction="column" justify="center" align="center">
+                <Group size="medium" color={color} />
+            </NavIconWrapper>
+        ),
+    },
+    {
+        name: 'Dashboard',
+        path: '/app/dashboard',
+        Icon: ({ color }) => (
+            <NavIconWrapper direction="column" justify="center" align="center">
+                <Dashboard size="medium" color={color} />
+            </NavIconWrapper>
+        ),
+    },
+    {
+        name: 'Trade Simulator',
+        path: '/app/trade',
+        Icon: ({ color }) => (
+            <NavIconWrapper direction="column" justify="center" align="center">
+                <ShareOption size="medium" color={color} />
+            </NavIconWrapper>
+        ),
+    },
+]
+
+const EnhanceNavListItem = Icon => ({ name, selected, handleClick, theme }) => (
     <NavListItem direction="row" align="center" onClick={handleClick} selected={selected}>
-        <WrappedComponent selected={selected} />
+        <Icon color={selected ? theme.global.colors.brand : 'white'} />
         <h3>{name}</h3>
     </NavListItem>
 )
@@ -86,45 +116,6 @@ function Nav({ history, location, isNavOpen, setNavOpen, isWidthTooSmall, theme 
         const { pathname } = location
         setCurrentPage(pathname)
     }, [location])
-
-    const NavLinks = [
-        {
-            name: 'Team Builder',
-            path: '/app/teambuilder',
-            handleClick: () => history.push('/app/teambuilder'),
-            Content: ({ selected }) => (
-                <NavIconWrapper direction="column" justify="center" align="center">
-                    <Group size="medium" color={selected ? theme.global.colors.brand : 'white'} />
-                </NavIconWrapper>
-            ),
-        },
-        {
-            name: 'Dashboard',
-            path: '/app/dashboard',
-            handleClick: () => history.push('/app/dashboard'),
-            Content: ({ selected }) => (
-                <NavIconWrapper direction="column" justify="center" align="center">
-                    <Dashboard
-                        size="medium"
-                        color={selected ? theme.global.colors.brand : 'white'}
-                    />
-                </NavIconWrapper>
-            ),
-        },
-        {
-            name: 'Trade Simulator',
-            path: '/app/trade',
-            handleClick: () => history.push('/app/trade'),
-            Content: ({ selected }) => (
-                <NavIconWrapper direction="column" justify="center" align="center">
-                    <ShareOption
-                        size="medium"
-                        color={selected ? theme.global.colors.brand : 'white'}
-                    />
-                </NavIconWrapper>
-            ),
-        },
-    ]
 
     return (
         <Box>
@@ -155,13 +146,14 @@ function Nav({ history, location, isNavOpen, setNavOpen, isWidthTooSmall, theme 
                         <h1>StatCat</h1>
                     </Box>
                 </NavListItem>
-                {NavLinks.map(({ name, Content, path, handleClick }) => {
-                    const Enhanced = EnhancedNavListItem(Content)
+                {NavLinks.map(({ name, Icon, path }) => {
+                    const Enhanced = EnhanceNavListItem(Icon)
                     return (
                         <Enhanced
                             name={name}
                             selected={currentPage === path}
-                            handleClick={handleClick}
+                            handleClick={() => history.push(path)}
+                            theme={theme}
                         />
                     )
                 })}

@@ -14,6 +14,7 @@ export default {
         colors: {
             brand: '#7781f7',
             secondary: 'black',
+            backdrop: '#EFF1F3',
         },
         focus: {
             border: {

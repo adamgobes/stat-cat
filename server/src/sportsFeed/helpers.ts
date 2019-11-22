@@ -104,7 +104,8 @@ export function constructTimeString(timeFrame: string): string {
             if (lastMonthDate.isBefore(moment('2019-10-22'))) {
                 return ''
             }
-            return `date=${lastMonthDate}`
+
+            return `date=${lastMonthDate.format('YYYYMMDD')}`
         default:
             return ''
     }

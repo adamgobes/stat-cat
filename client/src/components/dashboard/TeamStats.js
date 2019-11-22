@@ -63,24 +63,33 @@ function computePercentage(attempted, made) {
     return Math.round((made * 100) / attempted)
 }
 
-function PercentageChangeIndicator({ currentValue, tradeValue }) {
+function PercentageChangeIndicator({ category, currentValue, tradeValue }) {
     const percentageChange = Math.abs(
         (parseFloat((tradeValue - currentValue) * 100) / parseFloat(currentValue)).toFixed(2)
     )
 
+    const isTurnoverStat = category === 'TPG'
+
     return (
         <Box direction="row">
-            <Percentage positive={tradeValue > currentValue}>
+            <Percentage
+                positive={
+                    (tradeValue > currentValue && !isTurnoverStat) ||
+                    (tradeValue < currentValue && isTurnoverStat)
+                }
+            >
                 {percentageChange !== 0 && `${percentageChange}%`}
             </Percentage>
             {tradeValue > currentValue && (
                 <IconWrapper>
-                    <LinkUp color="green" size="XS" />
+                    {!isTurnoverStat && <LinkUp color="green" size="XS" />}
+                    {isTurnoverStat && <LinkDown color="red" />}
                 </IconWrapper>
             )}
             {tradeValue < currentValue && (
                 <IconWrapper>
-                    <LinkDown color="red" size="XS" />
+                    {!isTurnoverStat && <LinkDown color="red" />}
+                    {isTurnoverStat && <LinkUp color="green" size="XS" />}
                 </IconWrapper>
             )}
         </Box>
@@ -107,7 +116,11 @@ function CountingNumberElement({ category, values, isTradeSimulated }) {
             ))}
             {isTradeSimulated && (
                 <Box direction="row" basis="small" justify="center">
-                    <PercentageChangeIndicator currentValue={values[0]} tradeValue={values[1]} />
+                    <PercentageChangeIndicator
+                        currentValue={values[0]}
+                        tradeValue={values[1]}
+                        category={category}
+                    />
                 </Box>
             )}
         </TableRow>

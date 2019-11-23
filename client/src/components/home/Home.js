@@ -29,14 +29,22 @@ const SVGWrapper = styled(Box)`
     height: 300px;
 `
 
-const GetStartedButton = styled(Button)`
+const GetStartedButton = styled(Box)`
     width: 200px;
+    text-align: center;
     background: #e17e62;
     color: white;
+    margin-left: 4px;
+    font-size: 1.2em;
     font-weight: bold;
     border-color: white;
     border-radius: 5px;
     padding: 10px 0;
+    cursor: pointer;
+    &:hover {
+        opacity: 0.8;
+        transition: 0.2s ease;
+    }
 `
 
 const SecondBlock = styled(Box)`
@@ -56,7 +64,7 @@ const Home = () => (
                 </FirstBlockText>
                 <Box direction="row" align="center">
                     <TextInput placeholder="Enter your email address" size="small" />
-                    <GetStartedButton label="Get Started" />
+                    <GetStartedButton>Get Started</GetStartedButton>
                 </Box>
             </Box>
             <SVGWrapper justify="center" align="center" basis="1/2">
@@ -67,11 +75,7 @@ const Home = () => (
             <HomePageHeader color="white">
                 Build your team. See your stats. Simulate a trade.
             </HomePageHeader>
-            <Box direction="row" justify="evenly">
-                <GetStartedButton label="Team Builder" />
-                <GetStartedButton label="Dashboard" />
-                <GetStartedButton label="Trade Simulator" />
-            </Box>
+            <Box direction="row" justify="evenly"></Box>
         </SecondBlock>
     </Box>
 )

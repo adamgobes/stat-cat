@@ -26,9 +26,14 @@ const StyledButton = styled(Button)`
 
 function LoginRegister({ history, location }) {
     const initialIsLogin = location.state ? location.state.isLogin : false
+    const initialEmail = location.state ? location.state.email : ''
+
     const [{ name, email, password, secondPassword, errorMessage, isLogin }, dispatch] = useReducer(
         loginRegisterReducer,
-        createInitialState(initialIsLogin)
+        createInitialState({
+            initialIsLogin,
+            initialEmail,
+        })
     )
 
     const [loginUser, { loading: loginLoading }] = useMutation(LOGIN_MUTATION, {

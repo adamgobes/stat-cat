@@ -12,11 +12,12 @@ const LogoContainer = styled(Box)`
 `
 
 const NavWrapper = styled(Box)`
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     padding-top: 20px;
+    z-index: 1000;
 `
 
 const HomeButton = styled(Button)`

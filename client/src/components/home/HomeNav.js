@@ -31,41 +31,47 @@ const Header = styled.h1`
     font-size: 2em;
 `
 
+const NavItems = styled(Box)`
+    width: 80%;
+`
+
 export default function Nav() {
     return (
-        <NavWrapper direction="row" justify="evenly">
-            <Box direction="row">
-                <LogoContainer justify="center">
-                    <img src={StatLogo} alt="Stat Logo" height="100%" width="100%" />
-                </LogoContainer>
-                <Box justify="center">
-                    <Header>StatCat</Header>
+        <NavWrapper align="center">
+            <NavItems direction="row" justify="between" align="center">
+                <Box direction="row">
+                    <LogoContainer justify="center">
+                        <img src={StatLogo} alt="Stat Logo" height="100%" width="100%" />
+                    </LogoContainer>
+                    <Box justify="center">
+                        <Header>StatCat</Header>
+                    </Box>
                 </Box>
-            </Box>
-            <Box align="center" justify="center">
-                <Box direction="row" align="center">
-                    <StyledLink
-                        to={{
-                            pathname: '/auth',
-                            state: {
-                                isLogin: false,
-                            },
-                        }}
-                    >
-                        <HomeButton label="Sign Up" primary />
-                    </StyledLink>
-                    <StyledLink
-                        to={{
-                            pathname: '/auth',
-                            state: {
-                                isLogin: true,
-                            },
-                        }}
-                    >
-                        <HomeButton label="Log In" primary />
-                    </StyledLink>
+                <Box>
+                    <Box direction="row" align="center">
+                        <StyledLink
+                            to={{
+                                pathname: '/auth',
+                                state: {
+                                    isLogin: false,
+                                },
+                            }}
+                        >
+                            <HomeButton label="Sign Up" primary />
+                        </StyledLink>
+                        <StyledLink
+                            to={{
+                                pathname: '/auth',
+                                state: {
+                                    isLogin: true,
+                                },
+                            }}
+                        >
+                            <HomeButton label="Log In" primary />
+                        </StyledLink>
+                    </Box>
                 </Box>
-            </Box>
+            </NavItems>
         </NavWrapper>
     )
 }

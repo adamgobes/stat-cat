@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Box, Button, TextInput } from 'grommet'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 import { Group, Dashboard, ShareOption } from 'grommet-icons'
 
 import { ReactComponent as BasketballImage } from '../../assets/images/basketball_homepage.svg'
@@ -8,6 +8,7 @@ import HomeNav from './HomeNav'
 import teambuilderScreenshot from '../../assets/images/teambuilder_screenshot.png'
 import dashboardScreenshot from '../../assets/images/dashboard_screenshot.png'
 import tradeScreenshot from '../../assets/images/trade_screenshot.png'
+import safariTop from '../../assets/images/safari-top.png'
 import StyledLink from '../shared/StyledLink'
 
 const FirstBlock = styled(Box)`
@@ -50,12 +51,12 @@ const GetStartedButton = styled(Box)`
 `
 
 const SecondBlock = styled(Box)`
+    background: ${props => props.theme.global.colors.backdrop};
     width: 100%;
-    background: ${props => props.theme.global.colors.brand};
 `
 
 const ProductFeatureButton = styled(Box)`
-    background: ${props => (props.selected ? '#e17e62' : '')};
+    background: ${props => (props.selected ? props.theme.global.colors.brand : '')};
     width: 200px;
     border-radius: 10px;
     cursor: pointer;
@@ -69,16 +70,19 @@ const ProductFeatureIconWrapper = styled(Box)`
 `
 
 const ProductFeatureText = styled.span`
-    color: white;
-    font-size: 1.2em;
+    color: ${props => (props.selected ? 'white' : props.theme.global.colors.brand)};
+    font-size: 1.6em;
     font-weight: bold;
 `
 
+const SafariTopWrapper = styled(Box)`
+    width: 70%;
+`
+
 const ProductScreenShotWrapper = styled(Box)`
-    padding: 20px;
-    background: white;
-    width: 90%;
-    height: 600px;
+    width: 70%;
+    box-shadow: rgba(84, 70, 35, 0.15) 0px 2px 8px, rgba(84, 70, 35, 0.15) 0px 1px 3px;
+    display: ${props => (!props.selected ? 'none' : '')};
 `
 
 const features = [
@@ -99,7 +103,7 @@ const features = [
     },
 ]
 
-const Home = () => {
+const Home = ({ theme }) => {
     const [currentFeature, setCurrentFeature] = useState(features[0].name)
     const [email, setEmail] = useState('')
     return (
@@ -140,7 +144,7 @@ const Home = () => {
                 </SVGWrapper>
             </FirstBlock>
             <SecondBlock direction="column" justify="between">
-                <HomePageHeader color="white" margin={48}>
+                <HomePageHeader color="black" margin={48}>
                     Build your team. See your stats. Simulate a trade.
                 </HomePageHeader>
                 <Box direction="row" justify="evenly" style={{ margin: '40px 0' }}>
@@ -153,30 +157,38 @@ const Home = () => {
                             selected={currentFeature === name}
                         >
                             <ProductFeatureIconWrapper justify="center">
-                                <Icon size="medium" color="white" />
+                                <Icon
+                                    size="medium"
+                                    color={
+                                        currentFeature === name
+                                            ? 'white'
+                                            : theme.global.colors.brand
+                                    }
+                                />
                             </ProductFeatureIconWrapper>
-                            <ProductFeatureText>{name}</ProductFeatureText>
+                            <ProductFeatureText selected={currentFeature === name}>
+                                {name}
+                            </ProductFeatureText>
                         </ProductFeatureButton>
                     ))}
                 </Box>
                 <Box align="center">
-                    {features.map(
-                        ({ screenshot, name }) =>
-                            currentFeature === name && (
-                                <ProductScreenShotWrapper align="center">
-                                    <img
-                                        src={screenshot}
-                                        height="100%"
-                                        width="100%"
-                                        alt="Screenshot"
-                                    />
-                                </ProductScreenShotWrapper>
-                            )
-                    )}
+                    <SafariTopWrapper>
+                        <img src={safariTop} height="100%" width="100%" alt="safari-top" />
+                    </SafariTopWrapper>
+                    {features.map(({ screenshot, name }) => (
+                        <ProductScreenShotWrapper
+                            align="center"
+                            key={name}
+                            selected={name === currentFeature}
+                        >
+                            <img src={screenshot} height="100%" width="100%" alt="Screenshot" />
+                        </ProductScreenShotWrapper>
+                    ))}
                 </Box>
             </SecondBlock>
         </Box>
     )
 }
 
-export default Home
+export default withTheme(Home)

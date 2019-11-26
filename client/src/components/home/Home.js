@@ -10,6 +10,7 @@ import dashboardScreenshot from '../../assets/images/dashboard_screenshot.png'
 import tradeScreenshot from '../../assets/images/trade_screenshot.png'
 import safariTop from '../../assets/images/safari-top.png'
 import StyledLink from '../shared/StyledLink'
+import Footer from './Footer'
 
 const FirstBlock = styled(Box)`
     width: 100%;
@@ -53,6 +54,7 @@ const GetStartedButton = styled(Box)`
 const SecondBlock = styled(Box)`
     background: ${props => props.theme.global.colors.backdrop};
     width: 100%;
+    padding: 80px 0 140px 0;
 `
 
 const ProductFeatureButton = styled(Box)`
@@ -187,6 +189,7 @@ const Home = ({ theme }) => {
                     ))}
                 </Box>
             </SecondBlock>
+            <Footer />
         </Box>
     )
 }

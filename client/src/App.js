@@ -3,7 +3,7 @@ import { Grommet } from 'grommet'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import cookie from 'react-cookies'
 
-import Home from './components/general/Home'
+import Home from './components/home/Home'
 import LoginRegister from './components/auth/LoginRegister'
 import ApolloWrapper from './apollo/ApolloWrapper'
 import theme from './theme'

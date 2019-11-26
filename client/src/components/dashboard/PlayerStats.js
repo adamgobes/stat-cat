@@ -4,7 +4,7 @@ import { Box, Select } from 'grommet'
 
 import PlayerImage from '../shared/PlayerImage'
 import { allStats } from '../../utils/computeHelpers'
-import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
+import DashboardTableHeader from './DashboardTableHeader'
 import { getFullName, getPlayerImage } from '../../apollo/dataSelectors'
 
 const Table = styled(Box)`
@@ -17,6 +17,20 @@ const StatDropdownContainer = styled.div`
     width: 104px;
     border: 1px solid white;
     border-radius: 10px;
+`
+
+const PlayerRow = styled(Box)`
+    flex-direction: row;
+    align-items: center;
+    background: ${props => (props.isTraded ? '#549E66' : 'white')};
+    padding: 10px;
+    margin: 4px 0;
+    border-radius: 10px;
+`
+
+const PlayerText = styled(Box)`
+    color: ${props => (props.isTraded ? 'white' : '')};
+    font-weight: bold;
 `
 
 const findStat = (statsArray, stat) => statsArray.find(s => s.category === stat).value
@@ -57,17 +71,31 @@ function PlayerStats({ players }) {
             />
             <Box style={{ overflow: 'hidden', overflowY: 'scroll' }}>
                 {sortedData.map(player => (
-                    <TableRow flex={false} key={player.id}>
+                    <PlayerRow flex={false} key={player.id} isTraded={player.isTraded}>
                         <Box direction="row" justify="center" basis="xsmall">
-                            <PlayerImage src={getPlayerImage(player)} size="XS" />
+                            <PlayerImage
+                                src={getPlayerImage(player)}
+                                size="XS"
+                                borderColor={player.isTraded ? 'white' : null}
+                            />
                         </Box>
-                        <Box direction="row" justify="center" basis="small">
+                        <PlayerText
+                            direction="row"
+                            justify="center"
+                            basis="small"
+                            isTraded={player.isTraded}
+                        >
                             <b>{getFullName(player)}</b>
-                        </Box>
-                        <Box direction="row" justify="center" basis="small">
+                        </PlayerText>
+                        <PlayerText
+                            direction="row"
+                            justify="center"
+                            basis="small"
+                            isTraded={player.isTraded}
+                        >
                             {findStat(player.stats, selectedStat)}
-                        </Box>
-                    </TableRow>
+                        </PlayerText>
+                    </PlayerRow>
                 ))}
             </Box>
         </Table>

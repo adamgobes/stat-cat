@@ -58,7 +58,7 @@ export default function TradeSimulator() {
 
         setPostTradeTeam([
             ...currentStatsData.myTeam.players.filter(p => !sentPlayersIds.includes(p.id)),
-            ...data.getPlayerStats,
+            ...data.getPlayerStats.map(p => ({ ...p, isTraded: true })),
         ])
     }
 

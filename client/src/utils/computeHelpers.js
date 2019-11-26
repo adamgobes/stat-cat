@@ -1,4 +1,16 @@
-export const allStats = ['PPG', 'APG', 'RPG', 'SPG', 'BPG', 'TPG', 'FGA', 'FGM', 'FTA', 'FTM']
+export const allStats = [
+    'PPG',
+    'APG',
+    '3PM',
+    'RPG',
+    'SPG',
+    'BPG',
+    'TPG',
+    'FGA',
+    'FGM',
+    'FTA',
+    'FTM',
+]
 export const timeFrames = ['All', '7d', '1m']
 
 function computeStatProjection(stat, players) {

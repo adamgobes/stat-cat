@@ -46,12 +46,13 @@ const Percentage = styled.b`
     color: ${props => (props.positive ? 'green' : 'red')};
 `
 
-const countingNumbers = ['PPG', 'APG', 'RPG', 'SPG', 'BPG', 'TPG']
+const countingNumbers = ['PPG', 'APG', 'RPG', '3PM', 'SPG', 'BPG', 'TPG']
 
 const statsAbbreviationToFull = {
     PPG: 'Points',
     APG: 'Assists',
     RPG: 'Rebounds',
+    '3PM': 'Threes',
     SPG: 'Steals',
     BPG: 'Blocks',
     TPG: 'Turnovers',
@@ -83,12 +84,12 @@ function PercentageChangeIndicator({ category, currentValue, tradeValue }) {
             {tradeValue > currentValue && (
                 <IconWrapper>
                     {!isTurnoverStat && <LinkUp color="green" size="XS" />}
-                    {isTurnoverStat && <LinkDown color="red" />}
+                    {isTurnoverStat && <LinkDown color="red" size="XS" />}
                 </IconWrapper>
             )}
             {tradeValue < currentValue && (
                 <IconWrapper>
-                    {!isTurnoverStat && <LinkDown color="red" />}
+                    {!isTurnoverStat && <LinkDown color="red" size="XS" />}
                     {isTurnoverStat && <LinkUp color="green" size="XS" />}
                 </IconWrapper>
             )}

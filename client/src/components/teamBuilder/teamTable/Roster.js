@@ -3,9 +3,7 @@ import styled from 'styled-components'
 import { Box, Button } from 'grommet'
 
 import PlayerImage from '../../shared/PlayerImage'
-import RosterPlaceHolderImage from '../../../assets/images/roster-placeholder.png'
 import AddRemovePlayerButton from '../AddRemovePlayerButton'
-import { ROSTER_SIZE } from '../TeamBuilderContext'
 import Loader from '../../shared/Loader'
 import { getFirstLastShortened, getPlayerImage } from '../../../apollo/dataSelectors'
 
@@ -72,28 +70,22 @@ const RosterItem = styled(Box)`
 `
 
 function Roster({ players, onRemovePlayer, onSaveTeam, saveTeamLoading }) {
-    const team = [...players, ...new Array(ROSTER_SIZE - players.length)]
+    const team = [...players]
 
     return (
         <RosterWrapper align="center">
             <MyTeamHeader>My Team</MyTeamHeader>
             <RosterGrid>
                 <Box direction="row" justify="start" wrap>
-                    {team.map((p, i) => (
-                        <RosterItem key={p ? p.id : i} flex="shrink">
+                    {team.map(p => (
+                        <RosterItem key={p.id} flex="shrink">
                             <MiniRosterImage align="center" justify="center">
-                                <PlayerImage
-                                    size="M"
-                                    src={p ? getPlayerImage(p) : RosterPlaceHolderImage}
-                                    borderColor="white"
-                                />
-                                {p && (
-                                    <RemovePlayerButton handleClick={() => onRemovePlayer(p)}>
-                                        -
-                                    </RemovePlayerButton>
-                                )}
+                                <PlayerImage size="M" src={getPlayerImage(p)} borderColor="white" />
+                                <RemovePlayerButton handleClick={() => onRemovePlayer(p)}>
+                                    -
+                                </RemovePlayerButton>
                             </MiniRosterImage>
-                            {p && <PlayerName>{getFirstLastShortened(p)}</PlayerName>}
+                            <PlayerName>{getFirstLastShortened(p)}</PlayerName>
                         </RosterItem>
                     ))}
                 </Box>

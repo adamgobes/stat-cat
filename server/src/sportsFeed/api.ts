@@ -37,6 +37,10 @@ export const statCategories = [
         selector: json => t(json, `${freeThrowsSelector}.ftMadePerGame`).safeNumber,
     },
     {
+        categoryName: '3PM',
+        selector: json => t(json, `${fieldGoalSelector}.fg3PtMadePerGame`).safeNumber,
+    },
+    {
         categoryName: 'RPG',
         selector: json => t(json, `${reboundsSelector}.rebPerGame`).safeNumber,
     },

@@ -27,8 +27,8 @@ const HomePageHeader = styled.h1`
     text-align: center;
     font-size: 3vw;
     margin: ${props => props.margin}px;
-    @media (max-width: 675px) {
-        font-size: 4vw;
+    @media (max-width: 850px) {
+        font-size: 4.5vw;
         margin: 0px;
     }
 `
@@ -46,6 +46,9 @@ const FirstBlockText = styled.p`
     text-align: center;
     font-size: 2em;
     line-height: 1.2em;
+    @media (max-width: 600px) {
+        font-size: 1.4em;
+    }
 `
 
 const SVGWrapper = styled(Box)`
@@ -91,23 +94,23 @@ const ProductFeatureText = styled.span`
     color: ${props => (props.selected ? 'white' : props.theme.global.colors.brand)};
     font-size: 1.6em;
     font-weight: bold;
-    @media (max-width: 675px) {
+    @media (max-width: 750px) {
         font-size: 1em;
     }
 `
 
 const SafariTopWrapper = styled(Box)`
-    width: 70%;
-    @media (max-width: 675px) {
+    width: 80%;
+    @media (max-width: 750px) {
         width: 100%;
     }
 `
 
 const ProductScreenShotWrapper = styled(Box)`
-    width: 70%;
+    width: 80%;
     box-shadow: rgba(84, 70, 35, 0.15) 0px 2px 8px, rgba(84, 70, 35, 0.15) 0px 1px 3px;
     display: ${props => (!props.selected ? 'none' : '')};
-    @media (max-width: 675px) {
+    @media (max-width: 750px) {
         width: 100%;
     }
 `
@@ -172,11 +175,11 @@ const Home = ({ theme }) => {
                     </SVGWrapper>
                 </FirstBlockElement>
             </FirstBlock>
-            <SecondBlock direction="column" justify="between">
+            <SecondBlock direction="column" justify="between" align="center">
                 <HomePageHeader color="black" margin={48}>
                     Build your team. See your stats. Simulate a trade.
                 </HomePageHeader>
-                <Box direction="row" justify="evenly" style={{ margin: '40px 0' }}>
+                <Box direction="row" justify="evenly" style={{ margin: '40px 0', width: '80%' }}>
                     {features.map(({ name, Icon }) => (
                         <ProductFeatureButton
                             key={name}

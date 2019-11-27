@@ -24,6 +24,9 @@ const HomeButton = styled(Button)`
     margin: 0 10px;
     color: white;
     font-weight: bold;
+    @media (max-width: 600px) {
+        font-size: 1em;
+    }
 `
 
 const Header = styled.h1`

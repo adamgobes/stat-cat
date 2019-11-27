@@ -13,17 +13,7 @@ import StatCatApp from './components/general/StatCatApp'
 import { SCREEN_SIZE_MESSAGE } from './utils/strings'
 
 const App = () => {
-    const { height, width } = useWindowDimensions()
-
     const isLoggedIn = () => !!cookie.load('authToken')
-
-    if (width < 800 || height < 550) {
-        return (
-            <Grommet theme={theme}>
-                <FallbackMessage message={SCREEN_SIZE_MESSAGE} />
-            </Grommet>
-        )
-    }
 
     return (
         <ApolloWrapper>

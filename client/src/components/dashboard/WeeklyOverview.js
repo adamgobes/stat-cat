@@ -84,7 +84,7 @@ function WeeklyOverview({ data, loading }) {
                             {data.slice((page - 1) * MAX_PER_PAGE, page * MAX_PER_PAGE).map(p => {
                                 const isInjured = getIsInjured(p)
                                 return (
-                                    <TableRow>
+                                    <TableRow key={p.id}>
                                         <Box direction="row" justify="center" basis="xsmall">
                                             <PlayerImage src={getPlayerImage(p)} size="XS" />
                                         </Box>

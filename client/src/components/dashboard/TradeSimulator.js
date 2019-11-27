@@ -1,20 +1,17 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
 import { Box, Button } from 'grommet'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 
 import TradeSearch from './TradeSearch'
 import { MIN_CHARS } from '../teamBuilder/TeamBuilderContext'
-import {
-    SEARCH_PLAYERS_QUERY,
-    DASHBOARD_QUERY,
-    GET_PLAYER_STATS_QUERY,
-    MY_STATS_QUERY,
-} from '../../apollo/queries'
+import { SEARCH_PLAYERS_QUERY, GET_PLAYER_STATS_QUERY, MY_STATS_QUERY } from '../../apollo/queries'
 import SentAndReceived from './SentAndReceived'
 import MyStats from './MyStats'
 import Loader from '../shared/Loader'
 import { computeTeamStatsAverages } from '../../utils/computeHelpers'
+import FallbackMessage from '../general/FallbackMessage'
+import { NETWORK_ERROR_MESSAGE } from '../../utils/strings'
 
 export const MAX_PLAYERS_TRADED = 4
 
@@ -51,7 +48,9 @@ export default function TradeSimulator() {
         skip: playerInput.length < MIN_CHARS,
     })
 
-    const { data: currentStatsData, loading: statsLoading } = useQuery(MY_STATS_QUERY)
+    const { data: currentStatsData, loading: statsLoading, error: statsError } = useQuery(
+        MY_STATS_QUERY
+    )
 
     function onGetPlayerStatsCompleted(data) {
         const sentPlayersIds = sentPlayers.map(p => p.id)
@@ -114,6 +113,8 @@ export default function TradeSimulator() {
     function onSimulateTrade() {
         getPlayerStats({ variables: { playerIds: receivedPlayers.map(p => p.id) } })
     }
+
+    if (statsError) return <FallbackMessage message={NETWORK_ERROR_MESSAGE} showReload />
 
     if (statsLoading) return <Loader size="100" />
 

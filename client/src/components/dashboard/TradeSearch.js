@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
-import { Box, Text, Button } from 'grommet'
+import { Box, Text } from 'grommet'
 import PlayerImage from '../shared/PlayerImage'
 import AddPlayerInput from '../teamBuilder/playerSearch/AddPlayerInput'
 import { getFirstLastShortened, getPlayerImage } from '../../apollo/dataSelectors'

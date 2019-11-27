@@ -78,6 +78,7 @@ export default function MyStats({
                         >
                             {timeFrames.map(tf => (
                                 <TimeFrameButton
+                                    key={tf}
                                     justify="center"
                                     onClick={() => setSelectedTimeFrame(tf)}
                                     selected={tf === selectedTimeFrame}
@@ -135,6 +136,15 @@ export default function MyStats({
                 )}
             </MyStatsWrapper>
         ),
-        [players, averages, selectedTimeFrame, statType]
+        [
+            players,
+            loading,
+            averages,
+            selectedTimeFrame,
+            setSelectedTimeFrame,
+            showTimeFrames,
+            statType,
+            isTradeSimulated,
+        ]
     )
 }

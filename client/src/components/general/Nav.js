@@ -4,19 +4,7 @@ import styled, { withTheme } from 'styled-components'
 import { Box } from 'grommet'
 import cookie from 'react-cookies'
 import { useApolloClient } from '@apollo/react-hooks'
-import {
-    Menu,
-    Group,
-    Dashboard,
-    Trophy,
-    Configure,
-    Info,
-    CircleInformation,
-    Help,
-    Logout,
-    FormPreviousLink,
-    ShareOption,
-} from 'grommet-icons'
+import { Menu, Group, Dashboard, Logout, ShareOption, FormClose } from 'grommet-icons'
 
 import StatLogo from '../../assets/images/stat-logo.png'
 
@@ -45,12 +33,12 @@ const NavigationContainer = styled(Box)`
 
 const ToggleNavButton = styled(Box)`
     position: absolute;
-    left: ${({ isNavOpen }) => (isNavOpen ? '290px' : '40px')};
+    cursor: pointer;
+    left: ${({ isNavOpen }) => (isNavOpen ? '126px' : '40px')};
     top: 20px;
     width: 40px;
     height: 40px;
     border-radius: 100%;
-    border: 2px solid black;
     transition: 0.3s;
     z-index: 1000;
 `
@@ -127,7 +115,7 @@ function Nav({ history, location, isNavOpen, setNavOpen, isWidthTooSmall, theme 
                     isNavOpen={isNavOpen}
                 >
                     {!isNavOpen && <Menu size="medium" color="black" />}
-                    {isNavOpen && <FormPreviousLink size="medium" color="black" />}
+                    {isNavOpen && <FormClose size="medium" color="white" />}
                 </ToggleNavButton>
             )}
 
@@ -149,6 +137,7 @@ function Nav({ history, location, isNavOpen, setNavOpen, isWidthTooSmall, theme 
                     const Enhanced = EnhanceNavListItem(Icon)
                     return (
                         <Enhanced
+                            key={name}
                             name={name}
                             selected={currentPage === path}
                             handleClick={() => history.push(path)}

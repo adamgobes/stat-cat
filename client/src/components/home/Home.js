@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Button, TextInput } from 'grommet'
+import { Box, TextInput } from 'grommet'
 import styled, { withTheme } from 'styled-components'
 import { Group, Dashboard, ShareOption } from 'grommet-icons'
 

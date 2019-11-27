@@ -179,6 +179,7 @@ const Home = ({ theme }) => {
                 <Box direction="row" justify="evenly" style={{ margin: '40px 0' }}>
                     {features.map(({ name, Icon }) => (
                         <ProductFeatureButton
+                            key={name}
                             direction="row"
                             align="center"
                             justify="center"

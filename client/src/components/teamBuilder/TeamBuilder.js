@@ -26,6 +26,8 @@ import {
 import AddPlayerInput from './playerSearch/AddPlayerInput'
 import SuggestionsGrid from './playerSearch/SuggestionsGrid'
 import { ReactComponent as SearchPlaceholderGraphic } from '../../assets/images/undraw_search_placeholder.svg'
+import FallbackMessage from '../general/FallbackMessage'
+import { NETWORK_ERROR_MESSAGE } from '../../utils/strings'
 
 const Header = styled.h1`
     font-size: 2.6em;
@@ -51,7 +53,7 @@ function TeamBuilder({ history }) {
         dispatch,
     } = useContext(TeamBuilderContext)
 
-    const { data: myTeamData, loading: myTeamLoading } = useQuery(MY_TEAM_QUERY)
+    const { data: myTeamData, loading: myTeamLoading, error: myTeamError } = useQuery(MY_TEAM_QUERY)
 
     const [mutateTeam, { loading: saveTeamLoading }] = useMutation(SAVE_TEAM_MUTATION, {
         refetchQueries: () => [{ query: WEEKLY_OVERVIEW_QUERY }, { query: MY_STATS_QUERY }],
@@ -98,6 +100,8 @@ function TeamBuilder({ history }) {
     function handleRemovePlayer(player) {
         dispatch(removePlayer(player))
     }
+
+    if (myTeamError) return <FallbackMessage message={NETWORK_ERROR_MESSAGE} showReload />
 
     if (myTeamLoading) return <Loader size={80} />
 

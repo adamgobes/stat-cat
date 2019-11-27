@@ -8,6 +8,8 @@ import { WEEKLY_OVERVIEW_QUERY, MY_STATS_QUERY } from '../../apollo/queries'
 import WeeklyOverview from './WeeklyOverview'
 import MyStats from './MyStats'
 import { computeTeamStatsAverages, timeFrames } from '../../utils/computeHelpers'
+import FallbackMessage from '../general/FallbackMessage'
+import { NETWORK_ERROR_MESSAGE } from '../../utils/strings'
 
 const DashboardWrapper = styled(Box)`
     position: relative;
@@ -23,12 +25,18 @@ const DashboardComponentWrapper = styled(Box)`
 export default function Dashboard() {
     const [selectedTimeFrame, setSelectedTimeFrame] = useState(timeFrames[0])
 
-    const { data: weeklyOverviewData, loading: weeklyOverviewLoading } = useQuery(
-        WEEKLY_OVERVIEW_QUERY
+    const {
+        data: weeklyOverviewData,
+        loading: weeklyOverviewLoading,
+        error: weeklyOverviewError,
+    } = useQuery(WEEKLY_OVERVIEW_QUERY)
+
+    const { data: statsData, loading: statsLoading, error: myStatsError } = useQuery(
+        MY_STATS_QUERY,
+        {
+            variables: { timeFrame: selectedTimeFrame },
+        }
     )
-    const { data: statsData, loading: statsLoading } = useQuery(MY_STATS_QUERY, {
-        variables: { timeFrame: selectedTimeFrame },
-    })
 
     const myTeamAverages = useMemo(() => {
         const averages =
@@ -41,6 +49,9 @@ export default function Dashboard() {
             )
         return averages
     }, [statsData])
+
+    if (myStatsError) return <FallbackMessage message={NETWORK_ERROR_MESSAGE} showReload />
+    if (weeklyOverviewError) return <FallbackMessage message={NETWORK_ERROR_MESSAGE} showReload />
 
     if (weeklyOverviewLoading && statsLoading) return <Loader size={80} />
 

@@ -8,8 +8,9 @@ import LoginRegister from './components/auth/LoginRegister'
 import ApolloWrapper from './apollo/ApolloWrapper'
 import theme from './theme'
 import { useWindowDimensions } from './utils/customHooks'
-import ResponsiveFallback from './components/general/ResponsiveFallback'
+import FallbackMessage from './components/general/FallbackMessage'
 import StatCatApp from './components/general/StatCatApp'
+import { SCREEN_SIZE_MESSAGE } from './utils/strings'
 
 const App = () => {
     const { height, width } = useWindowDimensions()
@@ -19,7 +20,7 @@ const App = () => {
     if (width < 800 || height < 550) {
         return (
             <Grommet theme={theme}>
-                <ResponsiveFallback />
+                <FallbackMessage message={SCREEN_SIZE_MESSAGE} />
             </Grommet>
         )
     }

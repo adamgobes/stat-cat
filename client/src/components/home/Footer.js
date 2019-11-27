@@ -13,7 +13,11 @@ const FooterWrapper = styled(Box)`
     padding: 30px 0;
 `
 const FooterItems = styled(Box)`
-    width: 70%;
+    width: 80%;
+    @media (max-width: 700px) {
+        width: 98%;
+        font-size: 0.7em;
+    }
 `
 
 const LogoContainer = styled(Box)`
@@ -24,7 +28,8 @@ const LogoContainer = styled(Box)`
 
 const FooterText = styled.h2`
     color: white;
-    margin: 0 20px;
+    margin: 0 30px;
+    text-align: center;
 `
 
 export default function Footer() {
@@ -36,8 +41,8 @@ export default function Footer() {
                         <img src={StatLogo} alt="Stat Logo" height="100%" width="100%" />
                     </LogoContainer>
                 </Box>
-                <Box direction="row" align="center">
-                    <FooterText>Contact Us</FooterText>
+                <Box direction="row" align="center" justify="center">
+                    <FooterText>Contact</FooterText>
                     <FooterText>Terms and Conditions</FooterText>
                     <FooterText>Cookie Policy</FooterText>
                 </Box>

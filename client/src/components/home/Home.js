@@ -16,13 +16,29 @@ const FirstBlock = styled(Box)`
     width: 100%;
     padding: 50px 0;
     margin: 100px 0;
+    flex-direction: row;
+    @media (max-width: 900px) {
+        flex-direction: column;
+    }
 `
 
 const HomePageHeader = styled.h1`
     color: ${props => props.color};
     text-align: center;
-    font-size: 3em;
+    font-size: 3vw;
     margin: ${props => props.margin}px;
+    @media (max-width: 675px) {
+        font-size: 4vw;
+        margin: 0px;
+    }
+`
+
+const FirstBlockElement = styled(Box)`
+    flex-basis: 50%;
+    @media (max-width: 900px) {
+        margin: 30px 0 0 0;
+        flex-basis: 100%;
+    }
 `
 
 const FirstBlockText = styled.p`
@@ -33,7 +49,7 @@ const FirstBlockText = styled.p`
 `
 
 const SVGWrapper = styled(Box)`
-    width: 300px;
+    width: 1300px;
     height: 300px;
 `
 
@@ -75,16 +91,25 @@ const ProductFeatureText = styled.span`
     color: ${props => (props.selected ? 'white' : props.theme.global.colors.brand)};
     font-size: 1.6em;
     font-weight: bold;
+    @media (max-width: 675px) {
+        font-size: 1em;
+    }
 `
 
 const SafariTopWrapper = styled(Box)`
     width: 70%;
+    @media (max-width: 675px) {
+        width: 100%;
+    }
 `
 
 const ProductScreenShotWrapper = styled(Box)`
     width: 70%;
     box-shadow: rgba(84, 70, 35, 0.15) 0px 2px 8px, rgba(84, 70, 35, 0.15) 0px 1px 3px;
     display: ${props => (!props.selected ? 'none' : '')};
+    @media (max-width: 675px) {
+        width: 100%;
+    }
 `
 
 const features = [
@@ -111,8 +136,8 @@ const Home = ({ theme }) => {
     return (
         <Box>
             <HomeNav />
-            <FirstBlock direction="row" align="center" justify="center">
-                <Box direction="column" align="center" basis="1/2">
+            <FirstBlock align="center" justify="center">
+                <FirstBlockElement direction="column" align="center">
                     <HomePageHeader color="black" margin={5}>
                         Fantasy sports, your way
                     </HomePageHeader>
@@ -140,10 +165,12 @@ const Home = ({ theme }) => {
                             <GetStartedButton>Get Started</GetStartedButton>
                         </StyledLink>
                     </Box>
-                </Box>
-                <SVGWrapper justify="center" align="center" basis="1/2">
-                    <BasketballImage />
-                </SVGWrapper>
+                </FirstBlockElement>
+                <FirstBlockElement>
+                    <SVGWrapper justify="center" align="center">
+                        <BasketballImage />
+                    </SVGWrapper>
+                </FirstBlockElement>
             </FirstBlock>
             <SecondBlock direction="column" justify="between">
                 <HomePageHeader color="black" margin={48}>

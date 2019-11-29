@@ -14,7 +14,7 @@ import Footer from './Footer'
 
 const FirstBlock = styled(Box)`
     width: 100%;
-    padding: 50px 0;
+    padding: 50px 0 10px 0;
     margin: 100px 0;
     flex-direction: row;
     @media (max-width: 900px) {

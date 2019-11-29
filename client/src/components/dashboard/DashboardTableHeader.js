@@ -2,6 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 
+import { Text } from '../general/TextComponents'
+
+const TableHeaderText = styled(Text)`
+    color: ${props => props.theme.global.colors.brand};
+    font-size: 1em;
+`
+
 export const TableRow = styled(Box)`
     flex-direction: row;
     align-items: center;
@@ -13,12 +20,10 @@ export const TableRow = styled(Box)`
 
 export default function DashboardTableHeader({ headers, sizes, justify = 'center' }) {
     return (
-        <TableRow
-            style={{ margin: '12px 0', background: 'white', color: '#7781f7', fontWeight: 'bold' }}
-        >
+        <TableRow>
             {headers.map((header, i) => (
                 <Box direction="row" justify={justify} basis={sizes[i]} key={i}>
-                    <Box>{header}</Box>
+                    <TableHeaderText>{header}</TableHeaderText>
                 </Box>
             ))}
         </TableRow>

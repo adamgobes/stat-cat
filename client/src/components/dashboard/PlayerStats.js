@@ -5,11 +5,12 @@ import { Box, Select } from 'grommet'
 import PlayerImage from '../shared/PlayerImage'
 import { allStats } from '../../utils/computeHelpers'
 import DashboardTableHeader from './DashboardTableHeader'
-import { getFullName, getPlayerImage } from '../../apollo/dataSelectors'
+import { getPlayerImage, getFirstLastShortened } from '../../apollo/dataSelectors'
+import { Text } from '../general/TextComponents'
 
 const Table = styled(Box)`
     max-height: 500px;
-    sposition: relative;
+    position: relative;
     width: 96%;
 `
 
@@ -30,7 +31,6 @@ const PlayerRow = styled(Box)`
 
 const PlayerText = styled(Box)`
     color: ${props => (props.isTraded ? 'white' : '')};
-    font-weight: bold;
 `
 
 const findStat = (statsArray, stat) => statsArray.find(s => s.category === stat).value
@@ -85,7 +85,7 @@ function PlayerStats({ players }) {
                             basis="small"
                             isTraded={player.isTraded}
                         >
-                            <b>{getFullName(player)}</b>
+                            <Text>{getFirstLastShortened(player)}</Text>
                         </PlayerText>
                         <PlayerText
                             direction="row"
@@ -93,7 +93,7 @@ function PlayerStats({ players }) {
                             basis="small"
                             isTraded={player.isTraded}
                         >
-                            {findStat(player.stats, selectedStat)}
+                            <Text>{findStat(player.stats, selectedStat)}</Text>
                         </PlayerText>
                     </PlayerRow>
                 ))}

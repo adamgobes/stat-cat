@@ -27,13 +27,13 @@ import AddPlayerInput from './playerSearch/AddPlayerInput'
 import SuggestionsGrid from './playerSearch/SuggestionsGrid'
 import { ReactComponent as SearchPlaceholderGraphic } from '../../assets/images/undraw_search_placeholder.svg'
 import FallbackMessage from '../general/FallbackMessage'
+import { Title } from '../general/TextComponents'
 import { NETWORK_ERROR_MESSAGE } from '../../utils/strings'
 
-const Header = styled.h1`
-    font-size: 2.6em;
+const Header = styled(Title)`
     text-align: center;
     font-weight: bold;
-    margin: 30px 0;
+    margin: 70px 0 74px 0;
 `
 
 const WarningMessage = styled.h3`

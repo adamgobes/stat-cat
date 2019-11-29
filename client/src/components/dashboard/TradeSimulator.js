@@ -12,6 +12,8 @@ import Loader from '../shared/Loader'
 import { computeTeamStatsAverages } from '../../utils/computeHelpers'
 import FallbackMessage from '../general/FallbackMessage'
 import { NETWORK_ERROR_MESSAGE } from '../../utils/strings'
+import { Title, Text } from '../general/TextComponents'
+import { RoundedButton } from '../general/Buttons'
 
 export const MAX_PLAYERS_TRADED = 4
 
@@ -20,6 +22,11 @@ const TradeSimulatorWrapper = styled(Box)`
     background: ${props => props.theme.global.colors.backdrop};
     height: 100%;
     overflow: scroll;
+`
+
+const Copy = styled(Text)`
+    margin: 20px;
+    font-size: 1em;
 `
 
 const SimulateTradeButton = styled(Button)`
@@ -120,10 +127,10 @@ export default function TradeSimulator() {
 
     return (
         <TradeSimulatorWrapper align="center">
-            <h1>Trade Simulator</h1>
             <Box direction="row" align="center" style={{ width: '90%' }}>
                 <Box direction="column" justify="center" align="center" basis="1/2">
-                    <h2 style={{ textAlign: 'center' }}>Start searching and get trading</h2>
+                    <Title>Trade Simulator</Title>
+                    <Copy style={{ textAlign: 'center' }}>Start searching and get trading</Copy>
                     <TradeSearch
                         searchValue={playerInput}
                         suggestions={
@@ -149,12 +156,12 @@ export default function TradeSimulator() {
                             onRemovePlayer={onRemoveReceivedPlayer}
                         />
                     </TradedPlayers>
-                    <SimulateTradeButton
+                    <RoundedButton
                         label={getPlayerStatsLoading ? <Loader size={20} /> : <b>Simulate Trade</b>}
                         onClick={onSimulateTrade}
                     />
                 </Box>
-                <Box basis="1/2" align="center">
+                <Box basis="1/2" align="center" style={{ marginTop: '50px' }}>
                     <MyStats
                         players={
                             postTradeTeam.length === 0

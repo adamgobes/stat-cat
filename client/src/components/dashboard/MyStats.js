@@ -5,6 +5,12 @@ import TeamStats from './TeamStats'
 import PlayerStats from './PlayerStats'
 import Loader from '../shared/Loader'
 import { timeFrames } from '../../utils/computeHelpers'
+import { Title } from '../general/TextComponents'
+
+const statTypes = {
+    TEAM_STATS: 'Team Stats',
+    PLAYER_STATS: 'Player Stats',
+}
 
 const MyStatsWrapper = styled(Box)`
     position: relative;
@@ -42,13 +48,15 @@ const TimeFrameButton = styled(Box)`
 `
 
 const StatTypeHeaderWrapper = styled(Box)`
-    margin: -12px;
+    margin: 0 10px;
 `
 
-const StatTypeHeader = styled.h2`
+const StatTypeHeader = styled(Title)`
+    font-size: 1.4em;
     cursor: pointer;
     width: fit-content;
     padding-bottom: 6px;
+    padding-top: 14px;
     border-bottom: ${props =>
         props.selected ? `2px solid ${props.theme.global.colors.brand}` : ''};
 `
@@ -60,16 +68,13 @@ export default function MyStats({
     loading = false,
     timeFrames: { showTimeFrames, selectedTimeFrame, setSelectedTimeFrame },
 }) {
-    const [statType, setStatType] = useState('Team')
+    const [statType, setStatType] = useState('Team Stats')
 
     return useMemo(
         () => (
             <MyStatsWrapper>
                 <Box direction="row">
-                    <Box basis="1/2" justify="start">
-                        <h1 style={{ margin: '20px' }}>My Stats</h1>
-                    </Box>
-                    {showTimeFrames && (
+                    {/* {showTimeFrames && (
                         <Box
                             direction="row"
                             basis="1/2"
@@ -87,7 +92,7 @@ export default function MyStats({
                                 </TimeFrameButton>
                             ))}
                         </Box>
-                    )}
+                    )} */}
                 </Box>
                 {loading && (
                     <MyStatsLoaderWrapper>
@@ -100,37 +105,37 @@ export default function MyStats({
                             <Box
                                 direction="row"
                                 style={{ width: '100%' }}
-                                justify="center"
+                                justify="between"
                                 align="center"
                             >
                                 <StatTypeHeaderWrapper
                                     direction="row"
-                                    onClick={() => setStatType('Team')}
+                                    onClick={() => setStatType('Team Stats')}
                                     justify="center"
                                     basis="small"
                                 >
-                                    <StatTypeHeader selected={statType === 'Team'}>
-                                        Team
+                                    <StatTypeHeader selected={statType === 'Team Stats'}>
+                                        Team Stats
                                     </StatTypeHeader>
                                 </StatTypeHeaderWrapper>
                                 <StatTypeHeaderWrapper
                                     direction="row"
-                                    onClick={() => setStatType('Player')}
+                                    onClick={() => setStatType('Player Stats')}
                                     justify="center"
                                     basis="small"
                                 >
-                                    <StatTypeHeader selected={statType === 'Player'}>
-                                        Player
+                                    <StatTypeHeader selected={statType === 'Player Stats'}>
+                                        Player Stats
                                     </StatTypeHeader>
                                 </StatTypeHeaderWrapper>
                             </Box>
                         </Box>
 
                         <StatsTableWrapper align="center">
-                            {statType === 'Team' && (
+                            {statType === 'Team Stats' && (
                                 <TeamStats stats={averages} isTradeSimulated={isTradeSimulated} />
                             )}
-                            {statType === 'Player' && <PlayerStats players={players} />}
+                            {statType === 'Player Stats' && <PlayerStats players={players} />}
                         </StatsTableWrapper>
                     </>
                 )}

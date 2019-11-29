@@ -4,6 +4,7 @@ import { Box } from 'grommet'
 import { LinkUp, LinkDown } from 'grommet-icons'
 
 import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
+import { Text } from '../general/TextComponents'
 
 import basketball from '../../assets/images/basketball.png'
 import assistIcon from '../../assets/images/assist-icon.png'
@@ -42,7 +43,7 @@ const IconWrapper = styled.div`
     overflow: hidden;
 `
 
-const Percentage = styled.b`
+const Percentage = styled(Text)`
     color: ${props => (props.positive ? 'green' : 'red')};
 `
 
@@ -108,11 +109,11 @@ function CountingNumberElement({ category, values, isTradeSimulated }) {
                         </Box>
                     </IconWrapper>
                 )}
-                <b>{statsAbbreviationToFull[category]}</b>
+                <Text>{statsAbbreviationToFull[category]}</Text>
             </Box>
             {values.map((value, i) => (
                 <Box direction="row" justify="center" basis="small" key={i}>
-                    <b>{value}</b>
+                    <Text>{value}</Text>
                 </Box>
             ))}
             {isTradeSimulated && (
@@ -139,15 +140,15 @@ function EfficiencyNumberElement({ category, attempted, made, isTradeSimulated }
                         </Box>
                     </IconWrapper>
                 )}
-                <b>{statsAbbreviationToFull[category]}</b>
+                <Text>{statsAbbreviationToFull[category]}</Text>
             </Box>
             {attempted.map((_, i) => (
                 <Box basis="small" align="center" key={i}>
                     <Box direction="row" justify="start">
-                        <b>{`${computePercentage(attempted[i], made[i])}%`}</b>
+                        <Text>{`${computePercentage(attempted[i], made[i])}%`}</Text>
                     </Box>
                     <Box direction="column" align="start">
-                        <b>{`${made[i]}/${attempted[i]}`}</b>
+                        <Text>{`${made[i]}/${attempted[i]}`}</Text>
                     </Box>
                 </Box>
             ))}

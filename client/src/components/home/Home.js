@@ -11,6 +11,7 @@ import tradeScreenshot from '../../assets/images/trade_screenshot.png'
 import safariTop from '../../assets/images/safari-top.png'
 import StyledLink from '../shared/StyledLink'
 import Footer from './Footer'
+import { Title, Text, Subheader } from '../general/TextComponents'
 
 const FirstBlock = styled(Box)`
     width: 100%;
@@ -22,13 +23,13 @@ const FirstBlock = styled(Box)`
     }
 `
 
-const HomePageHeader = styled.h1`
+const HomePageHeader = styled(Title)`
     color: ${props => props.color};
     text-align: center;
-    font-size: 3vw;
+    font-size: 1.8em;
     margin: ${props => props.margin}px;
     @media (max-width: 850px) {
-        font-size: 4.5vw;
+        font-size: 1.4em;
         margin: 0px;
     }
 `
@@ -41,10 +42,10 @@ const FirstBlockElement = styled(Box)`
     }
 `
 
-const FirstBlockText = styled.p`
+const FirstBlockText = styled(Text)`
     width: 75%;
     text-align: center;
-    font-size: 2em;
+    font-size: 1.4em;
     line-height: 1.2em;
     @media (max-width: 600px) {
         font-size: 1.4em;
@@ -62,7 +63,7 @@ const GetStartedButton = styled(Box)`
     background: #e17e62;
     color: white;
     margin-left: 4px;
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: bold;
     border-color: white;
     border-radius: 5px;
@@ -90,12 +91,12 @@ const ProductFeatureIconWrapper = styled(Box)`
     opacity: 0.8;
 `
 
-const ProductFeatureText = styled.span`
+const ProductFeatureHeader = styled(Subheader)`
     color: ${props => (props.selected ? 'white' : props.theme.global.colors.brand)};
-    font-size: 1.6em;
+    font-size: 1em;
     font-weight: bold;
     @media (max-width: 750px) {
-        font-size: 1em;
+        font-size: 0.7em;
     }
 `
 
@@ -141,7 +142,7 @@ const Home = ({ theme }) => {
             <HomeNav />
             <FirstBlock align="center" justify="center">
                 <FirstBlockElement direction="column" align="center">
-                    <HomePageHeader color="black" margin={5}>
+                    <HomePageHeader color="black" margin={20}>
                         Fantasy sports, your way
                     </HomePageHeader>
                     <FirstBlockText>
@@ -176,7 +177,7 @@ const Home = ({ theme }) => {
                 </FirstBlockElement>
             </FirstBlock>
             <SecondBlock direction="column" justify="between" align="center">
-                <HomePageHeader color="black" margin={48}>
+                <HomePageHeader color="black" margin={20}>
                     Build your team. See your stats. Simulate a trade.
                 </HomePageHeader>
                 <Box direction="row" justify="evenly" style={{ margin: '40px 0', width: '80%' }}>
@@ -199,9 +200,9 @@ const Home = ({ theme }) => {
                                     }
                                 />
                             </ProductFeatureIconWrapper>
-                            <ProductFeatureText selected={currentFeature === name}>
+                            <ProductFeatureHeader selected={currentFeature === name}>
                                 {name}
-                            </ProductFeatureText>
+                            </ProductFeatureHeader>
                         </ProductFeatureButton>
                     ))}
                 </Box>

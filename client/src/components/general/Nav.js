@@ -6,6 +6,8 @@ import cookie from 'react-cookies'
 import { useApolloClient } from '@apollo/react-hooks'
 import { Menu, Group, Dashboard, Logout, ShareOption, FormClose } from 'grommet-icons'
 
+import { Subheader, Title } from './TextComponents'
+
 import StatLogo from '../../assets/images/stat-logo.png'
 
 const LogoContainer = styled(Box)`
@@ -48,13 +50,17 @@ const NavIconWrapper = styled(Box)`
     margin: 0 2px;
 `
 
+const NavListHeader = styled(Subheader)`
+    color: ${props => (props.selected ? props.theme.global.colors.brand : 'white')};
+    font-size: 0.9em;
+`
+
 const NavListItem = styled(Box)`
-    width: 90%;
+    width: 94%;
     border-radius: 10px;
     cursor: pointer;
-    margin: 0 10px;
+    margin: 0 4px;
     background: ${props => (props.selected ? 'white' : '')};
-    color: ${props => (props.selected ? props.theme.global.colors.brand : 'white')};
 `
 
 const NavLinks = [
@@ -90,7 +96,7 @@ const NavLinks = [
 const EnhanceNavListItem = Icon => ({ name, selected, handleClick, theme }) => (
     <NavListItem direction="row" align="center" onClick={handleClick} selected={selected}>
         <Icon color={selected ? theme.global.colors.brand : 'white'} />
-        <h3>{name}</h3>
+        <NavListHeader selected={selected}>{name}</NavListHeader>
     </NavListItem>
 )
 
@@ -124,12 +130,9 @@ function Nav({ history, location, isNavOpen, setNavOpen, isWidthTooSmall, theme 
                 justify="evenly"
                 isNavOpen={isNavOpen}
             >
-                <NavListItem direction="row" align="center" style={{ marginBottom: '12px' }}>
-                    <LogoContainer justify="center">
-                        <img src={StatLogo} alt="Stat Logo" height="100%" width="100%" />
-                    </LogoContainer>
-                    <Box>
-                        <h1>StatCat</h1>
+                <NavListItem direction="row" align="center" style={{ margin: '0px' }}>
+                    <Box align="center" style={{ width: '100%' }}>
+                        <Title>statcat</Title>
                     </Box>
                 </NavListItem>
                 {NavLinks.map(({ name, Icon, path }) => {
@@ -157,7 +160,7 @@ function Nav({ history, location, isNavOpen, setNavOpen, isWidthTooSmall, theme 
                     <NavIconWrapper direction="column" justify="center" align="center">
                         <Logout size="medium" color="white" />
                     </NavIconWrapper>
-                    <h3>Logout</h3>
+                    <NavListHeader>Logout</NavListHeader>
                 </NavListItem>
             </NavigationContainer>
         </Box>

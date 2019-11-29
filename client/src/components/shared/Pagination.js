@@ -3,9 +3,11 @@ import styled from 'styled-components'
 import { Box } from 'grommet'
 import { Previous, Next } from 'grommet-icons'
 
+import { Text } from '../general/TextComponents'
+
 const PaginationComponent = styled(Box)`
     position: absolute;
-    bottom: 8px;
+    bottom: 0px;
     right: 20px;
     width: 30%;
     border-radius: 10px;
@@ -31,7 +33,7 @@ export default function Pagination({ increment, decrement, page, totalPages }) {
     return (
         <PaginationComponent direction="row" justify="evenly">
             <PageIndicator>
-                <span>{`${page} of ${totalPages}`}</span>
+                <Text style={{ fontSize: '0.8em' }}>{`${page} of ${totalPages}`}</Text>
             </PageIndicator>
             <PaginationButton align="center" onClick={decrement}>
                 <Previous size="small" />

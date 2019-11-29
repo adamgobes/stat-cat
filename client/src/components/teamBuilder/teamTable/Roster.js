@@ -6,6 +6,8 @@ import PlayerImage from '../../shared/PlayerImage'
 import AddRemovePlayerButton from '../AddRemovePlayerButton'
 import Loader from '../../shared/Loader'
 import { getFirstLastShortened, getPlayerImage } from '../../../apollo/dataSelectors'
+import { Text, Title } from '../../general/TextComponents'
+import { RoundedButton } from '../../general/Buttons'
 
 const RosterWrapper = styled(Box)`
     background-color: ${props => props.theme.global.colors.brand};
@@ -23,19 +25,18 @@ const RosterGrid = styled(Box)`
     }
 `
 
-const MyTeamHeader = styled.h1`
-    font-size: 2.6em;
+const MyTeamHeader = styled(Title)`
     text-align: center;
     font-weight: bold;
     color: white;
-    margin: 30px 0;
+    margin: 70px 0 30px 0;
 `
 
 const MiniRosterImage = styled(Box)`
     position: relative;
 `
 
-const PlayerName = styled.h3`
+const PlayerName = styled(Text)`
     color: white;
     text-align: center;
     margin-top: 6px;
@@ -48,16 +49,6 @@ const RemovePlayerButton = styled(AddRemovePlayerButton)`
     background: white;
     border: 2px solid ${props => props.theme.global.colors.brand};
     color: ${props => props.theme.global.colors.brand};
-`
-
-const SaveTeamButton = styled(Button)`
-    width: 140px;
-    border-radius: 20px;
-    background: white;
-    color: ${props => props.theme.global.colors.brand};
-    padding: 10px;
-    text-align: center;
-    border: 2px solid white;
 `
 
 const RosterItem = styled(Box)`
@@ -90,7 +81,8 @@ function Roster({ players, onRemovePlayer, onSaveTeam, saveTeamLoading }) {
                     ))}
                 </Box>
             </RosterGrid>
-            <SaveTeamButton
+            <RoundedButton
+                width={140}
                 label={saveTeamLoading ? <Loader size={20} /> : <b>Save Team</b>}
                 onClick={onSaveTeam}
             />

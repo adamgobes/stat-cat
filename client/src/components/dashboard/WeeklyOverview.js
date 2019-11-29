@@ -15,6 +15,7 @@ import {
     getGameCount,
     getFirstLastShortened,
 } from '../../apollo/dataSelectors'
+import { Title, Text } from '../general/TextComponents'
 import Loader from '../shared/Loader'
 
 const playingProbToColor = {
@@ -33,6 +34,14 @@ const WeeklyOverviewWrapper = styled(Box)`
     border-radius: 10px;
 `
 
+const WeeklyOverviewTitle = styled(Title)`
+    margin: 20px;
+`
+
+const WeeklyOverviewText = styled(Text)`
+    font-size: 0.8em;
+`
+
 const Table = styled(Box)`
     position: relative;
     width: 96%;
@@ -43,13 +52,13 @@ const Entries = styled(Box)`
     padding-bottom: 28px;
 `
 
-const Truncated = styled.span`
+const Truncated = styled(WeeklyOverviewText)`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 `
 
-const PlayingProbSpan = styled.span`
+const PlayingProbText = styled(WeeklyOverviewText)`
     color: ${props => playingProbToColor[props.playingProb]};
     font-weight: bold;
     text-transform: capitalize;
@@ -68,10 +77,10 @@ function WeeklyOverview({ data, loading }) {
         <WeeklyOverviewWrapper align="center">
             <ReactTooltip />
             <Table>
-                <h1 style={{ margin: '20px' }}>Weekly Overview</h1>
+                <WeeklyOverviewTitle>Weekly Overview</WeeklyOverviewTitle>
                 <DashboardTableHeader
                     sizes={['xsmall', 'small', 'small', 'small', 'small']}
-                    headers={['', 'Player Name', 'Injury', 'Playing Probability', 'Games']}
+                    headers={['', 'Player Name', 'Injury', 'Playing Prob.', 'Games']}
                 />
                 {loading && (
                     <div style={{ height: '100vh' }}>
@@ -89,10 +98,14 @@ function WeeklyOverview({ data, loading }) {
                                             <PlayerImage src={getPlayerImage(p)} size="XS" />
                                         </Box>
                                         <Box direction="row" justify="center" basis="small">
-                                            <b>{getFirstLastShortened(p)}</b>
+                                            <WeeklyOverviewText>
+                                                {getFirstLastShortened(p)}
+                                            </WeeklyOverviewText>
                                         </Box>
                                         <Box direction="row" justify="center" basis="small">
-                                            {!isInjured && <b>N/A</b>}
+                                            {!isInjured && (
+                                                <WeeklyOverviewText>N/A</WeeklyOverviewText>
+                                            )}
                                             {isInjured && (
                                                 <Truncated data-tip={getPlayerInjuryDescription(p)}>
                                                     {getPlayerInjuryDescription(p)}
@@ -100,17 +113,19 @@ function WeeklyOverview({ data, loading }) {
                                             )}
                                         </Box>
                                         <Box direction="row" justify="center" basis="small">
-                                            <PlayingProbSpan
+                                            <PlayingProbText
                                                 playingProb={
                                                     isInjured ? getPlayingProb(p) : 'healthy'
                                                 }
                                             >
                                                 {isInjured && getPlayingProb(p)}
                                                 {!isInjured && 'healthy'}
-                                            </PlayingProbSpan>
+                                            </PlayingProbText>
                                         </Box>
                                         <Box direction="row" justify="center" basis="small">
-                                            {getGameCount(p)}
+                                            <WeeklyOverviewText>
+                                                {getGameCount(p)}
+                                            </WeeklyOverviewText>
                                         </Box>
                                     </TableRow>
                                 )

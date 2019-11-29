@@ -19,7 +19,7 @@ const DashboardWrapper = styled(Box)`
 `
 
 const DashboardComponentWrapper = styled(Box)`
-    margin: 20px;
+    margin: 60px 20px 20px 20px;
 `
 
 export default function Dashboard() {
@@ -57,7 +57,6 @@ export default function Dashboard() {
 
     return (
         <DashboardWrapper align="center" justify="start">
-            <h1>Dashboard</h1>
             <Box direction="row" justify="center" align="start">
                 <DashboardComponentWrapper>
                     <WeeklyOverview

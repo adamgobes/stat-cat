@@ -28,7 +28,6 @@ const NavigationContainer = styled(Box)`
     overflow-x: hidden;
     transition: 0.3s;
     font-size: 0.8em;
-    border-top-right-radius: 10px;
 `
 
 const ToggleNavButton = styled(Box)`

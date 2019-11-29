@@ -33,16 +33,15 @@ const StyledRoundedButton = styled(Button)`
     font-family: Roboto;
 `
 
-export function RoundedButton({ className, style, inverted = false, width, label, onClick }) {
+export function RoundedButton({ className, style, inverted = false, width, ...otherProps }) {
     if (!inverted) {
         return (
             !inverted && (
                 <StyledSquareButton
                     style={style}
-                    label={label}
                     width={width}
                     className={className}
-                    onClick={onClick}
+                    {...otherProps}
                 />
             )
         )
@@ -51,10 +50,9 @@ export function RoundedButton({ className, style, inverted = false, width, label
     return (
         <StyledSquareButtonInverted
             style={style}
-            label={label}
             width={width}
             className={className}
-            onClick={onClick}
+            {...otherProps}
         />
     )
 }

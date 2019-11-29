@@ -4,6 +4,8 @@ import { Box, TextInput, Button } from 'grommet'
 import styled from 'styled-components'
 import cookie from 'react-cookies'
 
+import { Title } from '../general/TextComponents'
+import { RoundedButton } from '../general/Buttons'
 import Loader from '../shared/Loader'
 import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../apollo/mutations'
 import loginRegisterReducer, {
@@ -69,6 +71,7 @@ function LoginRegister({ history, location }) {
     }
 
     function formValid() {
+        console.log('formValid')
         return (
             (!isLogin &&
                 email.length !== 0 &&
@@ -105,8 +108,8 @@ function LoginRegister({ history, location }) {
             className="container"
             onKeyDown={handleEnterClicked}
         >
-            <h1>{`${isLogin ? 'Welcome Back' : 'Create an Account'}`}</h1>
-            {errorMessage && <h1>{errorMessage}</h1>}
+            <Title>{`${isLogin ? 'Welcome Back' : 'Create an Account'}`}</Title>
+            {errorMessage && <Title>{errorMessage}</Title>}
             <Box pad="small">
                 {!isLogin && (
                     <FormInput
@@ -142,7 +145,8 @@ function LoginRegister({ history, location }) {
                         onChange={handleInputChange}
                     />
                 )}
-                <StyledButton
+                <RoundedButton
+                    inverted
                     label={
                         loginLoading || registerLoading ? <Loader size={20} /> : submitButtonString
                     }
@@ -152,7 +156,7 @@ function LoginRegister({ history, location }) {
                 />
             </Box>
             <Box>
-                <Button
+                <RoundedButton
                     label={`Click here to ${isLogin ? 'Register' : 'Login'}`}
                     onClick={() => dispatch(changeIsLogin())}
                 />

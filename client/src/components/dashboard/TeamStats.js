@@ -43,7 +43,11 @@ const IconWrapper = styled.div`
     overflow: hidden;
 `
 
-const Percentage = styled(Text)`
+const StatCategoryText = styled(Text)`
+    font-size: 0.8em;
+`
+
+const Percentage = styled(StatCategoryText)`
     color: ${props => (props.positive ? 'green' : 'red')};
 `
 
@@ -109,11 +113,11 @@ function CountingNumberElement({ category, values, isTradeSimulated }) {
                         </Box>
                     </IconWrapper>
                 )}
-                <Text>{statsAbbreviationToFull[category]}</Text>
+                <StatCategoryText>{statsAbbreviationToFull[category]}</StatCategoryText>
             </Box>
             {values.map((value, i) => (
                 <Box direction="row" justify="center" basis="small" key={i}>
-                    <Text>{value}</Text>
+                    <StatCategoryText>{value}</StatCategoryText>
                 </Box>
             ))}
             {isTradeSimulated && (
@@ -145,10 +149,12 @@ function EfficiencyNumberElement({ category, attempted, made, isTradeSimulated }
             {attempted.map((_, i) => (
                 <Box basis="small" align="center" key={i}>
                     <Box direction="row" justify="start">
-                        <Text>{`${computePercentage(attempted[i], made[i])}%`}</Text>
+                        <StatCategoryText>
+                            {`${computePercentage(attempted[i], made[i])}%`}
+                        </StatCategoryText>
                     </Box>
                     <Box direction="column" align="start">
-                        <Text>{`${made[i]}/${attempted[i]}`}</Text>
+                        <StatCategoryText>{`${made[i]}/${attempted[i]}`}</StatCategoryText>
                     </Box>
                 </Box>
             ))}

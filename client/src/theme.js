@@ -12,6 +12,11 @@ export default {
     textInput: {
         extend: textInputStyles,
     },
+    select: {
+        container: {
+            extend: textInputStyles,
+        },
+    },
     global: {
         colors: {
             brand: '#7781f7',

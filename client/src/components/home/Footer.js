@@ -4,6 +4,8 @@ import { Box } from 'grommet'
 
 import StatLogo from '../../assets/images/stat-logo.png'
 
+import { Subheader, Title } from '../general/TextComponents'
+
 const FooterWrapper = styled(Box)`
     position: relative;
     bottom: 0;
@@ -26,7 +28,7 @@ const LogoContainer = styled(Box)`
     margin-right: 20px;
 `
 
-const FooterText = styled.h2`
+const FooterText = styled(Subheader)`
     color: white;
     margin: 0 30px;
     text-align: center;
@@ -37,9 +39,7 @@ export default function Footer() {
         <FooterWrapper align="center">
             <FooterItems direction="row" justify="between">
                 <Box direction="row">
-                    <LogoContainer justify="center">
-                        <img src={StatLogo} alt="Stat Logo" height="100%" width="100%" />
-                    </LogoContainer>
+                    <Title style={{ color: 'white' }}>statcat</Title>
                 </Box>
                 <Box direction="row" align="center" justify="center">
                     <FooterText>Contact</FooterText>

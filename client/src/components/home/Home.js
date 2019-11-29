@@ -12,6 +12,7 @@ import safariTop from '../../assets/images/safari-top.png'
 import StyledLink from '../shared/StyledLink'
 import Footer from './Footer'
 import { Title, Text, Subheader } from '../general/TextComponents'
+import { RoundedButton } from '../general/Buttons'
 
 const FirstBlock = styled(Box)`
     width: 100%;
@@ -47,6 +48,7 @@ const FirstBlockText = styled(Text)`
     text-align: center;
     font-size: 1.4em;
     line-height: 1.2em;
+    margin-bottom: 24px;
     @media (max-width: 600px) {
         font-size: 1.4em;
     }
@@ -57,18 +59,11 @@ const SVGWrapper = styled(Box)`
     height: 300px;
 `
 
-const GetStartedButton = styled(Box)`
+const GetStartedButton = styled(RoundedButton)`
     width: 100px;
-    text-align: center;
-    background: #e17e62;
-    color: white;
-    margin-left: 4px;
-    font-size: 1em;
-    font-weight: bold;
-    border-color: white;
-    border-radius: 5px;
-    padding: 10px 0;
-    cursor: pointer;
+    margin: 0 0 4px 20px;
+    font-size: 0.8em;
+    padding: 8px;
 `
 
 const SecondBlock = styled(Box)`
@@ -166,7 +161,7 @@ const Home = ({ theme }) => {
                             }}
                             style={{ width: '100px' }}
                         >
-                            <GetStartedButton>Get Started</GetStartedButton>
+                            <GetStartedButton inverted label="Get Started" />
                         </StyledLink>
                     </Box>
                 </FirstBlockElement>

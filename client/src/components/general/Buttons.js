@@ -15,8 +15,8 @@ const StyledSquareButton = styled(Button)`
 
 const StyledSquareButtonInverted = styled(Button)`
     border-radius: 20px;
-    background: white;
-    color: ${props => props.theme.global.colors.brand};
+    background: ${props => props.theme.global.colors.brand};
+    color: white;
     padding: 10px;
     text-align: center;
     margin-top: 12px;
@@ -33,19 +33,32 @@ const StyledRoundedButton = styled(Button)`
     font-family: Roboto;
 `
 
-export function SquareButton({ className, style, inverted = false, width, label, onClick }) {
-    return (
-        !inverted && (
-            <StyledSquareButton
-                label={label}
-                width={width}
-                className={className}
-                onClick={onClick}
-            />
+export function RoundedButton({ className, style, inverted = false, width, label, onClick }) {
+    if (!inverted) {
+        return (
+            !inverted && (
+                <StyledSquareButton
+                    style={style}
+                    label={label}
+                    width={width}
+                    className={className}
+                    onClick={onClick}
+                />
+            )
         )
+    }
+
+    return (
+        <StyledSquareButtonInverted
+            style={style}
+            label={label}
+            width={width}
+            className={className}
+            onClick={onClick}
+        />
     )
 }
 
-export function RoundedButton({ className, style, inverted = false, width, label }) {
+export function SquareButton({ className, style, inverted = false, width, label }) {
     return !inverted && <StyledSquareButton label={label} width={width} className={className} />
 }

@@ -130,7 +130,9 @@ export default function TradeSimulator() {
             <Box direction="row" align="center" style={{ width: '90%' }}>
                 <Box direction="column" justify="center" align="center" basis="1/2">
                     <Title>Trade Simulator</Title>
-                    <Copy style={{ textAlign: 'center' }}>Start searching and get trading</Copy>
+                    <Copy style={{ textAlign: 'center', marginTop: '-10px' }}>
+                        Start searching and get trading
+                    </Copy>
                     <TradeSearch
                         searchValue={playerInput}
                         suggestions={
@@ -157,6 +159,7 @@ export default function TradeSimulator() {
                         />
                     </TradedPlayers>
                     <RoundedButton
+                        inverted
                         label={getPlayerStatsLoading ? <Loader size={20} /> : <b>Simulate Trade</b>}
                         onClick={onSimulateTrade}
                     />

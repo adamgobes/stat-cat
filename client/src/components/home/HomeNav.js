@@ -35,7 +35,7 @@ export default function Nav() {
             <NavItems direction="row" justify="between" align="center">
                 <Box direction="row">
                     <Box justify="center">
-                        <Title>statcat</Title>
+                        <Title style={{ fontSize: '2.4em' }}>statcat</Title>
                     </Box>
                 </Box>
                 <Box style={{ paddingBottom: '10px' }}>

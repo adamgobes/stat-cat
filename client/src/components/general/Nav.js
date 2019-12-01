@@ -132,7 +132,7 @@ function Nav({ history, location, isNavOpen, setNavOpen, isWidthTooSmall, theme 
             >
                 <NavListItem direction="row" align="center" style={{ margin: '0px' }}>
                     <Box align="center" style={{ width: '100%' }}>
-                        <Title>statcat</Title>
+                        <Title style={{ fontSize: '2.4em' }}>statcat</Title>
                     </Box>
                 </NavListItem>
                 {NavLinks.map(({ name, Icon, path }) => {

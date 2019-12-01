@@ -55,7 +55,6 @@ const StatTypeHeader = styled(Title)`
     font-size: 1.4em;
     cursor: pointer;
     width: fit-content;
-    padding-bottom: 6px;
     padding-top: 14px;
     border-bottom: ${props =>
         props.selected ? `2px solid ${props.theme.global.colors.brand}` : ''};

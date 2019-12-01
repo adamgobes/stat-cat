@@ -16,7 +16,10 @@ const NavWrapper = styled(Box)`
 `
 
 const HomeNavButton = styled(RoundedButton)`
-    margin: 0 10px;
+    width: 100px;
+    margin: 0 0 4px 20px;
+    font-size: 0.9em;
+    padding: 6px;
     @media (max-width: 600px) {
         font-size: 1em;
     }
@@ -35,7 +38,7 @@ export default function Nav() {
                         <Title>statcat</Title>
                     </Box>
                 </Box>
-                <Box>
+                <Box style={{ paddingBottom: '10px' }}>
                     <Box direction="row" align="center">
                         <StyledLink
                             to={{

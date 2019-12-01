@@ -11,7 +11,6 @@ import { RoundedButton } from '../../general/Buttons'
 
 const RosterWrapper = styled(Box)`
     background-color: ${props => props.theme.global.colors.brand};
-    border-radius: 10px;
     min-height: 100%;
     overflow-y: scroll;
 `

@@ -27,7 +27,7 @@ const FirstBlock = styled(Box)`
 const HomePageHeader = styled(Title)`
     color: ${props => props.color};
     text-align: center;
-    font-size: 1.8em;
+    font-size: 1.9em;
     margin: ${props => props.margin}px;
     @media (max-width: 850px) {
         font-size: 1.4em;
@@ -60,22 +60,22 @@ const SVGWrapper = styled(Box)`
 `
 
 const GetStartedButton = styled(RoundedButton)`
-    width: 100px;
+    width: 120px;
     margin: 0 0 4px 20px;
-    font-size: 0.8em;
+    font-size: 0.9em;
     padding: 8px;
 `
 
 const SecondBlock = styled(Box)`
     background: ${props => props.theme.global.colors.backdrop};
     width: 100%;
-    padding: 80px 0 140px 0;
+    padding: 40px 0 100px 0;
 `
 
 const ProductFeatureButton = styled(Box)`
     background: ${props => (props.selected ? props.theme.global.colors.brand : '')};
     width: 200px;
-    border-radius: 10px;
+    border-radius: 14px;
     cursor: pointer;
 `
 
@@ -145,24 +145,42 @@ const Home = ({ theme }) => {
                         easier and more fun for everyone
                     </FirstBlockText>
                     <Box direction="row" align="center">
-                        <TextInput
-                            style={{ width: '200px' }}
-                            placeholder="Enter your email address"
-                            size="small"
-                            onChange={e => setEmail(e.target.value)}
-                        />
-                        <StyledLink
-                            to={{
-                                pathname: '/auth',
-                                state: {
-                                    isLogin: false,
-                                    email,
-                                },
-                            }}
-                            style={{ width: '100px' }}
-                        >
-                            <GetStartedButton inverted label="Get Started" />
-                        </StyledLink>
+                        <Box direction="column">
+                            <TextInput
+                                style={{ width: '220px', borderRadius: '10px' }}
+                                placeholder="Enter your email address"
+                                size="small"
+                                onChange={e => setEmail(e.target.value)}
+                            />
+                            <Text style={{ opacity: '0.8', fontSize: '0.6em' }}>
+                                Already using statcat?
+                                <StyledLink
+                                    to={{
+                                        pathname: '/auth',
+                                        state: {
+                                            isLogin: true,
+                                        },
+                                    }}
+                                    style={{ textDecoration: 'underline' }}
+                                >
+                                    Sign in
+                                </StyledLink>
+                            </Text>
+                        </Box>
+                        <Box>
+                            <StyledLink
+                                to={{
+                                    pathname: '/auth',
+                                    state: {
+                                        isLogin: false,
+                                        email,
+                                    },
+                                }}
+                                style={{ width: '100px' }}
+                            >
+                                <GetStartedButton inverted label="Get Started" />
+                            </StyledLink>
+                        </Box>
                     </Box>
                 </FirstBlockElement>
                 <FirstBlockElement>
@@ -172,7 +190,7 @@ const Home = ({ theme }) => {
                 </FirstBlockElement>
             </FirstBlock>
             <SecondBlock direction="column" justify="between" align="center">
-                <HomePageHeader color="black" margin={20}>
+                <HomePageHeader color="black">
                     Build your team. See your stats. Simulate a trade.
                 </HomePageHeader>
                 <Box direction="row" justify="evenly" style={{ margin: '40px 0', width: '80%' }}>

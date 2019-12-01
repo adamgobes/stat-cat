@@ -12,7 +12,7 @@ const FooterWrapper = styled(Box)`
     left: 0;
     width: 100%;
     background: ${props => props.theme.global.colors.brand};
-    padding: 30px 0;
+    padding: 10px 0;
 `
 const FooterItems = styled(Box)`
     width: 80%;
@@ -42,9 +42,8 @@ export default function Footer() {
                     <Title style={{ color: 'white' }}>statcat</Title>
                 </Box>
                 <Box direction="row" align="center" justify="center">
-                    <FooterText>Contact</FooterText>
-                    <FooterText>Terms and Conditions</FooterText>
-                    <FooterText>Cookie Policy</FooterText>
+                    <FooterText>About Us</FooterText>
+                    <FooterText>Contact Us</FooterText>
                 </Box>
             </FooterItems>
         </FooterWrapper>

@@ -11,7 +11,7 @@ const NavWrapper = styled(Box)`
     top: 0;
     left: 0;
     width: 100%;
-    padding-bottom: 10px;
+    padding-top: 10px;
     z-index: 1000;
 `
 
@@ -35,7 +35,7 @@ export default function Nav({ showButtons = true }) {
             <NavItems direction="row" justify="between" align="end">
                 <Box direction="row">
                     <Box justify="center">
-                        <TextLogo color="white">statcat</TextLogo>
+                        <TextLogo color="black">statcat</TextLogo>
                     </Box>
                 </Box>
                 <Box style={{ visibility: !showButtons ? 'hidden' : 'visible' }}>

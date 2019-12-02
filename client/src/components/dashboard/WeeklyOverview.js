@@ -26,10 +26,26 @@ const playingProbToColor = {
     doubtful: '#EB604B',
 }
 
+const heightToElementsDisplayed = {
+    750: 6,
+    650: 5,
+    600: 4,
+}
+
+function calculateMaxPerPage(height) {
+    const sortedHeights = Object.keys(heightToElementsDisplayed).sort((a, b) => b - a)
+    const matchingHeight = sortedHeights.reduce((currentHeight, nextHeight) => {
+        if (height <= currentHeight) return nextHeight
+        return currentHeight
+    }, sortedHeights[0])
+
+    return heightToElementsDisplayed[matchingHeight]
+}
+
 const WeeklyOverviewWrapper = styled(Box)`
     position: relative;
     width: 540px;
-    height: 62vh;
+    height: 80vh;
     background: white;
     border-radius: 10px;
 `
@@ -66,7 +82,7 @@ const PlayingProbText = styled(WeeklyOverviewText)`
 
 function WeeklyOverview({ data, loading }) {
     const { height } = useWindowDimensions()
-    const MAX_PER_PAGE = height < 650 ? 3 : 4
+    const MAX_PER_PAGE = calculateMaxPerPage(height)
 
     const { page, incrementPage, decrementPage, maxPages } = usePagination(
         data.length,

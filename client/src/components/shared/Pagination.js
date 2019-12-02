@@ -7,7 +7,7 @@ import { Text } from '../general/TextComponents'
 
 const PaginationComponent = styled(Box)`
     position: absolute;
-    bottom: 0px;
+    bottom: 8px;
     right: 20px;
     width: 30%;
     border-radius: 10px;

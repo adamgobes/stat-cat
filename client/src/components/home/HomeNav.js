@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box, Button } from 'grommet'
 
-import { Title } from '../general/TextComponents'
+import { Title, TextLogo } from '../general/TextComponents'
 import { RoundedButton } from '../general/Buttons'
 import StyledLink from '../shared/StyledLink'
 
@@ -11,13 +11,14 @@ const NavWrapper = styled(Box)`
     top: 0;
     left: 0;
     width: 100%;
-    padding-top: 10px;
+    padding-bottom: 10px;
     z-index: 1000;
+    background: ${props => props.theme.global.colors.brand};
 `
 
 const HomeNavButton = styled(RoundedButton)`
     width: 100px;
-    margin: 0 0 4px 20px;
+    margin-left: 20px;
     font-size: 0.9em;
     padding: 6px;
     @media (max-width: 600px) {
@@ -32,14 +33,14 @@ const NavItems = styled(Box)`
 export default function Nav({ showButtons = true }) {
     return (
         <NavWrapper align="center">
-            <NavItems direction="row" justify="between" align="center">
+            <NavItems direction="row" justify="between" align="end">
                 <Box direction="row">
                     <Box justify="center">
-                        <Title style={{ fontSize: '2.4em' }}>statcat</Title>
+                        <TextLogo color="white">statcat</TextLogo>
                     </Box>
                 </Box>
                 {showButtons && (
-                    <Box style={{ paddingBottom: '10px' }}>
+                    <Box>
                         <Box direction="row" align="center">
                             <StyledLink
                                 to={{

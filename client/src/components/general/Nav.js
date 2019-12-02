@@ -6,7 +6,7 @@ import cookie from 'react-cookies'
 import { useApolloClient } from '@apollo/react-hooks'
 import { Menu, Group, Dashboard, Logout, ShareOption, FormClose } from 'grommet-icons'
 
-import { Subheader, Title } from './TextComponents'
+import { Subheader, Title, TextLogo } from './TextComponents'
 
 import StatLogo from '../../assets/images/stat-logo.png'
 
@@ -132,7 +132,7 @@ function Nav({ history, location, isNavOpen, setNavOpen, isWidthTooSmall, theme 
             >
                 <NavListItem direction="row" align="center" style={{ margin: '0px' }}>
                     <Box align="center" style={{ width: '100%' }}>
-                        <Title style={{ fontSize: '2.4em' }}>statcat</Title>
+                        <TextLogo>statcat</TextLogo>
                     </Box>
                 </NavListItem>
                 {NavLinks.map(({ name, Icon, path }) => {

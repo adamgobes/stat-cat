@@ -2,9 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 
-import StatLogo from '../../assets/images/stat-logo.png'
-
-import { Subheader, Title } from '../general/TextComponents'
+import { Subheader, TextLogo } from '../general/TextComponents'
 
 const FooterWrapper = styled(Box)`
     position: relative;
@@ -12,7 +10,7 @@ const FooterWrapper = styled(Box)`
     left: 0;
     width: 100%;
     background: ${props => props.theme.global.colors.brand};
-    padding: 10px 0;
+    padding: 36px 0;
 `
 const FooterItems = styled(Box)`
     width: 80%;
@@ -20,12 +18,6 @@ const FooterItems = styled(Box)`
         width: 98%;
         font-size: 0.7em;
     }
-`
-
-const LogoContainer = styled(Box)`
-    width: 50px;
-    height: 50px;
-    margin-right: 20px;
 `
 
 const FooterText = styled(Subheader)`
@@ -39,7 +31,7 @@ export default function Footer() {
         <FooterWrapper align="center">
             <FooterItems direction="row" justify="between">
                 <Box direction="row">
-                    <Title style={{ color: 'white' }}>statcat</Title>
+                    <TextLogo color="white">statcat</TextLogo>
                 </Box>
                 <Box direction="row" align="center" justify="center">
                     <FooterText>About Us</FooterText>

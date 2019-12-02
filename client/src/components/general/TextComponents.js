@@ -41,3 +41,7 @@ export function Subheader({ children, className, style }) {
         </StyledSubheader>
     )
 }
+
+export function TextLogo({ color }) {
+    return <Title style={{ fontSize: '2.6em', margin: '0', color }}>statcat</Title>
+}

@@ -168,8 +168,8 @@ function LoginRegister({ history, location }) {
                     />
                 </Box>
             </Box>
-            <Box>
-                <Text style={{ opacity: '0.5' }} onClick={() => dispatch(changeIsLogin())}>
+            <Box style={{ cursor: 'pointer' }} onClick={() => dispatch(changeIsLogin())}>
+                <Text style={{ opacity: '0.5' }}>
                     {`Click here to ${isLogin ? 'register' : 'login'}`}
                 </Text>
             </Box>

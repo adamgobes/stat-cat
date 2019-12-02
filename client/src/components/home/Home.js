@@ -144,14 +144,28 @@ const Home = ({ theme }) => {
                         ESPN or Yahoo, rookie or seasoned vet, StatCat makes fantasy basketball
                         easier and more fun for everyone
                     </FirstBlockText>
-                    <Box direction="row" align="center">
-                        <Box direction="column">
+                    <Box direction="column">
+                        <Box direction="row">
                             <TextInput
                                 style={{ width: '220px', borderRadius: '10px' }}
                                 placeholder="Enter your email address"
                                 size="small"
                                 onChange={e => setEmail(e.target.value)}
                             />
+                            <StyledLink
+                                to={{
+                                    pathname: '/auth',
+                                    state: {
+                                        isLogin: false,
+                                        email,
+                                    },
+                                }}
+                                style={{ width: '100px' }}
+                            >
+                                <GetStartedButton inverted label="Get Started" />
+                            </StyledLink>
+                        </Box>
+                        <Box>
                             <Text style={{ opacity: '0.8', fontSize: '0.6em' }}>
                                 Already using statcat?
                                 <StyledLink
@@ -166,20 +180,6 @@ const Home = ({ theme }) => {
                                     Sign in
                                 </StyledLink>
                             </Text>
-                        </Box>
-                        <Box>
-                            <StyledLink
-                                to={{
-                                    pathname: '/auth',
-                                    state: {
-                                        isLogin: false,
-                                        email,
-                                    },
-                                }}
-                                style={{ width: '100px' }}
-                            >
-                                <GetStartedButton inverted label="Get Started" />
-                            </StyledLink>
                         </Box>
                     </Box>
                 </FirstBlockElement>

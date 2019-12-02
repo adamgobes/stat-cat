@@ -13,7 +13,6 @@ const NavWrapper = styled(Box)`
     width: 100%;
     padding-bottom: 10px;
     z-index: 1000;
-    background: ${props => props.theme.global.colors.brand};
 `
 
 const HomeNavButton = styled(RoundedButton)`

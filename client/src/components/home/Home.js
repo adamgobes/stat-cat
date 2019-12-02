@@ -167,7 +167,7 @@ const Home = ({ theme }) => {
                         </Box>
                         <Box>
                             <Text style={{ opacity: '0.8', fontSize: '0.6em' }}>
-                                Already using statcat?
+                                Already using statcat? &nbsp;
                                 <StyledLink
                                     to={{
                                         pathname: '/auth',

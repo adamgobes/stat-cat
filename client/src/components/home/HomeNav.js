@@ -39,32 +39,30 @@ export default function Nav({ showButtons = true }) {
                         <TextLogo color="white">statcat</TextLogo>
                     </Box>
                 </Box>
-                {showButtons && (
-                    <Box>
-                        <Box direction="row" align="center">
-                            <StyledLink
-                                to={{
-                                    pathname: '/auth',
-                                    state: {
-                                        isLogin: false,
-                                    },
-                                }}
-                            >
-                                <HomeNavButton label="Sign Up" primary />
-                            </StyledLink>
-                            <StyledLink
-                                to={{
-                                    pathname: '/auth',
-                                    state: {
-                                        isLogin: true,
-                                    },
-                                }}
-                            >
-                                <HomeNavButton label="Log In" primary />
-                            </StyledLink>
-                        </Box>
+                <Box style={{ visibility: !showButtons ? 'hidden' : 'visible' }}>
+                    <Box direction="row" align="center">
+                        <StyledLink
+                            to={{
+                                pathname: '/auth',
+                                state: {
+                                    isLogin: false,
+                                },
+                            }}
+                        >
+                            <HomeNavButton label="Sign Up" primary />
+                        </StyledLink>
+                        <StyledLink
+                            to={{
+                                pathname: '/auth',
+                                state: {
+                                    isLogin: true,
+                                },
+                            }}
+                        >
+                            <HomeNavButton label="Log In" primary />
+                        </StyledLink>
                     </Box>
-                )}
+                </Box>
             </NavItems>
         </NavWrapper>
     )

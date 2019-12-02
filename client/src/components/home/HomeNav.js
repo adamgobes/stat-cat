@@ -29,7 +29,7 @@ const NavItems = styled(Box)`
     width: 80%;
 `
 
-export default function Nav() {
+export default function Nav({ showButtons = true }) {
     return (
         <NavWrapper align="center">
             <NavItems direction="row" justify="between" align="center">
@@ -38,30 +38,32 @@ export default function Nav() {
                         <Title style={{ fontSize: '2.4em' }}>statcat</Title>
                     </Box>
                 </Box>
-                <Box style={{ paddingBottom: '10px' }}>
-                    <Box direction="row" align="center">
-                        <StyledLink
-                            to={{
-                                pathname: '/auth',
-                                state: {
-                                    isLogin: false,
-                                },
-                            }}
-                        >
-                            <HomeNavButton label="Sign Up" primary />
-                        </StyledLink>
-                        <StyledLink
-                            to={{
-                                pathname: '/auth',
-                                state: {
-                                    isLogin: true,
-                                },
-                            }}
-                        >
-                            <HomeNavButton label="Log In" primary />
-                        </StyledLink>
+                {showButtons && (
+                    <Box style={{ paddingBottom: '10px' }}>
+                        <Box direction="row" align="center">
+                            <StyledLink
+                                to={{
+                                    pathname: '/auth',
+                                    state: {
+                                        isLogin: false,
+                                    },
+                                }}
+                            >
+                                <HomeNavButton label="Sign Up" primary />
+                            </StyledLink>
+                            <StyledLink
+                                to={{
+                                    pathname: '/auth',
+                                    state: {
+                                        isLogin: true,
+                                    },
+                                }}
+                            >
+                                <HomeNavButton label="Log In" primary />
+                            </StyledLink>
+                        </Box>
                     </Box>
-                </Box>
+                )}
             </NavItems>
         </NavWrapper>
     )

@@ -110,7 +110,7 @@ function LoginRegister({ history, location }) {
             className="container"
             onKeyDown={handleEnterClicked}
         >
-            <HomeNav />
+            <HomeNav showButtons={false} />
             <Title>{`${isLogin ? 'Log in' : 'Create an Account'}`}</Title>
             <Text style={{ marginTop: '-10px' }}>
                 {!isLogin && `You're just a step away from fantasy domination`}

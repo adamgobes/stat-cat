@@ -11,7 +11,7 @@ import tradeScreenshot from '../../assets/images/trade_screenshot.png'
 import safariTop from '../../assets/images/safari-top.png'
 import StyledLink from '../shared/StyledLink'
 import Footer from './Footer'
-import { Title, Text, Subheader } from '../general/TextComponents'
+import { Title, Text, Subheader, TextLogo } from '../general/TextComponents'
 import { RoundedButton } from '../general/Buttons'
 
 const FirstBlock = styled(Box)`
@@ -141,7 +141,7 @@ const Home = ({ theme }) => {
                         Fantasy sports, your way
                     </HomePageHeader>
                     <FirstBlockText>
-                        ESPN or Yahoo, rookie or seasoned vet, StatCat makes fantasy basketball
+                        ESPN or Yahoo, rookie or seasoned vet, statcat makes fantasy basketball
                         easier and more fun for everyone
                     </FirstBlockText>
                     <Box direction="column">

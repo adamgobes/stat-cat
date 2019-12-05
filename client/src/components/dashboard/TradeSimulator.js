@@ -29,14 +29,8 @@ const Copy = styled(Text)`
     font-size: 1em;
 `
 
-const SimulateTradeButton = styled(Button)`
-    width: 140px;
-    border-radius: 20px;
-    background: white;
-    color: ${props => props.theme.global.colors.brand};
-    padding: 10px;
-    text-align: center;
-    margin-top: 12px;
+const SimulateTradeButton = styled(RoundedButton)`
+    min-width: 160px;
 `
 
 const TradedPlayers = styled(Box)`
@@ -158,7 +152,7 @@ export default function TradeSimulator() {
                             onRemovePlayer={onRemoveReceivedPlayer}
                         />
                     </TradedPlayers>
-                    <RoundedButton
+                    <SimulateTradeButton
                         inverted
                         label={getPlayerStatsLoading ? <Loader size={20} /> : <b>Simulate Trade</b>}
                         onClick={onSimulateTrade}

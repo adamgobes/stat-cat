@@ -33,6 +33,7 @@ const tradeHeaders = ['Statistic', 'Before', 'After', 'Delta']
 
 const Table = styled(Box)`
     position: relative;
+    max-height: 500px;
     width: 90%;
 `
 
@@ -144,7 +145,7 @@ function EfficiencyNumberElement({ category, attempted, made, isTradeSimulated }
                         </Box>
                     </IconWrapper>
                 )}
-                <Text>{statsAbbreviationToFull[category]}</Text>
+                <StatCategoryText>{statsAbbreviationToFull[category]}</StatCategoryText>
             </Box>
             {attempted.map((_, i) => (
                 <Box basis="small" align="center" key={i}>

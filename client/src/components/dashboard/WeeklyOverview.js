@@ -45,7 +45,7 @@ function calculateMaxPerPage(height) {
 const WeeklyOverviewWrapper = styled(Box)`
     position: relative;
     width: 540px;
-    height: 80vh;
+    height: 82vh;
     background: white;
     border-radius: 10px;
 `

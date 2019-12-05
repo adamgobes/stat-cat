@@ -109,9 +109,13 @@ export default function MyStats({
                                 </StatTypeHeader>
                             </StatTypeHeaderWrapper>
                         </Box>
-                        {showTimeFrames && (
-                            <Box direction="row" align="center" style={{ width: '70%' }}>
-                                {timeFrames.map(tf => (
+                        <Box
+                            direction="row"
+                            align="center"
+                            style={{ width: '70%', minHeight: '24px' }}
+                        >
+                            {showTimeFrames &&
+                                timeFrames.map(tf => (
                                     <TimeFrameButton
                                         key={tf}
                                         justify="center"
@@ -121,8 +125,7 @@ export default function MyStats({
                                         {tf}
                                     </TimeFrameButton>
                                 ))}
-                            </Box>
-                        )}
+                        </Box>
                     </Box>
                     {loading && (
                         <MyStatsLoaderWrapper>

@@ -27,12 +27,20 @@ const HomeNavButton = styled(RoundedButton)`
 
 const NavItems = styled(Box)`
     width: 80%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    @media (max-width: 400px) {
+		width: 100%
+		flex-direction: column;
+		align-items: center;
+    }
 `
 
 export default function Nav({ showButtons = true }) {
     return (
         <NavWrapper align="center">
-            <NavItems direction="row" justify="between" align="end">
+            <NavItems>
                 <Box direction="row">
                     <Box justify="center">
                         <TextLogo color="black">statcat</TextLogo>

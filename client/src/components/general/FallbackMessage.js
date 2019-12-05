@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box, Button } from 'grommet'
+import { Box } from 'grommet'
 
+import { RoundedButton } from './Buttons'
 import { Title } from './TextComponents'
 import StatCatLogo from './Logo'
 
@@ -17,7 +18,9 @@ function FallbackMessage({ message, showReload }) {
         <Box style={{ height: '100%' }} align="center" justify="center">
             <StatCatLogo />
             <ErrorMessage>{message}</ErrorMessage>
-            {showReload && <Button label="Reload" onClick={() => window.location.reload()} />}
+            {showReload && (
+                <RoundedButton label="Reload" onClick={() => window.location.reload()} inverted />
+            )}
         </Box>
     )
 }

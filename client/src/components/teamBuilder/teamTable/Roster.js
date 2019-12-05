@@ -39,11 +39,14 @@ const PlayerName = styled(Text)`
     color: white;
     text-align: center;
     margin-top: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `
 
 const RemovePlayerButton = styled(AddRemovePlayerButton)`
     position: absolute;
-    margin-left: 38px;
+    margin-left: 30px;
     margin-top: -24px;
     background: white;
     border: 2px solid ${props => props.theme.global.colors.brand};
@@ -70,7 +73,7 @@ function Roster({ players, onRemovePlayer, onSaveTeam, saveTeamLoading }) {
                     {team.map(p => (
                         <RosterItem key={p.id} flex="shrink">
                             <MiniRosterImage align="center" justify="center">
-                                <PlayerImage size="M" src={getPlayerImage(p)} borderColor="white" />
+                                <PlayerImage size="S" src={getPlayerImage(p)} borderColor="white" />
                                 <RemovePlayerButton handleClick={() => onRemovePlayer(p)}>
                                     -
                                 </RemovePlayerButton>

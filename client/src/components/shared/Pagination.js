@@ -12,6 +12,9 @@ const PaginationComponent = styled(Box)`
     width: 30%;
     border-radius: 10px;
     background: white;
+    @media (max-width: 950px) {
+        width: 40%;
+    }
 `
 
 export const PaginationButton = styled(Box)`

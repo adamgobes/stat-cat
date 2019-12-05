@@ -63,6 +63,9 @@ const StatTypeHeader = styled(Title)`
     margin: 10px;
     border-bottom: ${props =>
         props.selected ? `2px solid ${props.theme.global.colors.brand}` : ''};
+    @media (max-width: 950px) {
+        font-size: 1em;
+    }
 `
 
 export default function MyStats({

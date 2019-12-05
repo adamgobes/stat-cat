@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box, Button } from 'grommet'
+import { Box } from 'grommet'
 
-import { Title, TextLogo } from '../general/TextComponents'
+import { TextLogo } from '../general/TextComponents'
 import { RoundedButton } from '../general/Buttons'
 import StyledLink from '../shared/StyledLink'
 

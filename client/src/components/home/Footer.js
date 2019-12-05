@@ -14,6 +14,8 @@ const FooterWrapper = styled(Box)`
 `
 const FooterItems = styled(Box)`
     width: 80%;
+    flex-direction: row;
+    justify-content: space-between;
     @media (max-width: 700px) {
         width: 98%;
         font-size: 0.7em;
@@ -24,6 +26,9 @@ const FooterText = styled(Subheader)`
     color: white;
     margin: 0 30px;
     text-align: center;
+    @media (max-width: 400) {
+        font-size: 0.5em;
+    }
 `
 
 export default function Footer() {

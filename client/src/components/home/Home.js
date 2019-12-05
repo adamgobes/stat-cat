@@ -33,6 +33,9 @@ const HomePageHeader = styled(Title)`
         font-size: 1.4em;
         margin: 0px;
     }
+    @media (max-width: 400px) {
+        font-size: 0.7em;
+    }
 `
 
 const FirstBlockElement = styled(Box)`
@@ -49,14 +52,27 @@ const FirstBlockText = styled(Text)`
     font-size: 1.4em;
     line-height: 1.2em;
     margin-bottom: 24px;
-    @media (max-width: 600px) {
-        font-size: 1.4em;
+    @media (max-width: 400px) {
+        font-size: 0.6em;
     }
 `
 
 const SVGWrapper = styled(Box)`
     width: 1300px;
     height: 300px;
+    @media (max-width: 400px) {
+        width: 1300px;
+        height: 200px;
+    }
+`
+
+const GetStartedInput = styled(TextInput)`
+    width: 220px;
+    border-radius: 10px;
+    @media (max-width: 400px) {
+        width: 120px;
+        font-size: 0.6em;
+    }
 `
 
 const GetStartedButton = styled(RoundedButton)`
@@ -64,6 +80,10 @@ const GetStartedButton = styled(RoundedButton)`
     margin: 0 0 4px 20px;
     font-size: 0.9em;
     padding: 8px;
+    @media (max-width: 400px) {
+        width: 80px;
+        font-size: 0.6em;
+    }
 `
 
 const SecondBlock = styled(Box)`
@@ -93,12 +113,18 @@ const ProductFeatureHeader = styled(Subheader)`
     @media (max-width: 750px) {
         font-size: 0.7em;
     }
+    @media (max-width: 400px) {
+        font-size: 0em;
+    }
 `
 
 const SafariTopWrapper = styled(Box)`
     width: 80%;
     @media (max-width: 750px) {
         width: 100%;
+    }
+    @media (max-width: 400px) {
+        width: 90%;
     }
 `
 
@@ -108,6 +134,9 @@ const ProductScreenShotWrapper = styled(Box)`
     display: ${props => (!props.selected ? 'none' : '')};
     @media (max-width: 750px) {
         width: 100%;
+    }
+    @media (max-width: 400px) {
+        width: 90%;
     }
 `
 
@@ -146,8 +175,7 @@ const Home = ({ theme }) => {
                     </FirstBlockText>
                     <Box direction="column">
                         <Box direction="row">
-                            <TextInput
-                                style={{ width: '220px', borderRadius: '10px' }}
+                            <GetStartedInput
                                 placeholder="Enter your email address"
                                 size="small"
                                 onChange={e => setEmail(e.target.value)}

@@ -1,9 +1,11 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
-import { Box, Text, Button } from 'grommet'
+import { Box } from 'grommet'
+
 import PlayerImage from '../shared/PlayerImage'
 import AddPlayerInput from '../teamBuilder/playerSearch/AddPlayerInput'
 import { getFirstLastShortened, getPlayerImage } from '../../apollo/dataSelectors'
+import { Text } from '../general/TextComponents'
 
 const TRADE_SEARCH_WIDTH = 320
 
@@ -53,12 +55,12 @@ export default function TradeSearch({
                           </Truncated>
                           {sendablePlayers.includes(player.id) && (
                               <AddRemoveButton onClick={() => onSendPlayer(player)}>
-                                  Send
+                                  <Text>Send</Text>
                               </AddRemoveButton>
                           )}
                           {!sendablePlayers.includes(player.id) && (
                               <AddRemoveButton onClick={() => onReceivePlayer(player)}>
-                                  Receive
+                                  <Text>Receive</Text>
                               </AddRemoveButton>
                           )}
                       </Box>

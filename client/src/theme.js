@@ -4,13 +4,20 @@ const dropStyles = `
 	overflow: hidden;
 `
 
+const textInputStyles = `
+	font-family: Roboto;
+`
+
 export default {
-    global: {
-        font: {
-            family: 'Thasadith',
-            size: '14px',
-            height: '20px',
+    textInput: {
+        extend: textInputStyles,
+    },
+    select: {
+        container: {
+            extend: textInputStyles,
         },
+    },
+    global: {
         colors: {
             brand: '#7781f7',
             secondary: 'black',

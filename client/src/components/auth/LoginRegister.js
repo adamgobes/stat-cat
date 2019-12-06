@@ -4,6 +4,8 @@ import { Box, TextInput, Button } from 'grommet'
 import styled from 'styled-components'
 import cookie from 'react-cookies'
 
+import { Title, Text } from '../general/TextComponents'
+import { RoundedButton } from '../general/Buttons'
 import Loader from '../shared/Loader'
 import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../apollo/mutations'
 import loginRegisterReducer, {
@@ -12,8 +14,10 @@ import loginRegisterReducer, {
     setErrorMessage,
     changeIsLogin,
 } from './reducer'
+import HomeNav from '../home/HomeNav'
 
 const FormInput = styled(TextInput)`
+    border-radius: 10px;
     width: 300px;
     margin: 10px 0;
     color: ${props => props.theme.global.colors.brand};
@@ -69,6 +73,7 @@ function LoginRegister({ history, location }) {
     }
 
     function formValid() {
+        console.log('formValid')
         return (
             (!isLogin &&
                 email.length !== 0 &&
@@ -86,7 +91,7 @@ function LoginRegister({ history, location }) {
         registerUser,
     ])
 
-    const submitButtonString = useMemo(() => (isLogin ? 'Login' : 'Register'), [isLogin])
+    const submitButtonString = useMemo(() => (isLogin ? 'Log in' : 'Register'), [isLogin])
 
     function handleEnterClicked(event) {
         switch (event.keyCode) {
@@ -105,8 +110,13 @@ function LoginRegister({ history, location }) {
             className="container"
             onKeyDown={handleEnterClicked}
         >
-            <h1>{`${isLogin ? 'Welcome Back' : 'Create an Account'}`}</h1>
-            {errorMessage && <h1>{errorMessage}</h1>}
+            <HomeNav showButtons={false} />
+            <Title>{`${isLogin ? 'Log in' : 'Create an Account'}`}</Title>
+            <Text style={{ marginTop: '-10px' }}>
+                {!isLogin && `You're just a step away from fantasy domination`}
+                {isLogin && `Welcome back!`}
+            </Text>
+            {errorMessage && <Title>{errorMessage}</Title>}
             <Box pad="small">
                 {!isLogin && (
                     <FormInput
@@ -127,7 +137,7 @@ function LoginRegister({ history, location }) {
                 <FormInput
                     size="medium"
                     name="password"
-                    placeholder="password"
+                    placeholder="Password"
                     value={password}
                     type="password"
                     onChange={handleInputChange}
@@ -142,20 +152,26 @@ function LoginRegister({ history, location }) {
                         onChange={handleInputChange}
                     />
                 )}
-                <StyledButton
-                    label={
-                        loginLoading || registerLoading ? <Loader size={20} /> : submitButtonString
-                    }
-                    onClick={submitForm}
-                    style={{ opacity: formValid() ? 1 : 0.5 }}
-                    disabled={!formValid()}
-                />
+                <Box align="center">
+                    <RoundedButton
+                        inverted
+                        label={
+                            loginLoading || registerLoading ? (
+                                <Loader size={20} />
+                            ) : (
+                                submitButtonString
+                            )
+                        }
+                        onClick={submitForm}
+                        style={{ opacity: formValid() ? 1 : 0.5, width: '200px' }}
+                        disabled={!formValid()}
+                    />
+                </Box>
             </Box>
-            <Box>
-                <Button
-                    label={`Click here to ${isLogin ? 'Register' : 'Login'}`}
-                    onClick={() => dispatch(changeIsLogin())}
-                />
+            <Box style={{ cursor: 'pointer' }} onClick={() => dispatch(changeIsLogin())}>
+                <Text style={{ opacity: '0.5' }}>
+                    {`Click here to ${isLogin ? 'register' : 'login'}`}
+                </Text>
             </Box>
         </Box>
     )

@@ -4,6 +4,7 @@ import { Box } from 'grommet'
 import { LinkUp, LinkDown } from 'grommet-icons'
 
 import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
+import { Text } from '../general/TextComponents'
 
 import basketball from '../../assets/images/basketball.png'
 import assistIcon from '../../assets/images/assist-icon.png'
@@ -32,6 +33,7 @@ const tradeHeaders = ['Statistic', 'Before', 'After', 'Delta']
 
 const Table = styled(Box)`
     position: relative;
+    max-height: 500px;
     width: 90%;
 `
 
@@ -42,7 +44,11 @@ const IconWrapper = styled.div`
     overflow: hidden;
 `
 
-const Percentage = styled.b`
+const StatCategoryText = styled(Text)`
+    font-size: 0.8em;
+`
+
+const Percentage = styled(StatCategoryText)`
     color: ${props => (props.positive ? 'green' : 'red')};
 `
 
@@ -108,11 +114,11 @@ function CountingNumberElement({ category, values, isTradeSimulated }) {
                         </Box>
                     </IconWrapper>
                 )}
-                <b>{statsAbbreviationToFull[category]}</b>
+                <StatCategoryText>{statsAbbreviationToFull[category]}</StatCategoryText>
             </Box>
             {values.map((value, i) => (
                 <Box direction="row" justify="center" basis="small" key={i}>
-                    <b>{value}</b>
+                    <StatCategoryText>{value}</StatCategoryText>
                 </Box>
             ))}
             {isTradeSimulated && (
@@ -139,15 +145,17 @@ function EfficiencyNumberElement({ category, attempted, made, isTradeSimulated }
                         </Box>
                     </IconWrapper>
                 )}
-                <b>{statsAbbreviationToFull[category]}</b>
+                <StatCategoryText>{statsAbbreviationToFull[category]}</StatCategoryText>
             </Box>
             {attempted.map((_, i) => (
                 <Box basis="small" align="center" key={i}>
                     <Box direction="row" justify="start">
-                        <b>{`${computePercentage(attempted[i], made[i])}%`}</b>
+                        <StatCategoryText>
+                            {`${computePercentage(attempted[i], made[i])}%`}
+                        </StatCategoryText>
                     </Box>
                     <Box direction="column" align="start">
-                        <b>{`${made[i]}/${attempted[i]}`}</b>
+                        <StatCategoryText>{`${made[i]}/${attempted[i]}`}</StatCategoryText>
                     </Box>
                 </Box>
             ))}

@@ -19,6 +19,10 @@ const ButtonWrapper = styled(Box)`
     }
 `
 
+const TextWrapper = styled.div`
+    font-size: 0.6em;
+`
+
 const AddRemovePlayerButton = ({ className, children, handleClick }) => (
     <ButtonWrapper
         className={className}
@@ -27,7 +31,7 @@ const AddRemovePlayerButton = ({ className, children, handleClick }) => (
         justify="center"
         onClick={handleClick}
     >
-        <div style={{ margin: '0 0 2px 1px' }}>{children}</div>
+        <TextWrapper style={{ margin: '0 1px 2px 1px' }}>{children}</TextWrapper>
     </ButtonWrapper>
 )
 

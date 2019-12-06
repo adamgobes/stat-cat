@@ -7,22 +7,10 @@ import Home from './components/home/Home'
 import LoginRegister from './components/auth/LoginRegister'
 import ApolloWrapper from './apollo/ApolloWrapper'
 import theme from './theme'
-import { useWindowDimensions } from './utils/customHooks'
-import ResponsiveFallback from './components/general/ResponsiveFallback'
 import StatCatApp from './components/general/StatCatApp'
 
 const App = () => {
-    const { height, width } = useWindowDimensions()
-
     const isLoggedIn = () => !!cookie.load('authToken')
-
-    if (width < 800 || height < 550) {
-        return (
-            <Grommet theme={theme}>
-                <ResponsiveFallback />
-            </Grommet>
-        )
-    }
 
     return (
         <ApolloWrapper>

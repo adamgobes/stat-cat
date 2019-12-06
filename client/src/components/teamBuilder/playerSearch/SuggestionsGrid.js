@@ -6,6 +6,7 @@ import AddRemovePlayerButton from '../AddRemovePlayerButton'
 import Loader from '../../shared/Loader'
 import PlayerImage from '../../shared/PlayerImage'
 import { getPlayerImage, getFullName } from '../../../apollo/dataSelectors'
+import { Text } from '../../general/TextComponents'
 
 const SuggestionsGridWrapper = styled(Box)`
     width: 80%;
@@ -14,7 +15,7 @@ const SuggestionsGridWrapper = styled(Box)`
     padding: 20px;
 `
 
-const PlayerName = styled.h3`
+const PlayerName = styled(Text)`
     margin-top: -18px;
     text-align: center;
 `

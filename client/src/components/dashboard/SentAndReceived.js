@@ -4,6 +4,7 @@ import { Box } from 'grommet'
 
 import PlayerImage from '../shared/PlayerImage'
 import AddRemovePlayerButton from '../teamBuilder/AddRemovePlayerButton'
+import { Subheader, Text } from '../general/TextComponents'
 
 const ComponentWrapper = styled(Box)`
     min-height: 300px;
@@ -19,7 +20,7 @@ const PlayerWrapper = styled(Box)`
     border-radius: 10px;
 `
 
-const Truncated = styled.h3`
+const Truncated = styled(Text)`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -38,7 +39,7 @@ const RemovePlayerButton = styled(AddRemovePlayerButton)`
 export default function SentAndReceived({ title, players, onRemovePlayer }) {
     return (
         <ComponentWrapper direction="column">
-            <h2 style={{ margin: '12px' }}>{title}</h2>
+            <Subheader style={{ margin: '12px' }}>{title}</Subheader>
             {players.map(player => (
                 <PlayerWrapper direction="row" align="center" key={player.id}>
                     <PlayerImage src={player.imageSrc} size="XS" />

@@ -9,6 +9,8 @@ import Dashboard from '../dashboard/Dashboard'
 import { TOGGLE_NAV, AppContext } from './AppContext'
 import { useWindowDimensions } from '../../utils/customHooks'
 import Nav from './Nav'
+import FallbackMessage from './FallbackMessage'
+import { SCREEN_SIZE_MESSAGE } from '../../utils/strings'
 
 const HIDE_NAV_WIDTH = 1100
 
@@ -20,11 +22,15 @@ const StatCatAppWrapper = styled.div`
 
 export default function StatCatApp() {
     const { appContext, dispatch } = useContext(AppContext)
-    const { width } = useWindowDimensions()
+    const { width, height } = useWindowDimensions()
 
     const { path } = useRouteMatch()
 
     const isNavOpen = width < HIDE_NAV_WIDTH ? appContext.isNavOpen : true
+
+    if (width < 800 || height < 550) {
+        return <FallbackMessage message={SCREEN_SIZE_MESSAGE} />
+    }
 
     return (
         <StatCatAppWrapper isNavOpen={isNavOpen}>

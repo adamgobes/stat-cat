@@ -1,20 +1,19 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
 import { Box, Button } from 'grommet'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 
 import TradeSearch from './TradeSearch'
 import { MIN_CHARS } from '../teamBuilder/TeamBuilderContext'
-import {
-    SEARCH_PLAYERS_QUERY,
-    DASHBOARD_QUERY,
-    GET_PLAYER_STATS_QUERY,
-    MY_STATS_QUERY,
-} from '../../apollo/queries'
+import { SEARCH_PLAYERS_QUERY, GET_PLAYER_STATS_QUERY, MY_STATS_QUERY } from '../../apollo/queries'
 import SentAndReceived from './SentAndReceived'
 import MyStats from './MyStats'
 import Loader from '../shared/Loader'
 import { computeTeamStatsAverages } from '../../utils/computeHelpers'
+import FallbackMessage from '../general/FallbackMessage'
+import { NETWORK_ERROR_MESSAGE } from '../../utils/strings'
+import { Title, Text } from '../general/TextComponents'
+import { RoundedButton } from '../general/Buttons'
 
 export const MAX_PLAYERS_TRADED = 4
 
@@ -25,14 +24,13 @@ const TradeSimulatorWrapper = styled(Box)`
     overflow: scroll;
 `
 
-const SimulateTradeButton = styled(Button)`
-    width: 140px;
-    border-radius: 20px;
-    background: white;
-    color: ${props => props.theme.global.colors.brand};
-    padding: 10px;
-    text-align: center;
-    margin-top: 12px;
+const Copy = styled(Text)`
+    margin: 20px;
+    font-size: 1em;
+`
+
+const SimulateTradeButton = styled(RoundedButton)`
+    min-width: 160px;
 `
 
 const TradedPlayers = styled(Box)`
@@ -51,14 +49,16 @@ export default function TradeSimulator() {
         skip: playerInput.length < MIN_CHARS,
     })
 
-    const { data: currentStatsData, loading: statsLoading } = useQuery(MY_STATS_QUERY)
+    const { data: currentStatsData, loading: statsLoading, error: statsError } = useQuery(
+        MY_STATS_QUERY
+    )
 
     function onGetPlayerStatsCompleted(data) {
         const sentPlayersIds = sentPlayers.map(p => p.id)
 
         setPostTradeTeam([
             ...currentStatsData.myTeam.players.filter(p => !sentPlayersIds.includes(p.id)),
-            ...data.getPlayerStats,
+            ...data.getPlayerStats.map(p => ({ ...p, isTraded: true })),
         ])
     }
 
@@ -115,14 +115,18 @@ export default function TradeSimulator() {
         getPlayerStats({ variables: { playerIds: receivedPlayers.map(p => p.id) } })
     }
 
+    if (statsError) return <FallbackMessage message={NETWORK_ERROR_MESSAGE} showReload />
+
     if (statsLoading) return <Loader size="100" />
 
     return (
         <TradeSimulatorWrapper align="center">
-            <h1>Trade Simulator</h1>
             <Box direction="row" align="center" style={{ width: '90%' }}>
                 <Box direction="column" justify="center" align="center" basis="1/2">
-                    <h2 style={{ textAlign: 'center' }}>Start searching and get trading</h2>
+                    <Title>Trade Simulator</Title>
+                    <Copy style={{ textAlign: 'center', marginTop: '-10px' }}>
+                        Start searching and get trading
+                    </Copy>
                     <TradeSearch
                         searchValue={playerInput}
                         suggestions={
@@ -149,11 +153,12 @@ export default function TradeSimulator() {
                         />
                     </TradedPlayers>
                     <SimulateTradeButton
+                        inverted
                         label={getPlayerStatsLoading ? <Loader size={20} /> : <b>Simulate Trade</b>}
                         onClick={onSimulateTrade}
                     />
                 </Box>
-                <Box basis="1/2" align="center">
+                <Box basis="1/2" align="center" style={{ marginTop: '50px' }}>
                     <MyStats
                         players={
                             postTradeTeam.length === 0

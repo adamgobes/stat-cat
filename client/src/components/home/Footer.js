@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 
-import StatLogo from '../../assets/images/stat-logo.png'
+import { Subheader, TextLogo } from '../general/TextComponents'
 
 const FooterWrapper = styled(Box)`
     position: relative;
@@ -10,21 +10,25 @@ const FooterWrapper = styled(Box)`
     left: 0;
     width: 100%;
     background: ${props => props.theme.global.colors.brand};
-    padding: 30px 0;
+    padding: 36px 0;
 `
 const FooterItems = styled(Box)`
-    width: 70%;
+    width: 80%;
+    flex-direction: row;
+    justify-content: space-between;
+    @media (max-width: 700px) {
+        width: 98%;
+        font-size: 0.7em;
+    }
 `
 
-const LogoContainer = styled(Box)`
-    width: 50px;
-    height: 50px;
-    margin-right: 20px;
-`
-
-const FooterText = styled.h2`
+const FooterText = styled(Subheader)`
     color: white;
-    margin: 0 20px;
+    margin: 0 30px;
+    text-align: center;
+    @media (max-width: 400) {
+        font-size: 0.5em;
+    }
 `
 
 export default function Footer() {
@@ -32,14 +36,11 @@ export default function Footer() {
         <FooterWrapper align="center">
             <FooterItems direction="row" justify="between">
                 <Box direction="row">
-                    <LogoContainer justify="center">
-                        <img src={StatLogo} alt="Stat Logo" height="100%" width="100%" />
-                    </LogoContainer>
+                    <TextLogo color="white">statcat</TextLogo>
                 </Box>
-                <Box direction="row" align="center">
+                <Box direction="row" align="center" justify="center">
+                    <FooterText>About Us</FooterText>
                     <FooterText>Contact Us</FooterText>
-                    <FooterText>Terms and Conditions</FooterText>
-                    <FooterText>Cookie Policy</FooterText>
                 </Box>
             </FooterItems>
         </FooterWrapper>

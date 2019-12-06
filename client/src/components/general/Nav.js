@@ -4,19 +4,9 @@ import styled, { withTheme } from 'styled-components'
 import { Box } from 'grommet'
 import cookie from 'react-cookies'
 import { useApolloClient } from '@apollo/react-hooks'
-import {
-    Menu,
-    Group,
-    Dashboard,
-    Trophy,
-    Configure,
-    Info,
-    CircleInformation,
-    Help,
-    Logout,
-    FormPreviousLink,
-    ShareOption,
-} from 'grommet-icons'
+import { Menu, Group, Dashboard, Logout, ShareOption, FormClose } from 'grommet-icons'
+
+import { Subheader, Title, TextLogo } from './TextComponents'
 
 import StatLogo from '../../assets/images/stat-logo.png'
 
@@ -40,17 +30,16 @@ const NavigationContainer = styled(Box)`
     overflow-x: hidden;
     transition: 0.3s;
     font-size: 0.8em;
-    border-top-right-radius: 10px;
 `
 
 const ToggleNavButton = styled(Box)`
     position: absolute;
-    left: ${({ isNavOpen }) => (isNavOpen ? '290px' : '40px')};
+    cursor: pointer;
+    left: ${({ isNavOpen }) => (isNavOpen ? '126px' : '40px')};
     top: 20px;
     width: 40px;
     height: 40px;
     border-radius: 100%;
-    border: 2px solid black;
     transition: 0.3s;
     z-index: 1000;
 `
@@ -61,13 +50,17 @@ const NavIconWrapper = styled(Box)`
     margin: 0 2px;
 `
 
+const NavListHeader = styled(Subheader)`
+    color: ${props => (props.selected ? props.theme.global.colors.brand : 'white')};
+    font-size: 0.9em;
+`
+
 const NavListItem = styled(Box)`
-    width: 90%;
+    width: 94%;
     border-radius: 10px;
     cursor: pointer;
-    margin: 0 10px;
+    margin: 0 4px;
     background: ${props => (props.selected ? 'white' : '')};
-    color: ${props => (props.selected ? props.theme.global.colors.brand : 'white')};
 `
 
 const NavLinks = [
@@ -103,7 +96,7 @@ const NavLinks = [
 const EnhanceNavListItem = Icon => ({ name, selected, handleClick, theme }) => (
     <NavListItem direction="row" align="center" onClick={handleClick} selected={selected}>
         <Icon color={selected ? theme.global.colors.brand : 'white'} />
-        <h3>{name}</h3>
+        <NavListHeader selected={selected}>{name}</NavListHeader>
     </NavListItem>
 )
 
@@ -127,7 +120,7 @@ function Nav({ history, location, isNavOpen, setNavOpen, isWidthTooSmall, theme 
                     isNavOpen={isNavOpen}
                 >
                     {!isNavOpen && <Menu size="medium" color="black" />}
-                    {isNavOpen && <FormPreviousLink size="medium" color="black" />}
+                    {isNavOpen && <FormClose size="medium" color="white" />}
                 </ToggleNavButton>
             )}
 
@@ -137,18 +130,16 @@ function Nav({ history, location, isNavOpen, setNavOpen, isWidthTooSmall, theme 
                 justify="evenly"
                 isNavOpen={isNavOpen}
             >
-                <NavListItem direction="row" align="center" style={{ marginBottom: '12px' }}>
-                    <LogoContainer justify="center">
-                        <img src={StatLogo} alt="Stat Logo" height="100%" width="100%" />
-                    </LogoContainer>
-                    <Box>
-                        <h1>StatCat</h1>
+                <NavListItem direction="row" align="center" style={{ margin: '0px' }}>
+                    <Box align="center" style={{ width: '100%' }}>
+                        <TextLogo>statcat</TextLogo>
                     </Box>
                 </NavListItem>
                 {NavLinks.map(({ name, Icon, path }) => {
                     const Enhanced = EnhanceNavListItem(Icon)
                     return (
                         <Enhanced
+                            key={name}
                             name={name}
                             selected={currentPage === path}
                             handleClick={() => history.push(path)}
@@ -169,7 +160,7 @@ function Nav({ history, location, isNavOpen, setNavOpen, isWidthTooSmall, theme 
                     <NavIconWrapper direction="column" justify="center" align="center">
                         <Logout size="medium" color="white" />
                     </NavIconWrapper>
-                    <h3>Logout</h3>
+                    <NavListHeader>Logout</NavListHeader>
                 </NavListItem>
             </NavigationContainer>
         </Box>

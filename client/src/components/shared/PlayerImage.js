@@ -23,8 +23,8 @@ const ImageWrapper = styled.div`
 
 const PlayerImage = ({ src, name, size = 'M', borderColor }) => (
     <ImageWrapper size={size} borderColor={borderColor}>
-        <Box align="center" justify="center" className="container" style={{ marginTop: '10px' }}>
-            {(src && <img src={src} height="80%" width="100%" alt={name} />) ||
+        <Box align="center" justify="center" className="container" style={{ marginTop: '8px' }}>
+            {(src && <img src={src} height="95%" width="120%" alt={name} />) ||
                 (!src && <img src={NoImagePlayer} height="100%" width="100%" alt={name} />)}
         </Box>
     </ImageWrapper>

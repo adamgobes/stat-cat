@@ -70,13 +70,15 @@ export async function fetchPlayerStatsTimeFrame(
                 value: 0.0,
             }
         }
-
         return {
             category: c.categoryName,
             value: parseFloat(
                 (
-                    (c.selector(currentStatsObject) * currentGamesPlayed -
-                        c.selector(oldStatsObject) * oldGamesPlayed) /
+                    Math.max(
+                        0,
+                        c.selector(currentStatsObject) * currentGamesPlayed -
+                            c.selector(oldStatsObject) * oldGamesPlayed
+                    ) /
                     (currentGamesPlayed - oldGamesPlayed)
                 ).toFixed(1)
             ),

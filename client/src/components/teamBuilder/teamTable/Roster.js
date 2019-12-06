@@ -3,15 +3,14 @@ import styled from 'styled-components'
 import { Box, Button } from 'grommet'
 
 import PlayerImage from '../../shared/PlayerImage'
-import RosterPlaceHolderImage from '../../../assets/images/roster-placeholder.png'
 import AddRemovePlayerButton from '../AddRemovePlayerButton'
-import { ROSTER_SIZE } from '../TeamBuilderContext'
 import Loader from '../../shared/Loader'
 import { getFirstLastShortened, getPlayerImage } from '../../../apollo/dataSelectors'
+import { Text, Title } from '../../general/TextComponents'
+import { RoundedButton } from '../../general/Buttons'
 
 const RosterWrapper = styled(Box)`
     background-color: ${props => props.theme.global.colors.brand};
-    border-radius: 10px;
     min-height: 100%;
     overflow-y: scroll;
 `
@@ -25,41 +24,33 @@ const RosterGrid = styled(Box)`
     }
 `
 
-const MyTeamHeader = styled.h1`
-    font-size: 2.6em;
+const MyTeamHeader = styled(Title)`
     text-align: center;
     font-weight: bold;
     color: white;
-    margin: 30px 0;
+    margin: 70px 0 30px 0;
 `
 
 const MiniRosterImage = styled(Box)`
     position: relative;
 `
 
-const PlayerName = styled.h3`
+const PlayerName = styled(Text)`
     color: white;
     text-align: center;
     margin-top: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `
 
 const RemovePlayerButton = styled(AddRemovePlayerButton)`
     position: absolute;
-    margin-left: 38px;
+    margin-left: 30px;
     margin-top: -24px;
     background: white;
     border: 2px solid ${props => props.theme.global.colors.brand};
     color: ${props => props.theme.global.colors.brand};
-`
-
-const SaveTeamButton = styled(Button)`
-    width: 140px;
-    border-radius: 20px;
-    background: white;
-    color: ${props => props.theme.global.colors.brand};
-    padding: 10px;
-    text-align: center;
-    border: 2px solid white;
 `
 
 const RosterItem = styled(Box)`
@@ -72,33 +63,28 @@ const RosterItem = styled(Box)`
 `
 
 function Roster({ players, onRemovePlayer, onSaveTeam, saveTeamLoading }) {
-    const team = [...players, ...new Array(ROSTER_SIZE - players.length)]
+    const team = [...players]
 
     return (
         <RosterWrapper align="center">
             <MyTeamHeader>My Team</MyTeamHeader>
             <RosterGrid>
                 <Box direction="row" justify="start" wrap>
-                    {team.map((p, i) => (
-                        <RosterItem key={p ? p.id : i} flex="shrink">
+                    {team.map(p => (
+                        <RosterItem key={p.id} flex="shrink">
                             <MiniRosterImage align="center" justify="center">
-                                <PlayerImage
-                                    size="M"
-                                    src={p ? getPlayerImage(p) : RosterPlaceHolderImage}
-                                    borderColor="white"
-                                />
-                                {p && (
-                                    <RemovePlayerButton handleClick={() => onRemovePlayer(p)}>
-                                        -
-                                    </RemovePlayerButton>
-                                )}
+                                <PlayerImage size="S" src={getPlayerImage(p)} borderColor="white" />
+                                <RemovePlayerButton handleClick={() => onRemovePlayer(p)}>
+                                    -
+                                </RemovePlayerButton>
                             </MiniRosterImage>
-                            {p && <PlayerName>{getFirstLastShortened(p)}</PlayerName>}
+                            <PlayerName>{getFirstLastShortened(p)}</PlayerName>
                         </RosterItem>
                     ))}
                 </Box>
             </RosterGrid>
-            <SaveTeamButton
+            <RoundedButton
+                width={140}
                 label={saveTeamLoading ? <Loader size={20} /> : <b>Save Team</b>}
                 onClick={onSaveTeam}
             />

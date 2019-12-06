@@ -20,8 +20,7 @@ export default function reducer(state, action) {
             }
         case CHANGE_IS_LOGIN:
             return {
-                ...createInitialState(!state.isLogin),
-                errorMessage: null,
+                ...createInitialState({ initialIsLogin: !state.isLogin }),
             }
         case SET_ERROR_MESSAGE:
             return {

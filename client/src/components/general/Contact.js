@@ -7,7 +7,6 @@ import { Title, Text } from './TextComponents'
 import HomeNav from '../home/HomeNav'
 import { RoundedButton } from './Buttons'
 import Loader from '../shared/Loader'
-import { EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_USER_ID } from '../../utils/config'
 
 const ContactForm = styled(Box)``
 
@@ -43,7 +42,12 @@ export default function Contact() {
             message,
             email,
         }
-        send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_USER_ID)
+        send(
+            process.env.EMAILJS_SERVICE_ID,
+            process.env.EMAILJS_TEMPLATE_ID,
+            templateParams,
+            process.env.EMAILJS_USER_ID
+        )
             .then(() => {
                 setResult('Thanks! We got your message and will be in touch soon!')
                 setLoading(false)

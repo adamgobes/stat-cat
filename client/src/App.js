@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import cookie from 'react-cookies'
 
 import Home from './components/home/Home'
+import Contact from './components/general/Contact'
 import LoginRegister from './components/auth/LoginRegister'
 import ApolloWrapper from './apollo/ApolloWrapper'
 import theme from './theme'
@@ -29,6 +30,7 @@ const App = () => {
                     />
                     <Route exact path="/auth" component={LoginRegister} />
                     <Route exact path="/home" component={Home} />
+                    <Route exact path="/contact" component={Contact} />
 
                     <Route path="/app" component={StatCatApp} />
                 </Grommet>

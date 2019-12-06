@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 
@@ -38,11 +39,17 @@ const NavItems = styled(Box)`
 `
 
 export default function Nav({ showButtons = true }) {
+    const history = useHistory()
+
     return (
         <NavWrapper align="center">
             <NavItems>
                 <Box direction="row">
-                    <Box justify="center">
+                    <Box
+                        justify="center"
+                        style={{ cursor: 'pointerr' }}
+                        onClick={() => history.push('/')}
+                    >
                         <TextLogo color="black">statcat</TextLogo>
                     </Box>
                 </Box>

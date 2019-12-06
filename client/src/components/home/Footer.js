@@ -1,5 +1,5 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 
@@ -33,8 +33,9 @@ const FooterText = styled(Subheader)`
     }
 `
 
-function Footer({ history }) {
-    console.log({ history })
+function Footer() {
+    const history = useHistory()
+
     return (
         <FooterWrapper align="center">
             <FooterItems direction="row" justify="between">
@@ -54,4 +55,4 @@ function Footer({ history }) {
     )
 }
 
-export default withRouter(Footer)
+export default Footer

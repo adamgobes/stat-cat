@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 
@@ -26,12 +27,15 @@ const FooterText = styled(Subheader)`
     color: white;
     margin: 0 30px;
     text-align: center;
+    cursor: pointer;
     @media (max-width: 400) {
         font-size: 0.5em;
     }
 `
 
-export default function Footer() {
+function Footer() {
+    const history = useHistory()
+
     return (
         <FooterWrapper align="center">
             <FooterItems direction="row" justify="between">
@@ -39,10 +43,16 @@ export default function Footer() {
                     <TextLogo color="white">statcat</TextLogo>
                 </Box>
                 <Box direction="row" align="center" justify="center">
-                    <FooterText>About Us</FooterText>
-                    <FooterText>Contact Us</FooterText>
+                    <Box onClick={() => history.push('/about')}>
+                        <FooterText>About Us</FooterText>
+                    </Box>
+                    <Box onClick={() => history.push('/contact')}>
+                        <FooterText>Contact Us</FooterText>
+                    </Box>
                 </Box>
             </FooterItems>
         </FooterWrapper>
     )
 }
+
+export default Footer

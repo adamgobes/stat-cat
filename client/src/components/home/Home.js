@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Box, TextInput } from 'grommet'
-import styled, { withTheme } from 'styled-components'
+import styled, { ThemeContext } from 'styled-components'
 import { Group, Dashboard, ShareOption } from 'grommet-icons'
 
 import { ReactComponent as BasketballImage } from '../../assets/images/basketball_homepage.svg'
@@ -158,7 +158,9 @@ const features = [
     },
 ]
 
-const Home = ({ theme }) => {
+const Home = () => {
+    const theme = useContext(ThemeContext)
+
     const [currentFeature, setCurrentFeature] = useState(features[0].name)
     const [email, setEmail] = useState('')
     return (
@@ -267,4 +269,4 @@ const Home = ({ theme }) => {
     )
 }
 
-export default withTheme(Home)
+export default Home

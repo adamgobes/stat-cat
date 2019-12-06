@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { withRouter } from 'react-router-dom'
-import styled, { withTheme } from 'styled-components'
+import React, { useState, useEffect, useContext } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
+import styled, { ThemeContext } from 'styled-components'
 import { Box } from 'grommet'
 import cookie from 'react-cookies'
 import { useApolloClient } from '@apollo/react-hooks'
 import { Menu, Group, Dashboard, Logout, ShareOption, FormClose } from 'grommet-icons'
 
-import { Subheader, Title, TextLogo } from './TextComponents'
-
-import StatLogo from '../../assets/images/stat-logo.png'
-
-const LogoContainer = styled(Box)`
-    width: 40px;
-    height: 40px;
-    margin: 0 20px 10px 0;
-`
+import { Subheader, TextLogo } from './TextComponents'
 
 const NavigationContainer = styled(Box)`
     background: ${props => props.theme.global.colors.brand};
@@ -100,7 +92,11 @@ const EnhanceNavListItem = Icon => ({ name, selected, handleClick, theme }) => (
     </NavListItem>
 )
 
-function Nav({ history, location, isNavOpen, setNavOpen, isWidthTooSmall, theme }) {
+function Nav({ isNavOpen, setNavOpen, isWidthTooSmall }) {
+    const history = useHistory()
+    const location = useLocation()
+    const theme = useContext(ThemeContext)
+
     const client = useApolloClient()
     const [currentPage, setCurrentPage] = useState(location.pathname)
 
@@ -167,4 +163,4 @@ function Nav({ history, location, isNavOpen, setNavOpen, isWidthTooSmall, theme 
     )
 }
 
-export default withRouter(withTheme(Nav))
+export default Nav

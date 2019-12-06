@@ -73,7 +73,6 @@ function LoginRegister({ history, location }) {
     }
 
     function formValid() {
-        console.log('formValid')
         return (
             (!isLogin &&
                 email.length !== 0 &&

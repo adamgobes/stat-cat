@@ -17,6 +17,9 @@ export default {
             extend: textInputStyles,
         },
     },
+    textArea: {
+        extend: textInputStyles,
+    },
     global: {
         colors: {
             brand: '#7781f7',

@@ -3,10 +3,11 @@ import styled from 'styled-components'
 import { Box, TextInput, TextArea } from 'grommet'
 import { send } from 'emailjs-com'
 
-import { Title, Text, Subheader } from './TextComponents'
+import { Title, Text } from './TextComponents'
 import HomeNav from '../home/HomeNav'
 import { RoundedButton } from './Buttons'
 import Loader from '../shared/Loader'
+import { emailjs_SERVICE_ID, emailjs_TEMPLATE_ID, emailjs_USER_ID } from '../../utils/config'
 
 const ContactForm = styled(Box)``
 
@@ -26,7 +27,7 @@ export default function Contact() {
     const [subject, setSubject] = useState('')
     const [message, setMessage] = useState('')
     const [loading, setLoading] = useState('')
-    const [result, setResult] = useState('Thanks! We got your message and will be in touch soon!')
+    const [result, setResult] = useState('')
 
     function formValid() {
         return (
@@ -42,7 +43,7 @@ export default function Contact() {
             message,
             email,
         }
-        send('adam_gobran', 'template_5IRWoQks', templateParams, 'user_ndpNcHAqxdL0sF1D25sVn')
+        send(emailjs_SERVICE_ID, emailjs_TEMPLATE_ID, templateParams, emailjs_USER_ID)
             .then(() => {
                 setResult('Thanks! We got your message and will be in touch soon!')
                 setLoading(false)

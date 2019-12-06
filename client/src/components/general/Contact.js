@@ -43,10 +43,10 @@ export default function Contact() {
             email,
         }
         send(
-            process.env.EMAILJS_SERVICE_ID,
-            process.env.EMAILJS_TEMPLATE_ID,
+            process.env.REACT_APP_EMAILJS_SERVICE_ID,
+            process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
             templateParams,
-            process.env.EMAILJS_USER_ID
+            process.env.REACT_APP_EMAILJS_USER_ID
         )
             .then(() => {
                 setResult('Thanks! We got your message and will be in touch soon!')

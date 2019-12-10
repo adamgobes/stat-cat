@@ -36,14 +36,7 @@ const StyledRoundedButton = styled(Button)`
 export function RoundedButton({ className, style, inverted = false, width, ...otherProps }) {
     if (!inverted) {
         return (
-            !inverted && (
-                <StyledSquareButton
-                    style={style}
-                    width={width}
-                    className={className}
-                    {...otherProps}
-                />
-            )
+            <StyledSquareButton style={style} width={width} className={className} {...otherProps} />
         )
     }
 

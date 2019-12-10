@@ -3,7 +3,7 @@ import { Box } from 'grommet'
 import { storiesOf } from '@storybook/react'
 import { RoundedButton } from '../Buttons'
 
-const storyPath = 'General/Buttons'
+const storyPath = 'Shared/Buttons'
 
 storiesOf(`${storyPath}`, module)
     .add('Default', () => (

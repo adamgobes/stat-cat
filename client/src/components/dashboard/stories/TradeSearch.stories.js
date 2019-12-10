@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import TradeSearch from '../TradeSearch'
+import TradeSearch from '../../tradeSimulator/TradeSearch'
 
 const storyPath = 'Dashboard/Trade Search'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import TradeSimulator from '../TradeSimulator'
+import TradeSimulator from '../../tradeSimulator/TradeSimulator'
 
 const storyPath = 'Dashboard/Trade Simulator'
 

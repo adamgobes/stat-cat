@@ -1,4 +1,4 @@
-const DashboardStoriesData = [
+export const playerData = [
     {
         id: '9158',
         firstName: 'LeBron',
@@ -695,4 +695,17 @@ const DashboardStoriesData = [
         ],
     },
 ]
-export default DashboardStoriesData
+
+export const averagesData = [
+    { category: 'PPG', values: ['14.5'] },
+    { category: 'APG', values: ['4.4'] },
+    { category: '3PM', values: ['1.0'] },
+    { category: 'RPG', values: ['6.5'] },
+    { category: 'SPG', values: ['1.2'] },
+    { category: 'BPG', values: ['0.6'] },
+    { category: 'TPG', values: ['2.1'] },
+    { category: 'FGA', values: ['11.3'] },
+    { category: 'FGM', values: ['5.5'] },
+    { category: 'FTA', values: ['3.4'] },
+    { category: 'FTM', values: ['2.4'] },
+]

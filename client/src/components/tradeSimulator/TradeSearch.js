@@ -74,7 +74,7 @@ export default function TradeSearch({
             <AddPlayerInput
                 onPlayerInputChange={handleInputChange}
                 width={TRADE_SEARCH_WIDTH}
-                value={searchValue}
+                inputValue={searchValue}
                 suggestions={renderSuggestions()}
                 dropTarget={searchRef.current}
                 loading={loading}

@@ -1,54 +1,63 @@
 export const suggestionsGridData = [
     {
-        id: '9386',
-        fullName: 'Kevin Durant',
-        position: 'SF',
-        imageSrc:
-            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201142.png',
-    },
-    {
-        id: '9458',
-        fullName: 'Ben McLemore',
+        id: '9477',
+        firstName: 'Danny',
+        lastName: 'Green',
+        fullName: 'Danny Green',
         currentTeam: {
-            abbreviation: 'SAC',
-            __typename: 'NbaTeam',
+            abbreviation: 'LAL',
         },
         position: 'SG',
         imageSrc:
-            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203463.png',
+            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201980.png',
     },
     {
-        id: '9262',
-        fullName: 'Blake Griffin',
+        id: '9228',
+        firstName: 'Draymond',
+        lastName: 'Green',
+        fullName: 'Draymond Green',
+        currentTeam: {
+            abbreviation: 'GSW',
+        },
         position: 'PF',
         imageSrc:
-            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201933.png',
+            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203110.png',
     },
     {
-        id: '10087',
-        fullName: 'Ben Simmons',
+        id: '9316',
+        firstName: 'Gerald',
+        lastName: 'Green',
+        fullName: 'Gerald Green',
         currentTeam: {
-            abbreviation: 'PHI',
-            __typename: 'NbaTeam',
+            abbreviation: 'HOU',
         },
-        position: 'PG',
-        imageSrc:
-            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1627732.png',
-        __typename: 'Player',
-    },
-    {
-        id: '9232',
-        fullName: 'James Harden',
         position: 'SG',
         imageSrc:
-            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201935.png',
+            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/101123.png',
     },
     {
-        id: '9387',
-        fullName: 'Russell Westbrook',
-        position: 'PG',
+        id: '9302',
+        firstName: 'JaMychal',
+        lastName: 'Green',
+        fullName: 'JaMychal Green',
+        currentTeam: {
+            abbreviation: 'LAC',
+        },
+        position: 'PF',
         imageSrc:
-            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201566.png',
+            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203210.png',
+    },
+    {
+        id: '9271',
+        firstName: 'Jeff',
+        lastName: 'Green',
+        fullName: 'Jeff Green',
+        currentTeam: {
+            abbreviation: 'UTA',
+        },
+        position: 'SF',
+        imageSrc:
+            'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201145.png',
     },
 ]
 

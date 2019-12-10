@@ -85,7 +85,7 @@ function Roster({ players, onRemovePlayer, onSaveTeam, saveTeamLoading }) {
             </RosterGrid>
             <RoundedButton
                 width={140}
-                label={saveTeamLoading ? <Loader size={20} /> : <b>Save Team</b>}
+                label={saveTeamLoading ? <Loader size={20} /> : 'Save Team'}
                 onClick={onSaveTeam}
             />
         </RosterWrapper>

@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 
-import { RoundedButton } from './Buttons'
-import { Title } from './TextComponents'
+import { RoundedButton } from '../shared/Buttons'
+import { Title } from '../shared/TextComponents'
 import StatCatLogo from './Logo'
 
 const ErrorMessage = styled(Title)`

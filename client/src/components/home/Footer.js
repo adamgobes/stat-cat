@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 
-import { Subheader, TextLogo } from '../general/TextComponents'
+import { Subheader, TextLogo } from '../shared/TextComponents'
 
 const FooterWrapper = styled(Box)`
     position: relative;

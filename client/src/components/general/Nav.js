@@ -6,7 +6,7 @@ import cookie from 'react-cookies'
 import { useApolloClient } from '@apollo/react-hooks'
 import { Menu, Group, Dashboard, Logout, ShareOption, FormClose } from 'grommet-icons'
 
-import { Subheader, TextLogo } from './TextComponents'
+import { Subheader, TextLogo } from '../shared/TextComponents'
 
 const NavigationContainer = styled(Box)`
     background: ${props => props.theme.global.colors.brand};

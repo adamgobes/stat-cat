@@ -6,8 +6,8 @@ import PlayerImage from '../../shared/PlayerImage'
 import AddRemovePlayerButton from '../AddRemovePlayerButton'
 import Loader from '../../shared/Loader'
 import { getFirstLastShortened, getPlayerImage } from '../../../apollo/dataSelectors'
-import { Text, Title } from '../../general/TextComponents'
-import { RoundedButton } from '../../general/Buttons'
+import { Text, Title } from '../../shared/TextComponents'
+import { RoundedButton } from '../../shared/Buttons'
 
 const RosterWrapper = styled(Box)`
     background-color: ${props => props.theme.global.colors.brand};
@@ -85,7 +85,7 @@ function Roster({ players, onRemovePlayer, onSaveTeam, saveTeamLoading }) {
             </RosterGrid>
             <RoundedButton
                 width={140}
-                label={saveTeamLoading ? <Loader size={20} /> : <b>Save Team</b>}
+                label={saveTeamLoading ? <Loader size={20} /> : 'Save Team'}
                 onClick={onSaveTeam}
             />
         </RosterWrapper>

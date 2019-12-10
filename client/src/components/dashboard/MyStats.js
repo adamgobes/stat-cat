@@ -6,8 +6,8 @@ import TeamStats from './TeamStats'
 import PlayerStats from './PlayerStats'
 import Loader from '../shared/Loader'
 import { timeFrames } from '../../utils/computeHelpers'
-import { Title } from '../general/TextComponents'
-import { RoundedButton } from '../general/Buttons'
+import { Title } from '../shared/TextComponents'
+import { RoundedButton } from '../shared/Buttons'
 
 const statTypes = {
     TEAM_STATS: 'Team Stats',

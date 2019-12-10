@@ -6,7 +6,7 @@ import PlayerImage from '../shared/PlayerImage'
 import { allStats } from '../../utils/computeHelpers'
 import DashboardTableHeader from './DashboardTableHeader'
 import { getPlayerImage, getFirstLastShortened } from '../../apollo/dataSelectors'
-import { Text } from '../general/TextComponents'
+import { Text } from '../shared/TextComponents'
 
 const Table = styled(Box)`
     max-height: 500px;

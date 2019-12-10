@@ -15,7 +15,7 @@ import {
     getGameCount,
     getFirstLastShortened,
 } from '../../apollo/dataSelectors'
-import { Title, Text } from '../general/TextComponents'
+import { Title, Text } from '../shared/TextComponents'
 import Loader from '../shared/Loader'
 
 const playingProbToColor = {

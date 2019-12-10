@@ -1,19 +1,19 @@
 import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
-import { Box, Button } from 'grommet'
+import { Box } from 'grommet'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 
 import TradeSearch from './TradeSearch'
 import { MIN_CHARS } from '../teamBuilder/TeamBuilderContext'
 import { SEARCH_PLAYERS_QUERY, GET_PLAYER_STATS_QUERY, MY_STATS_QUERY } from '../../apollo/queries'
 import SentAndReceived from './SentAndReceived'
-import MyStats from './MyStats'
+import MyStats from '../dashboard/MyStats'
 import Loader from '../shared/Loader'
 import { computeTeamStatsAverages } from '../../utils/computeHelpers'
 import FallbackMessage from '../general/FallbackMessage'
 import { NETWORK_ERROR_MESSAGE } from '../../utils/strings'
-import { Title, Text } from '../general/TextComponents'
-import { RoundedButton } from '../general/Buttons'
+import { Title, Text } from '../shared/TextComponents'
+import { RoundedButton } from '../shared/Buttons'
 
 export const MAX_PLAYERS_TRADED = 4
 
@@ -154,7 +154,7 @@ export default function TradeSimulator() {
                     </TradedPlayers>
                     <SimulateTradeButton
                         inverted
-                        label={getPlayerStatsLoading ? <Loader size={20} /> : <b>Simulate Trade</b>}
+                        label={getPlayerStatsLoading ? <Loader size={20} /> : 'Simulate Trade'}
                         onClick={onSimulateTrade}
                     />
                 </Box>

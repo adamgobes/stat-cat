@@ -5,7 +5,7 @@ import { Box } from 'grommet'
 import PlayerImage from '../shared/PlayerImage'
 import AddPlayerInput from '../teamBuilder/playerSearch/AddPlayerInput'
 import { getFirstLastShortened, getPlayerImage } from '../../apollo/dataSelectors'
-import { Text } from '../general/TextComponents'
+import { Text } from '../shared/TextComponents'
 
 const TRADE_SEARCH_WIDTH = 320
 
@@ -74,7 +74,7 @@ export default function TradeSearch({
             <AddPlayerInput
                 onPlayerInputChange={handleInputChange}
                 width={TRADE_SEARCH_WIDTH}
-                value={searchValue}
+                inputValue={searchValue}
                 suggestions={renderSuggestions()}
                 dropTarget={searchRef.current}
                 loading={loading}

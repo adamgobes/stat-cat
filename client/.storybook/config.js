@@ -1,7 +1,7 @@
 import React from 'react'
 import { configure, addDecorator } from '@storybook/react'
 import { Grommet } from 'grommet'
-import { theme } from '../src/App'
+import theme from '../src/theme'
 import '../src/index.css'
 
 const req = require.context('../src/components', true, /\.stories.js$/)

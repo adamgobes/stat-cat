@@ -4,7 +4,7 @@ import { Box } from 'grommet'
 import { LinkUp, LinkDown } from 'grommet-icons'
 
 import DashboardTableHeader, { TableRow } from './DashboardTableHeader'
-import { Text } from '../general/TextComponents'
+import { Text } from '../shared/TextComponents'
 
 import basketball from '../../assets/images/basketball.png'
 import assistIcon from '../../assets/images/assist-icon.png'

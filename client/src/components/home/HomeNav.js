@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 
-import { TextLogo } from '../general/TextComponents'
-import { RoundedButton } from '../general/Buttons'
+import { TextLogo } from '../shared/TextComponents'
+import { RoundedButton } from '../shared/Buttons'
 import StyledLink from '../shared/StyledLink'
 
 const NavWrapper = styled(Box)`

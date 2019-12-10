@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { TeamBuilderContextProvider } from '../teamBuilder/TeamBuilderContext'
 import TeamBuilder from '../teamBuilder/TeamBuilder'
-import TradeSimulator from '../dashboard/TradeSimulator'
+import TradeSimulator from '../tradeSimulator/TradeSimulator'
 import Dashboard from '../dashboard/Dashboard'
 import { TOGGLE_NAV, AppContext } from './AppContext'
 import { useWindowDimensions } from '../../utils/customHooks'

@@ -11,8 +11,8 @@ import tradeScreenshot from '../../assets/images/trade_screenshot.png'
 import safariTop from '../../assets/images/safari-top.png'
 import StyledLink from '../shared/StyledLink'
 import Footer from './Footer'
-import { Title, Text, Subheader, TextLogo } from '../general/TextComponents'
-import { RoundedButton } from '../general/Buttons'
+import { Title, Text, Subheader } from '../shared/TextComponents'
+import { RoundedButton } from '../shared/Buttons'
 
 const FirstBlock = styled(Box)`
     width: 100%;

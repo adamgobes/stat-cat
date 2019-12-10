@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Box } from 'grommet'
 import { Previous, Next } from 'grommet-icons'
 
-import { Text } from '../general/TextComponents'
+import { Text } from '../shared/TextComponents'
 
 const PaginationComponent = styled(Box)`
     position: absolute;

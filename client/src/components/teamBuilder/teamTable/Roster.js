@@ -6,8 +6,8 @@ import PlayerImage from '../../shared/PlayerImage'
 import AddRemovePlayerButton from '../AddRemovePlayerButton'
 import Loader from '../../shared/Loader'
 import { getFirstLastShortened, getPlayerImage } from '../../../apollo/dataSelectors'
-import { Text, Title } from '../../general/TextComponents'
-import { RoundedButton } from '../../general/Buttons'
+import { Text, Title } from '../../shared/TextComponents'
+import { RoundedButton } from '../../shared/Buttons'
 
 const RosterWrapper = styled(Box)`
     background-color: ${props => props.theme.global.colors.brand};

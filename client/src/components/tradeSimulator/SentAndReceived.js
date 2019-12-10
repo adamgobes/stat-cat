@@ -4,7 +4,7 @@ import { Box } from 'grommet'
 
 import PlayerImage from '../shared/PlayerImage'
 import AddRemovePlayerButton from '../teamBuilder/AddRemovePlayerButton'
-import { Subheader, Text } from '../general/TextComponents'
+import { Subheader, Text } from '../shared/TextComponents'
 
 const ComponentWrapper = styled(Box)`
     min-height: 300px;

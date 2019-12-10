@@ -4,8 +4,8 @@ import { Box, TextInput, Button } from 'grommet'
 import styled from 'styled-components'
 import cookie from 'react-cookies'
 
-import { Title, Text } from '../general/TextComponents'
-import { RoundedButton } from '../general/Buttons'
+import { Title, Text } from '../shared/TextComponents'
+import { RoundedButton } from '../shared/Buttons'
 import Loader from '../shared/Loader'
 import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../apollo/mutations'
 import loginRegisterReducer, {

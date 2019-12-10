@@ -12,8 +12,8 @@ import Loader from '../shared/Loader'
 import { computeTeamStatsAverages } from '../../utils/computeHelpers'
 import FallbackMessage from '../general/FallbackMessage'
 import { NETWORK_ERROR_MESSAGE } from '../../utils/strings'
-import { Title, Text } from '../general/TextComponents'
-import { RoundedButton } from '../general/Buttons'
+import { Title, Text } from '../shared/TextComponents'
+import { RoundedButton } from '../shared/Buttons'
 
 export const MAX_PLAYERS_TRADED = 4
 

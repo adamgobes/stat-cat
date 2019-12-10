@@ -6,7 +6,7 @@ import AddRemovePlayerButton from '../AddRemovePlayerButton'
 import Loader from '../../shared/Loader'
 import PlayerImage from '../../shared/PlayerImage'
 import { getPlayerImage, getFullName } from '../../../apollo/dataSelectors'
-import { Text } from '../../general/TextComponents'
+import { Text } from '../../shared/TextComponents'
 
 const SuggestionsGridWrapper = styled(Box)`
     width: 80%;

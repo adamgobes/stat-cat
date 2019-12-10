@@ -5,7 +5,7 @@ import { Box } from 'grommet'
 import PlayerImage from '../shared/PlayerImage'
 import AddPlayerInput from '../teamBuilder/playerSearch/AddPlayerInput'
 import { getFirstLastShortened, getPlayerImage } from '../../apollo/dataSelectors'
-import { Text } from '../general/TextComponents'
+import { Text } from '../shared/TextComponents'
 
 const TRADE_SEARCH_WIDTH = 320
 

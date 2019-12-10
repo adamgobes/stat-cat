@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 
-import { Text } from '../general/TextComponents'
+import { Text } from '../shared/TextComponents'
 
 const TableHeaderText = styled(Text)`
     color: ${props => props.theme.global.colors.brand};

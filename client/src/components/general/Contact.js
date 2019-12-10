@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import { Box, TextInput, TextArea } from 'grommet'
 import { send } from 'emailjs-com'
 
-import { Title, Text } from './TextComponents'
+import { Title, Text } from '../shared/TextComponents'
 import HomeNav from '../home/HomeNav'
-import { RoundedButton } from './Buttons'
+import { RoundedButton } from '../shared/Buttons'
 import Loader from '../shared/Loader'
 
 const ContactForm = styled(Box)``

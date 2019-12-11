@@ -47,7 +47,7 @@ export default function Nav({ showButtons = true }) {
                 <Box direction="row">
                     <Box
                         justify="center"
-                        style={{ cursor: 'pointerr' }}
+                        style={{ cursor: 'pointer' }}
                         onClick={() => history.push('/')}
                     >
                         <TextLogo color="black">statcat</TextLogo>

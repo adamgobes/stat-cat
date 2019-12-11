@@ -15,6 +15,7 @@ import loginRegisterReducer, {
     changeIsLogin,
 } from './reducer'
 import HomeNav from '../home/HomeNav'
+import Footer from '../home/Footer'
 
 const FormInput = styled(TextInput)`
     border-radius: 10px;
@@ -102,13 +103,7 @@ function LoginRegister({ history, location }) {
     }
 
     return (
-        <Box
-            pad="large"
-            justify="center"
-            align="center"
-            className="container"
-            onKeyDown={handleEnterClicked}
-        >
+        <Box style={{ marginTop: '16vh' }} align="center" onKeyDown={handleEnterClicked}>
             <HomeNav showButtons={false} />
             <Title>{`${isLogin ? 'Log in' : 'Create an Account'}`}</Title>
             <Text style={{ marginTop: '-10px' }}>
@@ -172,6 +167,7 @@ function LoginRegister({ history, location }) {
                     {`Click here to ${isLogin ? 'register' : 'login'}`}
                 </Text>
             </Box>
+            <Footer />
         </Box>
     )
 }

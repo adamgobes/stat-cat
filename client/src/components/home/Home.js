@@ -14,6 +14,10 @@ import Footer from './Footer'
 import { Title, Text, Subheader } from '../shared/TextComponents'
 import { RoundedButton } from '../shared/Buttons'
 
+const HomeWrapper = styled(Box)`
+    position: relative;
+`
+
 const FirstBlock = styled(Box)`
     width: 100%;
     padding: 50px 0 10px 0;
@@ -67,7 +71,7 @@ const SVGWrapper = styled(Box)`
 `
 
 const GetStartedInput = styled(TextInput)`
-    width: 220px;
+    width: 240px;
     border-radius: 10px;
     @media (max-width: 400px) {
         width: 120px;
@@ -89,7 +93,12 @@ const GetStartedButton = styled(RoundedButton)`
 const SecondBlock = styled(Box)`
     background: ${props => props.theme.global.colors.backdrop};
     width: 100%;
-    padding: 40px 0 100px 0;
+    padding: 40px 0 180px 0;
+`
+
+const ProductFeatureButtonsWrapper = styled(Box)`
+    width: 80%;
+    margin: 14px 0 40px 0;
 `
 
 const ProductFeatureButton = styled(Box)`
@@ -164,7 +173,7 @@ const Home = () => {
     const [currentFeature, setCurrentFeature] = useState(features[0].name)
     const [email, setEmail] = useState('')
     return (
-        <Box>
+        <HomeWrapper>
             <HomeNav />
             <FirstBlock align="center" justify="center">
                 <FirstBlockElement direction="column" align="center">
@@ -196,7 +205,7 @@ const Home = () => {
                             </StyledLink>
                         </Box>
                         <Box>
-                            <Text style={{ opacity: '0.8', fontSize: '0.6em' }}>
+                            <Text style={{ opacity: '0.8', fontSize: '0.7em' }}>
                                 Already using statcat? &nbsp;
                                 <StyledLink
                                     to={{
@@ -223,7 +232,7 @@ const Home = () => {
                 <HomePageHeader color="black">
                     Build your team. See your stats. Simulate a trade.
                 </HomePageHeader>
-                <Box direction="row" justify="evenly" style={{ margin: '40px 0', width: '80%' }}>
+                <ProductFeatureButtonsWrapper direction="row" justify="evenly">
                     {features.map(({ name, Icon }) => (
                         <ProductFeatureButton
                             key={name}
@@ -248,7 +257,7 @@ const Home = () => {
                             </ProductFeatureHeader>
                         </ProductFeatureButton>
                     ))}
-                </Box>
+                </ProductFeatureButtonsWrapper>
                 <Box align="center">
                     <SafariTopWrapper>
                         <img src={safariTop} height="100%" width="100%" alt="safari-top" />
@@ -265,7 +274,7 @@ const Home = () => {
                 </Box>
             </SecondBlock>
             <Footer />
-        </Box>
+        </HomeWrapper>
     )
 }
 

@@ -40,6 +40,7 @@ const WarningMessage = styled(Subheader)`
     color: black;
     margin-top: 50px;
     text-align: center;
+    font-weight: normal;
 `
 
 const SVGWrapper = styled(Box)`
@@ -129,7 +130,7 @@ function TeamBuilder({ history }) {
                     <>
                         <WarningMessage>{warningMessage}</WarningMessage>
 
-                        {warningMessage === NOT_ENOUGH_CHARS_WARNING && (
+                        {!warningMessage && (
                             <SVGWrapper margin="40">
                                 <SearchPlaceholderGraphic />
                             </SVGWrapper>

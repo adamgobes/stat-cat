@@ -7,17 +7,24 @@ import { Title, Text } from '../shared/TextComponents'
 import HomeNav from '../home/HomeNav'
 import { RoundedButton } from '../shared/Buttons'
 import Loader from '../shared/Loader'
+import Footer from '../home/Footer'
 
-const ContactForm = styled(Box)``
+const ContactForm = styled(Box)`
+    width: 50%;
+`
 
 const FormInput = styled(TextInput)`
+    width: 100%;
     border-radius: 10px;
-    width: 300px;
-    margin: 10px 0;
+    margin: 10px 0px;
 `
 
 const MessageWrapper = styled(Box)`
     height: 250px;
+`
+
+const NameEmailWrapper = styled(Box)`
+    width: 48%;
 `
 
 export default function Contact() {
@@ -62,37 +69,46 @@ export default function Contact() {
 
     return (
         <Box pad="large" justify="center" align="center">
-            <HomeNav showButtons={false} />
+            <HomeNav showButtons />
             {result.length === 0 && (
                 <>
-                    <Title style={{ marginTop: '40px' }}>
+                    <Title style={{ marginTop: '70px' }}>
                         Love statcat? Hate it? Want a new feature?
                     </Title>
                     <Text style={{ margin: '-10px 0 10px 0', fontSize: '1.3em' }}>
                         Drop us a line and get in touch
                     </Text>
                     <ContactForm>
-                        <FormInput
-                            size="medium"
-                            name="name"
-                            placeholder="Name"
-                            value={name}
-                            onChange={e => setName(e.target.value)}
-                        />
-                        <FormInput
-                            size="medium"
-                            name="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                        />
-                        <FormInput
-                            size="medium"
-                            name="subject"
-                            placeholder="Subject"
-                            value={subject}
-                            onChange={e => setSubject(e.target.value)}
-                        />
+                        <Box direction="row">
+                            <NameEmailWrapper style={{ marginRight: '2%' }}>
+                                <FormInput
+                                    size="medium"
+                                    name="name"
+                                    placeholder="Name"
+                                    value={name}
+                                    onChange={e => setName(e.target.value)}
+                                    style={{ marginRight: '20px' }}
+                                />
+                            </NameEmailWrapper>
+                            <NameEmailWrapper style={{ marginLeft: '2%' }}>
+                                <FormInput
+                                    size="medium"
+                                    name="email"
+                                    placeholder="Email"
+                                    value={email}
+                                    onChange={e => setEmail(e.target.value)}
+                                />
+                            </NameEmailWrapper>
+                        </Box>
+                        <Box>
+                            <FormInput
+                                size="medium"
+                                name="subject"
+                                placeholder="Subject"
+                                value={subject}
+                                onChange={e => setSubject(e.target.value)}
+                            />
+                        </Box>
                         <MessageWrapper>
                             <TextArea
                                 fill
@@ -102,12 +118,15 @@ export default function Contact() {
                                 onChange={e => setMessage(e.target.value)}
                             />
                         </MessageWrapper>
-                        <RoundedButton
-                            inverted
-                            label={loading ? <Loader size={20} /> : 'Submit'}
-                            disabled={!formValid()}
-                            onClick={() => handleFormSubmit()}
-                        />
+                        <Box align="center">
+                            <RoundedButton
+                                width={300}
+                                inverted
+                                label={loading ? <Loader size={20} /> : 'Submit'}
+                                disabled={!formValid()}
+                                onClick={() => handleFormSubmit()}
+                            />
+                        </Box>
                     </ContactForm>
                 </>
             )}

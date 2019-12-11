@@ -57,7 +57,7 @@ const AddPlayerInput = ({
                 width={width}
                 value={inputValue}
                 onChange={onPlayerInputChange}
-                placeholder="Search for Players"
+                placeholder="Search for players"
                 focusIndicator={false}
                 plain
             />

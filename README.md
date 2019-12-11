@@ -6,4 +6,4 @@ Build your team ![Team Builder](https://gifyu.com/image/vBeC)
 
 See your stats ![Dashboard](https://gifyu.com/image/vBeY)
 
-Simulate a trade ![Trade Simulator](https://s5.gifyu.com/images/trade_speedup.gif)](https://gifyu.com/image/vBe)
+Simulate a trade ![Trade Simulator](https://s5.gifyu.com/images/trade_speedup.gif)

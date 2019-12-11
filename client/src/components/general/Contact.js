@@ -9,6 +9,12 @@ import { RoundedButton } from '../shared/Buttons'
 import Loader from '../shared/Loader'
 import Footer from '../home/Footer'
 
+const ContactWrapper = styled(Box)`
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 160px;
+`
+
 const ContactForm = styled(Box)`
     width: 50%;
 `
@@ -68,7 +74,7 @@ export default function Contact() {
     }
 
     return (
-        <Box pad="large" justify="center" align="center">
+        <ContactWrapper pad="large" justify="center" align="center">
             <HomeNav showButtons />
             {result.length === 0 && (
                 <>
@@ -133,6 +139,7 @@ export default function Contact() {
             {result.length !== 0 && (
                 <Title style={{ marginTop: '90px', fontSize: '1.4em' }}>{result}</Title>
             )}
-        </Box>
+            <Footer />
+        </ContactWrapper>
     )
 }

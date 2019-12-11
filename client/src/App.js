@@ -9,6 +9,7 @@ import LoginRegister from './components/auth/LoginRegister'
 import ApolloWrapper from './apollo/ApolloWrapper'
 import theme from './theme'
 import StatCatApp from './components/general/StatCatApp'
+import About from './components/general/About'
 
 const App = () => {
     const isLoggedIn = () => !!cookie.load('authToken')
@@ -31,6 +32,7 @@ const App = () => {
                     <Route exact path="/auth" component={LoginRegister} />
                     <Route exact path="/home" component={Home} />
                     <Route exact path="/contact" component={Contact} />
+                    <Route exact path="/about" component={About} />
 
                     <Route path="/app" component={StatCatApp} />
                 </Grommet>

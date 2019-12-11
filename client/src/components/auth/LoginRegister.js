@@ -1,6 +1,6 @@
 import React, { useReducer, useCallback, useMemo } from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { Box, TextInput, Button } from 'grommet'
+import { Box, TextInput } from 'grommet'
 import styled from 'styled-components'
 import cookie from 'react-cookies'
 
@@ -15,18 +15,12 @@ import loginRegisterReducer, {
     changeIsLogin,
 } from './reducer'
 import HomeNav from '../home/HomeNav'
-import Footer from '../home/Footer'
 
 const FormInput = styled(TextInput)`
     border-radius: 10px;
     width: 300px;
     margin: 10px 0;
     color: ${props => props.theme.global.colors.brand};
-`
-
-const StyledButton = styled(Button)`
-    background: ${props => props.theme.global.colors.brand};
-    color: white;
 `
 
 function LoginRegister({ history, location }) {
@@ -103,7 +97,12 @@ function LoginRegister({ history, location }) {
     }
 
     return (
-        <Box style={{ marginTop: '16vh' }} align="center" onKeyDown={handleEnterClicked}>
+        <Box
+            style={{ minHeight: '100vh' }}
+            align="center"
+            justify="center"
+            onKeyDown={handleEnterClicked}
+        >
             <HomeNav showButtons={false} />
             <Title>{`${isLogin ? 'Log in' : 'Create an Account'}`}</Title>
             <Text style={{ marginTop: '-10px' }}>
@@ -167,7 +166,6 @@ function LoginRegister({ history, location }) {
                     {`Click here to ${isLogin ? 'register' : 'login'}`}
                 </Text>
             </Box>
-            <Footer />
         </Box>
     )
 }

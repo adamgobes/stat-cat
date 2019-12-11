@@ -7,6 +7,7 @@ import { Title, Text } from '../shared/TextComponents'
 import HomeNav from '../home/HomeNav'
 import { RoundedButton } from '../shared/Buttons'
 import Loader from '../shared/Loader'
+import Footer from '../home/Footer'
 
 const ContactForm = styled(Box)`
     width: 50%;

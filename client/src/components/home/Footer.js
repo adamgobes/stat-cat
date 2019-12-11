@@ -6,12 +6,12 @@ import { Box } from 'grommet'
 import { Subheader, TextLogo } from '../shared/TextComponents'
 
 const FooterWrapper = styled(Box)`
-    position: relative;
+    position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     background: ${props => props.theme.global.colors.brand};
-    padding: 36px 0;
+    padding: 26px 0;
 `
 const FooterItems = styled(Box)`
     width: 80%;
@@ -39,7 +39,11 @@ function Footer() {
     return (
         <FooterWrapper align="center">
             <FooterItems direction="row" justify="between">
-                <Box direction="row">
+                <Box
+                    direction="row"
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => history.push('/home')}
+                >
                     <TextLogo color="white">statcat</TextLogo>
                 </Box>
                 <Box direction="row" align="center" justify="center">

@@ -52,6 +52,7 @@ const WeeklyOverviewWrapper = styled(Box)`
 
 const WeeklyOverviewTitle = styled(Title)`
     margin: 20px;
+    text-align: center;
 `
 
 const WeeklyOverviewText = styled(Text)`

@@ -55,7 +55,7 @@ export default function Dashboard() {
 
     if (weeklyOverviewLoading && statsLoading) return <Loader size={80} />
 
-    if (weeklyOverviewData.myTeam.players.length === 0)
+    if (!weeklyOverviewLoading && weeklyOverviewData.myTeam.players.length === 0)
         return <FallbackMessage message={TEAM_EMPTY_MESSAGE} />
 
     return (

@@ -33,6 +33,12 @@ const PlayerText = styled(Box)`
     color: ${props => (props.isTraded ? 'white' : '')};
 `
 
+const Truncated = styled(Text)`
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`
+
 const findStat = (statsArray, stat) => statsArray.find(s => s.category === stat).value
 
 function PlayerStats({ players }) {
@@ -85,7 +91,7 @@ function PlayerStats({ players }) {
                             basis="small"
                             isTraded={player.isTraded}
                         >
-                            <Text>{getFirstLastShortened(player)}</Text>
+                            <Truncated>{getFirstLastShortened(player)}</Truncated>
                         </PlayerText>
                         <PlayerText
                             direction="row"

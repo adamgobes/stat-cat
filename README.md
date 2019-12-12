@@ -3,7 +3,7 @@ Let's leave the spreadsheets to the people on Wall Street. Statcat was built to 
 
 Build your team
 
-![Teambuilder](https://s5.gifyu.com/images/teambuilderf13cc429ed7fb148.gif)
+![Teambuilder](https://s5.gifyu.com/images/teambuildere24d0f34b4979c8a.gif)
 
 
 See your stats 

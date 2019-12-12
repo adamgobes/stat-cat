@@ -8,7 +8,7 @@ Build your team
 
 See your stats 
 
-![Dashboard](https://media.giphy.com/media/ftqxbf3qBGaDp8s3qt/giphy.gif)
+![Dashboard](https://s5.gifyu.com/images/dashboard.gif)
 
 Simulate a trade 
 

@@ -126,7 +126,10 @@ export function getLastDayOfWeek(startDate: moment.Moment): moment.Moment {
 }
 
 export function isActive(player): boolean {
-    return player.currentRosterStatus === 'ROSTER'
+    return (
+        player.currentRosterStatus === 'ROSTER' ||
+        player.currentRosterStatus === 'ASSIGNED_TO_MINORS'
+    )
 }
 
 export const TIME_FRAMES = {

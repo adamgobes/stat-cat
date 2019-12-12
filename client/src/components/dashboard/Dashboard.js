@@ -9,7 +9,7 @@ import WeeklyOverview from './WeeklyOverview'
 import MyStats from './MyStats'
 import { computeTeamStatsAverages, timeFrames } from '../../utils/computeHelpers'
 import FallbackMessage from '../general/FallbackMessage'
-import { NETWORK_ERROR_MESSAGE } from '../../utils/strings'
+import { NETWORK_ERROR_MESSAGE, TEAM_EMPTY_MESSAGE } from '../../utils/strings'
 
 const DashboardWrapper = styled(Box)`
     position: relative;
@@ -54,6 +54,9 @@ export default function Dashboard() {
     if (weeklyOverviewError) return <FallbackMessage message={NETWORK_ERROR_MESSAGE} showReload />
 
     if (weeklyOverviewLoading && statsLoading) return <Loader size={80} />
+
+    if (weeklyOverviewData.myTeam.players.length === 0)
+        return <FallbackMessage message={TEAM_EMPTY_MESSAGE} />
 
     return (
         <DashboardWrapper align="center" justify="start">

@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button } from 'grommet'
 
+import Loader from './Loader'
+
 const StyledRoundedButton = styled(Button)`
     width: ${props => props.width}px;
     border-radius: 20px;
@@ -13,13 +15,22 @@ const StyledRoundedButton = styled(Button)`
     font-family: Roboto;
 `
 
-export function RoundedButton({ className, style, inverted = false, width, ...otherProps }) {
+export function RoundedButton({
+    className,
+    style,
+    loading,
+    label,
+    inverted = false,
+    width,
+    ...otherProps
+}) {
     return (
         <StyledRoundedButton
             inverted={inverted}
             style={style}
             width={width}
             className={className}
+            label={loading ? <Loader size={20} /> : label}
             {...otherProps}
         />
     )

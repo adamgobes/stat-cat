@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/main.css",
+    "main.js": "/main.ff749e25b8ec4c0acb8f.bundle.js",
+    "main.css.map": "/main.css.map",
+    "main.js.map": "/main.ff749e25b8ec4c0acb8f.bundle.js.map",
+    "runtime~main.js": "/runtime~main.ff749e25b8ec4c0acb8f.bundle.js",
+    "runtime~main.js.map": "/runtime~main.ff749e25b8ec4c0acb8f.bundle.js.map",
+    "vendors~main.js": "/vendors~main.ff749e25b8ec4c0acb8f.bundle.js",
+    "vendors~main.js.map": "/vendors~main.ff749e25b8ec4c0acb8f.bundle.js.map",
+    "iframe.html": "/iframe.html",
+    "precache-manifest.fc45cb356d2474cfb979457422384098.js": "/precache-manifest.fc45cb356d2474cfb979457422384098.js",
+    "service-worker.js": "/service-worker.js",
+    "static/media/assist-icon.png": "/static/media/assist-icon.b13e276c.png",
+    "static/media/basketball.png": "/static/media/basketball.234584b0.png",
+    "static/media/block.png": "/static/media/block.26db6405.png",
+    "static/media/effiency.png": "/static/media/effiency.0a051c7c.png",
+    "static/media/lock.png": "/static/media/lock.d0b9e1fd.png",
+    "static/media/money-bag.png": "/static/media/money-bag.e4512bda.png",
+    "static/media/player.png": "/static/media/player.058f7fb6.png",
+    "static/media/rebound-icon.png": "/static/media/rebound-icon.ddb1bf26.png",
+    "static/media/three-pointer.png": "/static/media/three-pointer.37d22b19.png",
+    "static/media/turnover.png": "/static/media/turnover.ce309e8d.png"
+  },
+  "entrypoints": [
+    "runtime~main.ff749e25b8ec4c0acb8f.bundle.js",
+    "vendors~main.ff749e25b8ec4c0acb8f.bundle.js",
+    "main.css",
+    "main.ff749e25b8ec4c0acb8f.bundle.js"
+  ]
+}

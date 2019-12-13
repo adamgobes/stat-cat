@@ -1,0 +1,34 @@
+html,
+body,
+#root,
+#root > div,
+.container {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+}
+
+::-webkit-input-placeholder {
+    font-family: 'Roboto';
+    opacity: 0.6;
+}
+
+::-moz-placeholder {
+    font-family: 'Roboto';
+    opacity: 0.6;
+}
+
+::-ms-input-placeholder {
+    font-family: 'Roboto';
+    opacity: 0.6;
+}
+
+::placeholder {
+    font-family: 'Roboto';
+    opacity: 0.6;
+}
+
+
+/*# sourceMappingURL=main.css.map*/

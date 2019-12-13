@@ -86,7 +86,8 @@ function Roster({ players, onRemovePlayer, onSaveTeam, saveTeamLoading }) {
             {players.length !== 0 && (
                 <RoundedButton
                     width={140}
-                    label={saveTeamLoading ? <Loader size={20} /> : 'Save Team'}
+                    loading={saveTeamLoading}
+                    label="Save Team"
                     onClick={onSaveTeam}
                 />
             )}

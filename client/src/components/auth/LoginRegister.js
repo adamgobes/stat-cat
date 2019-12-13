@@ -148,13 +148,8 @@ function LoginRegister({ history, location }) {
                 <Box align="center">
                     <RoundedButton
                         inverted
-                        label={
-                            loginLoading || registerLoading ? (
-                                <Loader size={20} />
-                            ) : (
-                                submitButtonString
-                            )
-                        }
+                        label={submitButtonString}
+                        loading={loginLoading || registerLoading}
                         onClick={submitForm}
                         style={{ opacity: formValid() ? 1 : 0.5, width: '200px' }}
                         disabled={!formValid()}

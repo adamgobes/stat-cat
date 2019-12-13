@@ -128,7 +128,8 @@ export default function Contact() {
                             <RoundedButton
                                 width={300}
                                 inverted
-                                label={loading ? <Loader size={20} /> : 'Submit'}
+                                loading={loading}
+                                label="Submit"
                                 disabled={!formValid()}
                                 onClick={() => handleFormSubmit()}
                             />

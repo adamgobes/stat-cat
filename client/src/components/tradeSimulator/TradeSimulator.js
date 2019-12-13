@@ -154,7 +154,8 @@ export default function TradeSimulator() {
                     </TradedPlayers>
                     <SimulateTradeButton
                         inverted
-                        label={getPlayerStatsLoading ? <Loader size={20} /> : 'Simulate Trade'}
+                        loading={getPlayerStatsLoading}
+                        label="Simulate Trade"
                         onClick={onSimulateTrade}
                     />
                 </Box>

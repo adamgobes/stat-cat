@@ -16,3 +16,8 @@ storiesOf(`${storyPath}`, module)
             <RoundedButton width={200} inverted label="Simulate Trade" />
         </Box>
     ))
+    .add('Loading', () => (
+        <Box pad="large">
+            <RoundedButton width={200} loading />
+        </Box>
+    ))

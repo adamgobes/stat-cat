@@ -24,7 +24,7 @@ const Loader = styled.div`
 
 export default function({ size = 20 }) {
     return (
-        <LoaderWrapper>
+        <LoaderWrapper data-testid="loader">
             <Loader size={size} />
         </LoaderWrapper>
     )

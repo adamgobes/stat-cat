@@ -1,5 +1,4 @@
 import React from 'react'
-import { act } from 'react-dom/test-utils'
 import { Grommet } from 'grommet'
 import { render, waitForElement } from '@testing-library/react'
 import { MockedProvider } from '@apollo/react-testing'

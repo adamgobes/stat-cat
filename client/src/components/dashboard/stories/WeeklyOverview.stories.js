@@ -9,6 +9,6 @@ const storyPath = 'Dashboard/Weekly Overview'
 
 storiesOf(`${storyPath}`, module).add('default', () => (
     <Box pad="large" style={{ width: '100%', height: '100%', background: '#EFF1F3' }}>
-        <WeeklyOverview data={weeklyOverviewData} />
+        <WeeklyOverview data={weeklyOverviewData.myTeam.players} />
     </Box>
 ))

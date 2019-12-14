@@ -16,7 +16,7 @@ storiesOf(`${storyPath}`, module).add('default', () => (
     <Box pad="large" style={{ width: '100%', height: '100%', background: '#EFF1F3' }}>
         <MyStats
             averages={averagesData}
-            players={myStatsData}
+            players={myStatsData.myTeam.players}
             timeFrames={{
                 showTimeFrames: true,
                 selectedTimeFrame: 'All',

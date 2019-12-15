@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grommet } from 'grommet'
-import { render, waitForElement } from '@testing-library/react'
+import { render, waitForElement, fireEvent, within, cleanup } from '@testing-library/react'
 import { MockedProvider } from '@apollo/react-testing'
 
 import theme from '../../../theme'
@@ -40,20 +40,38 @@ describe('Dashboard Tests', () => {
             </Grommet>
         )
     })
+
+    afterAll(() => {
+        cleanup()
+    })
+
     it('should render loading state initially', () => {
         const { getByTestId } = render(dashboardWithThemeAndProvider)
         const loader = getByTestId('loader')
 
         expect(loader).toBeDefined()
     })
-    it('renders without error', async () => {
-        const { getByText } = render(dashboardWithThemeAndProvider)
-        const weeklyOverviewHeader = await waitForElement(() => getByText('Weekly Overview'))
-        const teamStatsHeader = await waitForElement(() => getByText('Team Stats'))
-        const playerStatsHeader = await waitForElement(() => getByText('Player Stats'))
 
-        expect(weeklyOverviewHeader).toBeDefined()
-        expect(teamStatsHeader).toBeDefined()
-        expect(playerStatsHeader).toBeDefined()
+    it('renders the users weekly overview and stats', async () => {
+        const { getByText, getByTestId } = render(dashboardWithThemeAndProvider)
+
+        const myStatsContainer = await waitForElement(() => getByTestId('mystats'))
+        const weeklyOverviewContainer = await waitForElement(() => getByTestId('weeklyoverview'))
+
+        const playerName = within(weeklyOverviewContainer).getByText('L. James')
+
+        expect(playerName).toBeDefined()
+
+        const averageName = within(myStatsContainer).getByText('Points')
+        const averageValue = within(myStatsContainer).getByText('15.3')
+
+        expect(averageName).toBeDefined()
+        expect(averageValue).toBeDefined()
+
+        fireEvent.click(getByText('Player Stats'))
+
+        const playerPPG = within(myStatsContainer).getByText('L. James')
+
+        expect(playerPPG).toBeDefined()
     })
 })

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grommet } from 'grommet'
-import { render, waitForElement, fireEvent, within, cleanup } from '@testing-library/react'
+import { render, waitForElement, fireEvent, cleanup } from '@testing-library/react'
 import { MockedProvider } from '@apollo/react-testing'
 
 import theme from '../../../theme'
@@ -10,7 +10,11 @@ import {
     SEARCH_PLAYERS_QUERY,
     GET_PLAYER_STATS_QUERY,
 } from '../../../apollo/queries'
-import { searchData, getPlayerStatsData } from '../stories/tradeSimulatorStoriesData'
+import {
+    sendingSearchData,
+    getPlayerStatsData,
+    receivingSearchData,
+} from '../stories/tradeSimulatorStoriesData'
 import { myStatsData } from '../../dashboard/stories/dashboardStoriesData'
 
 const tradeSimulatorMocks = [
@@ -25,16 +29,34 @@ const tradeSimulatorMocks = [
     {
         request: {
             query: SEARCH_PLAYERS_QUERY,
-            variables: { filter: 'leb' },
+            variables: { filter: 'green' },
         },
         result: () => ({
-            data: searchData,
+            data: sendingSearchData,
+        }),
+    },
+    {
+        request: {
+            query: SEARCH_PLAYERS_QUERY,
+            variables: { filter: 'randle' },
+        },
+        result: () => ({
+            data: receivingSearchData,
+        }),
+    },
+    {
+        request: {
+            query: SEARCH_PLAYERS_QUERY,
+            variables: { filter: 'randle' },
+        },
+        result: () => ({
+            data: sendingSearchData,
         }),
     },
     {
         request: {
             query: GET_PLAYER_STATS_QUERY,
-            variables: { variables: { playerIds: ['1928'] } },
+            variables: { playerIds: ['9282'] },
         },
         result: () => ({
             data: getPlayerStatsData,
@@ -60,5 +82,32 @@ describe('Trade Simulator Tests', () => {
         const loader = getByTestId('loader')
 
         expect(loader).toBeDefined()
+    })
+
+    it('allows user to search for players, send and receive them, and simulate a trade', async () => {
+        const {
+            findAllByTestId,
+            findByTestId,
+            getByText,
+            getByPlaceholderText,
+            findByText,
+        } = render(tradeSimulatorWithThemeAndProvider)
+
+        const searchInput = await waitForElement(() => getByPlaceholderText('Search for players'))
+        fireEvent.change(searchInput, { target: { value: 'green' } })
+
+        expect((await findAllByTestId('trade-search-result')).length).toBe(3)
+
+        fireEvent.click(getByText('Send'))
+
+        fireEvent.change(searchInput, { target: { value: 'randle' } })
+
+        expect(await findByTestId('trade-search-result')).toBeDefined()
+
+        fireEvent.click(getByText('Receive'))
+
+        fireEvent.click(getByText('Simulate Trade'))
+
+        expect(await findByText('Delta')).toBeDefined()
     })
 })

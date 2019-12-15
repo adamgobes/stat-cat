@@ -52,7 +52,7 @@ export const receivedPlayers = [
     },
 ]
 
-export const searchData = {
+export const sendingSearchData = {
     allPlayers: [
         {
             id: '9477',
@@ -117,6 +117,22 @@ export const searchData = {
             position: 'SF',
             imageSrc:
                 'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201145.png',
+            __typename: 'Player',
+        },
+    ],
+}
+
+export const receivingSearchData = {
+    allPlayers: [
+        {
+            id: '9282',
+            firstName: 'Julius',
+            lastName: 'Randle',
+            fullName: 'Julius Randle',
+            currentTeam: { abbreviation: 'NYK', __typename: 'NbaTeam' },
+            position: 'C',
+            imageSrc:
+                'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203944.png',
             __typename: 'Player',
         },
     ],

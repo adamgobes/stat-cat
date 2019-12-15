@@ -28,19 +28,15 @@ const dashboardMocks = [
     },
 ]
 
+const dashboardWithThemeAndProvider = (
+    <Grommet theme={theme}>
+        <MockedProvider mocks={dashboardMocks} addTypename>
+            <Dashboard />
+        </MockedProvider>
+    </Grommet>
+)
+
 describe('Dashboard Tests', () => {
-    let dashboardWithThemeAndProvider
-
-    beforeAll(() => {
-        dashboardWithThemeAndProvider = (
-            <Grommet theme={theme}>
-                <MockedProvider mocks={dashboardMocks} addTypename>
-                    <Dashboard />
-                </MockedProvider>
-            </Grommet>
-        )
-    })
-
     afterAll(() => {
         cleanup()
     })

@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions'
 import { storiesOf } from '@storybook/react'
 
 import MyStats from '../MyStats'
-import { averagesData, playerData } from './dashboardStoriesData'
+import { averagesData, myStatsData } from './dashboardStoriesData'
 
 const storyPath = 'Dashboard/My Stats'
 
@@ -16,7 +16,7 @@ storiesOf(`${storyPath}`, module).add('default', () => (
     <Box pad="large" style={{ width: '100%', height: '100%', background: '#EFF1F3' }}>
         <MyStats
             averages={averagesData}
-            players={playerData}
+            players={myStatsData.myTeam.players}
             timeFrames={{
                 showTimeFrames: true,
                 selectedTimeFrame: 'All',

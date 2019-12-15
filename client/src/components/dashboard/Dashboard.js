@@ -61,13 +61,13 @@ export default function Dashboard() {
     return (
         <DashboardWrapper align="center" justify="start">
             <Box direction="row" justify="center" align="start">
-                <DashboardComponentWrapper>
+                <DashboardComponentWrapper data-testid="weeklyoverview">
                     <WeeklyOverview
                         data={!weeklyOverviewLoading && weeklyOverviewData.myTeam.players}
                         loading={weeklyOverviewLoading}
                     />
                 </DashboardComponentWrapper>
-                <DashboardComponentWrapper>
+                <DashboardComponentWrapper data-testid="mystats">
                     <MyStats
                         players={!statsLoading && statsData.myTeam.players}
                         averages={myTeamAverages}

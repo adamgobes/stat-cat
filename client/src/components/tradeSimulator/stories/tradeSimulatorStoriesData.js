@@ -55,17 +55,6 @@ export const receivedPlayers = [
 export const sendingSearchData = {
     allPlayers: [
         {
-            id: '9477',
-            firstName: 'Danny',
-            lastName: 'Green',
-            fullName: 'Danny Green',
-            currentTeam: { abbreviation: 'LAL', __typename: 'NbaTeam' },
-            position: 'SG',
-            imageSrc:
-                'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201980.png',
-            __typename: 'Player',
-        },
-        {
             id: '9228',
             firstName: 'Draymond',
             lastName: 'Green',
@@ -74,49 +63,6 @@ export const sendingSearchData = {
             position: 'PF',
             imageSrc:
                 'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203110.png',
-            __typename: 'Player',
-        },
-        {
-            id: '9316',
-            firstName: 'Gerald',
-            lastName: 'Green',
-            fullName: 'Gerald Green',
-            currentTeam: { abbreviation: 'HOU', __typename: 'NbaTeam' },
-            position: 'SG',
-            imageSrc:
-                'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/101123.png',
-            __typename: 'Player',
-        },
-        {
-            id: '9302',
-            firstName: 'JaMychal',
-            lastName: 'Green',
-            fullName: 'JaMychal Green',
-            currentTeam: { abbreviation: 'LAC', __typename: 'NbaTeam' },
-            position: 'PF',
-            imageSrc:
-                'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203210.png',
-            __typename: 'Player',
-        },
-        {
-            id: '17261',
-            firstName: 'Javonte',
-            lastName: 'Green',
-            fullName: 'Javonte Green',
-            currentTeam: { abbreviation: 'BOS', __typename: 'NbaTeam' },
-            position: 'SG',
-            imageSrc: null,
-            __typename: 'Player',
-        },
-        {
-            id: '9271',
-            firstName: 'Jeff',
-            lastName: 'Green',
-            fullName: 'Jeff Green',
-            currentTeam: { abbreviation: 'UTA', __typename: 'NbaTeam' },
-            position: 'SF',
-            imageSrc:
-                'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201145.png',
             __typename: 'Player',
         },
     ],

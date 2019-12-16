@@ -12,7 +12,7 @@ import { receivingSearchData as searchData } from '../../tradeSimulator/stories/
 
 const SEARCH_STRING = 'julius randle'
 
-const tradeSimulatorMocks = [
+const teamBuilderMocks = [
     {
         request: {
             query: MY_TEAM_QUERY,
@@ -35,7 +35,7 @@ const tradeSimulatorMocks = [
 
 const teamBuilderWithThemeAndProvider = (
     <Grommet theme={theme}>
-        <MockedProvider mocks={tradeSimulatorMocks} addTypename>
+        <MockedProvider mocks={teamBuilderMocks} addTypename>
             <TeamBuilderContextProvider>
                 <TeamBuilder />
             </TeamBuilderContextProvider>

@@ -42,6 +42,7 @@ export default function TradeSearch({
             ? suggestions.slice(0, 3).map((player, index, list) => ({
                   label: (
                       <Box
+                          data-testid="trade-search-result"
                           direction="row"
                           justify="evenly"
                           align="center"

@@ -28,19 +28,15 @@ const dashboardMocks = [
     },
 ]
 
+const dashboardWithThemeAndProvider = (
+    <Grommet theme={theme}>
+        <MockedProvider mocks={dashboardMocks} addTypename>
+            <Dashboard />
+        </MockedProvider>
+    </Grommet>
+)
+
 describe('Dashboard Tests', () => {
-    let dashboardWithThemeAndProvider
-
-    beforeAll(() => {
-        dashboardWithThemeAndProvider = (
-            <Grommet theme={theme}>
-                <MockedProvider mocks={dashboardMocks} addTypename>
-                    <Dashboard />
-                </MockedProvider>
-            </Grommet>
-        )
-    })
-
     afterAll(() => {
         cleanup()
     })
@@ -63,7 +59,7 @@ describe('Dashboard Tests', () => {
         expect(playerName).toBeDefined()
 
         const averageName = within(myStatsContainer).getByText('Points')
-        const averageValue = within(myStatsContainer).getByText('15.3')
+        const averageValue = within(myStatsContainer).getByText('14.8')
 
         expect(averageName).toBeDefined()
         expect(averageValue).toBeDefined()

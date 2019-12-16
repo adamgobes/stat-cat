@@ -46,15 +46,6 @@ const tradeSimulatorMocks = [
     },
     {
         request: {
-            query: SEARCH_PLAYERS_QUERY,
-            variables: { filter: 'randle' },
-        },
-        result: () => ({
-            data: sendingSearchData,
-        }),
-    },
-    {
-        request: {
             query: GET_PLAYER_STATS_QUERY,
             variables: { playerIds: ['9282'] },
         },

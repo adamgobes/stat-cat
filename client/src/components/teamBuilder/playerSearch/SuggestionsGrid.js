@@ -38,7 +38,12 @@ const SuggestionsGrid = ({ players, loading, onAddPlayer }) => (
                 gap={{ row: 'medium', column: 'none' }}
             >
                 {players.slice(0, 6).map(p => (
-                    <Box direction="column" align="center" key={p.id}>
+                    <Box
+                        direction="column"
+                        align="center"
+                        key={p.id}
+                        data-testid="team-builder-search-result"
+                    >
                         <PlayerImage src={getPlayerImage(p)} name={getFullName(p)} />
                         <AddPlayerButton handleClick={() => onAddPlayer(p)}>+</AddPlayerButton>
                         <PlayerName>{getFullName(p)}</PlayerName>

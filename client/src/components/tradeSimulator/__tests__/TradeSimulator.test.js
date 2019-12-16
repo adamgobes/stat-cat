@@ -17,6 +17,9 @@ import {
 } from '../stories/tradeSimulatorStoriesData'
 import { myStatsData } from '../../dashboard/stories/dashboardStoriesData'
 
+const SEARCH_STRING_SENDING = 'draymond green'
+const SEARCH_STRING_RECEIVING = 'julius randle'
+
 const tradeSimulatorMocks = [
     {
         request: {
@@ -29,7 +32,7 @@ const tradeSimulatorMocks = [
     {
         request: {
             query: SEARCH_PLAYERS_QUERY,
-            variables: { filter: 'green' },
+            variables: { filter: SEARCH_STRING_SENDING },
         },
         result: () => ({
             data: sendingSearchData,
@@ -38,7 +41,7 @@ const tradeSimulatorMocks = [
     {
         request: {
             query: SEARCH_PLAYERS_QUERY,
-            variables: { filter: 'randle' },
+            variables: { filter: SEARCH_STRING_RECEIVING },
         },
         result: () => ({
             data: receivingSearchData,
@@ -76,22 +79,18 @@ describe('Trade Simulator Tests', () => {
     })
 
     it('allows user to search for players, send and receive them, and simulate a trade', async () => {
-        const {
-            findAllByTestId,
-            findByTestId,
-            getByText,
-            getByPlaceholderText,
-            findByText,
-        } = render(tradeSimulatorWithThemeAndProvider)
+        const { findByTestId, getByText, getByPlaceholderText, findByText } = render(
+            tradeSimulatorWithThemeAndProvider
+        )
 
         const searchInput = await waitForElement(() => getByPlaceholderText('Search for players'))
-        fireEvent.change(searchInput, { target: { value: 'green' } })
+        fireEvent.change(searchInput, { target: { value: SEARCH_STRING_SENDING } })
 
-        expect((await findAllByTestId('trade-search-result')).length).toBe(3)
+        expect(await findByTestId('trade-search-result')).toBeDefined()
 
         fireEvent.click(getByText('Send'))
 
-        fireEvent.change(searchInput, { target: { value: 'randle' } })
+        fireEvent.change(searchInput, { target: { value: SEARCH_STRING_RECEIVING } })
 
         expect(await findByTestId('trade-search-result')).toBeDefined()
 

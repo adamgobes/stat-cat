@@ -38,6 +38,13 @@ export function fetchPlayerStatsSeason(playerId: string): Promise<GQLStat[]> {
     })
 }
 
+export function extractStats(statsObject): GQLStat[] {
+    return statCategories.map(c => ({
+        category: c.categoryName,
+        value: c.selector(statsObject),
+    }))
+}
+
 export async function fetchPlayerStatsTimeFrame(
     playerId: string,
     timeFrame: string

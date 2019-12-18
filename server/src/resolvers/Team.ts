@@ -11,11 +11,9 @@ export function owner(parent, args, context): GQLUser {
 
 // in DB players are stored as IDs, this resolver turns those IDs into actual player objects
 // resolves User.team.players
-export function players(parent): Array<Promise<GQLPlayer>> {
-    return parent.players.map(playerId =>
-        sportsFeedRequest(`players.json?player=${playerId}`).then(json => {
-            const { player } = json.players[0]
-
+export function players(parent): Promise<GQLPlayer[]> {
+    return sportsFeedRequest(`players.json?player=${parent.players.join(',')}`).then(json => {
+        return json.players.map(({ player }) => {
             return {
                 ...extractBasicInfo(player),
                 injury: player.currentInjury
@@ -25,5 +23,5 @@ export function players(parent): Array<Promise<GQLPlayer>> {
                     : null,
             }
         })
-    )
+    })
 }

@@ -13,11 +13,11 @@ export function sportsFeedRequest(path: string): Promise<any> {
     return fetch(`${process.env.sportsFeedUrl}/${path}`, config).then(res => res.json())
 }
 
-const fieldGoalSelector = 'stats.fieldGoals'
-const freeThrowsSelector = 'stats.freeThrows'
-const reboundsSelector = 'stats.rebounds'
-const offenseSelector = 'stats.offense'
-const defenseSelector = 'stats.defense'
+const fieldGoalSelector = 'fieldGoals'
+const freeThrowsSelector = 'freeThrows'
+const reboundsSelector = 'rebounds'
+const offenseSelector = 'offense'
+const defenseSelector = 'defense'
 
 export const statCategories = [
     {

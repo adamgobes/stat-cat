@@ -17,13 +17,6 @@ function calculateGameCount(teamId: string, startDate: string, endDate: string):
         .catch(err => 4)
 }
 
-export async function stats(parent, args, context): Promise<GQLStat[]> {
-    if (args.timeFrame && args.timeFrame !== TIME_FRAMES.ALL) {
-        return fetchPlayerStatsTimeFrame(parent.id, args.timeFrame)
-    }
-    return fetchPlayerStatsSeason(parent.id)
-}
-
 export function gameCountThisWeek(parent, args): Promise<number> {
     const currentTeam: GQLTeam = parent.currentTeam
     const firstDayOfWeek = getFirstDayOfWeek()

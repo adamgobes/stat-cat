@@ -15,7 +15,7 @@ export function players(parent): Promise<GQLPlayer[]> {
     return sportsFeedRequest(
         `${season}/player_stats_totals.json?player=${parent.players.join(',')}`
     ).then(json => {
-        return json.playerStatsTotals.map(({ player }) => {
+        return json.playerStatsTotals.map(({ player, stats }) => {
             return {
                 ...extractBasicInfo(player),
                 injury: player.currentInjury
@@ -23,9 +23,7 @@ export function players(parent): Promise<GQLPlayer[]> {
                           ...extractInjuryInfo(player),
                       }
                     : null,
-                stats: {
-                    ...extractStats(player.stats),
-                },
+                stats: extractStats(stats),
             }
         })
     })

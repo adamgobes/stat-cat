@@ -198,7 +198,7 @@ type TeamConnection {
 
 input TeamCreateInput {
   name: String!
-  owner: UserCreateOneWithoutTeamInput!
+  owner: UserCreateOneWithoutTeamsInput!
   players: TeamCreateplayersInput
 }
 
@@ -207,9 +207,9 @@ input TeamCreateManyInput {
   connect: [TeamWhereUniqueInput!]
 }
 
-input TeamCreateOneWithoutOwnerInput {
-  create: TeamCreateWithoutOwnerInput
-  connect: TeamWhereUniqueInput
+input TeamCreateManyWithoutOwnerInput {
+  create: [TeamCreateWithoutOwnerInput!]
+  connect: [TeamWhereUniqueInput!]
 }
 
 input TeamCreateplayersInput {
@@ -297,13 +297,13 @@ input TeamSubscriptionWhereInput {
 
 input TeamUpdateDataInput {
   name: String
-  owner: UserUpdateOneRequiredWithoutTeamInput
+  owner: UserUpdateOneRequiredWithoutTeamsInput
   players: TeamUpdateplayersInput
 }
 
 input TeamUpdateInput {
   name: String
-  owner: UserUpdateOneRequiredWithoutTeamInput
+  owner: UserUpdateOneRequiredWithoutTeamsInput
   players: TeamUpdateplayersInput
 }
 
@@ -328,18 +328,20 @@ input TeamUpdateManyMutationInput {
   players: TeamUpdateplayersInput
 }
 
+input TeamUpdateManyWithoutOwnerInput {
+  create: [TeamCreateWithoutOwnerInput!]
+  delete: [TeamWhereUniqueInput!]
+  connect: [TeamWhereUniqueInput!]
+  disconnect: [TeamWhereUniqueInput!]
+  update: [TeamUpdateWithWhereUniqueWithoutOwnerInput!]
+  upsert: [TeamUpsertWithWhereUniqueWithoutOwnerInput!]
+  deleteMany: [TeamScalarWhereInput!]
+  updateMany: [TeamUpdateManyWithWhereNestedInput!]
+}
+
 input TeamUpdateManyWithWhereNestedInput {
   where: TeamScalarWhereInput!
   data: TeamUpdateManyDataInput!
-}
-
-input TeamUpdateOneWithoutOwnerInput {
-  create: TeamCreateWithoutOwnerInput
-  update: TeamUpdateWithoutOwnerDataInput
-  upsert: TeamUpsertWithoutOwnerInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: TeamWhereUniqueInput
 }
 
 input TeamUpdateplayersInput {
@@ -356,15 +358,21 @@ input TeamUpdateWithWhereUniqueNestedInput {
   data: TeamUpdateDataInput!
 }
 
-input TeamUpsertWithoutOwnerInput {
-  update: TeamUpdateWithoutOwnerDataInput!
-  create: TeamCreateWithoutOwnerInput!
+input TeamUpdateWithWhereUniqueWithoutOwnerInput {
+  where: TeamWhereUniqueInput!
+  data: TeamUpdateWithoutOwnerDataInput!
 }
 
 input TeamUpsertWithWhereUniqueNestedInput {
   where: TeamWhereUniqueInput!
   update: TeamUpdateDataInput!
   create: TeamCreateInput!
+}
+
+input TeamUpsertWithWhereUniqueWithoutOwnerInput {
+  where: TeamWhereUniqueInput!
+  update: TeamUpdateWithoutOwnerDataInput!
+  create: TeamCreateWithoutOwnerInput!
 }
 
 input TeamWhereInput {
@@ -411,7 +419,7 @@ type User {
   name: String!
   email: String!
   password: String!
-  team: Team
+  teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team!]
 }
 
 type UserConnection {
@@ -424,7 +432,7 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
-  team: TeamCreateOneWithoutOwnerInput
+  teams: TeamCreateManyWithoutOwnerInput
 }
 
 input UserCreateOneInput {
@@ -432,12 +440,12 @@ input UserCreateOneInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateOneWithoutTeamInput {
-  create: UserCreateWithoutTeamInput
+input UserCreateOneWithoutTeamsInput {
+  create: UserCreateWithoutTeamsInput
   connect: UserWhereUniqueInput
 }
 
-input UserCreateWithoutTeamInput {
+input UserCreateWithoutTeamsInput {
   name: String!
   email: String!
   password: String!
@@ -492,14 +500,14 @@ input UserUpdateDataInput {
   name: String
   email: String
   password: String
-  team: TeamUpdateOneWithoutOwnerInput
+  teams: TeamUpdateManyWithoutOwnerInput
 }
 
 input UserUpdateInput {
   name: String
   email: String
   password: String
-  team: TeamUpdateOneWithoutOwnerInput
+  teams: TeamUpdateManyWithoutOwnerInput
 }
 
 input UserUpdateManyMutationInput {
@@ -515,14 +523,14 @@ input UserUpdateOneRequiredInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneRequiredWithoutTeamInput {
-  create: UserCreateWithoutTeamInput
-  update: UserUpdateWithoutTeamDataInput
-  upsert: UserUpsertWithoutTeamInput
+input UserUpdateOneRequiredWithoutTeamsInput {
+  create: UserCreateWithoutTeamsInput
+  update: UserUpdateWithoutTeamsDataInput
+  upsert: UserUpsertWithoutTeamsInput
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateWithoutTeamDataInput {
+input UserUpdateWithoutTeamsDataInput {
   name: String
   email: String
   password: String
@@ -533,9 +541,9 @@ input UserUpsertNestedInput {
   create: UserCreateInput!
 }
 
-input UserUpsertWithoutTeamInput {
-  update: UserUpdateWithoutTeamDataInput!
-  create: UserCreateWithoutTeamInput!
+input UserUpsertWithoutTeamsInput {
+  update: UserUpdateWithoutTeamsDataInput!
+  create: UserCreateWithoutTeamsInput!
 }
 
 input UserWhereInput {
@@ -595,7 +603,9 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
-  team: TeamWhereInput
+  teams_every: TeamWhereInput
+  teams_some: TeamWhereInput
+  teams_none: TeamWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

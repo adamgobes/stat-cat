@@ -100,7 +100,7 @@ function WeeklyOverview({ data, loading }) {
                     headers={['', 'Player Name', 'Injury', 'Playing Prob.', 'Games']}
                 />
                 {loading && (
-                    <div style={{ height: '100vh' }}>
+                    <div style={{ height: '60vh' }}>
                         <Loader size={50} />
                     </div>
                 )}

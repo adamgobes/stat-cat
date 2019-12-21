@@ -53,9 +53,9 @@ export const MY_STATS_QUERY = gql`
     ${BasicPlayerInfoFragment}
     query myStatsQuery($timeFrame: String) {
         myTeam {
-            players {
+            players(timeFrame: $timeFrame) {
                 ...BasicPlayerInfo
-                stats(timeFrame: $timeFrame) {
+                stats {
                     category
                     value
                 }

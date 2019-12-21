@@ -1,6 +1,11 @@
 import { GQLPlayer, GQLUser, GQLTeam, GQLLeagueLeader, GQLStat } from '../generated/gqlTypes'
 import { sportsFeedRequest, season, statCategories } from '../sportsFeed/api'
-import { extractBasicInfo, fetchPlayerStatsSeason, isActive } from '../sportsFeed/helpers'
+import {
+    extractBasicInfo,
+    fetchPlayerStatsSeason,
+    isActive,
+    getPlayersStats,
+} from '../sportsFeed/helpers'
 import { getUserId } from '../utils'
 
 function containsFilter(playerObj, filter: string): boolean {
@@ -28,10 +33,12 @@ export function allPlayers(parent, args): Promise<GQLPlayer[]> {
     )
 }
 
-export function myTeam(parent, args, context): GQLTeam {
+export async function myTeam(parent, args, context): Promise<GQLTeam> {
     const id: string = getUserId(context)
 
-    return context.prisma.user({ id }).team()
+    const team = await context.prisma.user({ id }).teams({ first: 1 })
+
+    return team[0]
 }
 
 export async function leagueLeaders(parent, args): Promise<GQLLeagueLeader[]> {
@@ -64,14 +71,18 @@ export async function leagueLeaders(parent, args): Promise<GQLLeagueLeader[]> {
 }
 
 export function getPlayerStats(parent, args) {
-    return args.playerIds.map(playerId =>
-        sportsFeedRequest(`players.json?player=${playerId}`).then(json => {
-            const { player } = json.players[0]
+    return sportsFeedRequest(`players.json?player=${args.playerIds.join(',')}`).then(
+        async ({ players }) => {
+            const playerIds: string[] = players.map(({ player }) => player.id.toString())
+            const stats: GQLStat[][] = await getPlayersStats(playerIds)
 
-            return {
-                ...extractBasicInfo(player),
-            }
-        })
+            return players.map(({ player }, i) => {
+                return {
+                    ...extractBasicInfo(player),
+                    stats: stats[i],
+                }
+            })
+        }
     )
 }
 

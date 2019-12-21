@@ -3,7 +3,7 @@ type User {
     name: String!
     email: String! @unique
     password: String!
-    team: Team
+    teams: [Team!]!
 }
 
 type Team {

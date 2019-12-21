@@ -20,7 +20,7 @@ type User {
     id: ID!
     email: String!
     name: String!
-    team: Team!
+    teams: [Team!]!
 }
 
 type AuthPayLoad {

@@ -313,7 +313,9 @@ export interface UserWhereInput {
   password_not_starts_with?: String;
   password_ends_with?: String;
   password_not_ends_with?: String;
-  team?: TeamWhereInput;
+  teams_every?: TeamWhereInput;
+  teams_some?: TeamWhereInput;
+  teams_none?: TeamWhereInput;
   AND?: UserWhereInput[] | UserWhereInput;
   OR?: UserWhereInput[] | UserWhereInput;
   NOT?: UserWhereInput[] | UserWhereInput;
@@ -381,12 +383,12 @@ export interface UserCreateInput {
   name: String;
   email: String;
   password: String;
-  team?: TeamCreateOneWithoutOwnerInput;
+  teams?: TeamCreateManyWithoutOwnerInput;
 }
 
-export interface TeamCreateOneWithoutOwnerInput {
-  create?: TeamCreateWithoutOwnerInput;
-  connect?: TeamWhereUniqueInput;
+export interface TeamCreateManyWithoutOwnerInput {
+  create?: TeamCreateWithoutOwnerInput[] | TeamCreateWithoutOwnerInput;
+  connect?: TeamWhereUniqueInput[] | TeamWhereUniqueInput;
 }
 
 export interface TeamCreateWithoutOwnerInput {
@@ -405,16 +407,16 @@ export interface TeamCreateManyInput {
 
 export interface TeamCreateInput {
   name: String;
-  owner: UserCreateOneWithoutTeamInput;
+  owner: UserCreateOneWithoutTeamsInput;
   players?: TeamCreateplayersInput;
 }
 
-export interface UserCreateOneWithoutTeamInput {
-  create?: UserCreateWithoutTeamInput;
+export interface UserCreateOneWithoutTeamsInput {
+  create?: UserCreateWithoutTeamsInput;
   connect?: UserWhereUniqueInput;
 }
 
-export interface UserCreateWithoutTeamInput {
+export interface UserCreateWithoutTeamsInput {
   name: String;
   email: String;
   password: String;
@@ -437,16 +439,29 @@ export interface UserUpdateDataInput {
   name?: String;
   email?: String;
   password?: String;
-  team?: TeamUpdateOneWithoutOwnerInput;
+  teams?: TeamUpdateManyWithoutOwnerInput;
 }
 
-export interface TeamUpdateOneWithoutOwnerInput {
-  create?: TeamCreateWithoutOwnerInput;
-  update?: TeamUpdateWithoutOwnerDataInput;
-  upsert?: TeamUpsertWithoutOwnerInput;
-  delete?: Boolean;
-  disconnect?: Boolean;
-  connect?: TeamWhereUniqueInput;
+export interface TeamUpdateManyWithoutOwnerInput {
+  create?: TeamCreateWithoutOwnerInput[] | TeamCreateWithoutOwnerInput;
+  delete?: TeamWhereUniqueInput[] | TeamWhereUniqueInput;
+  connect?: TeamWhereUniqueInput[] | TeamWhereUniqueInput;
+  disconnect?: TeamWhereUniqueInput[] | TeamWhereUniqueInput;
+  update?:
+    | TeamUpdateWithWhereUniqueWithoutOwnerInput[]
+    | TeamUpdateWithWhereUniqueWithoutOwnerInput;
+  upsert?:
+    | TeamUpsertWithWhereUniqueWithoutOwnerInput[]
+    | TeamUpsertWithWhereUniqueWithoutOwnerInput;
+  deleteMany?: TeamScalarWhereInput[] | TeamScalarWhereInput;
+  updateMany?:
+    | TeamUpdateManyWithWhereNestedInput[]
+    | TeamUpdateManyWithWhereNestedInput;
+}
+
+export interface TeamUpdateWithWhereUniqueWithoutOwnerInput {
+  where: TeamWhereUniqueInput;
+  data: TeamUpdateWithoutOwnerDataInput;
 }
 
 export interface TeamUpdateWithoutOwnerDataInput {
@@ -458,66 +473,10 @@ export interface TeamUpdateplayersInput {
   set?: ID_Input[] | ID_Input;
 }
 
-export interface TeamUpsertWithoutOwnerInput {
+export interface TeamUpsertWithWhereUniqueWithoutOwnerInput {
+  where: TeamWhereUniqueInput;
   update: TeamUpdateWithoutOwnerDataInput;
   create: TeamCreateWithoutOwnerInput;
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export interface TeamUpdateManyInput {
-  create?: TeamCreateInput[] | TeamCreateInput;
-  update?:
-    | TeamUpdateWithWhereUniqueNestedInput[]
-    | TeamUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | TeamUpsertWithWhereUniqueNestedInput[]
-    | TeamUpsertWithWhereUniqueNestedInput;
-  delete?: TeamWhereUniqueInput[] | TeamWhereUniqueInput;
-  connect?: TeamWhereUniqueInput[] | TeamWhereUniqueInput;
-  disconnect?: TeamWhereUniqueInput[] | TeamWhereUniqueInput;
-  deleteMany?: TeamScalarWhereInput[] | TeamScalarWhereInput;
-  updateMany?:
-    | TeamUpdateManyWithWhereNestedInput[]
-    | TeamUpdateManyWithWhereNestedInput;
-}
-
-export interface TeamUpdateWithWhereUniqueNestedInput {
-  where: TeamWhereUniqueInput;
-  data: TeamUpdateDataInput;
-}
-
-export interface TeamUpdateDataInput {
-  name?: String;
-  owner?: UserUpdateOneRequiredWithoutTeamInput;
-  players?: TeamUpdateplayersInput;
-}
-
-export interface UserUpdateOneRequiredWithoutTeamInput {
-  create?: UserCreateWithoutTeamInput;
-  update?: UserUpdateWithoutTeamDataInput;
-  upsert?: UserUpsertWithoutTeamInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface UserUpdateWithoutTeamDataInput {
-  name?: String;
-  email?: String;
-  password?: String;
-}
-
-export interface UserUpsertWithoutTeamInput {
-  update: UserUpdateWithoutTeamDataInput;
-  create: UserCreateWithoutTeamInput;
-}
-
-export interface TeamUpsertWithWhereUniqueNestedInput {
-  where: TeamWhereUniqueInput;
-  update: TeamUpdateDataInput;
-  create: TeamCreateInput;
 }
 
 export interface TeamScalarWhereInput {
@@ -564,13 +523,70 @@ export interface TeamUpdateManyDataInput {
   players?: TeamUpdateplayersInput;
 }
 
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface TeamUpdateManyInput {
+  create?: TeamCreateInput[] | TeamCreateInput;
+  update?:
+    | TeamUpdateWithWhereUniqueNestedInput[]
+    | TeamUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | TeamUpsertWithWhereUniqueNestedInput[]
+    | TeamUpsertWithWhereUniqueNestedInput;
+  delete?: TeamWhereUniqueInput[] | TeamWhereUniqueInput;
+  connect?: TeamWhereUniqueInput[] | TeamWhereUniqueInput;
+  disconnect?: TeamWhereUniqueInput[] | TeamWhereUniqueInput;
+  deleteMany?: TeamScalarWhereInput[] | TeamScalarWhereInput;
+  updateMany?:
+    | TeamUpdateManyWithWhereNestedInput[]
+    | TeamUpdateManyWithWhereNestedInput;
+}
+
+export interface TeamUpdateWithWhereUniqueNestedInput {
+  where: TeamWhereUniqueInput;
+  data: TeamUpdateDataInput;
+}
+
+export interface TeamUpdateDataInput {
+  name?: String;
+  owner?: UserUpdateOneRequiredWithoutTeamsInput;
+  players?: TeamUpdateplayersInput;
+}
+
+export interface UserUpdateOneRequiredWithoutTeamsInput {
+  create?: UserCreateWithoutTeamsInput;
+  update?: UserUpdateWithoutTeamsDataInput;
+  upsert?: UserUpsertWithoutTeamsInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpdateWithoutTeamsDataInput {
+  name?: String;
+  email?: String;
+  password?: String;
+}
+
+export interface UserUpsertWithoutTeamsInput {
+  update: UserUpdateWithoutTeamsDataInput;
+  create: UserCreateWithoutTeamsInput;
+}
+
+export interface TeamUpsertWithWhereUniqueNestedInput {
+  where: TeamWhereUniqueInput;
+  update: TeamUpdateDataInput;
+  create: TeamCreateInput;
+}
+
 export interface FantasyLeagueUpdateManyMutationInput {
   name?: String;
 }
 
 export interface TeamUpdateInput {
   name?: String;
-  owner?: UserUpdateOneRequiredWithoutTeamInput;
+  owner?: UserUpdateOneRequiredWithoutTeamsInput;
   players?: TeamUpdateplayersInput;
 }
 
@@ -583,7 +599,7 @@ export interface UserUpdateInput {
   name?: String;
   email?: String;
   password?: String;
-  team?: TeamUpdateOneWithoutOwnerInput;
+  teams?: TeamUpdateManyWithoutOwnerInput;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -686,7 +702,15 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   name: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  team: <T = TeamPromise>() => T;
+  teams: <T = FragmentableArray<Team>>(args?: {
+    where?: TeamWhereInput;
+    orderBy?: TeamOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface UserSubscription
@@ -696,7 +720,15 @@ export interface UserSubscription
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
-  team: <T = TeamSubscription>() => T;
+  teams: <T = Promise<AsyncIterator<TeamSubscription>>>(args?: {
+    where?: TeamWhereInput;
+    orderBy?: TeamOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface Team {

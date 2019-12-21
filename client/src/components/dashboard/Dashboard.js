@@ -35,6 +35,7 @@ export default function Dashboard() {
         MY_STATS_QUERY,
         {
             variables: { timeFrame: selectedTimeFrame },
+            fetchPolicy: 'cache-and-network',
         }
     )
 

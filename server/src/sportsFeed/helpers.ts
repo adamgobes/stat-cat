@@ -28,74 +28,54 @@ export function extractInjuryInfo(sportsFeedPlayerObj): GQLInjury {
     }
 }
 
-export function fetchPlayerStatsSeason(playerId: string): Promise<GQLStat[]> {
-    return sportsFeedRequest(`${season}/player_stats_totals.json?player=${playerId}`).then(json => {
-        const statsObject = json.playerStatsTotals[0]
-        return statCategories.map(c => ({
-            category: c.categoryName,
-            value: c.selector(statsObject),
-        }))
-    })
-}
-
-export function extractStats(statsObject): GQLStat[] {
-    return statCategories.map(c => ({
-        category: c.categoryName,
-        value: c.selector(statsObject),
-    }))
-}
-
-export async function fetchPlayerStatsTimeFrame(
-    playerId: string,
-    timeFrame: string
-): Promise<GQLStat[]> {
+export function getPlayersStats(playerIds: string[], timeFrame?: string): Promise<GQLStat[][]> {
     const timeString = constructTimeString(timeFrame)
 
     if (timeString.length === 0) {
-        return fetchPlayerStatsSeason(playerId)
+        return fetchPlayerStatsSeason(playerIds)
+    } else {
+        return fetchPlayerStatsTimeFrame(playerIds, timeFrame)
     }
+}
 
-    const oldStats = await sportsFeedRequest(
-        `${season}/player_stats_totals.json?player=${playerId}&${timeString}`
-    )
-
-    const oldStatsObject = oldStats.playerStatsTotals[0]
-
-    const currentStats = await sportsFeedRequest(
-        `${season}/player_stats_totals.json?player=${playerId}`
-    )
-
-    const currentStatsObject = currentStats.playerStatsTotals[0]
-
-    return statCategories.map(c => {
-        const oldGamesPlayed = oldStatsObject.stats.gamesPlayed
-        const currentGamesPlayed = currentStatsObject.stats.gamesPlayed
-
-        if (oldGamesPlayed === currentGamesPlayed) {
-            return {
+export function fetchPlayerStatsSeason(playerIds: string[]): Promise<GQLStat[][]> {
+    return sportsFeedRequest(
+        `${season}/player_stats_totals.json?player=${playerIds.join(',')}`
+    ).then(json => {
+        return json.playerStatsTotals.map(({ player, stats }) => {
+            return statCategories.map(c => ({
                 category: c.categoryName,
-                value: 0.0,
-            }
-        }
-        return {
-            category: c.categoryName,
-            value: parseFloat(
-                (
-                    Math.max(
-                        0,
-                        c.selector(currentStatsObject) * currentGamesPlayed -
-                            c.selector(oldStatsObject) * oldGamesPlayed
-                    ) /
-                    (currentGamesPlayed - oldGamesPlayed)
-                ).toFixed(1)
-            ),
-        }
+                value: c.selector(stats),
+            }))
+        })
+    })
+}
+
+export async function fetchPlayerStatsTimeFrame(
+    playerIds: string[],
+    timeFrame: string
+): Promise<GQLStat[][]> {
+    const timeString = constructTimeString(timeFrame)
+
+    return sportsFeedRequest(
+        `${season}/player_gamelogs.json?player=${playerIds.join(',')}&${timeString}`
+    ).then(json => {
+        return playerIds.map(id => {
+            const playerGameLogs = json.gamelogs.filter(
+                gamelog => gamelog.player.id.toString() === id
+            )
+
+            return statCategories.map(c => ({
+                category: c.categoryName,
+                value: computeAverageFromGameLogs(playerGameLogs, c),
+            }))
+        })
     })
 }
 
 export function computeAverageFromGameLogs(gamelogs, category): number {
     const total = gamelogs.reduce((sum, gamelog) => {
-        return sum + category.selector(gamelog)
+        return sum + category.selector(gamelog.stats)
     }, 0)
     return parseFloat((total / gamelogs.length).toFixed(1))
 }
@@ -103,18 +83,9 @@ export function computeAverageFromGameLogs(gamelogs, category): number {
 export function constructTimeString(timeFrame: string): string {
     switch (timeFrame) {
         case TIME_FRAMES.WEEK:
-            const lastWeekDate = moment()
-                .subtract(8, 'days')
-                .format('YYYYMMDD')
-            return `date=${lastWeekDate}`
+            return `date=since-7-days-ago`
         case TIME_FRAMES.MONTH:
-            const lastMonthDate = moment().subtract(1, 'months')
-
-            if (lastMonthDate.isBefore(moment('2019-10-22'))) {
-                return ''
-            }
-
-            return `date=${lastMonthDate.format('YYYYMMDD')}`
+            return `date=since-30-days-ago`
         default:
             return ''
     }

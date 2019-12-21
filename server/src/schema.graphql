@@ -31,7 +31,7 @@ type Team {
     id: ID!
     name: String!
     owner: User!
-    players: [Player!]!
+    players(timeFrame: String): [Player!]!
 }
 
 type Player {
@@ -42,7 +42,7 @@ type Player {
     position: String!
     currentTeam: NbaTeam
     imageSrc: String
-    stats(timeFrame: String): [Stat!]
+    stats: [Stat!]
     gameCountThisWeek: Int
     injury: Injury
 }

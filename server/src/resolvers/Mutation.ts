@@ -52,10 +52,11 @@ export async function login(parent, args, context, info): Promise<GQLAuthPayLoad
 
 export async function saveTeam(parent, args, context): Promise<GQLTeam> {
     const userId: string = getUserId(context)
-    const teamId: string = await context.prisma // get user's team based on their id
+    const team = await context.prisma // get user's team based on their id
         .user({ id: userId })
-        .team()
-        .id()
+        .teams({ first: 1 })
+
+    const teamId: string = team[0].id
 
     /* In DB, Team.players is simply array of sportsFeed IDs
      * In resolvers/Team.js this array gets mapped to array of actual player objects (see schema.graphql for what that looks like)

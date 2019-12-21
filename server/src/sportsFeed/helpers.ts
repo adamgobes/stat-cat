@@ -1,5 +1,3 @@
-import * as moment from 'moment'
-
 import { GQLInjury, GQLStat } from '../generated/gqlTypes'
 import { sportsFeedRequest, season, statCategories } from './api'
 
@@ -89,18 +87,6 @@ export function constructTimeString(timeFrame: string): string {
         default:
             return ''
     }
-}
-
-export function parseDate(date: moment.Moment): string {
-    return moment(date).format('YYYYMMDD')
-}
-
-export function getFirstDayOfWeek(): moment.Moment {
-    return moment().startOf('isoWeek')
-}
-
-export function getLastDayOfWeek(startDate: moment.Moment): moment.Moment {
-    return moment(startDate).add(6, 'days')
 }
 
 export function isActive(player): boolean {

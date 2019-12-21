@@ -1,5 +1,3 @@
-import * as moment from 'moment'
-
 import { GQLInjury, GQLStat } from '../generated/gqlTypes'
 import { sportsFeedRequest, season, statCategories } from './api'
 
@@ -28,67 +26,54 @@ export function extractInjuryInfo(sportsFeedPlayerObj): GQLInjury {
     }
 }
 
-export function fetchPlayerStatsSeason(playerId: string): Promise<GQLStat[]> {
-    return sportsFeedRequest(`${season}/player_stats_totals.json?player=${playerId}`).then(json => {
-        const statsObject = json.playerStatsTotals[0]
-        return statCategories.map(c => ({
-            category: c.categoryName,
-            value: c.selector(statsObject),
-        }))
+export function getPlayersStats(playerIds: string[], timeFrame?: string): Promise<GQLStat[][]> {
+    const timeString = constructTimeString(timeFrame)
+
+    if (timeString.length === 0) {
+        return fetchPlayerStatsSeason(playerIds)
+    } else {
+        return fetchPlayerStatsTimeFrame(playerIds, timeFrame)
+    }
+}
+
+export function fetchPlayerStatsSeason(playerIds: string[]): Promise<GQLStat[][]> {
+    return sportsFeedRequest(
+        `${season}/player_stats_totals.json?player=${playerIds.join(',')}`
+    ).then(json => {
+        return json.playerStatsTotals.map(({ player, stats }) => {
+            return statCategories.map(c => ({
+                category: c.categoryName,
+                value: c.selector(stats),
+            }))
+        })
     })
 }
 
 export async function fetchPlayerStatsTimeFrame(
-    playerId: string,
+    playerIds: string[],
     timeFrame: string
-): Promise<GQLStat[]> {
+): Promise<GQLStat[][]> {
     const timeString = constructTimeString(timeFrame)
 
-    if (timeString.length === 0) {
-        return fetchPlayerStatsSeason(playerId)
-    }
+    return sportsFeedRequest(
+        `${season}/player_gamelogs.json?player=${playerIds.join(',')}&${timeString}`
+    ).then(json => {
+        return playerIds.map(id => {
+            const playerGameLogs = json.gamelogs.filter(
+                gamelog => gamelog.player.id.toString() === id
+            )
 
-    const oldStats = await sportsFeedRequest(
-        `${season}/player_stats_totals.json?player=${playerId}&${timeString}`
-    )
-
-    const oldStatsObject = oldStats.playerStatsTotals[0]
-
-    const currentStats = await sportsFeedRequest(
-        `${season}/player_stats_totals.json?player=${playerId}`
-    )
-
-    const currentStatsObject = currentStats.playerStatsTotals[0]
-
-    return statCategories.map(c => {
-        const oldGamesPlayed = oldStatsObject.stats.gamesPlayed
-        const currentGamesPlayed = currentStatsObject.stats.gamesPlayed
-
-        if (oldGamesPlayed === currentGamesPlayed) {
-            return {
+            return statCategories.map(c => ({
                 category: c.categoryName,
-                value: 0.0,
-            }
-        }
-        return {
-            category: c.categoryName,
-            value: parseFloat(
-                (
-                    Math.max(
-                        0,
-                        c.selector(currentStatsObject) * currentGamesPlayed -
-                            c.selector(oldStatsObject) * oldGamesPlayed
-                    ) /
-                    (currentGamesPlayed - oldGamesPlayed)
-                ).toFixed(1)
-            ),
-        }
+                value: computeAverageFromGameLogs(playerGameLogs, c),
+            }))
+        })
     })
 }
 
 export function computeAverageFromGameLogs(gamelogs, category): number {
     const total = gamelogs.reduce((sum, gamelog) => {
-        return sum + category.selector(gamelog)
+        return sum + category.selector(gamelog.stats)
     }, 0)
     return parseFloat((total / gamelogs.length).toFixed(1))
 }
@@ -96,33 +81,12 @@ export function computeAverageFromGameLogs(gamelogs, category): number {
 export function constructTimeString(timeFrame: string): string {
     switch (timeFrame) {
         case TIME_FRAMES.WEEK:
-            const lastWeekDate = moment()
-                .subtract(8, 'days')
-                .format('YYYYMMDD')
-            return `date=${lastWeekDate}`
+            return `date=since-7-days-ago`
         case TIME_FRAMES.MONTH:
-            const lastMonthDate = moment().subtract(1, 'months')
-
-            if (lastMonthDate.isBefore(moment('2019-10-22'))) {
-                return ''
-            }
-
-            return `date=${lastMonthDate.format('YYYYMMDD')}`
+            return `date=since-30-days-ago`
         default:
             return ''
     }
-}
-
-export function parseDate(date: moment.Moment): string {
-    return moment(date).format('YYYYMMDD')
-}
-
-export function getFirstDayOfWeek(): moment.Moment {
-    return moment().startOf('isoWeek')
-}
-
-export function getLastDayOfWeek(startDate: moment.Moment): moment.Moment {
-    return moment(startDate).add(6, 'days')
 }
 
 export function isActive(player): boolean {

@@ -1,4 +1,4 @@
-import { sportsFeedRequest, season } from '../sportsFeed/api'
+import { sportsFeedRequest } from '../sportsFeed/api'
 
 import { extractBasicInfo, extractInjuryInfo, getPlayersStats } from '../sportsFeed/helpers'
 import { GQLUser, GQLPlayer, GQLStat } from '../generated/gqlTypes'

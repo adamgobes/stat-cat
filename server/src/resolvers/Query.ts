@@ -74,3 +74,8 @@ export function getPlayerStats(parent, args) {
         })
     )
 }
+
+export function getTeam(parent, args, context): GQLTeam {
+    const id: string = args.teamId
+    return context.prisma.team({ id })
+}

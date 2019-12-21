@@ -4,6 +4,7 @@ type Query {
     allPlayers(filter: String): [Player!]!
     leagueLeaders(timeFrame: String): [LeagueLeader!]!
     getPlayerStats(playerIds: [ID!]!): [Player!]!
+    getTeam(teamId: String): Team
 }
 
 type Mutation {

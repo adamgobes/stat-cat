@@ -25,7 +25,7 @@ type User {
 
 type AuthPayLoad {
     token: String
-    user: User
+    teamIds: [String!]!
 }
 
 type Team {

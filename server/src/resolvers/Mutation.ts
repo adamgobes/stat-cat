@@ -25,9 +25,12 @@ export async function register(parents, args, context, info): Promise<GQLAuthPay
 
     const token: string = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
 
+    const teams = await context.prisma.teams({ where: { owner: { id: user.id } } })
+    const teamIds = teams.map(team => team.id)
+
     return {
         token,
-        user,
+        teamIds,
     }
 }
 
@@ -44,9 +47,12 @@ export async function login(parent, args, context, info): Promise<GQLAuthPayLoad
 
     const token: string = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
 
+    const teams = await context.prisma.teams({ where: { owner: { id: user.id } } })
+    const teamIds = teams.map(team => team.id)
+
     return {
         token,
-        user,
+        teamIds,
     }
 }
 

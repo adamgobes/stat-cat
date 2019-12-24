@@ -45,7 +45,6 @@ export function setSelectedTeam(selectedTeam) {
 }
 
 function AppContextProvider({ children }) {
-    console.log(initialState.selectedTeam)
     const [appContext, dispatch] = useReducer(reducer, initialState)
 
     const contextValue = useMemo(

@@ -17,7 +17,7 @@ export const REGISTER_MUTATION = gql`
     mutation registerMutation($name: String!, $email: String!, $password: String!) {
         register(name: $name, email: $email, password: $password) {
             token
-            teamIdss
+            teamIds
         }
     }
 `

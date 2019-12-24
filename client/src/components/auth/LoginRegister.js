@@ -27,6 +27,15 @@ function LoginRegister({ history, location }) {
     const initialIsLogin = location.state ? location.state.isLogin : false
     const initialEmail = location.state ? location.state.email : ''
 
+    function onCompleted(data, path, route) {
+        const { token, teamIds } = data[path]
+
+        cookie.save('authToken', token, { path: '/' })
+        cookie.save('selectedTeam', teamIds[0], { path: '/' })
+
+        history.push(route)
+    }
+
     const [{ name, email, password, secondPassword, errorMessage, isLogin }, dispatch] = useReducer(
         loginRegisterReducer,
         createInitialState({
@@ -37,11 +46,7 @@ function LoginRegister({ history, location }) {
 
     const [loginUser, { loading: loginLoading }] = useMutation(LOGIN_MUTATION, {
         variables: { email, password },
-        onCompleted: data => {
-            const { token } = data.login
-            cookie.save('authToken', token, { path: '/' })
-            history.push('/app/dashboard')
-        },
+        onCompleted: data => onCompleted(data, 'login', '/app/dashboard'),
         onError: error => {
             dispatch(setErrorMessage(error.graphQLErrors[0].message))
         },
@@ -53,11 +58,7 @@ function LoginRegister({ history, location }) {
             email,
             password,
         },
-        onCompleted: data => {
-            const { token } = data.register
-            cookie.save('authToken', token, { path: '/' })
-            history.push('/app/teambuilder')
-        },
+        onCompleted: data => onCompleted(data, 'register', '/app/teambuilder'),
         onError: error => {
             dispatch(setErrorMessage(error.graphQLErrors[0].message))
         },

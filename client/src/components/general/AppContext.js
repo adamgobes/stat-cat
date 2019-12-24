@@ -1,14 +1,19 @@
 import React, { createContext, useReducer, useMemo } from 'react'
+import cookie from 'react-cookies'
 
 const AppContext = createContext()
 
+const initialSelectedTeam = cookie.load('selectedTeam')
+
 const initialState = {
+    selectedTeam: initialSelectedTeam,
     isNavOpen: false,
     darkMode: false,
 }
 
 export const TOGGLE_DARK_MODE = 'TOGGLE_DARK_MODE'
 export const TOGGLE_NAV = 'TOGGLE_NAV'
+export const SET_SELECTED_TEAM = 'SET_SELECTED_TEAM'
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -22,12 +27,25 @@ const reducer = (state, action) => {
                 ...state,
                 isNavOpen: !state.isNavOpen,
             }
+        case SET_SELECTED_TEAM:
+            return {
+                ...state,
+                selectedTeam: action.selectedTeam,
+            }
         default:
             return state
     }
 }
 
+export function setSelectedTeam(selectedTeam) {
+    return {
+        type: SET_SELECTED_TEAM,
+        selectedTeam,
+    }
+}
+
 function AppContextProvider({ children }) {
+    console.log(initialState.selectedTeam)
     const [appContext, dispatch] = useReducer(reducer, initialState)
 
     const contextValue = useMemo(

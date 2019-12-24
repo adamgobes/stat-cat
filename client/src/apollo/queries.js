@@ -4,8 +4,8 @@ import BasicPlayerInfoFragment from './fragments'
 
 export const MY_TEAM_QUERY = gql`
     ${BasicPlayerInfoFragment}
-    query {
-        myTeam {
+    query myTeamQuery($teamId: String) {
+        myTeam: getTeam(teamId: $teamId) {
             players {
                 ...BasicPlayerInfo
             }

@@ -29,6 +29,7 @@ import { ReactComponent as SearchPlaceholderGraphic } from '../../assets/images/
 import FallbackMessage from '../general/FallbackMessage'
 import { Title, Subheader } from '../shared/TextComponents'
 import { NETWORK_ERROR_MESSAGE } from '../../utils/strings'
+import { AppContext } from '../general/AppContext'
 
 const Header = styled(Title)`
     text-align: center;
@@ -51,11 +52,20 @@ const SVGWrapper = styled(Box)`
 
 function TeamBuilder({ history }) {
     const {
+        appContext: { selectedTeam },
+    } = useContext(AppContext)
+
+    const {
         teamBuilderContext: { playerInput, team, warningMessage },
         dispatch,
     } = useContext(TeamBuilderContext)
 
-    const { data: myTeamData, loading: myTeamLoading, error: myTeamError } = useQuery(MY_TEAM_QUERY)
+    const { data: myTeamData, loading: myTeamLoading, error: myTeamError } = useQuery(
+        MY_TEAM_QUERY,
+        {
+            variables: { teamId: selectedTeam },
+        }
+    )
 
     const [mutateTeam, { loading: saveTeamLoading }] = useMutation(SAVE_TEAM_MUTATION, {
         refetchQueries: () => [

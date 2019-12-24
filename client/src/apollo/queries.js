@@ -13,26 +13,6 @@ export const MY_TEAM_QUERY = gql`
     }
 `
 
-export const DASHBOARD_QUERY = gql`
-    ${BasicPlayerInfoFragment}
-    query {
-        myTeam {
-            players {
-                ...BasicPlayerInfo
-                gameCountThisWeek
-                stats {
-                    category
-                    value
-                }
-                injury {
-                    playingProbability
-                    description
-                }
-            }
-        }
-    }
-`
-
 export const WEEKLY_OVERVIEW_QUERY = gql`
     ${BasicPlayerInfoFragment}
     query {

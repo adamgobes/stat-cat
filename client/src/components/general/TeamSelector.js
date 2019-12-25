@@ -89,7 +89,7 @@ export default function TeamSelector({ teams }) {
     return (
         <DropButton
             ref={buttonRef}
-            style={{ width: '25%' }}
+            style={{ width: '100%' }}
             onClick={() => {
                 setDropdownOpen(!dropdownOpen)
             }}

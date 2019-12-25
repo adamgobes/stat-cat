@@ -1,3 +1,5 @@
+export const TEAM_ID = 'cjyxpft0e00h50709ic5ut9w4'
+
 export const SCREEN_SIZE_MESSAGE = 'Oops! StatCat does not support a screen size that small yet!'
 
 export const NETWORK_ERROR_MESSAGE =

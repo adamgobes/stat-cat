@@ -10,9 +10,9 @@ import { myTeamData } from '../stories/teamBuilderStoriesData'
 import { TeamBuilderContextProvider } from '../TeamBuilderContext'
 import { receivingSearchData as searchData } from '../../tradeSimulator/stories/tradeSimulatorStoriesData'
 import { AppContextProvider } from '../../general/AppContext'
+import { TEAM_ID } from '../../../utils/strings'
 
 const SEARCH_STRING = 'julius randle'
-const TEAM_ID = 'cjyxpft0e00h50709ic5ut9w4'
 
 const teamBuilderMocks = [
     {

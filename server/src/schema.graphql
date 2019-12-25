@@ -1,6 +1,5 @@
 type Query {
     me: User!
-    myTeam: Team!
     allPlayers(filter: String): [Player!]!
     leagueLeaders(timeFrame: String): [LeagueLeader!]!
     getPlayerStats(playerIds: [ID!]!): [Player!]!
@@ -10,7 +9,7 @@ type Query {
 type Mutation {
     register(name: String!, email: String!, password: String!): AuthPayLoad
     login(email: String!, password: String!): AuthPayLoad
-    saveTeam(playerIds: [ID!]!): Team
+    saveTeam(playerIds: [ID!]!, teamId: String!): Team
     createFantasyLeague(name: String!): FantasyLeague
     addFantasyLeagueMember(leagueId: ID!, teamId: ID!): Boolean
     removeFantasyLeagueMember(leagueId: ID!, teamId: ID!): Boolean

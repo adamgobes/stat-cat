@@ -33,14 +33,6 @@ export function allPlayers(parent, args): Promise<GQLPlayer[]> {
     )
 }
 
-export async function myTeam(parent, args, context): Promise<GQLTeam> {
-    const id: string = getUserId(context)
-
-    const team = await context.prisma.user({ id }).teams({ first: 1 })
-
-    return team[0]
-}
-
 export async function leagueLeaders(parent, args): Promise<GQLLeagueLeader[]> {
     const players = await sportsFeedRequest('players.json')
 

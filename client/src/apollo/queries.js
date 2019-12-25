@@ -4,30 +4,10 @@ import BasicPlayerInfoFragment from './fragments'
 
 export const MY_TEAM_QUERY = gql`
     ${BasicPlayerInfoFragment}
-    query {
-        myTeam {
+    query myTeamQuery($teamId: String) {
+        myTeam: getTeam(teamId: $teamId) {
             players {
                 ...BasicPlayerInfo
-            }
-        }
-    }
-`
-
-export const DASHBOARD_QUERY = gql`
-    ${BasicPlayerInfoFragment}
-    query {
-        myTeam {
-            players {
-                ...BasicPlayerInfo
-                gameCountThisWeek
-                stats {
-                    category
-                    value
-                }
-                injury {
-                    playingProbability
-                    description
-                }
             }
         }
     }
@@ -35,8 +15,8 @@ export const DASHBOARD_QUERY = gql`
 
 export const WEEKLY_OVERVIEW_QUERY = gql`
     ${BasicPlayerInfoFragment}
-    query {
-        myTeam {
+    query weeklyOverviewQuery($teamId: String) {
+        myTeam: getTeam(teamId: $teamId) {
             players {
                 ...BasicPlayerInfo
                 gameCountThisWeek
@@ -51,8 +31,8 @@ export const WEEKLY_OVERVIEW_QUERY = gql`
 
 export const MY_STATS_QUERY = gql`
     ${BasicPlayerInfoFragment}
-    query myStatsQuery($timeFrame: String) {
-        myTeam {
+    query myStatsQuery($timeFrame: String, $teamId: String) {
+        myTeam: getTeam(teamId: $teamId) {
             players(timeFrame: $timeFrame) {
                 ...BasicPlayerInfo
                 stats {

@@ -74,6 +74,10 @@ export async function fetchPlayerStatsTimeFrame(
 }
 
 export function computeAverageFromGameLogs(gamelogs, category): number {
+    if (gamelogs.length === 0) {
+        return 0
+    }
+
     const total = gamelogs.reduce((sum, gamelog) => {
         return sum + category.selector(gamelog.stats)
     }, 0)

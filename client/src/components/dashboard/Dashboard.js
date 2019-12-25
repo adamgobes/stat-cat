@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useContext } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import styled from 'styled-components'
 import { Box } from 'grommet'
@@ -10,6 +10,7 @@ import MyStats from './MyStats'
 import { computeTeamStatsAverages, timeFrames } from '../../utils/computeHelpers'
 import FallbackMessage from '../general/FallbackMessage'
 import { NETWORK_ERROR_MESSAGE, TEAM_EMPTY_MESSAGE } from '../../utils/strings'
+import { AppContext } from '../general/AppContext'
 
 const DashboardWrapper = styled(Box)`
     position: relative;
@@ -23,18 +24,23 @@ const DashboardComponentWrapper = styled(Box)`
 `
 
 export default function Dashboard() {
+    const {
+        appContext: { selectedTeam },
+    } = useContext(AppContext)
     const [selectedTimeFrame, setSelectedTimeFrame] = useState(timeFrames[0])
 
     const {
         data: weeklyOverviewData,
         loading: weeklyOverviewLoading,
         error: weeklyOverviewError,
-    } = useQuery(WEEKLY_OVERVIEW_QUERY)
+    } = useQuery(WEEKLY_OVERVIEW_QUERY, {
+        variables: { teamId: selectedTeam },
+    })
 
     const { data: statsData, loading: statsLoading, error: myStatsError } = useQuery(
         MY_STATS_QUERY,
         {
-            variables: { timeFrame: selectedTimeFrame },
+            variables: { timeFrame: selectedTimeFrame, teamId: selectedTeam },
             fetchPolicy: 'cache-and-network',
         }
     )

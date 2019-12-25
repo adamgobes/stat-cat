@@ -6,16 +6,19 @@ import { MockedProvider } from '@apollo/react-testing'
 import theme from '../../../theme'
 import TeamBuilder from '../TeamBuilder'
 import { MY_TEAM_QUERY, SEARCH_PLAYERS_QUERY } from '../../../apollo/queries'
-import { weeklyOverviewData as myTeamData } from '../../dashboard/stories/dashboardStoriesData'
+import { myTeamData } from '../stories/teamBuilderStoriesData'
 import { TeamBuilderContextProvider } from '../TeamBuilderContext'
 import { receivingSearchData as searchData } from '../../tradeSimulator/stories/tradeSimulatorStoriesData'
+import { AppContextProvider } from '../../general/AppContext'
 
 const SEARCH_STRING = 'julius randle'
+const TEAM_ID = 'cjyxpft0e00h50709ic5ut9w4'
 
 const teamBuilderMocks = [
     {
         request: {
             query: MY_TEAM_QUERY,
+            variables: { teamId: TEAM_ID },
         },
 
         result: () => ({
@@ -36,9 +39,11 @@ const teamBuilderMocks = [
 const teamBuilderWithThemeAndProvider = (
     <Grommet theme={theme}>
         <MockedProvider mocks={teamBuilderMocks} addTypename>
-            <TeamBuilderContextProvider>
-                <TeamBuilder />
-            </TeamBuilderContextProvider>
+            <AppContextProvider initialState={{ selectedTeam: TEAM_ID }}>
+                <TeamBuilderContextProvider>
+                    <TeamBuilder />
+                </TeamBuilderContextProvider>
+            </AppContextProvider>
         </MockedProvider>
     </Grommet>
 )

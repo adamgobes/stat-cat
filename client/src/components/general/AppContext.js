@@ -1,11 +1,15 @@
 import React, { createContext, useReducer, useMemo } from 'react'
 import cookie from 'react-cookies'
 
-const AppContext = createContext()
+const AppContext = createContext({
+    selectedTeam: 'cjyxpft0e00h50709ic5ut9w4',
+    isNavOpen: false,
+    darkMode: false,
+})
 
 const initialSelectedTeam = cookie.load('selectedTeam')
 
-const initialState = {
+const initialAppState = {
     selectedTeam: initialSelectedTeam,
     isNavOpen: false,
     darkMode: false,
@@ -44,7 +48,7 @@ export function setSelectedTeam(selectedTeam) {
     }
 }
 
-function AppContextProvider({ children }) {
+function AppContextProvider({ children, initialState = initialAppState }) {
     const [appContext, dispatch] = useReducer(reducer, initialState)
 
     const contextValue = useMemo(

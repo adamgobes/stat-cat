@@ -206,3 +206,132 @@ export const rosterData = [
             'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/200782.png',
     },
 ]
+
+export const myTeamData = {
+    myTeam: {
+        players: [
+            {
+                id: '15204',
+                firstName: 'Wendell',
+                lastName: 'Carter Jr.',
+                fullName: 'Wendell Carter Jr.',
+                currentTeam: { abbreviation: 'CHI', __typename: 'NbaTeam' },
+                position: 'C',
+                imageSrc:
+                    'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1628976.png',
+                __typename: 'Player',
+            },
+            {
+                id: '9296',
+                firstName: 'Mike',
+                lastName: 'Conley',
+                fullName: 'Mike Conley',
+                currentTeam: { abbreviation: 'UTA', __typename: 'NbaTeam' },
+                position: 'PG',
+                imageSrc:
+                    'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201144.png',
+                __typename: 'Player',
+            },
+            {
+                id: '9354',
+                firstName: 'Anthony',
+                lastName: 'Davis',
+                fullName: 'Anthony Davis',
+                currentTeam: { abbreviation: 'LAL', __typename: 'NbaTeam' },
+                position: 'PF',
+                imageSrc:
+                    'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203076.png',
+                __typename: 'Player',
+            },
+            {
+                id: '9503',
+                firstName: 'Rudy',
+                lastName: 'Gobert',
+                fullName: 'Rudy Gobert',
+                currentTeam: { abbreviation: 'UTA', __typename: 'NbaTeam' },
+                position: 'C',
+                imageSrc:
+                    'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203497.png',
+                __typename: 'Player',
+            },
+            {
+                id: '9228',
+                firstName: 'Draymond',
+                lastName: 'Green',
+                fullName: 'Draymond Green',
+                currentTeam: { abbreviation: 'GSW', __typename: 'NbaTeam' },
+                position: 'PF',
+                imageSrc:
+                    'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203110.png',
+                __typename: 'Player',
+            },
+            {
+                id: '9244',
+                firstName: 'Montrezl',
+                lastName: 'Harrell',
+                fullName: 'Montrezl Harrell',
+                currentTeam: { abbreviation: 'LAC', __typename: 'NbaTeam' },
+                position: 'PF',
+                imageSrc:
+                    'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1626149.png',
+                __typename: 'Player',
+            },
+            {
+                id: '9082',
+                firstName: 'Al',
+                lastName: 'Horford',
+                fullName: 'Al Horford',
+                currentTeam: { abbreviation: 'PHI', __typename: 'NbaTeam' },
+                position: 'C',
+                imageSrc:
+                    'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201143.png',
+                __typename: 'Player',
+            },
+            {
+                id: '9158',
+                firstName: 'LeBron',
+                lastName: 'James',
+                fullName: 'LeBron James',
+                currentTeam: { abbreviation: 'LAL', __typename: 'NbaTeam' },
+                position: 'SF',
+                imageSrc:
+                    'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/2544.png',
+                __typename: 'Player',
+            },
+            {
+                id: '9329',
+                firstName: 'Jabari',
+                lastName: 'Parker',
+                fullName: 'Jabari Parker',
+                currentTeam: { abbreviation: 'ATL', __typename: 'NbaTeam' },
+                position: 'PF',
+                imageSrc:
+                    'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203953.png',
+                __typename: 'Player',
+            },
+            {
+                id: '9338',
+                firstName: 'Ricky',
+                lastName: 'Rubio',
+                fullName: 'Ricky Rubio',
+                currentTeam: { abbreviation: 'PHX', __typename: 'NbaTeam' },
+                position: 'PG',
+                imageSrc:
+                    'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201937.png',
+                __typename: 'Player',
+            },
+            {
+                id: '10151',
+                firstName: 'Tomas',
+                lastName: 'Satoransky',
+                fullName: 'Tomas Satoransky',
+                currentTeam: { abbreviation: 'CHI', __typename: 'NbaTeam' },
+                position: 'PG',
+                imageSrc:
+                    'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203107.png',
+                __typename: 'Player',
+            },
+        ],
+        __typename: 'Team',
+    },
+}

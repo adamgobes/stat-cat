@@ -2,7 +2,6 @@ import { sportsFeedRequest } from '../sportsFeed/api'
 
 import { extractBasicInfo, extractInjuryInfo, getPlayersStats } from '../sportsFeed/helpers'
 import { GQLUser, GQLPlayer, GQLStat } from '../generated/gqlTypes'
-import { forEachField } from 'graphql-tools'
 
 export function owner(parent, args, context): GQLUser {
     return context.prisma.team({ id: parent.id }).owner()

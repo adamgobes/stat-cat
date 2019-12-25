@@ -1,6 +1,5 @@
 type Query {
     me: User!
-    myTeam: Team!
     allPlayers(filter: String): [Player!]!
     leagueLeaders(timeFrame: String): [LeagueLeader!]!
     getPlayerStats(playerIds: [ID!]!): [Player!]!

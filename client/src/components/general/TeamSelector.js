@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import { Box, DropButton } from 'grommet'
 import { FormUp, FormDown } from 'grommet-icons'
@@ -48,8 +48,22 @@ function DropContent({ teams, onDropdownItemClick }) {
 }
 
 export default function TeamSelector({ teams }) {
+    const dropDownRef = useRef(null)
     const [team, setTeam] = useState(teams[0])
     const [dropdownOpen, setDropdownOpen] = useState(false)
+
+    function handleClickOutside(event) {
+        if (dropDownRef.current && !dropDownRef.current.contains(event.target)) {
+            setDropdownOpen(false)
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutside, true)
+        return () => {
+            document.removeEventListener('click', handleClickOutside, true)
+        }
+    })
 
     function handleDropdownItemClick(t) {
         setDropdownOpen(false)
@@ -58,6 +72,7 @@ export default function TeamSelector({ teams }) {
 
     return (
         <DropButton
+            ref={dropDownRef}
             style={{ width: '25%' }}
             onClick={() => setDropdownOpen(true)}
             dropContent={

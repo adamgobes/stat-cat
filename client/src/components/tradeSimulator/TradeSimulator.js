@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useContext } from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
@@ -14,6 +14,7 @@ import FallbackMessage from '../general/FallbackMessage'
 import { NETWORK_ERROR_MESSAGE } from '../../utils/strings'
 import { Title, Text } from '../shared/TextComponents'
 import { RoundedButton } from '../shared/Buttons'
+import { AppContext } from '../general/AppContext'
 
 export const MAX_PLAYERS_TRADED = 4
 
@@ -39,6 +40,10 @@ const TradedPlayers = styled(Box)`
 `
 
 export default function TradeSimulator() {
+    const {
+        appContext: { selectedTeam },
+    } = useContext(AppContext)
+
     const [playerInput, setPlayerInput] = useState('')
     const [sentPlayers, setSentPlayers] = useState([])
     const [receivedPlayers, setReceivedPlayers] = useState([])
@@ -50,7 +55,8 @@ export default function TradeSimulator() {
     })
 
     const { data: currentStatsData, loading: statsLoading, error: statsError } = useQuery(
-        MY_STATS_QUERY
+        MY_STATS_QUERY,
+        { variables: { teamId: selectedTeam } }
     )
 
     function onGetPlayerStatsCompleted(data) {

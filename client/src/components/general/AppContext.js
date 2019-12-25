@@ -1,11 +1,7 @@
 import React, { createContext, useReducer, useMemo } from 'react'
 import cookie from 'react-cookies'
 
-const AppContext = createContext({
-    selectedTeam: 'cjyxpft0e00h50709ic5ut9w4',
-    isNavOpen: false,
-    darkMode: false,
-})
+const AppContext = createContext()
 
 const initialSelectedTeam = cookie.load('selectedTeam')
 

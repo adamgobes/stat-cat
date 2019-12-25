@@ -66,13 +66,13 @@ export default function TeamSelector({ teams }) {
         setTeam(t)
     }
 
-    const dropDownRef = useRef(null)
+    const dropContentRef = useRef(null)
     const buttonRef = useRef(null)
 
     function handleClickOutside(event) {
         if (
-            dropDownRef.current &&
-            !dropDownRef.current.contains(event.target) &&
+            dropContentRef.current &&
+            !dropContentRef.current.contains(event.target) &&
             !buttonRef.current.contains(event.target)
         ) {
             setDropdownOpen(false)
@@ -95,7 +95,7 @@ export default function TeamSelector({ teams }) {
             }}
             dropContent={
                 <DropContent
-                    ref={dropDownRef}
+                    ref={dropContentRef}
                     teams={teams}
                     setTeam={setTeam}
                     onDropdownItemClick={handleDropdownItemClick}

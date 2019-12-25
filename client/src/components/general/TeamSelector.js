@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, forwardRef } from 'react'
 import styled from 'styled-components'
 import { Box, DropButton } from 'grommet'
 import { FormUp, FormDown } from 'grommet-icons'
@@ -29,31 +29,52 @@ const TeamDropdownItem = styled(Box)`
     }
 `
 
-function DropContent({ teams, onDropdownItemClick }) {
-    return teams.map(t => (
-        <TeamDropdownItem
-            direction="row"
-            align="center"
-            key={t.id}
-            onClick={() => onDropdownItemClick(t)}
-        >
-            <FirstLetterWrapper size="40" align="center" justify="center" background="#7781f7">
-                <Text style={{ color: 'white', fontSize: '1em' }}>{t.name.substring(0, 1)}</Text>
-            </FirstLetterWrapper>
-            <Box>
-                <Text>{t.name}</Text>
-            </Box>
-        </TeamDropdownItem>
-    ))
-}
+const Truncated = styled(Text)`
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`
+
+const DropContent = forwardRef(({ teams, onDropdownItemClick }, ref) => (
+    <Box ref={ref}>
+        {teams.map(t => (
+            <TeamDropdownItem
+                direction="row"
+                align="center"
+                key={t.id}
+                onClick={() => onDropdownItemClick(t)}
+            >
+                <FirstLetterWrapper size="30" align="center" justify="center" background="#7781f7">
+                    <Text style={{ color: 'white', fontSize: '0.7em' }}>
+                        {t.name.substring(0, 1)}
+                    </Text>
+                </FirstLetterWrapper>
+                <Box>
+                    <Truncated>{t.name}</Truncated>
+                </Box>
+            </TeamDropdownItem>
+        ))}
+    </Box>
+))
 
 export default function TeamSelector({ teams }) {
-    const dropDownRef = useRef(null)
     const [team, setTeam] = useState(teams[0])
     const [dropdownOpen, setDropdownOpen] = useState(false)
 
+    function handleDropdownItemClick(t) {
+        setDropdownOpen(false)
+        setTeam(t)
+    }
+
+    const dropDownRef = useRef(null)
+    const buttonRef = useRef(null)
+
     function handleClickOutside(event) {
-        if (dropDownRef.current && !dropDownRef.current.contains(event.target)) {
+        if (
+            dropDownRef.current &&
+            !dropDownRef.current.contains(event.target) &&
+            !buttonRef.current.contains(event.target)
+        ) {
             setDropdownOpen(false)
         }
     }
@@ -65,18 +86,16 @@ export default function TeamSelector({ teams }) {
         }
     })
 
-    function handleDropdownItemClick(t) {
-        setDropdownOpen(false)
-        setTeam(t)
-    }
-
     return (
         <DropButton
-            ref={dropDownRef}
+            ref={buttonRef}
             style={{ width: '25%' }}
-            onClick={() => setDropdownOpen(true)}
+            onClick={() => {
+                setDropdownOpen(!dropdownOpen)
+            }}
             dropContent={
                 <DropContent
+                    ref={dropDownRef}
                     teams={teams}
                     setTeam={setTeam}
                     onDropdownItemClick={handleDropdownItemClick}
@@ -86,11 +105,11 @@ export default function TeamSelector({ teams }) {
             open={dropdownOpen}
         >
             <TeamSelectorWrapper direction="row" align="center">
-                <FirstLetterWrapper size="30" background="white" align="center" justify="center">
+                <FirstLetterWrapper size="20" background="white" align="center" justify="center">
                     <Text>{team.name.substring(0, 1)}</Text>
                 </FirstLetterWrapper>
-                <Box>
-                    <Subheader style={{ color: 'white' }}>{team.name}</Subheader>
+                <Box style={{ marginRight: '10px' }}>
+                    <Truncated style={{ color: 'white', fontSize: '0.7em' }}>{team.name}</Truncated>
                 </Box>
                 <Box>
                     <Arrows direction="column">

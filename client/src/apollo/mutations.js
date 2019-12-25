@@ -4,8 +4,8 @@ import BasicPlayerInfoFragment from './fragments'
 
 export const SAVE_TEAM_MUTATION = gql`
     ${BasicPlayerInfoFragment}
-    mutation saveTeamMutation($playerIds: [ID!]!) {
-        saveTeam(playerIds: $playerIds) {
+    mutation saveTeamMutation($playerIds: [ID!]!, $teamId: String!) {
+        saveTeam(playerIds: $playerIds, teamId: $teamId) {
             players {
                 ...BasicPlayerInfo
             }

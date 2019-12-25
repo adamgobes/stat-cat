@@ -101,7 +101,7 @@ function TeamBuilder({ history }) {
 
     function handleSaveTeam() {
         mutateTeam({
-            variables: { playerIds: team.map(p => p.id) },
+            variables: { playerIds: team.map(p => p.id), teamId: selectedTeam },
         })
     }
 

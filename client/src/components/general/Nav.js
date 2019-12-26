@@ -3,10 +3,13 @@ import { useHistory, useLocation } from 'react-router-dom'
 import styled, { ThemeContext } from 'styled-components'
 import { Box } from 'grommet'
 import cookie from 'react-cookies'
-import { useApolloClient } from '@apollo/react-hooks'
+import { useApolloClient, useQuery } from '@apollo/react-hooks'
 import { Menu, Group, Dashboard, Logout, ShareOption, FormClose } from 'grommet-icons'
 
 import { Subheader, TextLogo } from '../shared/TextComponents'
+import TeamSelector from './TeamSelector'
+import { ALL_MY_TEAMS_QUERY } from '../../apollo/queries'
+import Loader from '../shared/Loader'
 
 const NavigationContainer = styled(Box)`
     background: ${props => props.theme.global.colors.brand};
@@ -100,6 +103,8 @@ function Nav({ isNavOpen, setNavOpen, isWidthTooSmall }) {
     const client = useApolloClient()
     const [currentPage, setCurrentPage] = useState(location.pathname)
 
+    const { data: myTeamsData, loading } = useQuery(ALL_MY_TEAMS_QUERY)
+
     useEffect(() => {
         const { pathname } = location
         setCurrentPage(pathname)
@@ -130,6 +135,10 @@ function Nav({ isNavOpen, setNavOpen, isWidthTooSmall }) {
                     <Box align="center" style={{ width: '100%' }}>
                         <TextLogo>statcat</TextLogo>
                     </Box>
+                </NavListItem>
+                <NavListItem>
+                    {loading && <Loader size="20" />}
+                    {!loading && <TeamSelector teams={myTeamsData.me.teams} />}
                 </NavListItem>
                 {NavLinks.map(({ name, Icon, path }) => {
                     const Enhanced = EnhanceNavListItem(Icon)

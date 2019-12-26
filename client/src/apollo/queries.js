@@ -13,6 +13,17 @@ export const MY_TEAM_QUERY = gql`
     }
 `
 
+export const ALL_MY_TEAMS_QUERY = gql`
+    query {
+        me {
+            teams {
+                id
+                name
+            }
+        }
+    }
+`
+
 export const WEEKLY_OVERVIEW_QUERY = gql`
     ${BasicPlayerInfoFragment}
     query weeklyOverviewQuery($teamId: String) {

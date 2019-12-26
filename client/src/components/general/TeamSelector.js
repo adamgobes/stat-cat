@@ -30,6 +30,7 @@ const TeamDropdownItem = styled(Box)`
 `
 
 const Truncated = styled(Text)`
+    font-size: 0.8em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -87,37 +88,45 @@ export default function TeamSelector({ teams }) {
     })
 
     return (
-        <DropButton
-            ref={buttonRef}
-            style={{ width: '100%' }}
-            onClick={() => {
-                setDropdownOpen(!dropdownOpen)
-            }}
-            dropContent={
-                <DropContent
-                    ref={dropContentRef}
-                    teams={teams}
-                    setTeam={setTeam}
-                    onDropdownItemClick={handleDropdownItemClick}
-                />
-            }
-            dropAlign={{ top: 'bottom', right: 'right' }}
-            open={dropdownOpen}
-        >
-            <TeamSelectorWrapper direction="row" align="center">
-                <FirstLetterWrapper size="20" background="white" align="center" justify="center">
-                    <Text>{team.name.substring(0, 1)}</Text>
-                </FirstLetterWrapper>
-                <Box style={{ marginRight: '10px' }}>
-                    <Truncated style={{ color: 'white', fontSize: '0.7em' }}>{team.name}</Truncated>
+        <TeamSelectorWrapper align="center">
+            <DropButton
+                ref={buttonRef}
+                onClick={() => {
+                    setDropdownOpen(!dropdownOpen)
+                }}
+                dropContent={
+                    <DropContent
+                        ref={dropContentRef}
+                        teams={teams}
+                        setTeam={setTeam}
+                        onDropdownItemClick={handleDropdownItemClick}
+                    />
+                }
+                dropAlign={{ top: 'bottom', right: 'right' }}
+                open={dropdownOpen}
+            >
+                <Box direction="row" align="center">
+                    <FirstLetterWrapper
+                        size="20"
+                        background="white"
+                        align="center"
+                        justify="center"
+                    >
+                        <Text>{team.name.substring(0, 1)}</Text>
+                    </FirstLetterWrapper>
+                    <Box style={{ marginRight: '10px' }}>
+                        <Truncated style={{ color: 'white', fontSize: '0.7em' }}>
+                            {team.name}
+                        </Truncated>
+                    </Box>
+                    <Box>
+                        <Arrows direction="column">
+                            <FormUp size="small" color="white" />
+                            <FormDown size="small" color="white" />
+                        </Arrows>
+                    </Box>
                 </Box>
-                <Box>
-                    <Arrows direction="column">
-                        <FormUp size="small" color="white" />
-                        <FormDown size="small" color="white" />
-                    </Arrows>
-                </Box>
-            </TeamSelectorWrapper>
-        </DropButton>
+            </DropButton>
+        </TeamSelectorWrapper>
     )
 }

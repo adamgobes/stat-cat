@@ -7,6 +7,7 @@ import { useApolloClient } from '@apollo/react-hooks'
 import { Menu, Group, Dashboard, Logout, ShareOption, FormClose } from 'grommet-icons'
 
 import { Subheader, TextLogo } from '../shared/TextComponents'
+import TeamSelector from './TeamSelector'
 
 const NavigationContainer = styled(Box)`
     background: ${props => props.theme.global.colors.brand};
@@ -130,6 +131,20 @@ function Nav({ isNavOpen, setNavOpen, isWidthTooSmall }) {
                     <Box align="center" style={{ width: '100%' }}>
                         <TextLogo>statcat</TextLogo>
                     </Box>
+                </NavListItem>
+                <NavListItem>
+                    <TeamSelector
+                        teams={[
+                            {
+                                id: '123',
+                                name: 'Adam Gobran Team',
+                            },
+                            {
+                                id: '1234',
+                                name: 'Nur Al Sharif Team',
+                            },
+                        ]}
+                    />
                 </NavListItem>
                 {NavLinks.map(({ name, Icon, path }) => {
                     const Enhanced = EnhanceNavListItem(Icon)

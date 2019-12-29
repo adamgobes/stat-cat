@@ -74,7 +74,6 @@ export async function saveTeam(parent, args, context): Promise<GQLTeam> {
 export async function addTeam(parent, { name }, context): Promise<GQLTeam> {
     const userId: string = getUserId(context)
 
-    // initialize user's team when they create an account
     const teamInfo = {
         name,
         owner: { connect: { id: userId } },

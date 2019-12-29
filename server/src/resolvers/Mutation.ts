@@ -71,6 +71,18 @@ export async function saveTeam(parent, args, context): Promise<GQLTeam> {
     })
 }
 
+export async function addTeam(parent, args, context): Promise<GQLTeam> {
+    const userId: string = getUserId(context)
+
+    const teamInfo = {
+        name: args.name,
+        owner: { connect: { id: userId } },
+    }
+
+    const newTeam = await context.prisma.createTeam({ ...teamInfo })
+    return newTeam
+}
+
 export async function createFantasyLeague(parent, args, context): Promise<GQLFantasyLeague> {
     const userId: string = getUserId(context)
 

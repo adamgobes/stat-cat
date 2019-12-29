@@ -71,11 +71,11 @@ export async function saveTeam(parent, args, context): Promise<GQLTeam> {
     })
 }
 
-export async function addTeam(parent, { name }, context): Promise<GQLTeam> {
+export async function addTeam(parent, args, context): Promise<GQLTeam> {
     const userId: string = getUserId(context)
 
     const teamInfo = {
-        name,
+        name: args.name,
         owner: { connect: { id: userId } },
     }
 

@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect, forwardRef } from 'react'
 import styled from 'styled-components'
-import { Box, DropButton } from 'grommet'
+import { Box, DropButton, Layer } from 'grommet'
 import { FormUp, FormDown } from 'grommet-icons'
 
-import { Text, Subheader } from '../shared/TextComponents'
+import { Text } from '../shared/TextComponents'
+import AddTeamModal from '../shared/AddTeamModal'
 
 const TeamSelectorWrapper = styled(Box)``
 
@@ -24,6 +25,7 @@ const TeamDropdownItem = styled(Box)`
     width: 100%;
     cursor: pointer;
     transition: background 120ms ease-in 0s;
+    align-items: center;
     &:hover {
         background: #efefef;
     }
@@ -36,15 +38,10 @@ const Truncated = styled(Text)`
     text-overflow: ellipsis;
 `
 
-const DropContent = forwardRef(({ teams, onDropdownItemClick }, ref) => (
+const DropContent = forwardRef(({ teams, onTeamClick, onAddTeamClick }, ref) => (
     <Box ref={ref}>
         {teams.map(t => (
-            <TeamDropdownItem
-                direction="row"
-                align="center"
-                key={t.id}
-                onClick={() => onDropdownItemClick(t)}
-            >
+            <TeamDropdownItem direction="row" key={t.id} onClick={() => onTeamClick(t)}>
                 <FirstLetterWrapper size="30" align="center" justify="center" background="#7781f7">
                     <Text style={{ color: 'white', fontSize: '0.7em' }}>
                         {t.name.substring(0, 1)}
@@ -55,16 +52,30 @@ const DropContent = forwardRef(({ teams, onDropdownItemClick }, ref) => (
                 </Box>
             </TeamDropdownItem>
         ))}
+        <TeamDropdownItem direction="row" onClick={() => onAddTeamClick()}>
+            <FirstLetterWrapper size="30" align="center" justify="center" background="#7781f7">
+                <Text style={{ color: 'white', fontSize: '1em' }}>+</Text>
+            </FirstLetterWrapper>
+            <Box>
+                <Truncated>Add Team</Truncated>
+            </Box>
+        </TeamDropdownItem>
     </Box>
 ))
 
 export default function TeamSelector({ teams }) {
     const [team, setTeam] = useState(teams[0])
     const [dropdownOpen, setDropdownOpen] = useState(false)
+    const [showAddTeamModal, setShowAddTeamModal] = useState(false)
 
-    function handleDropdownItemClick(t) {
+    function handleTeamClick(t) {
         setDropdownOpen(false)
         setTeam(t)
+    }
+
+    function handleAddTeamClick() {
+        setShowAddTeamModal(true)
+        setDropdownOpen(false)
     }
 
     const dropContentRef = useRef(null)
@@ -99,7 +110,8 @@ export default function TeamSelector({ teams }) {
                         ref={dropContentRef}
                         teams={teams}
                         setTeam={setTeam}
-                        onDropdownItemClick={handleDropdownItemClick}
+                        onTeamClick={handleTeamClick}
+                        onAddTeamClick={handleAddTeamClick}
                     />
                 }
                 dropAlign={{ top: 'bottom', right: 'right' }}
@@ -127,6 +139,14 @@ export default function TeamSelector({ teams }) {
                     </Box>
                 </Box>
             </DropButton>
+            {showAddTeamModal && (
+                <Layer
+                    onEsc={() => setShowAddTeamModal(false)}
+                    onClickOutside={() => setShowAddTeamModal(false)}
+                >
+                    <AddTeamModal />
+                </Layer>
+            )}
         </TeamSelectorWrapper>
     )
 }

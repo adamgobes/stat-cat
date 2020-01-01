@@ -11,9 +11,9 @@ const initialAppState = {
     darkMode: false,
 }
 
-export const TOGGLE_DARK_MODE = 'TOGGLE_DARK_MODE'
-export const TOGGLE_NAV = 'TOGGLE_NAV'
-export const SET_SELECTED_TEAM = 'SET_SELECTED_TEAM'
+const TOGGLE_DARK_MODE = 'TOGGLE_DARK_MODE'
+const TOGGLE_NAV = 'TOGGLE_NAV'
+const SET_SELECTED_TEAM = 'SET_SELECTED_TEAM'
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -41,6 +41,12 @@ export function setSelectedTeam(selectedTeam) {
     return {
         type: SET_SELECTED_TEAM,
         selectedTeam,
+    }
+}
+
+export function toggleNav() {
+    return {
+        type: TOGGLE_NAV,
     }
 }
 

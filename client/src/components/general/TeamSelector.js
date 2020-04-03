@@ -75,7 +75,6 @@ export default function TeamSelector({ teams }) {
         setDropdownOpen(false)
         setTeam(t)
         dispatch(setSelectedTeam(t.id))
-        // window.location.reload()
     }
 
     function handleAddTeamClick() {

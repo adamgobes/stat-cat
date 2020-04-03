@@ -82,6 +82,10 @@ export default function TeamSelector({ teams }) {
         setDropdownOpen(false)
     }
 
+    function handleTeamCreated(t) {
+        setTeam(t)
+    }
+
     const dropContentRef = useRef(null)
     const buttonRef = useRef(null)
 
@@ -148,7 +152,10 @@ export default function TeamSelector({ teams }) {
                     onEsc={() => setShowAddTeamModal(false)}
                     onClickOutside={() => setShowAddTeamModal(false)}
                 >
-                    <AddTeamModal />
+                    <AddTeamModal
+                        closeModal={() => setShowAddTeamModal(false)}
+                        onTeamCreated={handleTeamCreated}
+                    />
                 </Layer>
             )}
         </TeamSelectorWrapper>

@@ -6,8 +6,9 @@ import { RoundedButton } from './Buttons'
 import { Title } from './TextComponents'
 import { CREATE_TEAM_MUTATION } from '../../apollo/mutations'
 import { AppContext, setSelectedTeam } from '../general/AppContext'
+import { ALL_MY_TEAMS_QUERY } from '../../apollo/queries'
 
-export default function AddTeamModal() {
+export default function AddTeamModal({ closeModal, onTeamCreated }) {
     const history = useHistory()
     const { appContext, dispatch } = useContext(AppContext)
 
@@ -15,11 +16,18 @@ export default function AddTeamModal() {
 
     function handleTeamCreated(data) {
         history.push('/app/teambuilder')
+
+        dispatch(setSelectedTeam(data.addTeam.id))
+
+        onTeamCreated(data.addTeam)
+
+        closeModal()
     }
 
     const [createTeam, { data, loading }] = useMutation(CREATE_TEAM_MUTATION, {
         variables: { name: teamName },
         onCompleted: handleTeamCreated,
+        refetchQueries: () => [{ query: ALL_MY_TEAMS_QUERY }],
     })
 
     return (

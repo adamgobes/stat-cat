@@ -30,3 +30,12 @@ export const LOGIN_MUTATION = gql`
         }
     }
 `
+
+export const CREATE_TEAM_MUTATION = gql`
+    mutation createTeamMutation($name: String!) {
+        addTeam(name: $name) {
+            name
+            id
+        }
+    }
+`

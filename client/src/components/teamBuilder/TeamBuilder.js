@@ -68,9 +68,12 @@ function TeamBuilder({ history }) {
     )
 
     const [mutateTeam, { loading: saveTeamLoading }] = useMutation(SAVE_TEAM_MUTATION, {
+        variables: {
+            teamId: selectedTeam,
+        },
         refetchQueries: () => [
-            { query: WEEKLY_OVERVIEW_QUERY },
-            { query: MY_STATS_QUERY, variables: { timeFrame: 'All' } },
+            { query: WEEKLY_OVERVIEW_QUERY, variables: { teamId: selectedTeam } },
+            { query: MY_STATS_QUERY, variables: { timeFrame: 'All', teamId: selectedTeam } },
         ],
         awaitRefetchQueries: true,
         onCompleted: () => history.push('/app/dashboard'),

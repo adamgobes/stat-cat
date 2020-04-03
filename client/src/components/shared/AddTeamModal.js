@@ -8,9 +8,9 @@ import { CREATE_TEAM_MUTATION } from '../../apollo/mutations'
 import { AppContext, setSelectedTeam } from '../general/AppContext'
 import { ALL_MY_TEAMS_QUERY } from '../../apollo/queries'
 
-export default function AddTeamModal({ closeModal, onTeamCreated }) {
+export default function AddTeamModal({ closeModal, setTeam }) {
     const history = useHistory()
-    const { appContext, dispatch } = useContext(AppContext)
+    const { dispatch } = useContext(AppContext)
 
     const [teamName, setTeamName] = useState('')
 
@@ -19,7 +19,7 @@ export default function AddTeamModal({ closeModal, onTeamCreated }) {
 
         dispatch(setSelectedTeam(data.addTeam.id))
 
-        onTeamCreated(data.addTeam)
+        setTeam(data.addTeam)
 
         closeModal()
     }

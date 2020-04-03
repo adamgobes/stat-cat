@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect, forwardRef } from 'react'
+import React, { useState, useRef, useEffect, forwardRef, useContext } from 'react'
 import styled from 'styled-components'
 import { Box, DropButton, Layer } from 'grommet'
 import { FormUp, FormDown } from 'grommet-icons'
 
 import { Text } from '../shared/TextComponents'
 import AddTeamModal from '../shared/AddTeamModal'
+import { AppContext, setSelectedTeam } from './AppContext'
 
 const TeamSelectorWrapper = styled(Box)``
 
@@ -64,6 +65,8 @@ const DropContent = forwardRef(({ teams, onTeamClick, onAddTeamClick }, ref) => 
 ))
 
 export default function TeamSelector({ teams }) {
+    const { dispatch } = useContext(AppContext)
+
     const [team, setTeam] = useState(teams[0])
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const [showAddTeamModal, setShowAddTeamModal] = useState(false)
@@ -71,6 +74,8 @@ export default function TeamSelector({ teams }) {
     function handleTeamClick(t) {
         setDropdownOpen(false)
         setTeam(t)
+        dispatch(setSelectedTeam(t.id))
+        // window.location.reload()
     }
 
     function handleAddTeamClick() {

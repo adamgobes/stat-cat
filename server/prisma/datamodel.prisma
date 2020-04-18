@@ -1,5 +1,5 @@
 type User {
-    id: ID! @unique
+    id: ID! @unique @id
     name: String!
     email: String! @unique
     password: String!
@@ -7,14 +7,14 @@ type User {
 }
 
 type Team {
-    id: ID! @unique
+    id: ID! @unique @id
     name: String!
     owner: User!
-    players: [ID!]!
+    players: [ID!]! @scalarList(strategy: RELATION)
 }
 
 type FantasyLeague {
-    id: ID! @unique
+    id: ID! @unique @id
     name: String!
     admin: User!
     teams: [Team!]!

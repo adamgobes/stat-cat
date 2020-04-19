@@ -1,38 +1,43 @@
 import { Prisma, models } from '../generated/prisma-client/index'
 import { typeDefs } from '../generated/prisma-client/prisma-schema'
+import { register, login } from './Mutation'
 
-const getPrismaInstance = () => new Prisma()
+const prismaInstance: Prisma = new Prisma()
 
-const registerMutation = `
-  mutation RegisterMutation($email: String!, $password: String!) {
-	register(email: $email, password: $password)
-  }
-`
+const TEST_EMAIL: string = 'test@gmail.com'
+let testTeamId: string
 
-const loginMutation = `
-  mutation LoginMutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-    	id
-    	email
-    	type
-    	ccLast4
-    }
-  }
-`
-
-const meQuery = `
-  query MeQuery {
-    me {
-    	id
-    	email
-    	type
-    	ccLast4
-    }
-  }
-`
+afterAll(async () => {
+    await prismaInstance.deleteTeam({ id: testTeamId })
+    await prismaInstance.deleteUser({ email: TEST_EMAIL })
+})
 
 describe('resolvers', () => {
-    it('register, login, and me', () => {
-        expect(true).toBe(true)
+    it('register and login mutations', async () => {
+        const parent = {}
+        const ctx = {
+            prisma: prismaInstance,
+        }
+        const info = {}
+
+        const registerArgs = {
+            email: TEST_EMAIL,
+            name: 'Test',
+            password: 'test',
+        }
+
+        const { token: registerToken, teamIds } = await register(parent, registerArgs, ctx, info)
+        testTeamId = teamIds[0]
+
+        expect(registerToken).not.toBeNull()
+
+        const loginArgs = {
+            email: TEST_EMAIL,
+            password: 'test',
+        }
+
+        const { token: loginToken } = await login(parent, loginArgs, ctx, info)
+
+        expect(loginToken).not.toBeNull()
     })
 })

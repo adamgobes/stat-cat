@@ -11,6 +11,10 @@ services:
         restart: always
         environment:
             - PRISMA_ENDPOINT=${LOCAL_PRISMA_ENDPOINT}
+            - APP_SECRET=${APP_SECRET}
+            - sportsFeedUsername=${sportsFeedUsername}
+            - sportsFeedPassword=${sportsFeedPassword}
+            - sportsFeedUrl=${sportsFeedUrl}
         volumes:
             - ./:/usr/src/app
         ports:

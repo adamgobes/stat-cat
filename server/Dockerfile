@@ -14,9 +14,6 @@ RUN yarn
 
 COPY . .
 
-RUN prisma deploy
-RUN prisma generate
-
 EXPOSE 4000
 
 CMD yarn start

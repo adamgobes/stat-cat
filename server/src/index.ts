@@ -2,22 +2,9 @@ import { GraphQLServer } from 'graphql-yoga'
 import * as dotenv from 'dotenv'
 
 import { prisma } from './generated/prisma-client'
-
-import * as Mutation from './resolvers/Mutation'
-import * as Player from './resolvers/Player'
-import * as Query from './resolvers/Query'
-import * as Team from './resolvers/Team'
-import * as User from './resolvers/User'
+import { resolvers } from './resolvers'
 
 dotenv.config()
-
-const resolvers = {
-    Mutation,
-    Player,
-    Query,
-    Team,
-    User,
-}
 
 const typeDefs = './src/schema.graphql'
 

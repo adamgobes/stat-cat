@@ -1,0 +1,16 @@
+export const registerMutation = `
+mutation RegisterMutation($email: String!, $name: String! $password: String!) {
+    register(email: $email, name: $name, password: $password) {
+		token
+		teamIds
+	}
+}
+`
+
+export const loginMutation = `
+mutation LoginMutation($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+		token
+	}
+}
+`

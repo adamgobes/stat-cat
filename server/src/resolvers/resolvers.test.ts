@@ -2,10 +2,15 @@ import { Prisma, models } from '../generated/prisma-client/index'
 import { typeDefs } from '../generated/prisma-client/prisma-schema'
 import { register, login, saveTeam } from './Mutation'
 import { players } from './Team'
+import { graphqlTestCall } from '../testUtils/gqlTestClient'
+import { registerMutation, loginMutation } from '../testUtils/testQueries'
 
 const prismaInstance: Prisma = new Prisma()
 
 const TEST_EMAIL: string = 'test@gmail.com'
+const TEST_NAME: string = 'Test'
+const TEST_PASSWORD: string = 'test'
+
 let testTeamId: string
 let authToken: string
 
@@ -16,53 +21,36 @@ afterAll(async () => {
 
 describe('resolvers', () => {
     it('register and login mutations', async () => {
-        const parent = {}
-        const ctx = {
-            prisma: prismaInstance,
-        }
-        const info = {}
-
-        const registerArgs = {
+        const registerVariables = {
             email: TEST_EMAIL,
-            name: 'Test',
-            password: 'test',
+            name: TEST_NAME,
+            password: TEST_PASSWORD,
         }
 
-        const { token: registerToken, teamIds } = await register(parent, registerArgs, ctx, info)
+        const { data: registerData } = await graphqlTestCall(
+            registerMutation,
+            prismaInstance,
+            registerVariables
+        )
+
+        const { token, teamIds } = registerData.register
         testTeamId = teamIds[0]
 
-        expect(registerToken).not.toBeNull()
+        expect(token).not.toBeNull()
+        expect(testTeamId).not.toBeNull()
 
-        const loginArgs = {
+        const loginVariables = {
             email: TEST_EMAIL,
-            password: 'test',
+            password: TEST_PASSWORD,
         }
 
-        const { token: loginToken } = await login(parent, loginArgs, ctx, info)
-        authToken = loginToken
+        const { data: loginData } = await graphqlTestCall(
+            loginMutation,
+            prismaInstance,
+            loginVariables
+        )
 
-        expect(loginToken).not.toBeNull()
-    })
-
-    it('adds players to the users team', async () => {
-        const parent = {}
-        const ctx = {
-            prisma: prismaInstance,
-            request: {
-                get: () => `Bearer ${authToken}`,
-            },
-        }
-        const info = {}
-
-        const sampleIds: string[] = ['9158', '9369', '9232', '9387']
-
-        const addPlayerArgs = {
-            teamId: testTeamId,
-            playerIds: sampleIds,
-        }
-
-        const { players: playerIds } = await saveTeam(parent, addPlayerArgs, ctx)
-
-        expect(playerIds).toEqual(sampleIds)
+        expect(loginData.token).not.toBeNull()
+        authToken = token
     })
 })

@@ -1,15 +1,14 @@
-import { Prisma, models } from '../generated/prisma-client/index'
-import { typeDefs } from '../generated/prisma-client/prisma-schema'
-import { register, login, saveTeam } from './Mutation'
-import { players } from './Team'
+import { Prisma } from '../generated/prisma-client/index'
 import { graphqlTestCall } from '../testUtils/gqlTestClient'
-import { registerMutation, loginMutation } from '../testUtils/testQueries'
+import { registerMutation, loginMutation, saveTeamMutation } from '../testUtils/testQueries'
 
 const prismaInstance: Prisma = new Prisma()
 
 const TEST_EMAIL: string = 'test@gmail.com'
 const TEST_NAME: string = 'Test'
 const TEST_PASSWORD: string = 'test'
+
+const sampleIds: string[] = ['9158', '9369', '9232', '9387']
 
 let testTeamId: string
 let authToken: string
@@ -52,5 +51,22 @@ describe('resolvers', () => {
 
         expect(loginData.token).not.toBeNull()
         authToken = token
+    })
+
+    it('adds players to the users team', async () => {
+        const saveTeamVariables = {
+            playerIds: sampleIds,
+            teamId: testTeamId,
+        }
+
+        const { data: saveTeamData, errors } = await graphqlTestCall(
+            saveTeamMutation,
+            prismaInstance,
+            saveTeamVariables,
+            authToken
+        )
+
+        expect(errors).toBeUndefined()
+        expect(saveTeamData).not.toBeUndefined()
     })
 })

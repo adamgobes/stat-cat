@@ -8,13 +8,21 @@ const typeDefs = importSchema('src/schema.graphql')
 
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 
-export const graphqlTestCall = async (query: any, prismaInstance: Prisma, variables?: any) => {
+export const graphqlTestCall = async (
+    query: any,
+    prismaInstance: Prisma,
+    variables?: any,
+    authToken?: string
+) => {
     return graphql(
         schema,
         query,
         undefined,
         {
             prisma: prismaInstance,
+            request: {
+                get: () => `Bearer ${authToken}`,
+            },
         },
         variables
     )

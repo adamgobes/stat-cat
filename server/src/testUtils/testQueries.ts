@@ -14,3 +14,13 @@ mutation LoginMutation($email: String!, $password: String!) {
 	}
 }
 `
+
+export const saveTeamMutation = `
+mutation saveTeamMutation($playerIds: [ID!]!, $teamId: String!) {
+	saveTeam(playerIds: $playerIds, teamId: $teamId) {
+		players {
+			id
+		}
+	}
+}
+`

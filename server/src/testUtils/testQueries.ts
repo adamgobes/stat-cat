@@ -24,3 +24,12 @@ mutation saveTeamMutation($playerIds: [ID!]!, $teamId: String!) {
 	}
 }
 `
+
+export const createTeamMutation = `
+mutation createTeamMutation($name: String!) {
+	addTeam(name: $name) {
+		name
+		id
+	}
+}
+`

@@ -1,6 +1,11 @@
 import { Prisma } from '../generated/prisma-client/index'
 import { graphqlTestCall } from '../testUtils/gqlTestClient'
-import { registerMutation, loginMutation, saveTeamMutation } from '../testUtils/testQueries'
+import {
+    registerMutation,
+    loginMutation,
+    saveTeamMutation,
+    createTeamMutation,
+} from '../testUtils/testQueries'
 
 const prismaInstance: Prisma = new Prisma()
 
@@ -67,6 +72,28 @@ describe('resolvers', () => {
         )
 
         expect(errors).toBeUndefined()
-        expect(saveTeamData).not.toBeUndefined()
+        expect(saveTeamData).toBeDefined()
+    })
+
+    it('allows the user to create a new fantasy team', async () => {
+        const newTeamName: string = 'Some New Team'
+
+        const newTeamVariables = {
+            name: newTeamName,
+        }
+
+        const { data: newTeamData, errors } = await graphqlTestCall(
+            createTeamMutation,
+            prismaInstance,
+            newTeamVariables,
+            authToken
+        )
+
+        const { name, id: newTeamId } = newTeamData.addTeam
+
+        await prismaInstance.deleteTeam({ id: newTeamId })
+
+        expect(name).toBe(newTeamName)
+        expect(newTeamId).toBeDefined()
     })
 })

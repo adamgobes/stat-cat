@@ -16,7 +16,7 @@ blocks:
             - docker-compose up -d
             - docker exec -it statcat_server yarn test
       env_vars:
-        - name: LOCAL_PRISMA_ENDPOINT
+        - name: PRISMA_ENDPOINT
           value: 'http://prisma:4466'
         - name: APP_SECRET
           value: catsarestatisticians

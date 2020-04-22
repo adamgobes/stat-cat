@@ -11,6 +11,7 @@ blocks:
         - name: Build Docker + Test
           commands:
             - checkout
+            - cd server
             - docker-compose build
             - docker-compose up -d
             - docker exec -it statcat_server yarn test

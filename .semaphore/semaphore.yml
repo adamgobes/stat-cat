@@ -13,9 +13,9 @@ blocks:
             - checkout
             - cd server
             - docker-compose build prisma postgres
-            - docker-compose up prisma postgres -d
+            - docker-compose up -d prisma postgres
             - docker-compose build server
-            - docker-compose up server -d
+            - docker-compose up -d server
             - docker exec -it statcat_server prisma deploy
             - docker exec -it statcat_server yarn test
       env_vars:

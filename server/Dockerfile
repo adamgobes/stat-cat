@@ -16,4 +16,4 @@ COPY . .
 
 EXPOSE 4000
 
-CMD prisma deploy && yarn start
+CMD yarn start

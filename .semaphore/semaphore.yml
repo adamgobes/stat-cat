@@ -1,0 +1,16 @@
+version: v1.0
+name: Initial Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Backend Tests
+    task:
+      jobs:
+        - name: Build Docker + Test
+          commands:
+            - checkout
+            - docker-compose build
+            - docker-compose up -d
+            - docker exec -it statcat_server yarn test

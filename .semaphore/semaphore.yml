@@ -21,8 +21,8 @@ blocks:
       env_vars:
         - name: LOCAL_PRISMA_ENDPOINT
           value: 'http://prisma:4466'
-        - name: APP_SECRET
-          value: catsarestatisticians
+      secrets:
+        - name: stat-cat-jwt-secret
   - name: Frontend Tests
     task:
       jobs:
@@ -32,3 +32,5 @@ blocks:
             - cd client
             - yarn
             - yarn test --watchAll=false
+      secrets:
+        - name: stat-cat-jwt-secret

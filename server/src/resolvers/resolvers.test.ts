@@ -7,6 +7,8 @@ import {
     createTeamMutation,
 } from '../testUtils/testQueries'
 
+jest.setTimeout(5000 * 2)
+
 const prismaInstance: Prisma = new Prisma()
 
 const TEST_EMAIL: string = 'test@gmail.com'

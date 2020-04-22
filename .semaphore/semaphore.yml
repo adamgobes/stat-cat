@@ -23,3 +23,12 @@ blocks:
           value: 'http://prisma:4466'
         - name: APP_SECRET
           value: catsarestatisticians
+  - name: Frontend Tests
+    task:
+      jobs:
+        - name: Yarn + Test
+          commands:
+            - checkout
+            - cd client
+            - yarn
+            - yarn test --watchAll=false

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Box } from 'grommet'
 import { Subheader, Text, Title } from '../shared/TextComponents'
 
-const ContactsWrapper = styled(Box)`
+const ContactListWrapper = styled(Box)`
     background: ${props => props.theme.global.colors.backdrop};
 `
 
@@ -27,7 +27,7 @@ const Contact = styled(Box)`
 
 const AvatarWrapper = styled(Box)`
     height: 100%;
-    width: 30%;
+    width: 25%;
 `
 
 const Avatar = styled(Box)`
@@ -39,6 +39,7 @@ const Avatar = styled(Box)`
 
 const ContactInformation = styled(Box)`
     height: 100%;
+    width: 64%;
     margin-top: 10px;
     color: black;
     margin-left: 20px;
@@ -60,28 +61,29 @@ const MessagePreview = styled(Subheader)`
     text-overflow: ellipsis;
 `
 
-export default function Contacts() {
+export default function ContactList({ contacts }) {
     return (
-        <ContactsWrapper>
+        <ContactListWrapper>
             <ContactsList direction="column">
-                <Contact direction="row" align="center">
-                    <AvatarWrapper direction="column" justify="center" align="center">
-                        <Avatar size="50" align="center" justify="center" background="#7781f7">
-                            <Text style={{ color: 'white', fontSize: '1em' }}>N</Text>
-                        </Avatar>
-                    </AvatarWrapper>
-                    <ContactInformation direction="column" justify="center">
-                        <Title style={{ color: 'black', fontSize: '1.2em', margin: '0px' }}>
-                            Nur Al Sharif
-                        </Title>
-                        <MessagePreview>
-                            Hey! I saw this player on your team and I think he'd be a really good
-                            fit on my team what do you think?
-                        </MessagePreview>
-                    </ContactInformation>
-                    <SentTime>12 min</SentTime>
-                </Contact>
+                {contacts.map(contact => (
+                    <Contact direction="row" align="center">
+                        <AvatarWrapper direction="column" justify="center" align="center">
+                            <Avatar size="50" align="center" justify="center" background="#7781f7">
+                                <Text style={{ color: 'white', fontSize: '1em' }}>
+                                    {contact.name.substring(0, 1)}
+                                </Text>
+                            </Avatar>
+                        </AvatarWrapper>
+                        <ContactInformation direction="column" justify="center">
+                            <Title style={{ color: 'black', fontSize: '1.2em', margin: '0px' }}>
+                                {contact.name}
+                            </Title>
+                            <MessagePreview>{contact.messagePreview}</MessagePreview>
+                        </ContactInformation>
+                        <SentTime>12 min</SentTime>
+                    </Contact>
+                ))}
             </ContactsList>
-        </ContactsWrapper>
+        </ContactListWrapper>
     )
 }

@@ -83,7 +83,6 @@ export function getTeam(parent, args, context): GQLTeam {
     return context.prisma.team({ id })
 }
 
-export function getUser(parent, args, context): GQLUser {
-    const id: string = args.userId
-    return context.prisma.user({ id })
+export function getUsers(parent, args, context): GQLUser[] {
+    return args.userIds.map(async id => await context.prisma.user({ id }))
 }

@@ -4,7 +4,7 @@ type Query {
     leagueLeaders(timeFrame: String): [LeagueLeader!]!
     getPlayerStats(playerIds: [ID!]!): [Player!]!
     getTeam(teamId: String): Team
-    getUser(userId: String): User
+    getUsers(userIds: [String!]!): [User!]!
 }
 
 type Mutation {

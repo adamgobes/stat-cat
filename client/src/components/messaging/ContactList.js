@@ -47,9 +47,19 @@ const ContactInformation = styled(Box)`
 
 const SentTime = styled(Text)`
     position: absolute;
-    right: 48px;
-    top: 30px;
+    right: 24px;
+    top: 38px;
     color: #c3c5cd;
+`
+
+const ContactName = styled(Title)`
+    color: black;
+    font-size: 1.2em;
+    margin: 0px;
+    width: 70%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `
 
 const MessagePreview = styled(Subheader)`
@@ -75,9 +85,7 @@ export default function ContactList({ contacts }) {
                             </Avatar>
                         </AvatarWrapper>
                         <ContactInformation direction="column" justify="center">
-                            <Title style={{ color: 'black', fontSize: '1.2em', margin: '0px' }}>
-                                {contact.name}
-                            </Title>
+                            <ContactName>{contact.name}</ContactName>
                             <MessagePreview>{contact.messagePreview}</MessagePreview>
                         </ContactInformation>
                         <SentTime>12 min</SentTime>

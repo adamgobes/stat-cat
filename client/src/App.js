@@ -10,6 +10,7 @@ import ApolloWrapper from './apollo/ApolloWrapper'
 import theme from './theme'
 import StatCatApp from './components/general/StatCatApp'
 import About from './components/general/About'
+import Contacts from './components/messaging/Contacts'
 
 const App = () => {
     const isLoggedIn = () => !!cookie.load('authToken')

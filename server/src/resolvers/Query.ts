@@ -82,3 +82,8 @@ export function getTeam(parent, args, context): GQLTeam {
     const id: string = args.teamId
     return context.prisma.team({ id })
 }
+
+export function getUser(parent, args, context): GQLUser {
+    const id: string = args.userId
+    return context.prisma.user({ id })
+}

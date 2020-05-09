@@ -34,7 +34,6 @@ const App = () => {
                     <Route exact path="/home" component={Home} />
                     <Route exact path="/contact" component={Contact} />
                     <Route exact path="/about" component={About} />
-                    <Route exact path="/messaging" component={Contacts} />
 
                     <Route path="/app" component={StatCatApp} />
                 </Grommet>

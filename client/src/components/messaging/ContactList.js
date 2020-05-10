@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 import { Subheader, Text, Title } from '../shared/TextComponents'
+import { GET_USER_INFO_QUERY } from '../../apollo/queries'
+import { useQuery } from '@apollo/react-hooks'
 
 const ContactListWrapper = styled(Box)`
     background: ${props => props.theme.global.colors.backdrop};
@@ -71,12 +73,12 @@ const MessagePreview = styled(Subheader)`
     text-overflow: ellipsis;
 `
 
-export default function ContactList({ contacts }) {
+export default function ContactList({ namesWithPreview }) {
     return (
         <ContactListWrapper>
             <ContactsList direction="column">
-                {contacts.map(contact => (
-                    <Contact direction="row" align="center">
+                {namesWithPreview.map(contact => (
+                    <Contact direction="row" align="center" key={contact.id}>
                         <AvatarWrapper direction="column" justify="center" align="center">
                             <Avatar size="50" align="center" justify="center" background="#7781f7">
                                 <Text style={{ color: 'white', fontSize: '1em' }}>
@@ -88,7 +90,7 @@ export default function ContactList({ contacts }) {
                             <ContactName>{contact.name}</ContactName>
                             <MessagePreview>{contact.messagePreview}</MessagePreview>
                         </ContactInformation>
-                        <SentTime>12 min</SentTime>
+                        <SentTime>{contact.sentAt}</SentTime>
                     </Contact>
                 ))}
             </ContactsList>

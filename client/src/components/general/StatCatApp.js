@@ -11,6 +11,7 @@ import { useWindowDimensions } from '../../utils/customHooks'
 import Nav from './Nav'
 import FallbackMessage from './FallbackMessage'
 import { SCREEN_SIZE_MESSAGE } from '../../utils/strings'
+import Messaging from '../messaging/Messaging'
 
 const HIDE_NAV_WIDTH = 1100
 
@@ -57,6 +58,11 @@ export default function StatCatApp() {
                 exact
                 path={`${path}/trade`}
                 render={({ history }) => <TradeSimulator history={history} />}
+            />
+            <Route
+                exact
+                path={`${path}/messaging`}
+                render={({ history }) => <Messaging history={history} />}
             />
         </StatCatAppWrapper>
     )

@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
+import moment from 'moment'
+
 import { Subheader, Text, Title } from '../shared/TextComponents'
 
 const ContactListWrapper = styled(Box)`
@@ -14,8 +16,8 @@ const ContactsList = styled(Box)`
 const Contact = styled(Box)`
     position: relative;
     background: white;
-    border-radius: 12px;
-    margin: 20px 0;
+    border-radius: 6px;
+    margin: 4px 0;
     min-height: 100px;
     padding: 20px;
     cursor: pointer;
@@ -40,21 +42,22 @@ const Avatar = styled(Box)`
 const ContactInformation = styled(Box)`
     height: 100%;
     width: 64%;
-    margin-top: 10px;
+    margin-top: 6px;
     color: black;
-    margin-left: 20px;
+    margin-left: 10px;
 `
 
 const SentTime = styled(Text)`
     position: absolute;
     right: 24px;
-    top: 38px;
+    top: 35px;
     color: #c3c5cd;
+    font-size: 0.7em;
 `
 
 const ContactName = styled(Title)`
     color: black;
-    font-size: 1.2em;
+    font-size: 0.8em;
     margin: 0px;
     width: 70%;
     white-space: nowrap;
@@ -64,21 +67,27 @@ const ContactName = styled(Title)`
 
 const MessagePreview = styled(Subheader)`
     width: 60%;
-    margin: 10px 0;
+    margin: 0px;
+    font-size: 0.7em;
     color: #c3c5cd;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 `
 
-export default function ContactList({ contacts }) {
+const formatDate = date => {
+    const dateStr = moment(date).fromNow()
+    return dateStr.substring(0, dateStr.length - 3)
+}
+
+export default function ContactList({ namesWithPreview }) {
     return (
         <ContactListWrapper>
             <ContactsList direction="column">
-                {contacts.map(contact => (
-                    <Contact direction="row" align="center">
+                {namesWithPreview.map(contact => (
+                    <Contact direction="row" align="center" key={contact.id}>
                         <AvatarWrapper direction="column" justify="center" align="center">
-                            <Avatar size="50" align="center" justify="center" background="#7781f7">
+                            <Avatar size="40" align="center" justify="center" background="#7781f7">
                                 <Text style={{ color: 'white', fontSize: '1em' }}>
                                     {contact.name.substring(0, 1)}
                                 </Text>
@@ -88,7 +97,7 @@ export default function ContactList({ contacts }) {
                             <ContactName>{contact.name}</ContactName>
                             <MessagePreview>{contact.messagePreview}</MessagePreview>
                         </ContactInformation>
-                        <SentTime>12 min</SentTime>
+                        <SentTime>{formatDate(contact.sentAt)}</SentTime>
                     </Contact>
                 ))}
             </ContactsList>

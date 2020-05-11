@@ -78,7 +78,7 @@ export const GET_PLAYER_STATS_QUERY = gql`
 `
 
 export const GET_USER_INFO_QUERY = gql`
-    query getUserInfoo($userIds: [ID!]!) {
+    query getUserInfo($userIds: [ID!]!) {
         getUsers(userIds: $userIds) {
             id
             name

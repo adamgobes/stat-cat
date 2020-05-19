@@ -50,6 +50,12 @@ export function toggleNav() {
     }
 }
 
+export function toggleDarkMode() {
+    return {
+        type: TOGGLE_DARK_MODE,
+    }
+}
+
 function AppContextProvider({ children, initialState = initialAppState }) {
     const [appContext, dispatch] = useReducer(reducer, initialState)
 

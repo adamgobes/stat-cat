@@ -15,7 +15,7 @@ import { AppContext } from './components/general/AppContext'
 const App = () => {
     const isLoggedIn = () => !!cookie.load('authToken')
 
-    const { appContext, dispatch } = useContext(AppContext)
+    const { appContext } = useContext(AppContext)
 
     return (
         <ApolloWrapper>

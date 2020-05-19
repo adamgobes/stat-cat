@@ -6,7 +6,7 @@ import { TeamBuilderContextProvider } from '../teamBuilder/TeamBuilderContext'
 import TeamBuilder from '../teamBuilder/TeamBuilder'
 import TradeSimulator from '../tradeSimulator/TradeSimulator'
 import Dashboard from '../dashboard/Dashboard'
-import { TOGGLE_NAV, AppContext, toggleNav } from './AppContext'
+import { TOGGLE_NAV, AppContext, toggleNav, toggleDarkMode } from './AppContext'
 import { useWindowDimensions } from '../../utils/customHooks'
 import Nav from './Nav'
 import FallbackMessage from './FallbackMessage'
@@ -39,6 +39,8 @@ export default function StatCatApp() {
                 setNavOpen={() => dispatch(toggleNav())}
                 isNavOpen={isNavOpen}
                 isWidthTooSmall={width < HIDE_NAV_WIDTH}
+                darkMode={appContext.darkMode}
+                toggleDarkMode={() => dispatch(toggleDarkMode())}
             />
             <Route
                 exact

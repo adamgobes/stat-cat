@@ -4,12 +4,13 @@ import styled, { ThemeContext } from 'styled-components'
 import { Box } from 'grommet'
 import cookie from 'react-cookies'
 import { useApolloClient, useQuery } from '@apollo/react-hooks'
-import { Menu, Group, Dashboard, Logout, ShareOption, FormClose } from 'grommet-icons'
+import { Menu, Group, Dashboard, Logout, ShareOption, FormClose, Info } from 'grommet-icons'
 
 import { Subheader, TextLogo } from '../shared/TextComponents'
 import TeamSelector from './TeamSelector'
 import { ALL_MY_TEAMS_QUERY } from '../../apollo/queries'
 import Loader from '../shared/Loader'
+import Toggle from '../shared/Toggle'
 
 const NavigationContainer = styled(Box)`
     background: ${props => props.theme.global.colors.brand};
@@ -95,7 +96,7 @@ const EnhanceNavListItem = Icon => ({ name, selected, handleClick, theme }) => (
     </NavListItem>
 )
 
-function Nav({ isNavOpen, setNavOpen, isWidthTooSmall }) {
+function Nav({ isNavOpen, setNavOpen, isWidthTooSmall, darkMode, toggleDarkMode }) {
     const history = useHistory()
     const location = useLocation()
     const theme = useContext(ThemeContext)
@@ -152,6 +153,15 @@ function Nav({ isNavOpen, setNavOpen, isWidthTooSmall }) {
                         />
                     )
                 })}
+                <NavListItem direction="row" justify="evenly">
+                    <Box align="center">
+                        <Info color="white" />
+                    </Box>
+                    <Toggle handleToggle={toggleDarkMode} isToggled={darkMode} />
+                    <Box align="center">
+                        <Info color="black" />
+                    </Box>
+                </NavListItem>
                 <Box style={{ height: '100px' }} />
                 <NavListItem
                     direction="row"

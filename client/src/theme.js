@@ -27,8 +27,9 @@ export const lightTheme = {
     global: {
         colors: {
             brand: '#7781f7',
-            secondary: 'black',
+            secondary: 'white',
             backdrop: '#EFF1F3',
+            freeText: 'black',
         },
         focus: {
             border: {
@@ -49,6 +50,7 @@ export const darkTheme = {
             brand: '#282B2F',
             secondary: 'black',
             backdrop: '#222529',
+            freeText: 'white',
         },
         focus: {
             border: {

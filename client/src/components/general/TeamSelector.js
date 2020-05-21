@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, forwardRef, useContext } from 'react'
-import styled from 'styled-components'
+import styled, { ThemeContext } from 'styled-components'
 import { Box, DropButton, Layer } from 'grommet'
 import { FormUp, FormDown } from 'grommet-icons'
 
@@ -39,30 +39,43 @@ const Truncated = styled(Text)`
     text-overflow: ellipsis;
 `
 
-const DropContent = forwardRef(({ teams, onTeamClick, onAddTeamClick }, ref) => (
-    <Box ref={ref}>
-        {teams.map(t => (
-            <TeamDropdownItem direction="row" key={t.id} onClick={() => onTeamClick(t)}>
-                <FirstLetterWrapper size="30" align="center" justify="center" background="#7781f7">
-                    <Text style={{ color: 'white', fontSize: '0.7em' }}>
-                        {t.name.substring(0, 1)}
-                    </Text>
+const DropContent = forwardRef(({ teams, onTeamClick, onAddTeamClick }, ref) => {
+    const theme = useContext(ThemeContext)
+    return (
+        <Box ref={ref}>
+            {teams.map(t => (
+                <TeamDropdownItem direction="row" key={t.id} onClick={() => onTeamClick(t)}>
+                    <FirstLetterWrapper
+                        size="30"
+                        align="center"
+                        justify="center"
+                        background={theme.global.colors.brand}
+                    >
+                        <Text style={{ color: 'white', fontSize: '0.7em' }}>
+                            {t.name.substring(0, 1)}
+                        </Text>
+                    </FirstLetterWrapper>
+                    <Box>
+                        <Truncated>{t.name}</Truncated>
+                    </Box>
+                </TeamDropdownItem>
+            ))}
+            <TeamDropdownItem direction="row" onClick={() => onAddTeamClick()}>
+                <FirstLetterWrapper
+                    size="30"
+                    align="center"
+                    justify="center"
+                    background={theme.global.colors.brand}
+                >
+                    <Text style={{ color: 'white', fontSize: '1em' }}>+</Text>
                 </FirstLetterWrapper>
                 <Box>
-                    <Truncated>{t.name}</Truncated>
+                    <Truncated>Add Team</Truncated>
                 </Box>
             </TeamDropdownItem>
-        ))}
-        <TeamDropdownItem direction="row" onClick={() => onAddTeamClick()}>
-            <FirstLetterWrapper size="30" align="center" justify="center" background="#7781f7">
-                <Text style={{ color: 'white', fontSize: '1em' }}>+</Text>
-            </FirstLetterWrapper>
-            <Box>
-                <Truncated>Add Team</Truncated>
-            </Box>
-        </TeamDropdownItem>
-    </Box>
-))
+        </Box>
+    )
+})
 
 export default function TeamSelector({ teams }) {
     const { dispatch } = useContext(AppContext)

@@ -59,6 +59,20 @@ const NavListItem = styled(Box)`
     background: ${props => (props.selected ? 'white' : '')};
 `
 
+const DarkModeToggle = styled(NavListItem)`
+    margin-top: 40px;
+    margin-left: -4px;
+`
+
+const Moon = styled(Box)`
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    box-shadow: 8px 5px 0 0 white;
+    margin-left: -10px;
+    margin-top: -8px;
+`
+
 const NavLinks = [
     {
         name: 'Team Builder',
@@ -153,15 +167,13 @@ function Nav({ isNavOpen, setNavOpen, isWidthTooSmall, darkMode, toggleDarkMode 
                         />
                     )
                 })}
-                <NavListItem direction="row" justify="evenly">
+                <DarkModeToggle direction="row" justify="evenly">
                     <Box align="center">
                         <Info color="white" />
                     </Box>
                     <Toggle handleToggle={toggleDarkMode} isToggled={darkMode} />
-                    <Box align="center">
-                        <Info color="black" />
-                    </Box>
-                </NavListItem>
+                    <Moon />
+                </DarkModeToggle>
                 <Box style={{ height: '100px' }} />
                 <NavListItem
                     direction="row"

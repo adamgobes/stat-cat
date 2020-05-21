@@ -4,12 +4,13 @@ import styled, { ThemeContext } from 'styled-components'
 import { Box } from 'grommet'
 import cookie from 'react-cookies'
 import { useApolloClient, useQuery } from '@apollo/react-hooks'
-import { Menu, Group, Dashboard, Logout, ShareOption, FormClose } from 'grommet-icons'
+import { Menu, Group, Dashboard, Logout, ShareOption, FormClose, Info } from 'grommet-icons'
 
 import { Subheader, TextLogo } from '../shared/TextComponents'
 import TeamSelector from './TeamSelector'
 import { ALL_MY_TEAMS_QUERY } from '../../apollo/queries'
 import Loader from '../shared/Loader'
+import Toggle from '../shared/Toggle'
 
 const NavigationContainer = styled(Box)`
     background: ${props => props.theme.global.colors.brand};
@@ -58,6 +59,20 @@ const NavListItem = styled(Box)`
     background: ${props => (props.selected ? 'white' : '')};
 `
 
+const DarkModeToggle = styled(NavListItem)`
+    margin-top: 40px;
+    margin-left: -4px;
+`
+
+const Moon = styled(Box)`
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    box-shadow: 8px 5px 0 0 white;
+    margin-left: -10px;
+    margin-top: -8px;
+`
+
 const NavLinks = [
     {
         name: 'Team Builder',
@@ -95,7 +110,7 @@ const EnhanceNavListItem = Icon => ({ name, selected, handleClick, theme }) => (
     </NavListItem>
 )
 
-function Nav({ isNavOpen, setNavOpen, isWidthTooSmall }) {
+function Nav({ isNavOpen, setNavOpen, isWidthTooSmall, darkMode, toggleDarkMode }) {
     const history = useHistory()
     const location = useLocation()
     const theme = useContext(ThemeContext)
@@ -152,6 +167,13 @@ function Nav({ isNavOpen, setNavOpen, isWidthTooSmall }) {
                         />
                     )
                 })}
+                <DarkModeToggle direction="row" justify="evenly">
+                    <Box align="center">
+                        <Info color="white" />
+                    </Box>
+                    <Toggle handleToggle={toggleDarkMode} isToggled={darkMode} />
+                    <Moon />
+                </DarkModeToggle>
                 <Box style={{ height: '100px' }} />
                 <NavListItem
                     direction="row"

@@ -25,9 +25,14 @@ const TradeSimulatorWrapper = styled(Box)`
     overflow: scroll;
 `
 
+const TradeSimulatorTitle = styled(Title)`
+    color: ${props => props.theme.global.colors.freeText};
+`
+
 const Copy = styled(Text)`
     margin: 20px;
     font-size: 1em;
+    color: ${props => props.theme.global.colors.freeText};
 `
 
 const SimulateTradeButton = styled(RoundedButton)`
@@ -129,7 +134,7 @@ export default function TradeSimulator() {
         <TradeSimulatorWrapper align="center">
             <Box direction="row" align="center" style={{ width: '90%' }}>
                 <Box direction="column" justify="center" align="center" basis="1/2">
-                    <Title>Trade Simulator</Title>
+                    <TradeSimulatorTitle>Trade Simulator</TradeSimulatorTitle>
                     <Copy style={{ textAlign: 'center', marginTop: '-10px' }}>
                         Start searching and get trading
                     </Copy>
@@ -159,7 +164,6 @@ export default function TradeSimulator() {
                         />
                     </TradedPlayers>
                     <SimulateTradeButton
-                        inverted
                         loading={getPlayerStatsLoading}
                         label="Simulate Trade"
                         onClick={onSimulateTrade}

@@ -8,7 +8,7 @@ const textInputStyles = `
 	font-family: Roboto;
 `
 
-export default {
+const baseTheme = {
     textInput: {
         extend: textInputStyles,
     },
@@ -20,11 +20,37 @@ export default {
     textArea: {
         extend: textInputStyles,
     },
+}
+
+export const lightTheme = {
+    ...baseTheme,
     global: {
         colors: {
             brand: '#7781f7',
-            secondary: 'black',
+            secondary: 'white',
             backdrop: '#EFF1F3',
+            freeText: 'black',
+        },
+        focus: {
+            border: {
+                color: 'none',
+            },
+        },
+        drop: {
+            shadowSize: 'medium',
+            extend: dropStyles,
+        },
+    },
+}
+
+export const darkTheme = {
+    ...baseTheme,
+    global: {
+        colors: {
+            brand: '#282B2F',
+            secondary: 'black',
+            backdrop: '#222529',
+            freeText: 'white',
         },
         focus: {
             border: {

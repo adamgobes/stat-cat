@@ -16,7 +16,6 @@ const AddPlayerInputWrapper = styled(Box)`
 const AddPlayer = styled(TextInput)`
     width: ${props => props.width}px;
     margin: 0 24px;
-    border-color: ${props => props.theme.global.colors.secondary};
 `
 
 const SearchIconWrapper = styled(Box)`

@@ -185,13 +185,21 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type TeamOrderByInput = "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC";
+export type TeamOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "espnId_ASC"
+  | "espnId_DESC";
 
 export type FantasyLeagueOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "name_ASC"
-  | "name_DESC";
+  | "name_DESC"
+  | "espnId_ASC"
+  | "espnId_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -207,6 +215,7 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export type FantasyLeagueWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  espnId?: Maybe<ID_Input>;
 }>;
 
 export interface TeamWhereInput {
@@ -239,6 +248,20 @@ export interface TeamWhereInput {
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
   owner?: Maybe<UserWhereInput>;
+  espnId?: Maybe<ID_Input>;
+  espnId_not?: Maybe<ID_Input>;
+  espnId_in?: Maybe<ID_Input[] | ID_Input>;
+  espnId_not_in?: Maybe<ID_Input[] | ID_Input>;
+  espnId_lt?: Maybe<ID_Input>;
+  espnId_lte?: Maybe<ID_Input>;
+  espnId_gt?: Maybe<ID_Input>;
+  espnId_gte?: Maybe<ID_Input>;
+  espnId_contains?: Maybe<ID_Input>;
+  espnId_not_contains?: Maybe<ID_Input>;
+  espnId_starts_with?: Maybe<ID_Input>;
+  espnId_not_starts_with?: Maybe<ID_Input>;
+  espnId_ends_with?: Maybe<ID_Input>;
+  espnId_not_ends_with?: Maybe<ID_Input>;
   AND?: Maybe<TeamWhereInput[] | TeamWhereInput>;
   OR?: Maybe<TeamWhereInput[] | TeamWhereInput>;
   NOT?: Maybe<TeamWhereInput[] | TeamWhereInput>;
@@ -342,6 +365,20 @@ export interface FantasyLeagueWhereInput {
   teams_every?: Maybe<TeamWhereInput>;
   teams_some?: Maybe<TeamWhereInput>;
   teams_none?: Maybe<TeamWhereInput>;
+  espnId?: Maybe<ID_Input>;
+  espnId_not?: Maybe<ID_Input>;
+  espnId_in?: Maybe<ID_Input[] | ID_Input>;
+  espnId_not_in?: Maybe<ID_Input[] | ID_Input>;
+  espnId_lt?: Maybe<ID_Input>;
+  espnId_lte?: Maybe<ID_Input>;
+  espnId_gt?: Maybe<ID_Input>;
+  espnId_gte?: Maybe<ID_Input>;
+  espnId_contains?: Maybe<ID_Input>;
+  espnId_not_contains?: Maybe<ID_Input>;
+  espnId_starts_with?: Maybe<ID_Input>;
+  espnId_not_starts_with?: Maybe<ID_Input>;
+  espnId_ends_with?: Maybe<ID_Input>;
+  espnId_not_ends_with?: Maybe<ID_Input>;
   AND?: Maybe<FantasyLeagueWhereInput[] | FantasyLeagueWhereInput>;
   OR?: Maybe<FantasyLeagueWhereInput[] | FantasyLeagueWhereInput>;
   NOT?: Maybe<FantasyLeagueWhereInput[] | FantasyLeagueWhereInput>;
@@ -361,6 +398,7 @@ export interface FantasyLeagueCreateInput {
   name: String;
   admin: UserCreateOneInput;
   teams?: Maybe<TeamCreateManyInput>;
+  espnId?: Maybe<ID_Input>;
 }
 
 export interface UserCreateOneInput {
@@ -385,6 +423,7 @@ export interface TeamCreateWithoutOwnerInput {
   id?: Maybe<ID_Input>;
   name: String;
   players?: Maybe<TeamCreateplayersInput>;
+  espnId?: Maybe<ID_Input>;
 }
 
 export interface TeamCreateplayersInput {
@@ -401,6 +440,7 @@ export interface TeamCreateInput {
   name: String;
   owner: UserCreateOneWithoutTeamsInput;
   players?: Maybe<TeamCreateplayersInput>;
+  espnId?: Maybe<ID_Input>;
 }
 
 export interface UserCreateOneWithoutTeamsInput {
@@ -419,6 +459,7 @@ export interface FantasyLeagueUpdateInput {
   name?: Maybe<String>;
   admin?: Maybe<UserUpdateOneRequiredInput>;
   teams?: Maybe<TeamUpdateManyInput>;
+  espnId?: Maybe<ID_Input>;
 }
 
 export interface UserUpdateOneRequiredInput {
@@ -463,6 +504,7 @@ export interface TeamUpdateWithWhereUniqueWithoutOwnerInput {
 export interface TeamUpdateWithoutOwnerDataInput {
   name?: Maybe<String>;
   players?: Maybe<TeamUpdateplayersInput>;
+  espnId?: Maybe<ID_Input>;
 }
 
 export interface TeamUpdateplayersInput {
@@ -504,6 +546,20 @@ export interface TeamScalarWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  espnId?: Maybe<ID_Input>;
+  espnId_not?: Maybe<ID_Input>;
+  espnId_in?: Maybe<ID_Input[] | ID_Input>;
+  espnId_not_in?: Maybe<ID_Input[] | ID_Input>;
+  espnId_lt?: Maybe<ID_Input>;
+  espnId_lte?: Maybe<ID_Input>;
+  espnId_gt?: Maybe<ID_Input>;
+  espnId_gte?: Maybe<ID_Input>;
+  espnId_contains?: Maybe<ID_Input>;
+  espnId_not_contains?: Maybe<ID_Input>;
+  espnId_starts_with?: Maybe<ID_Input>;
+  espnId_not_starts_with?: Maybe<ID_Input>;
+  espnId_ends_with?: Maybe<ID_Input>;
+  espnId_not_ends_with?: Maybe<ID_Input>;
   AND?: Maybe<TeamScalarWhereInput[] | TeamScalarWhereInput>;
   OR?: Maybe<TeamScalarWhereInput[] | TeamScalarWhereInput>;
   NOT?: Maybe<TeamScalarWhereInput[] | TeamScalarWhereInput>;
@@ -517,6 +573,7 @@ export interface TeamUpdateManyWithWhereNestedInput {
 export interface TeamUpdateManyDataInput {
   name?: Maybe<String>;
   players?: Maybe<TeamUpdateplayersInput>;
+  espnId?: Maybe<ID_Input>;
 }
 
 export interface UserUpsertNestedInput {
@@ -553,6 +610,7 @@ export interface TeamUpdateDataInput {
   name?: Maybe<String>;
   owner?: Maybe<UserUpdateOneRequiredWithoutTeamsInput>;
   players?: Maybe<TeamUpdateplayersInput>;
+  espnId?: Maybe<ID_Input>;
 }
 
 export interface UserUpdateOneRequiredWithoutTeamsInput {
@@ -581,17 +639,20 @@ export interface TeamUpsertWithWhereUniqueNestedInput {
 
 export interface FantasyLeagueUpdateManyMutationInput {
   name?: Maybe<String>;
+  espnId?: Maybe<ID_Input>;
 }
 
 export interface TeamUpdateInput {
   name?: Maybe<String>;
   owner?: Maybe<UserUpdateOneRequiredWithoutTeamsInput>;
   players?: Maybe<TeamUpdateplayersInput>;
+  espnId?: Maybe<ID_Input>;
 }
 
 export interface TeamUpdateManyMutationInput {
   name?: Maybe<String>;
   players?: Maybe<TeamUpdateplayersInput>;
+  espnId?: Maybe<ID_Input>;
 }
 
 export interface UserUpdateInput {
@@ -653,6 +714,7 @@ export interface NodeNode {
 export interface FantasyLeague {
   id: ID_Output;
   name: String;
+  espnId?: ID_Output;
 }
 
 export interface FantasyLeaguePromise
@@ -670,6 +732,7 @@ export interface FantasyLeaguePromise
     first?: Int;
     last?: Int;
   }) => T;
+  espnId: () => Promise<ID_Output>;
 }
 
 export interface FantasyLeagueSubscription
@@ -687,6 +750,7 @@ export interface FantasyLeagueSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  espnId: () => Promise<AsyncIterator<ID_Output>>;
 }
 
 export interface FantasyLeagueNullablePromise
@@ -704,6 +768,7 @@ export interface FantasyLeagueNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  espnId: () => Promise<ID_Output>;
 }
 
 export interface User {
@@ -769,6 +834,7 @@ export interface Team {
   id: ID_Output;
   name: String;
   players: ID_Output[];
+  espnId?: ID_Output;
 }
 
 export interface TeamPromise extends Promise<Team>, Fragmentable {
@@ -776,6 +842,7 @@ export interface TeamPromise extends Promise<Team>, Fragmentable {
   name: () => Promise<String>;
   owner: <T = UserPromise>() => T;
   players: () => Promise<ID_Output[]>;
+  espnId: () => Promise<ID_Output>;
 }
 
 export interface TeamSubscription
@@ -785,6 +852,7 @@ export interface TeamSubscription
   name: () => Promise<AsyncIterator<String>>;
   owner: <T = UserSubscription>() => T;
   players: () => Promise<AsyncIterator<ID_Output[]>>;
+  espnId: () => Promise<AsyncIterator<ID_Output>>;
 }
 
 export interface TeamNullablePromise
@@ -794,6 +862,7 @@ export interface TeamNullablePromise
   name: () => Promise<String>;
   owner: <T = UserPromise>() => T;
   players: () => Promise<ID_Output[]>;
+  espnId: () => Promise<ID_Output>;
 }
 
 export interface FantasyLeagueConnection {
@@ -1027,6 +1096,7 @@ export interface FantasyLeagueSubscriptionPayloadSubscription
 export interface FantasyLeaguePreviousValues {
   id: ID_Output;
   name: String;
+  espnId?: ID_Output;
 }
 
 export interface FantasyLeaguePreviousValuesPromise
@@ -1034,6 +1104,7 @@ export interface FantasyLeaguePreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  espnId: () => Promise<ID_Output>;
 }
 
 export interface FantasyLeaguePreviousValuesSubscription
@@ -1041,6 +1112,7 @@ export interface FantasyLeaguePreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  espnId: () => Promise<AsyncIterator<ID_Output>>;
 }
 
 export interface TeamSubscriptionPayload {
@@ -1072,6 +1144,7 @@ export interface TeamPreviousValues {
   id: ID_Output;
   name: String;
   players: ID_Output[];
+  espnId?: ID_Output;
 }
 
 export interface TeamPreviousValuesPromise
@@ -1080,6 +1153,7 @@ export interface TeamPreviousValuesPromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   players: () => Promise<ID_Output[]>;
+  espnId: () => Promise<ID_Output>;
 }
 
 export interface TeamPreviousValuesSubscription
@@ -1088,6 +1162,7 @@ export interface TeamPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   players: () => Promise<AsyncIterator<ID_Output[]>>;
+  espnId: () => Promise<AsyncIterator<ID_Output>>;
 }
 
 export interface UserSubscriptionPayload {

@@ -34,6 +34,7 @@ type Team {
     name: String!
     owner: User!
     players(timeFrame: String): [Player!]!
+    espnId: ID
 }
 
 type Player {
@@ -54,6 +55,7 @@ type FantasyLeague {
     name: String!
     admin: User!
     teams: [Team!]!
+    espnId: ID
 }
 
 type Injury {

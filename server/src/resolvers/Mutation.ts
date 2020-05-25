@@ -87,7 +87,14 @@ export async function addTeam(parent, args, context): Promise<GQLTeam> {
 export async function createFantasyLeague(parent, args, context): Promise<GQLFantasyLeague> {
     const userId: string = getUserId(context)
 
-    const { leagueName, leagueMembers } = await getLeagueInformation(args.leagueId)
+    let leagueName
+    let leagueMembers
+
+    try {
+        ;({ leagueName, leagueMembers } = await getLeagueInformation(args.leagueId))
+    } catch (e) {
+        throw new Error('Error fetching fantasy league information')
+    }
 
     const createdLeague: GQLFantasyLeague = await context.prisma.createFantasyLeague({
         name: leagueName,

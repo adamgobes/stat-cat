@@ -1,4 +1,11 @@
-import { GQLPlayer, GQLUser, GQLTeam, GQLLeagueLeader, GQLStat } from '../generated/gqlTypes'
+import {
+    GQLPlayer,
+    GQLUser,
+    GQLTeam,
+    GQLLeagueLeader,
+    GQLStat,
+    GQLFantasyLeague,
+} from '../generated/gqlTypes'
 import { sportsFeedRequest, season, statCategories } from '../sportsFeed/api'
 import {
     extractBasicInfo,
@@ -85,4 +92,8 @@ export function getTeam(parent, args, context): GQLTeam {
 
 export function getUsers(parent, args, context): GQLUser[] {
     return args.userIds.map(async id => await context.prisma.user({ id }))
+}
+
+export function getFantasyLeague(parent, args, context): GQLFantasyLeague {
+    return context.prisma.fantasyLeague({ espnId: args.leagueId })
 }

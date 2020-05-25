@@ -5,13 +5,20 @@ export async function getLeagueInformation(leagueId: string) {
     const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] })
 
     const page = await browser.newPage()
+
     await page.goto(
         `https://fantasy.espn.com/basketball/tools/leaguemembers?leagueId=${leagueId}&seasonId=2020`
     )
 
-    await page.waitForSelector('h3.subHeader', {
-        visible: true,
-    })
+    try {
+        await page.waitForSelector('h3.subHeader', {
+            visible: true,
+            timeout: 6000,
+        })
+    } catch (e) {
+        await browser.close()
+        throw new Error('timeout')
+    }
 
     const leagueName = await page.$eval('h3.subHeader', n => n.innerText)
 

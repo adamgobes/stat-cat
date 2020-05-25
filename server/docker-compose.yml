@@ -17,6 +17,7 @@ services:
             - sportsFeedUrl=${sportsFeedUrl}
         volumes:
             - ./src:/usr/src/app/src
+            - ./prisma:/usr/src/app/prisma
         ports:
             - 4000:4000
     prisma:

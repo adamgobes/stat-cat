@@ -23,6 +23,7 @@ type FantasyLeague {
   name: String!
   admin: User!
   teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team!]
+  espnId: ID
 }
 
 type FantasyLeagueConnection {
@@ -36,6 +37,7 @@ input FantasyLeagueCreateInput {
   name: String!
   admin: UserCreateOneInput!
   teams: TeamCreateManyInput
+  espnId: ID
 }
 
 type FantasyLeagueEdge {
@@ -48,11 +50,14 @@ enum FantasyLeagueOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  espnId_ASC
+  espnId_DESC
 }
 
 type FantasyLeaguePreviousValues {
   id: ID!
   name: String!
+  espnId: ID
 }
 
 type FantasyLeagueSubscriptionPayload {
@@ -77,10 +82,12 @@ input FantasyLeagueUpdateInput {
   name: String
   admin: UserUpdateOneRequiredInput
   teams: TeamUpdateManyInput
+  espnId: ID
 }
 
 input FantasyLeagueUpdateManyMutationInput {
   name: String
+  espnId: ID
 }
 
 input FantasyLeagueWhereInput {
@@ -116,6 +123,20 @@ input FantasyLeagueWhereInput {
   teams_every: TeamWhereInput
   teams_some: TeamWhereInput
   teams_none: TeamWhereInput
+  espnId: ID
+  espnId_not: ID
+  espnId_in: [ID!]
+  espnId_not_in: [ID!]
+  espnId_lt: ID
+  espnId_lte: ID
+  espnId_gt: ID
+  espnId_gte: ID
+  espnId_contains: ID
+  espnId_not_contains: ID
+  espnId_starts_with: ID
+  espnId_not_starts_with: ID
+  espnId_ends_with: ID
+  espnId_not_ends_with: ID
   AND: [FantasyLeagueWhereInput!]
   OR: [FantasyLeagueWhereInput!]
   NOT: [FantasyLeagueWhereInput!]
@@ -123,6 +144,7 @@ input FantasyLeagueWhereInput {
 
 input FantasyLeagueWhereUniqueInput {
   id: ID
+  espnId: ID
 }
 
 scalar Long
@@ -189,6 +211,7 @@ type Team {
   name: String!
   owner: User!
   players: [ID!]!
+  espnId: ID
 }
 
 type TeamConnection {
@@ -202,6 +225,7 @@ input TeamCreateInput {
   name: String!
   owner: UserCreateOneWithoutTeamsInput!
   players: TeamCreateplayersInput
+  espnId: ID
 }
 
 input TeamCreateManyInput {
@@ -222,6 +246,7 @@ input TeamCreateWithoutOwnerInput {
   id: ID
   name: String!
   players: TeamCreateplayersInput
+  espnId: ID
 }
 
 type TeamEdge {
@@ -234,12 +259,15 @@ enum TeamOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  espnId_ASC
+  espnId_DESC
 }
 
 type TeamPreviousValues {
   id: ID!
   name: String!
   players: [ID!]!
+  espnId: ID
 }
 
 input TeamScalarWhereInput {
@@ -271,6 +299,20 @@ input TeamScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  espnId: ID
+  espnId_not: ID
+  espnId_in: [ID!]
+  espnId_not_in: [ID!]
+  espnId_lt: ID
+  espnId_lte: ID
+  espnId_gt: ID
+  espnId_gte: ID
+  espnId_contains: ID
+  espnId_not_contains: ID
+  espnId_starts_with: ID
+  espnId_not_starts_with: ID
+  espnId_ends_with: ID
+  espnId_not_ends_with: ID
   AND: [TeamScalarWhereInput!]
   OR: [TeamScalarWhereInput!]
   NOT: [TeamScalarWhereInput!]
@@ -298,17 +340,20 @@ input TeamUpdateDataInput {
   name: String
   owner: UserUpdateOneRequiredWithoutTeamsInput
   players: TeamUpdateplayersInput
+  espnId: ID
 }
 
 input TeamUpdateInput {
   name: String
   owner: UserUpdateOneRequiredWithoutTeamsInput
   players: TeamUpdateplayersInput
+  espnId: ID
 }
 
 input TeamUpdateManyDataInput {
   name: String
   players: TeamUpdateplayersInput
+  espnId: ID
 }
 
 input TeamUpdateManyInput {
@@ -326,6 +371,7 @@ input TeamUpdateManyInput {
 input TeamUpdateManyMutationInput {
   name: String
   players: TeamUpdateplayersInput
+  espnId: ID
 }
 
 input TeamUpdateManyWithoutOwnerInput {
@@ -352,6 +398,7 @@ input TeamUpdateplayersInput {
 input TeamUpdateWithoutOwnerDataInput {
   name: String
   players: TeamUpdateplayersInput
+  espnId: ID
 }
 
 input TeamUpdateWithWhereUniqueNestedInput {
@@ -406,6 +453,20 @@ input TeamWhereInput {
   name_ends_with: String
   name_not_ends_with: String
   owner: UserWhereInput
+  espnId: ID
+  espnId_not: ID
+  espnId_in: [ID!]
+  espnId_not_in: [ID!]
+  espnId_lt: ID
+  espnId_lte: ID
+  espnId_gt: ID
+  espnId_gte: ID
+  espnId_contains: ID
+  espnId_not_contains: ID
+  espnId_starts_with: ID
+  espnId_not_starts_with: ID
+  espnId_ends_with: ID
+  espnId_not_ends_with: ID
   AND: [TeamWhereInput!]
   OR: [TeamWhereInput!]
   NOT: [TeamWhereInput!]

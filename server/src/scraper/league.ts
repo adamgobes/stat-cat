@@ -1,24 +1,25 @@
-import puppeteer from 'puppeteer'
+const puppeteer = require('puppeteer')
+import { GQLFantasyLeague } from '../generated/gqlTypes'
 
-async function getLeagueInformation(leagueId: string): Promise<any> {
-    const browser = await puppeteer.launch()
+export async function getLeagueInformation(leagueId: string) {
+    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] })
 
     const page = await browser.newPage()
     await page.goto(
-        'https://fantasy.espn.com/basketball/team?leagueId=633975&seasonId=2020&teamId=2'
+        `https://fantasy.espn.com/basketball/tools/leaguemembers?leagueId=${leagueId}&seasonId=2020`
     )
 
-    await page.waitForSelector('.player-column__athlete .AnchorLink', {
+    await page.waitForSelector('h3.subHeader', {
         visible: true,
     })
 
-    const elems = await page.$$eval('.player-column__athlete .AnchorLink', nodes =>
-        nodes.map(n => n.innerText)
-    )
+    const leagueName = await page.$eval('h3.subHeader', n => n.innerText)
 
-    console.log(elems)
+    const leagueMembers = await page.$$eval('div.team__column', nodes =>
+        nodes.map(n => n.title).slice(1)
+    )
 
     await browser.close()
 
-    return elems
+    return { leagueName, leagueMembers }
 }

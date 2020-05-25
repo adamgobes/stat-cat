@@ -3,6 +3,7 @@ import * as jwt from 'jsonwebtoken'
 
 import { getUserId } from '../utils'
 import { GQLAuthPayLoad, GQLTeam, GQLFantasyLeague, GQLUser } from '../generated/gqlTypes'
+import { getLeagueInformation } from '../scraper/league'
 
 export async function register(parents, args, context, info): Promise<GQLAuthPayLoad> {
     const password = await bcrypt.hash(args.password, 10)
@@ -86,15 +87,11 @@ export async function addTeam(parent, args, context): Promise<GQLTeam> {
 export async function createFantasyLeague(parent, args, context): Promise<GQLFantasyLeague> {
     const userId: string = getUserId(context)
 
-    const teamId: string = await context.prisma // get user's team based on their id
-        .user({ id: userId })
-        .team()
-        .id()
+    const { leagueName, leagueMembers } = await getLeagueInformation(args.leagueId)
 
     const createdLeague: GQLFantasyLeague = await context.prisma.createFantasyLeague({
-        name: args.name,
-        admin: { connect: { id: userId } },
-        teams: { connect: [{ id: teamId }] },
+        name: leagueName,
+        espnId: args.leagueId,
     })
 
     return createdLeague

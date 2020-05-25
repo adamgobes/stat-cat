@@ -14,11 +14,11 @@ import { GraphQLResolveInfo } from 'graphql';
  *******************************/
 export interface GQLQuery {
   me: GQLUser;
-  myTeam: GQLTeam;
   allPlayers: Array<GQLPlayer>;
   leagueLeaders: Array<GQLLeagueLeader>;
   getPlayerStats: Array<GQLPlayer>;
   getTeam?: GQLTeam;
+  getUsers: Array<GQLUser>;
 }
 
 export interface GQLUser {
@@ -33,6 +33,7 @@ export interface GQLTeam {
   name: string;
   owner: GQLUser;
   players: Array<GQLPlayer>;
+  espnId?: string;
 }
 
 export interface GQLPlayer {
@@ -72,6 +73,7 @@ export interface GQLMutation {
   register?: GQLAuthPayLoad;
   login?: GQLAuthPayLoad;
   saveTeam?: GQLTeam;
+  addTeam?: GQLTeam;
   createFantasyLeague?: GQLFantasyLeague;
   addFantasyLeagueMember?: boolean;
   removeFantasyLeagueMember?: boolean;
@@ -85,8 +87,8 @@ export interface GQLAuthPayLoad {
 export interface GQLFantasyLeague {
   id: string;
   name: string;
-  admin: GQLUser;
   teams: Array<GQLTeam>;
+  espnId?: string;
 }
 
 /*********************************
@@ -114,18 +116,14 @@ export interface GQLResolver {
 }
 export interface GQLQueryTypeResolver<TParent = any> {
   me?: QueryToMeResolver<TParent>;
-  myTeam?: QueryToMyTeamResolver<TParent>;
   allPlayers?: QueryToAllPlayersResolver<TParent>;
   leagueLeaders?: QueryToLeagueLeadersResolver<TParent>;
   getPlayerStats?: QueryToGetPlayerStatsResolver<TParent>;
   getTeam?: QueryToGetTeamResolver<TParent>;
+  getUsers?: QueryToGetUsersResolver<TParent>;
 }
 
 export interface QueryToMeResolver<TParent = any, TResult = any> {
-  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
-}
-
-export interface QueryToMyTeamResolver<TParent = any, TResult = any> {
   (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
 }
 
@@ -157,6 +155,13 @@ export interface QueryToGetTeamResolver<TParent = any, TResult = any> {
   (parent: TParent, args: QueryToGetTeamArgs, context: any, info: GraphQLResolveInfo): TResult;
 }
 
+export interface QueryToGetUsersArgs {
+  userIds: Array<string>;
+}
+export interface QueryToGetUsersResolver<TParent = any, TResult = any> {
+  (parent: TParent, args: QueryToGetUsersArgs, context: any, info: GraphQLResolveInfo): TResult;
+}
+
 export interface GQLUserTypeResolver<TParent = any> {
   id?: UserToIdResolver<TParent>;
   email?: UserToEmailResolver<TParent>;
@@ -185,6 +190,7 @@ export interface GQLTeamTypeResolver<TParent = any> {
   name?: TeamToNameResolver<TParent>;
   owner?: TeamToOwnerResolver<TParent>;
   players?: TeamToPlayersResolver<TParent>;
+  espnId?: TeamToEspnIdResolver<TParent>;
 }
 
 export interface TeamToIdResolver<TParent = any, TResult = any> {
@@ -204,6 +210,10 @@ export interface TeamToPlayersArgs {
 }
 export interface TeamToPlayersResolver<TParent = any, TResult = any> {
   (parent: TParent, args: TeamToPlayersArgs, context: any, info: GraphQLResolveInfo): TResult;
+}
+
+export interface TeamToEspnIdResolver<TParent = any, TResult = any> {
+  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
 }
 
 export interface GQLPlayerTypeResolver<TParent = any> {
@@ -315,6 +325,7 @@ export interface GQLMutationTypeResolver<TParent = any> {
   register?: MutationToRegisterResolver<TParent>;
   login?: MutationToLoginResolver<TParent>;
   saveTeam?: MutationToSaveTeamResolver<TParent>;
+  addTeam?: MutationToAddTeamResolver<TParent>;
   createFantasyLeague?: MutationToCreateFantasyLeagueResolver<TParent>;
   addFantasyLeagueMember?: MutationToAddFantasyLeagueMemberResolver<TParent>;
   removeFantasyLeagueMember?: MutationToRemoveFantasyLeagueMemberResolver<TParent>;
@@ -339,9 +350,17 @@ export interface MutationToLoginResolver<TParent = any, TResult = any> {
 
 export interface MutationToSaveTeamArgs {
   playerIds: Array<string>;
+  teamId: string;
 }
 export interface MutationToSaveTeamResolver<TParent = any, TResult = any> {
   (parent: TParent, args: MutationToSaveTeamArgs, context: any, info: GraphQLResolveInfo): TResult;
+}
+
+export interface MutationToAddTeamArgs {
+  name: string;
+}
+export interface MutationToAddTeamResolver<TParent = any, TResult = any> {
+  (parent: TParent, args: MutationToAddTeamArgs, context: any, info: GraphQLResolveInfo): TResult;
 }
 
 export interface MutationToCreateFantasyLeagueArgs {
@@ -383,8 +402,8 @@ export interface AuthPayLoadToTeamIdsResolver<TParent = any, TResult = any> {
 export interface GQLFantasyLeagueTypeResolver<TParent = any> {
   id?: FantasyLeagueToIdResolver<TParent>;
   name?: FantasyLeagueToNameResolver<TParent>;
-  admin?: FantasyLeagueToAdminResolver<TParent>;
   teams?: FantasyLeagueToTeamsResolver<TParent>;
+  espnId?: FantasyLeagueToEspnIdResolver<TParent>;
 }
 
 export interface FantasyLeagueToIdResolver<TParent = any, TResult = any> {
@@ -395,10 +414,10 @@ export interface FantasyLeagueToNameResolver<TParent = any, TResult = any> {
   (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
 }
 
-export interface FantasyLeagueToAdminResolver<TParent = any, TResult = any> {
+export interface FantasyLeagueToTeamsResolver<TParent = any, TResult = any> {
   (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
 }
 
-export interface FantasyLeagueToTeamsResolver<TParent = any, TResult = any> {
+export interface FantasyLeagueToEspnIdResolver<TParent = any, TResult = any> {
   (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
 }

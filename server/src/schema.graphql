@@ -12,7 +12,7 @@ type Mutation {
     login(email: String!, password: String!): AuthPayLoad
     saveTeam(playerIds: [ID!]!, teamId: String!): Team
     addTeam(name: String!): Team
-    createFantasyLeague(name: String!): FantasyLeague
+    createFantasyLeague(leagueId: ID!): FantasyLeague
     addFantasyLeagueMember(leagueId: ID!, teamId: ID!): Boolean
     removeFantasyLeagueMember(leagueId: ID!, teamId: ID!): Boolean
 }
@@ -53,9 +53,8 @@ type Player {
 type FantasyLeague {
     id: ID!
     name: String!
-    admin: User!
     teams: [Team!]!
-    espnId: ID
+    espnId: ID!
 }
 
 type Injury {

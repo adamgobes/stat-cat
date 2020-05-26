@@ -3,8 +3,7 @@ import { importSchema } from 'graphql-import'
 import { makeExecutableSchema } from 'graphql-tools'
 import { Prisma } from '../generated/prisma-client'
 import { resolvers } from '../resolvers'
-
-const typeDefs = importSchema('src/schema.graphql')
+import typeDefs from '../schemas'
 
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 

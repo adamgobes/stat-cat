@@ -1,6 +1,9 @@
 import { generateTypeScriptTypes } from 'graphql-schema-typescript'
+import { makeExecutableSchema } from 'graphql-tools'
 
-generateTypeScriptTypes('./src/schema.graphql', './src/generated/gqlTypes.ts')
+import typeDefs from './schemas/index'
+
+generateTypeScriptTypes(makeExecutableSchema({ typeDefs }), './src/generated/gqlTypes.ts')
     .then(() => {
         console.log('DONE')
         process.exit(0)

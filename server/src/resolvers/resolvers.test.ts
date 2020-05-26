@@ -1,11 +1,16 @@
 import { Prisma } from '../generated/prisma-client/index'
+import { mocked } from 'ts-jest/utils'
 import { graphqlTestCall } from '../testUtils/gqlTestClient'
 import {
     registerMutation,
     loginMutation,
     saveTeamMutation,
     createTeamMutation,
+    createLeagueMutation,
 } from '../testUtils/testQueries'
+import { getLeagueInformation } from '../scraper/league'
+
+jest.mock('../scraper/league')
 
 jest.setTimeout(5000 * 2)
 
@@ -97,5 +102,52 @@ describe('resolvers', () => {
 
         expect(name).toBe(newTeamName)
         expect(newTeamId).toBeDefined()
+    })
+
+    it('allows the user to connect their fantasy league', async () => {
+        const testLeagueId: string = '24502'
+        const testLeagueName: string = 'Test League Name'
+        const testLeagueMembers: string[] = [
+            'league member 1',
+            'league member 2',
+            'league member 3',
+        ]
+
+        const expectedReturn = new Promise<{ leagueName: any; leagueMembers: any }>(
+            (resolve, reject) => {
+                resolve({
+                    leagueName: testLeagueName,
+                    leagueMembers: testLeagueMembers,
+                })
+            }
+        )
+
+        const mockedFunc = mocked(getLeagueInformation, true)
+
+        mockedFunc.mockReturnValueOnce(expectedReturn)
+
+        const newLeagueVariables = {
+            leagueId: testLeagueId,
+        }
+
+        const { data: newLeagueData, errors } = await graphqlTestCall(
+            createLeagueMutation,
+            prismaInstance,
+            newLeagueVariables,
+            authToken
+        )
+
+        const { leagueName, espnId, leagueMembers } = newLeagueData.createFantasyLeague
+
+        await prismaInstance.deleteFantasyLeague({ espnId })
+
+        expect(errors).toBeUndefined()
+
+        expect(leagueName).toBe(testLeagueName)
+        expect(espnId).toBe(testLeagueId)
+        expect(leagueMembers[0]).toEqual({
+            teamId: 1,
+            teamName: testLeagueMembers[0],
+        })
     })
 })

@@ -21,9 +21,8 @@ type BatchPayload {
 type FantasyLeague {
   id: ID!
   name: String!
-  admin: User!
   teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team!]
-  espnId: ID
+  espnId: ID!
 }
 
 type FantasyLeagueConnection {
@@ -35,9 +34,8 @@ type FantasyLeagueConnection {
 input FantasyLeagueCreateInput {
   id: ID
   name: String!
-  admin: UserCreateOneInput!
   teams: TeamCreateManyInput
-  espnId: ID
+  espnId: ID!
 }
 
 type FantasyLeagueEdge {
@@ -57,7 +55,7 @@ enum FantasyLeagueOrderByInput {
 type FantasyLeaguePreviousValues {
   id: ID!
   name: String!
-  espnId: ID
+  espnId: ID!
 }
 
 type FantasyLeagueSubscriptionPayload {
@@ -80,7 +78,6 @@ input FantasyLeagueSubscriptionWhereInput {
 
 input FantasyLeagueUpdateInput {
   name: String
-  admin: UserUpdateOneRequiredInput
   teams: TeamUpdateManyInput
   espnId: ID
 }
@@ -119,7 +116,6 @@ input FantasyLeagueWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  admin: UserWhereInput
   teams_every: TeamWhereInput
   teams_some: TeamWhereInput
   teams_none: TeamWhereInput
@@ -498,11 +494,6 @@ input UserCreateInput {
   teams: TeamCreateManyWithoutOwnerInput
 }
 
-input UserCreateOneInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-}
-
 input UserCreateOneWithoutTeamsInput {
   create: UserCreateWithoutTeamsInput
   connect: UserWhereUniqueInput
@@ -556,13 +547,6 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateDataInput {
-  name: String
-  email: String
-  password: String
-  teams: TeamUpdateManyWithoutOwnerInput
-}
-
 input UserUpdateInput {
   name: String
   email: String
@@ -576,13 +560,6 @@ input UserUpdateManyMutationInput {
   password: String
 }
 
-input UserUpdateOneRequiredInput {
-  create: UserCreateInput
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
-  connect: UserWhereUniqueInput
-}
-
 input UserUpdateOneRequiredWithoutTeamsInput {
   create: UserCreateWithoutTeamsInput
   update: UserUpdateWithoutTeamsDataInput
@@ -594,11 +571,6 @@ input UserUpdateWithoutTeamsDataInput {
   name: String
   email: String
   password: String
-}
-
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
 }
 
 input UserUpsertWithoutTeamsInput {

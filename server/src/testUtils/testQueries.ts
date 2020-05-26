@@ -31,3 +31,16 @@ mutation createTeamMutation($name: String!) {
 	}
 }
 `
+
+export const createLeagueMutation = `
+	mutation createLeagueMutation($leagueId: ID!) {
+		createFantasyLeague(leagueId: $leagueId) {
+			leagueName
+			leagueMembers {
+				teamId
+				teamName
+			}
+			espnId
+		}
+	}
+`

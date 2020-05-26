@@ -361,7 +361,6 @@ export interface FantasyLeagueWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  admin?: Maybe<UserWhereInput>;
   teams_every?: Maybe<TeamWhereInput>;
   teams_some?: Maybe<TeamWhereInput>;
   teams_none?: Maybe<TeamWhereInput>;
@@ -396,38 +395,8 @@ export type UserWhereUniqueInput = AtLeastOne<{
 export interface FantasyLeagueCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
-  admin: UserCreateOneInput;
   teams?: Maybe<TeamCreateManyInput>;
-  espnId?: Maybe<ID_Input>;
-}
-
-export interface UserCreateOneInput {
-  create?: Maybe<UserCreateInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email: String;
-  password: String;
-  teams?: Maybe<TeamCreateManyWithoutOwnerInput>;
-}
-
-export interface TeamCreateManyWithoutOwnerInput {
-  create?: Maybe<TeamCreateWithoutOwnerInput[] | TeamCreateWithoutOwnerInput>;
-  connect?: Maybe<TeamWhereUniqueInput[] | TeamWhereUniqueInput>;
-}
-
-export interface TeamCreateWithoutOwnerInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  players?: Maybe<TeamCreateplayersInput>;
-  espnId?: Maybe<ID_Input>;
-}
-
-export interface TeamCreateplayersInput {
-  set?: Maybe<ID_Input[] | ID_Input>;
+  espnId: ID_Input;
 }
 
 export interface TeamCreateManyInput {
@@ -455,66 +424,74 @@ export interface UserCreateWithoutTeamsInput {
   password: String;
 }
 
+export interface TeamCreateplayersInput {
+  set?: Maybe<ID_Input[] | ID_Input>;
+}
+
 export interface FantasyLeagueUpdateInput {
   name?: Maybe<String>;
-  admin?: Maybe<UserUpdateOneRequiredInput>;
   teams?: Maybe<TeamUpdateManyInput>;
   espnId?: Maybe<ID_Input>;
 }
 
-export interface UserUpdateOneRequiredInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  teams?: Maybe<TeamUpdateManyWithoutOwnerInput>;
-}
-
-export interface TeamUpdateManyWithoutOwnerInput {
-  create?: Maybe<TeamCreateWithoutOwnerInput[] | TeamCreateWithoutOwnerInput>;
+export interface TeamUpdateManyInput {
+  create?: Maybe<TeamCreateInput[] | TeamCreateInput>;
+  update?: Maybe<
+    | TeamUpdateWithWhereUniqueNestedInput[]
+    | TeamUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | TeamUpsertWithWhereUniqueNestedInput[]
+    | TeamUpsertWithWhereUniqueNestedInput
+  >;
   delete?: Maybe<TeamWhereUniqueInput[] | TeamWhereUniqueInput>;
   connect?: Maybe<TeamWhereUniqueInput[] | TeamWhereUniqueInput>;
   set?: Maybe<TeamWhereUniqueInput[] | TeamWhereUniqueInput>;
   disconnect?: Maybe<TeamWhereUniqueInput[] | TeamWhereUniqueInput>;
-  update?: Maybe<
-    | TeamUpdateWithWhereUniqueWithoutOwnerInput[]
-    | TeamUpdateWithWhereUniqueWithoutOwnerInput
-  >;
-  upsert?: Maybe<
-    | TeamUpsertWithWhereUniqueWithoutOwnerInput[]
-    | TeamUpsertWithWhereUniqueWithoutOwnerInput
-  >;
   deleteMany?: Maybe<TeamScalarWhereInput[] | TeamScalarWhereInput>;
   updateMany?: Maybe<
     TeamUpdateManyWithWhereNestedInput[] | TeamUpdateManyWithWhereNestedInput
   >;
 }
 
-export interface TeamUpdateWithWhereUniqueWithoutOwnerInput {
+export interface TeamUpdateWithWhereUniqueNestedInput {
   where: TeamWhereUniqueInput;
-  data: TeamUpdateWithoutOwnerDataInput;
+  data: TeamUpdateDataInput;
 }
 
-export interface TeamUpdateWithoutOwnerDataInput {
+export interface TeamUpdateDataInput {
   name?: Maybe<String>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutTeamsInput>;
   players?: Maybe<TeamUpdateplayersInput>;
   espnId?: Maybe<ID_Input>;
+}
+
+export interface UserUpdateOneRequiredWithoutTeamsInput {
+  create?: Maybe<UserCreateWithoutTeamsInput>;
+  update?: Maybe<UserUpdateWithoutTeamsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutTeamsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutTeamsDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+}
+
+export interface UserUpsertWithoutTeamsInput {
+  update: UserUpdateWithoutTeamsDataInput;
+  create: UserCreateWithoutTeamsInput;
 }
 
 export interface TeamUpdateplayersInput {
   set?: Maybe<ID_Input[] | ID_Input>;
 }
 
-export interface TeamUpsertWithWhereUniqueWithoutOwnerInput {
+export interface TeamUpsertWithWhereUniqueNestedInput {
   where: TeamWhereUniqueInput;
-  update: TeamUpdateWithoutOwnerDataInput;
-  create: TeamCreateWithoutOwnerInput;
+  update: TeamUpdateDataInput;
+  create: TeamCreateInput;
 }
 
 export interface TeamScalarWhereInput {
@@ -576,67 +553,6 @@ export interface TeamUpdateManyDataInput {
   espnId?: Maybe<ID_Input>;
 }
 
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export interface TeamUpdateManyInput {
-  create?: Maybe<TeamCreateInput[] | TeamCreateInput>;
-  update?: Maybe<
-    | TeamUpdateWithWhereUniqueNestedInput[]
-    | TeamUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | TeamUpsertWithWhereUniqueNestedInput[]
-    | TeamUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<TeamWhereUniqueInput[] | TeamWhereUniqueInput>;
-  connect?: Maybe<TeamWhereUniqueInput[] | TeamWhereUniqueInput>;
-  set?: Maybe<TeamWhereUniqueInput[] | TeamWhereUniqueInput>;
-  disconnect?: Maybe<TeamWhereUniqueInput[] | TeamWhereUniqueInput>;
-  deleteMany?: Maybe<TeamScalarWhereInput[] | TeamScalarWhereInput>;
-  updateMany?: Maybe<
-    TeamUpdateManyWithWhereNestedInput[] | TeamUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface TeamUpdateWithWhereUniqueNestedInput {
-  where: TeamWhereUniqueInput;
-  data: TeamUpdateDataInput;
-}
-
-export interface TeamUpdateDataInput {
-  name?: Maybe<String>;
-  owner?: Maybe<UserUpdateOneRequiredWithoutTeamsInput>;
-  players?: Maybe<TeamUpdateplayersInput>;
-  espnId?: Maybe<ID_Input>;
-}
-
-export interface UserUpdateOneRequiredWithoutTeamsInput {
-  create?: Maybe<UserCreateWithoutTeamsInput>;
-  update?: Maybe<UserUpdateWithoutTeamsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutTeamsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutTeamsDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-}
-
-export interface UserUpsertWithoutTeamsInput {
-  update: UserUpdateWithoutTeamsDataInput;
-  create: UserCreateWithoutTeamsInput;
-}
-
-export interface TeamUpsertWithWhereUniqueNestedInput {
-  where: TeamWhereUniqueInput;
-  update: TeamUpdateDataInput;
-  create: TeamCreateInput;
-}
-
 export interface FantasyLeagueUpdateManyMutationInput {
   name?: Maybe<String>;
   espnId?: Maybe<ID_Input>;
@@ -655,11 +571,68 @@ export interface TeamUpdateManyMutationInput {
   espnId?: Maybe<ID_Input>;
 }
 
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  password: String;
+  teams?: Maybe<TeamCreateManyWithoutOwnerInput>;
+}
+
+export interface TeamCreateManyWithoutOwnerInput {
+  create?: Maybe<TeamCreateWithoutOwnerInput[] | TeamCreateWithoutOwnerInput>;
+  connect?: Maybe<TeamWhereUniqueInput[] | TeamWhereUniqueInput>;
+}
+
+export interface TeamCreateWithoutOwnerInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  players?: Maybe<TeamCreateplayersInput>;
+  espnId?: Maybe<ID_Input>;
+}
+
 export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
   teams?: Maybe<TeamUpdateManyWithoutOwnerInput>;
+}
+
+export interface TeamUpdateManyWithoutOwnerInput {
+  create?: Maybe<TeamCreateWithoutOwnerInput[] | TeamCreateWithoutOwnerInput>;
+  delete?: Maybe<TeamWhereUniqueInput[] | TeamWhereUniqueInput>;
+  connect?: Maybe<TeamWhereUniqueInput[] | TeamWhereUniqueInput>;
+  set?: Maybe<TeamWhereUniqueInput[] | TeamWhereUniqueInput>;
+  disconnect?: Maybe<TeamWhereUniqueInput[] | TeamWhereUniqueInput>;
+  update?: Maybe<
+    | TeamUpdateWithWhereUniqueWithoutOwnerInput[]
+    | TeamUpdateWithWhereUniqueWithoutOwnerInput
+  >;
+  upsert?: Maybe<
+    | TeamUpsertWithWhereUniqueWithoutOwnerInput[]
+    | TeamUpsertWithWhereUniqueWithoutOwnerInput
+  >;
+  deleteMany?: Maybe<TeamScalarWhereInput[] | TeamScalarWhereInput>;
+  updateMany?: Maybe<
+    TeamUpdateManyWithWhereNestedInput[] | TeamUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface TeamUpdateWithWhereUniqueWithoutOwnerInput {
+  where: TeamWhereUniqueInput;
+  data: TeamUpdateWithoutOwnerDataInput;
+}
+
+export interface TeamUpdateWithoutOwnerDataInput {
+  name?: Maybe<String>;
+  players?: Maybe<TeamUpdateplayersInput>;
+  espnId?: Maybe<ID_Input>;
+}
+
+export interface TeamUpsertWithWhereUniqueWithoutOwnerInput {
+  where: TeamWhereUniqueInput;
+  update: TeamUpdateWithoutOwnerDataInput;
+  create: TeamCreateWithoutOwnerInput;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -714,7 +687,7 @@ export interface NodeNode {
 export interface FantasyLeague {
   id: ID_Output;
   name: String;
-  espnId?: ID_Output;
+  espnId: ID_Output;
 }
 
 export interface FantasyLeaguePromise
@@ -722,7 +695,6 @@ export interface FantasyLeaguePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-  admin: <T = UserPromise>() => T;
   teams: <T = FragmentableArray<Team>>(args?: {
     where?: TeamWhereInput;
     orderBy?: TeamOrderByInput;
@@ -740,7 +712,6 @@ export interface FantasyLeagueSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
-  admin: <T = UserSubscription>() => T;
   teams: <T = Promise<AsyncIterator<TeamSubscription>>>(args?: {
     where?: TeamWhereInput;
     orderBy?: TeamOrderByInput;
@@ -758,7 +729,6 @@ export interface FantasyLeagueNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-  admin: <T = UserPromise>() => T;
   teams: <T = FragmentableArray<Team>>(args?: {
     where?: TeamWhereInput;
     orderBy?: TeamOrderByInput;
@@ -768,6 +738,41 @@ export interface FantasyLeagueNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  espnId: () => Promise<ID_Output>;
+}
+
+export interface Team {
+  id: ID_Output;
+  name: String;
+  players: ID_Output[];
+  espnId?: ID_Output;
+}
+
+export interface TeamPromise extends Promise<Team>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  owner: <T = UserPromise>() => T;
+  players: () => Promise<ID_Output[]>;
+  espnId: () => Promise<ID_Output>;
+}
+
+export interface TeamSubscription
+  extends Promise<AsyncIterator<Team>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  owner: <T = UserSubscription>() => T;
+  players: () => Promise<AsyncIterator<ID_Output[]>>;
+  espnId: () => Promise<AsyncIterator<ID_Output>>;
+}
+
+export interface TeamNullablePromise
+  extends Promise<Team | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  owner: <T = UserPromise>() => T;
+  players: () => Promise<ID_Output[]>;
   espnId: () => Promise<ID_Output>;
 }
 
@@ -828,41 +833,6 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-}
-
-export interface Team {
-  id: ID_Output;
-  name: String;
-  players: ID_Output[];
-  espnId?: ID_Output;
-}
-
-export interface TeamPromise extends Promise<Team>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  owner: <T = UserPromise>() => T;
-  players: () => Promise<ID_Output[]>;
-  espnId: () => Promise<ID_Output>;
-}
-
-export interface TeamSubscription
-  extends Promise<AsyncIterator<Team>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  owner: <T = UserSubscription>() => T;
-  players: () => Promise<AsyncIterator<ID_Output[]>>;
-  espnId: () => Promise<AsyncIterator<ID_Output>>;
-}
-
-export interface TeamNullablePromise
-  extends Promise<Team | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  owner: <T = UserPromise>() => T;
-  players: () => Promise<ID_Output[]>;
-  espnId: () => Promise<ID_Output>;
 }
 
 export interface FantasyLeagueConnection {
@@ -1096,7 +1066,7 @@ export interface FantasyLeagueSubscriptionPayloadSubscription
 export interface FantasyLeaguePreviousValues {
   id: ID_Output;
   name: String;
-  espnId?: ID_Output;
+  espnId: ID_Output;
 }
 
 export interface FantasyLeaguePreviousValuesPromise

@@ -102,17 +102,28 @@ export async function createFantasyLeague(parent, args, context): Promise<GQLCre
         throw new Error('Error fetching fantasy league information')
     }
 
-    const createdLeague: GQLFantasyLeague = await context.prisma.createFantasyLeague({
-        name: leagueName,
-        espnId: args.leagueId,
-    })
-
     const formattedLeagueMembers: GQLLeagueMemberEntry[] = leagueMembers.map(
         (teamName, teamIndex) => ({
             teamId: teamIndex + 1,
             teamName,
         })
     )
+
+    // check if league already exists
+    const league = await context.prisma.fantasyLeague({ espnId: args.leagueId })
+    if (!!league) {
+        return {
+            leagueName: league.name,
+            leagueMembers: formattedLeagueMembers,
+            espnId: league.espnId,
+        }
+    }
+
+    // if it doesn't, go ahead and create a new one
+    const createdLeague: GQLFantasyLeague = await context.prisma.createFantasyLeague({
+        name: leagueName,
+        espnId: args.leagueId,
+    })
 
     return {
         leagueName: createdLeague.name,

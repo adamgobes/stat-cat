@@ -1,11 +1,16 @@
 import { Prisma } from '../generated/prisma-client/index'
+import { mocked } from 'ts-jest/utils'
 import { graphqlTestCall } from '../testUtils/gqlTestClient'
 import {
     registerMutation,
     loginMutation,
     saveTeamMutation,
     createTeamMutation,
+    createLeagueMutation,
 } from '../testUtils/testQueries'
+import { getLeagueInformation } from '../scraper/league'
+
+jest.mock('../scraper/league')
 
 jest.setTimeout(5000 * 2)
 
@@ -97,5 +102,44 @@ describe('resolvers', () => {
 
         expect(name).toBe(newTeamName)
         expect(newTeamId).toBeDefined()
+    })
+
+    it('allows the user to connect their fantasy league', async () => {
+        const leagueId: string = '24502'
+        const leagueName: string = 'Test League Name'
+
+        const expectedReturn = new Promise<{ leagueName: any; leagueMembers: any }>(
+            (resolve, reject) => {
+                resolve({
+                    leagueName,
+                    leagueMembers: ['some league member'],
+                })
+            }
+        )
+
+        const mockedFunc = mocked(getLeagueInformation, true)
+
+        mockedFunc.mockReturnValueOnce(expectedReturn)
+
+        const newLeagueVariables = {
+            leagueId,
+        }
+
+        const { data: newLeagueData, errors } = await graphqlTestCall(
+            createLeagueMutation,
+            prismaInstance,
+            newLeagueVariables,
+            authToken
+        )
+
+        const { name, espnId } = newLeagueData.createFantasyLeague
+
+        await prismaInstance.deleteFantasyLeague({ espnId })
+
+        expect(errors).toBeUndefined()
+        expect(newLeagueData).toBeDefined()
+
+        expect(name).toBe(leagueName)
+        expect(espnId).toBe(leagueId)
     })
 })

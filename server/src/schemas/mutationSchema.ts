@@ -6,7 +6,7 @@ export default gql`
         login(email: String!, password: String!): AuthPayLoad
         saveTeam(playerIds: [ID!]!, teamId: String!): Team
         addTeam(name: String!): Team
-        createFantasyLeague(leagueId: ID!): FantasyLeague
+        createFantasyLeague(leagueId: ID!): CreateLeagueResponse
         addFantasyLeagueMember(leagueId: ID!, teamId: ID!): Boolean
         removeFantasyLeagueMember(leagueId: ID!, teamId: ID!): Boolean
     }

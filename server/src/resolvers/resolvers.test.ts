@@ -106,13 +106,18 @@ describe('resolvers', () => {
 
     it('allows the user to connect their fantasy league', async () => {
         const leagueId: string = '24502'
-        const leagueName: string = 'Test League Name'
+        const testLeagueName: string = 'Test League Name'
+        const testLeagueMembers: string[] = [
+            'league member 1',
+            'league member 2',
+            'league member 3',
+        ]
 
         const expectedReturn = new Promise<{ leagueName: any; leagueMembers: any }>(
             (resolve, reject) => {
                 resolve({
-                    leagueName,
-                    leagueMembers: ['some league member'],
+                    leagueName: testLeagueName,
+                    leagueMembers: testLeagueMembers,
                 })
             }
         )
@@ -132,14 +137,19 @@ describe('resolvers', () => {
             authToken
         )
 
-        const { name, espnId } = newLeagueData.createFantasyLeague
+        console.log(newLeagueData)
+        const { leagueName, espnId, leagueMembers } = newLeagueData.createFantasyLeague
 
         await prismaInstance.deleteFantasyLeague({ espnId })
 
         expect(errors).toBeUndefined()
         expect(newLeagueData).toBeDefined()
 
-        expect(name).toBe(leagueName)
+        expect(leagueName).toBe(testLeagueName)
         expect(espnId).toBe(leagueId)
+        expect(leagueMembers[0]).toEqual({
+            teamId: 1,
+            teamName: testLeagueMembers[0],
+        })
     })
 })

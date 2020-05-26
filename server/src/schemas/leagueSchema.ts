@@ -7,4 +7,15 @@ export default gql`
         teams: [Team!]!
         espnId: ID!
     }
+
+    type LeagueMemberEntry {
+        teamId: Int!
+        teamName: String!
+    }
+
+    type CreateLeagueResponse {
+        leagueName: String!
+        espnId: ID!
+        leagueMembers: [LeagueMemberEntry]
+    }
 `

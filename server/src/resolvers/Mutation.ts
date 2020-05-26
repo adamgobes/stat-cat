@@ -2,7 +2,13 @@ import * as bcrypt from 'bcryptjs'
 import * as jwt from 'jsonwebtoken'
 
 import { getUserId } from '../utils'
-import { GQLAuthPayLoad, GQLTeam, GQLFantasyLeague, GQLUser } from '../generated/gqlTypes'
+import {
+    GQLAuthPayLoad,
+    GQLTeam,
+    GQLFantasyLeague,
+    GQLCreateLeagueResponse,
+    GQLLeagueMemberEntry,
+} from '../generated/gqlTypes'
 import { getLeagueInformation } from '../scraper/league'
 
 export async function register(parents, args, context, info): Promise<GQLAuthPayLoad> {
@@ -84,7 +90,7 @@ export async function addTeam(parent, args, context): Promise<GQLTeam> {
     return newTeam
 }
 
-export async function createFantasyLeague(parent, args, context): Promise<GQLFantasyLeague> {
+export async function createFantasyLeague(parent, args, context): Promise<GQLCreateLeagueResponse> {
     const userId: string = getUserId(context)
 
     let leagueName
@@ -101,7 +107,18 @@ export async function createFantasyLeague(parent, args, context): Promise<GQLFan
         espnId: args.leagueId,
     })
 
-    return createdLeague
+    const formattedLeagueMembers: GQLLeagueMemberEntry[] = leagueMembers.map(
+        (teamName, teamIndex) => ({
+            teamId: teamIndex + 1,
+            teamName,
+        })
+    )
+
+    return {
+        leagueName: createdLeague.name,
+        leagueMembers: formattedLeagueMembers,
+        espnId: createdLeague.espnId,
+    }
 }
 
 export async function addFantasyLeagueMember(parent, args, context): Promise<boolean> {

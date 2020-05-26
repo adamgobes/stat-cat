@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Box, TextInput } from 'grommet'
+import { useMutation } from '@apollo/react-hooks'
 
 import espnLogo from '../../assets/images/espnlogo.png'
 import { Title } from '../shared/TextComponents'
 import { RoundedButton } from '../shared/Buttons'
+import { CREATE_LEAGUE_MUTATION } from '../../apollo/mutations'
 
 const ConnectLeagueWrapper = styled(Box)`
     width: 90%;
@@ -36,6 +38,15 @@ const ConnectButton = styled(RoundedButton)`
 `
 
 export default function ConnectLeague() {
+    const [leagueId, setLeagueId] = useState('')
+
+    const [connectLeague, { loading: connectLeagueLoading }] = useMutation(CREATE_LEAGUE_MUTATION, {
+        variables: {
+            leagueId,
+        },
+        refetchQueries: () => [],
+    })
+
     return (
         <ConnectLeagueWrapper align="center">
             <Header direction="column" align="center">
@@ -45,8 +56,18 @@ export default function ConnectLeague() {
                 <ConnectTitle>Connect your ESPN league and team</ConnectTitle>
             </Header>
             <Box align="center">
-                <FormInput name="name" size="medium" placeholder="Enter ESPN League ID" />
-                <ConnectButton label="Connect Account" />
+                <FormInput
+                    name="name"
+                    size="medium"
+                    value={leagueId}
+                    onChange={e => setLeagueId(e.target.value)}
+                    placeholder="Enter ESPN League ID"
+                />
+                <ConnectButton
+                    label="Connect Account"
+                    loading={connectLeagueLoading}
+                    onClick={() => connectLeague()}
+                />
             </Box>
         </ConnectLeagueWrapper>
     )

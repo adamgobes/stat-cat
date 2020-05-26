@@ -39,3 +39,16 @@ export const CREATE_TEAM_MUTATION = gql`
         }
     }
 `
+
+export const CREATE_LEAGUE_MUTATION = gql`
+    mutation createLeagueMutation($leagueId: ID!) {
+        createFantasyLeague(leagueId: $leagueId) {
+            leagueName
+            leagueMembers {
+                teamId
+                teamName
+            }
+            espnId
+        }
+    }
+`

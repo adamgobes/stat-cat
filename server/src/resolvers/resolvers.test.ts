@@ -105,7 +105,7 @@ describe('resolvers', () => {
     })
 
     it('allows the user to connect their fantasy league', async () => {
-        const leagueId: string = '24502'
+        const testLeagueId: string = '24502'
         const testLeagueName: string = 'Test League Name'
         const testLeagueMembers: string[] = [
             'league member 1',
@@ -127,7 +127,7 @@ describe('resolvers', () => {
         mockedFunc.mockReturnValueOnce(expectedReturn)
 
         const newLeagueVariables = {
-            leagueId,
+            leagueId: testLeagueId,
         }
 
         const { data: newLeagueData, errors } = await graphqlTestCall(
@@ -137,16 +137,14 @@ describe('resolvers', () => {
             authToken
         )
 
-        console.log(newLeagueData)
         const { leagueName, espnId, leagueMembers } = newLeagueData.createFantasyLeague
 
         await prismaInstance.deleteFantasyLeague({ espnId })
 
         expect(errors).toBeUndefined()
-        expect(newLeagueData).toBeDefined()
 
         expect(leagueName).toBe(testLeagueName)
-        expect(espnId).toBe(leagueId)
+        expect(espnId).toBe(testLeagueId)
         expect(leagueMembers[0]).toEqual({
             teamId: 1,
             teamName: testLeagueMembers[0],

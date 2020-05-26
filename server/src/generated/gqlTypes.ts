@@ -99,7 +99,7 @@ export interface GQLCreateLeagueResponse {
 }
 
 export interface GQLLeagueMemberEntry {
-  index: number;
+  teamId: number;
   teamName: string;
 }
 
@@ -463,11 +463,11 @@ export interface CreateLeagueResponseToLeagueMembersResolver<TParent = any, TRes
 }
 
 export interface GQLLeagueMemberEntryTypeResolver<TParent = any> {
-  index?: LeagueMemberEntryToIndexResolver<TParent>;
+  teamId?: LeagueMemberEntryToTeamIdResolver<TParent>;
   teamName?: LeagueMemberEntryToTeamNameResolver<TParent>;
 }
 
-export interface LeagueMemberEntryToIndexResolver<TParent = any, TResult = any> {
+export interface LeagueMemberEntryToTeamIdResolver<TParent = any, TResult = any> {
   (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
 }
 

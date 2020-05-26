@@ -93,8 +93,8 @@ export async function addTeam(parent, args, context): Promise<GQLTeam> {
 export async function createFantasyLeague(parent, args, context): Promise<GQLCreateLeagueResponse> {
     const userId: string = getUserId(context)
 
-    let leagueName
-    let leagueMembers
+    let leagueName: string
+    let leagueMembers: string[]
 
     try {
         ;({ leagueName, leagueMembers } = await getLeagueInformation(args.leagueId))

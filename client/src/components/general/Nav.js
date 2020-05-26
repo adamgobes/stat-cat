@@ -4,7 +4,16 @@ import styled, { ThemeContext } from 'styled-components'
 import { Box } from 'grommet'
 import cookie from 'react-cookies'
 import { useApolloClient, useQuery } from '@apollo/react-hooks'
-import { Menu, Group, Dashboard, Logout, ShareOption, FormClose, Info } from 'grommet-icons'
+import {
+    Menu,
+    Group,
+    Dashboard,
+    Logout,
+    ShareOption,
+    FormClose,
+    Info,
+    Achievement,
+} from 'grommet-icons'
 
 import { Subheader, TextLogo } from '../shared/TextComponents'
 import TeamSelector from './TeamSelector'
@@ -98,6 +107,15 @@ const NavLinks = [
         Icon: ({ color }) => (
             <NavIconWrapper direction="column" justify="center" align="center">
                 <ShareOption size="medium" color={color} />
+            </NavIconWrapper>
+        ),
+    },
+    {
+        name: 'My League',
+        path: '/app/league',
+        Icon: ({ color }) => (
+            <NavIconWrapper direction="column" justify="center" align="center">
+                <Achievement size="medium" color={color} />
             </NavIconWrapper>
         ),
     },

@@ -12,6 +12,7 @@ import Nav from './Nav'
 import FallbackMessage from './FallbackMessage'
 import { SCREEN_SIZE_MESSAGE } from '../../utils/strings'
 import Messaging from '../messaging/Messaging'
+import MyLeague from '../league/MyLeague'
 
 const HIDE_NAV_WIDTH = 1100
 
@@ -61,6 +62,13 @@ export default function StatCatApp() {
                 path={`${path}/trade`}
                 render={({ history }) => <TradeSimulator history={history} />}
             />
+
+            <Route
+                exact
+                path={`${path}/league`}
+                render={({ history }) => <MyLeague history={history} />}
+            />
+
             <Route
                 exact
                 path={`${path}/messaging`}

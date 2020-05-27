@@ -27,7 +27,7 @@ export const lightTheme = {
     global: {
         colors: {
             brand: '#7781f7',
-            secondary: 'white',
+            contrast: 'white',
             backdrop: '#EFF1F3',
             freeText: 'black',
         },
@@ -48,7 +48,7 @@ export const darkTheme = {
     global: {
         colors: {
             brand: '#282B2F',
-            secondary: 'black',
+            contrast: 'white',
             backdrop: '#222529',
             freeText: 'white',
         },

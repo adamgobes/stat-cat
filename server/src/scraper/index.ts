@@ -30,3 +30,7 @@ export async function getLeagueInformation(leagueId: string) {
 
     return { leagueName, leagueMembers }
 }
+
+export function getESPNTeamPlayers(leagueId: string, espnTeamId: string): string[] {
+    return [leagueId, espnTeamId]
+}

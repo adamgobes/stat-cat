@@ -9,7 +9,8 @@ import {
     GQLCreateLeagueResponse,
     GQLLeagueMemberEntry,
 } from '../generated/gqlTypes'
-import { getLeagueInformation } from '../scraper/league'
+import { getLeagueInformation, getESPNTeamPlayers } from '../scraper'
+import { playerNamesToIds } from '../sportsFeed/api'
 
 export async function register(parents, args, context, info): Promise<GQLAuthPayLoad> {
     const password = await bcrypt.hash(args.password, 10)
@@ -149,10 +150,14 @@ export async function addFantasyLeagueMember(parent, args, context): Promise<boo
         throw new Error(`This team is already in the ${leagueName} league`)
     }
 
+    // const espnTeamPlayers: string[] = getESPNTeamPlayers(args.leagueId, args.espnTeamId)
+    // const playerIds = playerNamesToIds(espnTeamPlayers)
+
     await context.prisma.updateTeam({
         data: {
             league: { connect: { id: league.id } },
             espnId: args.espnTeamId,
+            // players: { set: playerIds },
         },
         where: { id: args.statCatTeamId },
     })

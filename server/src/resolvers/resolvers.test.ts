@@ -8,9 +8,9 @@ import {
     createTeamMutation,
     createLeagueMutation,
 } from '../testUtils/testQueries'
-import { getLeagueInformation } from '../scraper/league'
+import { getLeagueInformation } from '../scraper/index'
 
-jest.mock('../scraper/league')
+jest.mock('../scraper/index')
 
 jest.setTimeout(5000 * 2)
 

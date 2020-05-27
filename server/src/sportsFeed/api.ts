@@ -65,3 +65,7 @@ export const statCategories = [
         selector: json => t(json, `${defenseSelector}.tovPerGame`).safeNumber,
     },
 ]
+
+export function playerNamesToIds(playerNames: string[]): string[] {
+    return playerNames
+}

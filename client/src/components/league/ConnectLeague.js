@@ -20,6 +20,11 @@ const ConnectTitle = styled(Title)`
     color: ${props => props.theme.global.colors.freeText};
 `
 
+const ErrorMessage = styled(Text)`
+    color: #e33829;
+    margin-bottom: 8px;
+`
+
 const LogoWrapper = styled(Box)`
     width: 60px;
     height: 60px;
@@ -70,7 +75,7 @@ export default function ConnectLeague() {
             </Header>
             {!!error && (
                 <Box align="center">
-                    <Text style={{ color: '#E33829' }}>{error}</Text>
+                    <ErrorMessage style={{ color: '#E33829' }}>{error}</ErrorMessage>
                 </Box>
             )}
             {!fetchSuccessful && (

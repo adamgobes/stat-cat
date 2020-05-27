@@ -34,7 +34,18 @@ type FantasyLeagueConnection {
 input FantasyLeagueCreateInput {
   id: ID
   name: String!
-  teams: TeamCreateManyInput
+  teams: TeamCreateManyWithoutLeagueInput
+  espnId: ID!
+}
+
+input FantasyLeagueCreateOneWithoutTeamsInput {
+  create: FantasyLeagueCreateWithoutTeamsInput
+  connect: FantasyLeagueWhereUniqueInput
+}
+
+input FantasyLeagueCreateWithoutTeamsInput {
+  id: ID
+  name: String!
   espnId: ID!
 }
 
@@ -78,13 +89,32 @@ input FantasyLeagueSubscriptionWhereInput {
 
 input FantasyLeagueUpdateInput {
   name: String
-  teams: TeamUpdateManyInput
+  teams: TeamUpdateManyWithoutLeagueInput
   espnId: ID
 }
 
 input FantasyLeagueUpdateManyMutationInput {
   name: String
   espnId: ID
+}
+
+input FantasyLeagueUpdateOneWithoutTeamsInput {
+  create: FantasyLeagueCreateWithoutTeamsInput
+  update: FantasyLeagueUpdateWithoutTeamsDataInput
+  upsert: FantasyLeagueUpsertWithoutTeamsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: FantasyLeagueWhereUniqueInput
+}
+
+input FantasyLeagueUpdateWithoutTeamsDataInput {
+  name: String
+  espnId: ID
+}
+
+input FantasyLeagueUpsertWithoutTeamsInput {
+  update: FantasyLeagueUpdateWithoutTeamsDataInput!
+  create: FantasyLeagueCreateWithoutTeamsInput!
 }
 
 input FantasyLeagueWhereInput {
@@ -208,6 +238,7 @@ type Team {
   owner: User!
   players: [ID!]!
   espnId: ID
+  league: FantasyLeague
 }
 
 type TeamConnection {
@@ -222,10 +253,11 @@ input TeamCreateInput {
   owner: UserCreateOneWithoutTeamsInput!
   players: TeamCreateplayersInput
   espnId: ID
+  league: FantasyLeagueCreateOneWithoutTeamsInput
 }
 
-input TeamCreateManyInput {
-  create: [TeamCreateInput!]
+input TeamCreateManyWithoutLeagueInput {
+  create: [TeamCreateWithoutLeagueInput!]
   connect: [TeamWhereUniqueInput!]
 }
 
@@ -238,11 +270,20 @@ input TeamCreateplayersInput {
   set: [ID!]
 }
 
+input TeamCreateWithoutLeagueInput {
+  id: ID
+  name: String!
+  owner: UserCreateOneWithoutTeamsInput!
+  players: TeamCreateplayersInput
+  espnId: ID
+}
+
 input TeamCreateWithoutOwnerInput {
   id: ID
   name: String!
   players: TeamCreateplayersInput
   espnId: ID
+  league: FantasyLeagueCreateOneWithoutTeamsInput
 }
 
 type TeamEdge {
@@ -332,18 +373,12 @@ input TeamSubscriptionWhereInput {
   NOT: [TeamSubscriptionWhereInput!]
 }
 
-input TeamUpdateDataInput {
-  name: String
-  owner: UserUpdateOneRequiredWithoutTeamsInput
-  players: TeamUpdateplayersInput
-  espnId: ID
-}
-
 input TeamUpdateInput {
   name: String
   owner: UserUpdateOneRequiredWithoutTeamsInput
   players: TeamUpdateplayersInput
   espnId: ID
+  league: FantasyLeagueUpdateOneWithoutTeamsInput
 }
 
 input TeamUpdateManyDataInput {
@@ -352,22 +387,22 @@ input TeamUpdateManyDataInput {
   espnId: ID
 }
 
-input TeamUpdateManyInput {
-  create: [TeamCreateInput!]
-  update: [TeamUpdateWithWhereUniqueNestedInput!]
-  upsert: [TeamUpsertWithWhereUniqueNestedInput!]
-  delete: [TeamWhereUniqueInput!]
-  connect: [TeamWhereUniqueInput!]
-  set: [TeamWhereUniqueInput!]
-  disconnect: [TeamWhereUniqueInput!]
-  deleteMany: [TeamScalarWhereInput!]
-  updateMany: [TeamUpdateManyWithWhereNestedInput!]
-}
-
 input TeamUpdateManyMutationInput {
   name: String
   players: TeamUpdateplayersInput
   espnId: ID
+}
+
+input TeamUpdateManyWithoutLeagueInput {
+  create: [TeamCreateWithoutLeagueInput!]
+  delete: [TeamWhereUniqueInput!]
+  connect: [TeamWhereUniqueInput!]
+  set: [TeamWhereUniqueInput!]
+  disconnect: [TeamWhereUniqueInput!]
+  update: [TeamUpdateWithWhereUniqueWithoutLeagueInput!]
+  upsert: [TeamUpsertWithWhereUniqueWithoutLeagueInput!]
+  deleteMany: [TeamScalarWhereInput!]
+  updateMany: [TeamUpdateManyWithWhereNestedInput!]
 }
 
 input TeamUpdateManyWithoutOwnerInput {
@@ -391,15 +426,23 @@ input TeamUpdateplayersInput {
   set: [ID!]
 }
 
-input TeamUpdateWithoutOwnerDataInput {
+input TeamUpdateWithoutLeagueDataInput {
   name: String
+  owner: UserUpdateOneRequiredWithoutTeamsInput
   players: TeamUpdateplayersInput
   espnId: ID
 }
 
-input TeamUpdateWithWhereUniqueNestedInput {
+input TeamUpdateWithoutOwnerDataInput {
+  name: String
+  players: TeamUpdateplayersInput
+  espnId: ID
+  league: FantasyLeagueUpdateOneWithoutTeamsInput
+}
+
+input TeamUpdateWithWhereUniqueWithoutLeagueInput {
   where: TeamWhereUniqueInput!
-  data: TeamUpdateDataInput!
+  data: TeamUpdateWithoutLeagueDataInput!
 }
 
 input TeamUpdateWithWhereUniqueWithoutOwnerInput {
@@ -407,10 +450,10 @@ input TeamUpdateWithWhereUniqueWithoutOwnerInput {
   data: TeamUpdateWithoutOwnerDataInput!
 }
 
-input TeamUpsertWithWhereUniqueNestedInput {
+input TeamUpsertWithWhereUniqueWithoutLeagueInput {
   where: TeamWhereUniqueInput!
-  update: TeamUpdateDataInput!
-  create: TeamCreateInput!
+  update: TeamUpdateWithoutLeagueDataInput!
+  create: TeamCreateWithoutLeagueInput!
 }
 
 input TeamUpsertWithWhereUniqueWithoutOwnerInput {
@@ -463,6 +506,7 @@ input TeamWhereInput {
   espnId_not_starts_with: ID
   espnId_ends_with: ID
   espnId_not_ends_with: ID
+  league: FantasyLeagueWhereInput
   AND: [TeamWhereInput!]
   OR: [TeamWhereInput!]
   NOT: [TeamWhereInput!]

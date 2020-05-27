@@ -35,6 +35,7 @@ export interface GQLTeam {
   owner: GQLUser;
   players: Array<GQLPlayer>;
   espnId?: string;
+  league?: GQLFantasyLeague;
 }
 
 export interface GQLPlayer {
@@ -65,16 +66,16 @@ export interface GQLInjury {
   description: string;
 }
 
-export interface GQLLeagueLeader {
-  stat: string;
-  leaders: Array<GQLPlayer>;
-}
-
 export interface GQLFantasyLeague {
   id: string;
   name: string;
   teams: Array<GQLTeam>;
   espnId: string;
+}
+
+export interface GQLLeagueLeader {
+  stat: string;
+  leaders: Array<GQLPlayer>;
 }
 
 export interface GQLMutation {
@@ -121,8 +122,8 @@ export interface GQLResolver {
   NbaTeam?: GQLNbaTeamTypeResolver;
   Stat?: GQLStatTypeResolver;
   Injury?: GQLInjuryTypeResolver;
-  LeagueLeader?: GQLLeagueLeaderTypeResolver;
   FantasyLeague?: GQLFantasyLeagueTypeResolver;
+  LeagueLeader?: GQLLeagueLeaderTypeResolver;
   Mutation?: GQLMutationTypeResolver;
   AuthPayLoad?: GQLAuthPayLoadTypeResolver;
   CreateLeagueResponse?: GQLCreateLeagueResponseTypeResolver;
@@ -213,6 +214,7 @@ export interface GQLTeamTypeResolver<TParent = any> {
   owner?: TeamToOwnerResolver<TParent>;
   players?: TeamToPlayersResolver<TParent>;
   espnId?: TeamToEspnIdResolver<TParent>;
+  league?: TeamToLeagueResolver<TParent>;
 }
 
 export interface TeamToIdResolver<TParent = any, TResult = any> {
@@ -235,6 +237,10 @@ export interface TeamToPlayersResolver<TParent = any, TResult = any> {
 }
 
 export interface TeamToEspnIdResolver<TParent = any, TResult = any> {
+  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
+}
+
+export interface TeamToLeagueResolver<TParent = any, TResult = any> {
   (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
 }
 
@@ -330,19 +336,6 @@ export interface InjuryToDescriptionResolver<TParent = any, TResult = any> {
   (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
 }
 
-export interface GQLLeagueLeaderTypeResolver<TParent = any> {
-  stat?: LeagueLeaderToStatResolver<TParent>;
-  leaders?: LeagueLeaderToLeadersResolver<TParent>;
-}
-
-export interface LeagueLeaderToStatResolver<TParent = any, TResult = any> {
-  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
-}
-
-export interface LeagueLeaderToLeadersResolver<TParent = any, TResult = any> {
-  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
-}
-
 export interface GQLFantasyLeagueTypeResolver<TParent = any> {
   id?: FantasyLeagueToIdResolver<TParent>;
   name?: FantasyLeagueToNameResolver<TParent>;
@@ -363,6 +356,19 @@ export interface FantasyLeagueToTeamsResolver<TParent = any, TResult = any> {
 }
 
 export interface FantasyLeagueToEspnIdResolver<TParent = any, TResult = any> {
+  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
+}
+
+export interface GQLLeagueLeaderTypeResolver<TParent = any> {
+  stat?: LeagueLeaderToStatResolver<TParent>;
+  leaders?: LeagueLeaderToLeadersResolver<TParent>;
+}
+
+export interface LeagueLeaderToStatResolver<TParent = any, TResult = any> {
+  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
+}
+
+export interface LeagueLeaderToLeadersResolver<TParent = any, TResult = any> {
   (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
 }
 

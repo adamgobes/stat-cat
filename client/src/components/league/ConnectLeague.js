@@ -4,7 +4,7 @@ import { Box, TextInput } from 'grommet'
 import { useMutation } from '@apollo/react-hooks'
 
 import espnLogo from '../../assets/images/espnlogo.png'
-import { Title } from '../shared/TextComponents'
+import { Title, Text } from '../shared/TextComponents'
 import { RoundedButton } from '../shared/Buttons'
 import { CREATE_LEAGUE_MUTATION } from '../../apollo/mutations'
 import LeagueTeamsGrid from './LeagueTeamsGrid'
@@ -42,6 +42,7 @@ export default function ConnectLeague() {
     const [leagueId, setLeagueId] = useState('')
     const [fetchSuccessful, setFetchSuccessful] = useState(false)
     const [possibleTeams, setPossibleTeams] = useState([])
+    const [error, setError] = useState('')
 
     const [connectLeague, { loading: connectLeagueLoading }] = useMutation(CREATE_LEAGUE_MUTATION, {
         variables: {
@@ -52,6 +53,10 @@ export default function ConnectLeague() {
             const { leagueName, espnId, leagueMembers } = data.createFantasyLeague
             setPossibleTeams(leagueMembers)
             setFetchSuccessful(true)
+            setError('')
+        },
+        onError: () => {
+            setError('Oops! We had trouble fetching your league information')
         },
     })
 
@@ -63,6 +68,11 @@ export default function ConnectLeague() {
                 </LogoWrapper>
                 <ConnectTitle>Connect your ESPN league and team</ConnectTitle>
             </Header>
+            {!!error && (
+                <Box align="center">
+                    <Text style={{ color: '#E33829' }}>{error}</Text>
+                </Box>
+            )}
             {!fetchSuccessful && (
                 <Box align="center">
                     <FormInput

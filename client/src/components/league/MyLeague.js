@@ -12,7 +12,7 @@ const MyLeagueWrapper = styled(Box)`
 
 export default function MyLeague() {
     return (
-        <MyLeagueWrapper align="center">
+        <MyLeagueWrapper align="center" data-testid="myleague">
             <ConnectLeague />
         </MyLeagueWrapper>
     )

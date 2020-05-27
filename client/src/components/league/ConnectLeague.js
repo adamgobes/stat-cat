@@ -66,7 +66,7 @@ export default function ConnectLeague() {
     })
 
     return (
-        <ConnectLeagueWrapper align="center">
+        <ConnectLeagueWrapper align="center" data-testid="connectleague">
             <Header direction="column" align="center">
                 <LogoWrapper align="center" justify="center">
                     <img src={espnLogo} width="100%" height="100%" alt="PPG" />

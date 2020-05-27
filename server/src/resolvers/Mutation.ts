@@ -152,8 +152,9 @@ export async function addFantasyLeagueMember(parent, args, context): Promise<boo
     await context.prisma.updateTeam({
         data: {
             league: { connect: { id: league.id } },
+            espnId: args.espnTeamId,
         },
-        where: { id: args.teamId },
+        where: { id: args.statCatTeamId },
     })
 
     return true
@@ -167,8 +168,9 @@ export async function removeFantasyLeagueMember(parent, args, context): Promise<
     await context.prisma.updateTeam({
         data: {
             league: { disconnect: true },
+            espnId: null,
         },
-        where: { id: args.teamId },
+        where: { id: args.statCatTeamId },
     })
 
     return true

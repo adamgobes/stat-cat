@@ -84,6 +84,10 @@ export default function TeamSelector({ teams }) {
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const [showAddTeamModal, setShowAddTeamModal] = useState(false)
 
+    useEffect(() => {
+        setTeam(teams[0])
+    }, [teams, setTeam])
+
     function handleTeamClick(t) {
         setDropdownOpen(false)
         setTeam(t)

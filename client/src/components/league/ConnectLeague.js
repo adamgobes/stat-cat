@@ -46,7 +46,10 @@ const ConnectButton = styled(RoundedButton)`
 export default function ConnectLeague() {
     const [leagueId, setLeagueId] = useState('')
     const [fetchSuccessful, setFetchSuccessful] = useState(false)
+
+    const [espnLeagueName, setEspnLeagueName] = useState('')
     const [possibleTeams, setPossibleTeams] = useState([])
+
     const [error, setError] = useState('')
 
     const [connectLeague, { loading: connectLeagueLoading }] = useMutation(CREATE_LEAGUE_MUTATION, {
@@ -55,7 +58,10 @@ export default function ConnectLeague() {
         },
         refetchQueries: () => [],
         onCompleted: data => {
-            const { leagueName, espnId, leagueMembers } = data.createFantasyLeague
+            const { leagueName, leagueMembers } = data.createFantasyLeague
+
+            setEspnLeagueName(leagueName)
+
             setPossibleTeams(leagueMembers)
             setFetchSuccessful(true)
             setError('')
@@ -94,7 +100,13 @@ export default function ConnectLeague() {
                     />
                 </Box>
             )}
-            {fetchSuccessful && <LeagueTeamsGrid teams={possibleTeams} />}
+            {fetchSuccessful && (
+                <LeagueTeamsGrid
+                    leagueId={leagueId}
+                    leagueName={espnLeagueName}
+                    teams={possibleTeams}
+                />
+            )}
         </ConnectLeagueWrapper>
     )
 }

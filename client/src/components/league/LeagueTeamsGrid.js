@@ -1,8 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
+import { useMutation } from '@apollo/react-hooks'
+import { useHistory } from 'react-router-dom'
+
 import { Subheader, Title } from '../shared/TextComponents'
 import { RoundedButton } from '../shared/Buttons'
+import { WEEKLY_OVERVIEW_QUERY, MY_STATS_QUERY, ALL_MY_TEAMS_QUERY } from '../../apollo/queries'
+import { SYNC_ESPN_TEAM } from '../../apollo/mutations'
+import { AppContext } from '../general/AppContext'
 
 const Wrapper = styled(Box)`
     width: 86%;
@@ -38,9 +44,33 @@ const ConnectButton = styled(RoundedButton)`
     width: 160px;
 `
 
-export default function LeagueTeamsGrid({ teams }) {
-    const [selectedIndex, setSelectedIndex] = useState(-1)
+export default function LeagueTeamsGrid({ leagueId, teams }) {
+    const {
+        appContext: { selectedTeam },
+    } = useContext(AppContext)
 
+    const history = useHistory()
+
+    const [selectedIndex, setSelectedIndex] = useState(-1)
+    const [syncSuccessful, setSyncSuccessful] = useState(false)
+
+    const [syncTeam, { loading: syncTeamLoading }] = useMutation(SYNC_ESPN_TEAM, {
+        variables: {
+            leagueId,
+            statCatTeamId: selectedTeam,
+            espnTeamId: selectedIndex.toString(),
+        },
+        refetchQueries: () => [
+            { query: WEEKLY_OVERVIEW_QUERY, variables: { teamId: selectedTeam } },
+            { query: MY_STATS_QUERY, variables: { timeFrame: 'All', teamId: selectedTeam } },
+            { query: ALL_MY_TEAMS_QUERY },
+        ],
+        awaitRefetchQueries: true,
+        onCompleted: data => {
+            setSyncSuccessful(true)
+            history.push('/app/teambuilder')
+        },
+    })
     return (
         <Wrapper>
             <SelectTeamHeader>Select your team</SelectTeamHeader>
@@ -60,7 +90,12 @@ export default function LeagueTeamsGrid({ teams }) {
                 ))}
             </GridRow>
             <Box style={{ width: '100%' }} align="center">
-                <ConnectButton label="Connect Team" disabled={selectedIndex === -1} />
+                <ConnectButton
+                    label="Connect Team"
+                    loading={syncTeamLoading}
+                    disabled={selectedIndex === -1}
+                    onClick={() => syncTeam()}
+                />
             </Box>
         </Wrapper>
     )

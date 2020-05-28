@@ -159,6 +159,7 @@ export async function addFantasyLeagueMember(parent, args, context): Promise<boo
             league: { connect: { id: league.id } },
             espnId: args.espnTeamId,
             players: { set: playerIds },
+            name: espnTeamName,
         },
         where: { id: args.statCatTeamId },
     })

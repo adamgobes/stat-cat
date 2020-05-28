@@ -31,6 +31,29 @@ export async function getLeagueInformation(leagueId: string) {
     return { leagueName, leagueMembers }
 }
 
-export function getESPNTeamPlayers(leagueId: string, espnTeamId: string): string[] {
-    return [leagueId, espnTeamId]
+export async function getESPNTeamPlayers(leagueId: string, espnTeamId: string) {
+    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] })
+
+    const page = await browser.newPage()
+    await page.goto(
+        `https://fantasy.espn.com/basketball/team?leagueId=${leagueId}&teamId=${espnTeamId}&seasonId=2020`
+    )
+
+    try {
+        await page.waitForSelector('.player-column__athlete .AnchorLink', {
+            visible: true,
+            timeout: 6000,
+        })
+    } catch (e) {
+        await browser.close()
+        throw new Error('timeout')
+    }
+
+    const playerNames = await page.$$eval('.player-column__athlete .AnchorLink', nodes =>
+        nodes.map(n => n.innerText)
+    )
+
+    const espnTeamName = await page.$eval('.teamName', n => n.innerText)
+
+    return { espnTeamName, playerNames }
 }

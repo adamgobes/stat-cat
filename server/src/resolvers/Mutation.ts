@@ -150,7 +150,10 @@ export async function addFantasyLeagueMember(parent, args, context): Promise<boo
         throw new Error(`This team is already in the ${leagueName} league`)
     }
 
-    // const espnTeamPlayers: string[] = getESPNTeamPlayers(args.leagueId, args.espnTeamId)
+    const { espnTeamName, playerNames } = await getESPNTeamPlayers(args.leagueId, args.espnTeamId)
+
+    console.log({ espnTeamName, playerNames })
+
     // const playerIds = playerNamesToIds(espnTeamPlayers)
 
     await context.prisma.updateTeam({

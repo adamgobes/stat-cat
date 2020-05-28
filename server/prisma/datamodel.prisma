@@ -12,6 +12,7 @@ type Team {
     owner: User!
     players: [ID!]! @scalarList(strategy: RELATION)
     espnId: ID
+    league: FantasyLeague
 }
 
 type FantasyLeague {

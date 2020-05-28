@@ -7,6 +7,7 @@ export default gql`
         owner: User!
         players(timeFrame: String): [Player!]!
         espnId: ID
+        league: FantasyLeague
     }
 
     type Player {

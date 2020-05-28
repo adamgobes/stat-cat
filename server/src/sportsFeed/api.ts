@@ -71,9 +71,10 @@ const formatName = (name: string): string => {
 
     const lastName = name.substring(firstName.length + 1)
 
-    const formattedLastName = lastName.replace(/[^a-zA-Z ]/g, '')
+    const formattedFirstName = firstName.replace(/[^a-zA-Z]/g, '')
+    const formattedLastName = lastName.replace(/[^a-zA-Z]/g, '')
 
-    return `${firstName}-${formattedLastName}`
+    return `${formattedFirstName}-${formattedLastName}`
 }
 
 export function playerNamesToIds(playerNames: string[]): Promise<string[]> {

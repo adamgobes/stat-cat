@@ -19,6 +19,9 @@ export const ALL_MY_TEAMS_QUERY = gql`
             teams {
                 id
                 name
+                league {
+                    name
+                }
             }
         }
     }

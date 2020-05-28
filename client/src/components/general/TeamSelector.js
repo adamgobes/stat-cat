@@ -63,7 +63,11 @@ const DropContent = forwardRef(({ teams, onTeamClick, onAddTeamClick }, ref) => 
                     <Box justify="center">
                         <Box justify="center">
                             <Truncated style={{ marginTop: '6px' }}>{t.name}</Truncated>
-                            <LeagueName style={{ marginTop: '-6px' }}>Some League</LeagueName>
+                            {t.league && (
+                                <LeagueName style={{ marginTop: '-6px' }}>
+                                    {t.league.name}
+                                </LeagueName>
+                            )}
                         </Box>
                     </Box>
                 </TeamDropdownItem>

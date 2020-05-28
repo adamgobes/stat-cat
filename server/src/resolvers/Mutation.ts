@@ -152,15 +152,13 @@ export async function addFantasyLeagueMember(parent, args, context): Promise<boo
 
     const { espnTeamName, playerNames } = await getESPNTeamPlayers(args.leagueId, args.espnTeamId)
 
-    console.log({ espnTeamName, playerNames })
-
-    // const playerIds = playerNamesToIds(espnTeamPlayers)
+    const playerIds = await playerNamesToIds(playerNames)
 
     await context.prisma.updateTeam({
         data: {
             league: { connect: { id: league.id } },
             espnId: args.espnTeamId,
-            // players: { set: playerIds },
+            players: { set: playerIds },
         },
         where: { id: args.statCatTeamId },
     })

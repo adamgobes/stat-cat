@@ -66,6 +66,18 @@ export const statCategories = [
     },
 ]
 
-export function playerNamesToIds(playerNames: string[]): string[] {
-    return playerNames
+const formatName = (name: string): string => {
+    const firstName = name.substring(0, name.indexOf(' '))
+
+    const lastName = name.substring(firstName.length + 1)
+
+    const formattedLastName = lastName.replace(/[^a-zA-Z ]/g, '')
+
+    return `${firstName}-${formattedLastName}`
+}
+
+export function playerNamesToIds(playerNames: string[]): Promise<string[]> {
+    return sportsFeedRequest(
+        `players.json?player=${playerNames.map(name => formatName(name)).join(',')}`
+    ).then(({ players }) => players.map(({ player }) => player.id.toString()))
 }

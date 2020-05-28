@@ -13,7 +13,7 @@ export async function getLeagueInformation(leagueId: string) {
     try {
         await page.waitForSelector('h3.subHeader', {
             visible: true,
-            timeout: 6000,
+            timeout: 9000,
         })
     } catch (e) {
         await browser.close()
@@ -42,7 +42,7 @@ export async function getESPNTeamPlayers(leagueId: string, espnTeamId: string) {
     try {
         await page.waitForSelector('.player-column__athlete .AnchorLink', {
             visible: true,
-            timeout: 6000,
+            timeout: 9000,
         })
     } catch (e) {
         await browser.close()

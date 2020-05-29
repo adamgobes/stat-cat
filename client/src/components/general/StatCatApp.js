@@ -6,13 +6,14 @@ import { TeamBuilderContextProvider } from '../teamBuilder/TeamBuilderContext'
 import TeamBuilder from '../teamBuilder/TeamBuilder'
 import TradeSimulator from '../tradeSimulator/TradeSimulator'
 import Dashboard from '../dashboard/Dashboard'
-import { AppContext, toggleNav, toggleDarkMode } from './AppContext'
+import { AppContext, toggleNav, toggleDarkMode, closeAlert } from './AppContext'
 import { useWindowDimensions } from '../../utils/customHooks'
 import Nav from './Nav'
 import FallbackMessage from './FallbackMessage'
 import { SCREEN_SIZE_MESSAGE } from '../../utils/strings'
 import Messaging from '../messaging/Messaging'
 import MyLeague from '../league/MyLeague'
+import Alert from './Alert'
 
 const HIDE_NAV_WIDTH = 1100
 
@@ -42,6 +43,12 @@ export default function StatCatApp() {
                 isWidthTooSmall={width < HIDE_NAV_WIDTH}
                 darkMode={appContext.darkMode}
                 toggleDarkMode={() => dispatch(toggleDarkMode())}
+            />
+            <Alert
+                isNavOpen={isNavOpen}
+                alertWidth={isNavOpen ? width - 180 : width}
+                alertInfo={appContext.alert}
+                onCloseAlert={() => dispatch(closeAlert())}
             />
             <Route
                 exact

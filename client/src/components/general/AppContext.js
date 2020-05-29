@@ -9,11 +9,18 @@ const initialAppState = {
     selectedTeam: initialSelectedTeam,
     isNavOpen: false,
     darkMode: false,
+    alert: {
+        showAlert: false,
+        message: '',
+        isError: false,
+    },
 }
 
 const TOGGLE_DARK_MODE = 'TOGGLE_DARK_MODE'
 const TOGGLE_NAV = 'TOGGLE_NAV'
 const SET_SELECTED_TEAM = 'SET_SELECTED_TEAM'
+const CLOSE_ALERT = 'CLOSE_ALERT'
+const SHOW_ALERT = 'SHOW_ALERT'
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -31,6 +38,23 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 selectedTeam: action.selectedTeam,
+            }
+        case CLOSE_ALERT:
+            return {
+                ...state,
+                alert: {
+                    ...state.alert,
+                    showAlert: false,
+                },
+            }
+        case SHOW_ALERT:
+            return {
+                ...state,
+                alert: {
+                    showAlert: true,
+                    message: action.message,
+                    isError: action.isError,
+                },
             }
         default:
             return state
@@ -53,6 +77,20 @@ export function toggleNav() {
 export function toggleDarkMode() {
     return {
         type: TOGGLE_DARK_MODE,
+    }
+}
+
+export function closeAlert() {
+    return {
+        type: CLOSE_ALERT,
+    }
+}
+
+export function showAlert(message, isError) {
+    return {
+        type: SHOW_ALERT,
+        message,
+        isError,
     }
 }
 

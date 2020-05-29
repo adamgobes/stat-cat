@@ -39,6 +39,11 @@ const Truncated = styled(Text)`
     text-overflow: ellipsis;
 `
 
+const LeagueName = styled(Truncated)`
+    font-size: 0.6em;
+    color: gray;
+`
+
 const DropContent = forwardRef(({ teams, onTeamClick, onAddTeamClick }, ref) => {
     const theme = useContext(ThemeContext)
     return (
@@ -55,8 +60,15 @@ const DropContent = forwardRef(({ teams, onTeamClick, onAddTeamClick }, ref) => 
                             {t.name.substring(0, 1)}
                         </Text>
                     </FirstLetterWrapper>
-                    <Box>
-                        <Truncated>{t.name}</Truncated>
+                    <Box justify="center">
+                        <Box justify="center">
+                            <Truncated style={{ marginTop: '6px' }}>{t.name}</Truncated>
+                            {t.league && (
+                                <LeagueName style={{ marginTop: '-6px' }}>
+                                    {t.league.name}
+                                </LeagueName>
+                            )}
+                        </Box>
                     </Box>
                 </TeamDropdownItem>
             ))}
@@ -83,6 +95,10 @@ export default function TeamSelector({ teams }) {
     const [team, setTeam] = useState(teams[0])
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const [showAddTeamModal, setShowAddTeamModal] = useState(false)
+
+    useEffect(() => {
+        setTeam(teams[0])
+    }, [teams, setTeam])
 
     function handleTeamClick(t) {
         setDropdownOpen(false)
@@ -133,6 +149,7 @@ export default function TeamSelector({ teams }) {
                 }
                 dropAlign={{ top: 'bottom', right: 'right' }}
                 open={dropdownOpen}
+                style={{ maxWidth: '100%' }}
             >
                 <Box direction="row" align="center">
                     <FirstLetterWrapper

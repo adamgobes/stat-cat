@@ -1,7 +1,7 @@
 import { sportsFeedRequest } from '../sportsFeed/api'
 
 import { extractBasicInfo, extractInjuryInfo, getPlayersStats } from '../sportsFeed/helpers'
-import { GQLUser, GQLPlayer, GQLStat } from '../generated/gqlTypes'
+import { GQLUser, GQLPlayer, GQLStat, GQLFantasyLeague } from '../generated/gqlTypes'
 
 export function owner(parent, args, context): GQLUser {
     return context.prisma.team({ id: parent.id }).owner()
@@ -32,4 +32,8 @@ export function players(parent, { timeFrame }): Promise<GQLPlayer[]> {
             })
         }
     )
+}
+
+export function league(parent, args, context): Promise<GQLFantasyLeague> {
+    return context.prisma.team({ id: parent.id }).league()
 }

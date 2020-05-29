@@ -44,11 +44,11 @@ const LeagueName = styled(Truncated)`
     color: gray;
 `
 
-const DropContent = forwardRef(({ teams, onTeamClick, onAddTeamClick }, ref) => {
+const DropContent = forwardRef(({ otherTeams, onTeamClick, onAddTeamClick }, ref) => {
     const theme = useContext(ThemeContext)
     return (
         <Box ref={ref}>
-            {teams.map(t => (
+            {otherTeams.map(t => (
                 <TeamDropdownItem direction="row" key={t.id} onClick={() => onTeamClick(t)}>
                     <FirstLetterWrapper
                         size="30"
@@ -90,19 +90,19 @@ const DropContent = forwardRef(({ teams, onTeamClick, onAddTeamClick }, ref) => 
 })
 
 export default function TeamSelector({ teams }) {
-    const { dispatch } = useContext(AppContext)
+    const { appContext, dispatch } = useContext(AppContext)
 
-    const [team, setTeam] = useState(teams[0])
+    const [currentTeam, setCurrentTeam] = useState(teams[0])
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const [showAddTeamModal, setShowAddTeamModal] = useState(false)
 
     useEffect(() => {
-        setTeam(teams[0])
-    }, [teams, setTeam])
+        setCurrentTeam(teams.find(t => t.id === appContext.selectedTeam))
+    }, [teams, setCurrentTeam])
 
     function handleTeamClick(t) {
         setDropdownOpen(false)
-        setTeam(t)
+        setCurrentTeam(t)
         dispatch(setSelectedTeam(t.id))
     }
 
@@ -141,8 +141,8 @@ export default function TeamSelector({ teams }) {
                 dropContent={
                     <DropContent
                         ref={dropContentRef}
-                        teams={teams}
-                        setTeam={setTeam}
+                        otherTeams={teams.filter(t => t.id !== currentTeam.id)}
+                        setTeam={setCurrentTeam}
                         onTeamClick={handleTeamClick}
                         onAddTeamClick={handleAddTeamClick}
                     />
@@ -158,11 +158,11 @@ export default function TeamSelector({ teams }) {
                         align="center"
                         justify="center"
                     >
-                        <Text>{team.name.substring(0, 1)}</Text>
+                        <Text>{currentTeam.name.substring(0, 1)}</Text>
                     </FirstLetterWrapper>
                     <Box style={{ marginRight: '10px' }}>
                         <Truncated style={{ color: 'white', fontSize: '0.7em' }}>
-                            {team.name}
+                            {currentTeam.name}
                         </Truncated>
                     </Box>
                     <Box>
@@ -178,7 +178,10 @@ export default function TeamSelector({ teams }) {
                     onEsc={() => setShowAddTeamModal(false)}
                     onClickOutside={() => setShowAddTeamModal(false)}
                 >
-                    <AddTeamModal closeModal={() => setShowAddTeamModal(false)} setTeam={setTeam} />
+                    <AddTeamModal
+                        closeModal={() => setShowAddTeamModal(false)}
+                        setTeam={setCurrentTeam}
+                    />
                 </Layer>
             )}
         </TeamSelectorWrapper>

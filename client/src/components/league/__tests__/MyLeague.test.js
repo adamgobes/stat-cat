@@ -1,5 +1,7 @@
 import React from 'react'
 import { Grommet } from 'grommet'
+import { createMemoryHistory } from 'history'
+import { Router } from 'react-router-dom'
 import { render, waitForElement, fireEvent, within, cleanup } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import { MockedProvider } from '@apollo/react-testing'
@@ -60,11 +62,13 @@ const leagueMocks = [
 
 const myLeagueWithThemeAndProvider = (
     <Grommet theme={theme}>
-        <MockedProvider mocks={leagueMocks} addTypename>
-            <AppContextProvider initialState={{ selectedTeam: TEAM_ID }}>
-                <MyLeague />
-            </AppContextProvider>
-        </MockedProvider>
+        <Router history={createMemoryHistory()}>
+            <MockedProvider mocks={leagueMocks} addTypename>
+                <AppContextProvider initialState={{ selectedTeam: TEAM_ID }}>
+                    <MyLeague />
+                </AppContextProvider>
+            </MockedProvider>
+        </Router>
     </Grommet>
 )
 

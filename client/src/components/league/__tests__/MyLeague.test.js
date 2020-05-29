@@ -3,7 +3,6 @@ import { Grommet } from 'grommet'
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import { render, waitForElement, fireEvent, within, cleanup } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
 import { MockedProvider } from '@apollo/react-testing'
 
 import theme from '../../../theme'

@@ -8,7 +8,7 @@ import { Subheader, Title } from '../shared/TextComponents'
 import { RoundedButton } from '../shared/Buttons'
 import { WEEKLY_OVERVIEW_QUERY, MY_STATS_QUERY, ALL_MY_TEAMS_QUERY } from '../../apollo/queries'
 import { SYNC_ESPN_TEAM } from '../../apollo/mutations'
-import { AppContext } from '../general/AppContext'
+import { AppContext, showAlert } from '../general/AppContext'
 
 const Wrapper = styled(Box)`
     width: 86%;
@@ -47,12 +47,12 @@ const ConnectButton = styled(RoundedButton)`
 export default function LeagueTeamsGrid({ leagueId, teams }) {
     const {
         appContext: { selectedTeam },
+        dispatch,
     } = useContext(AppContext)
 
     const history = useHistory()
 
     const [selectedIndex, setSelectedIndex] = useState(-1)
-    const [syncSuccessful, setSyncSuccessful] = useState(false)
 
     const [syncTeam, { loading: syncTeamLoading }] = useMutation(SYNC_ESPN_TEAM, {
         variables: {
@@ -66,9 +66,9 @@ export default function LeagueTeamsGrid({ leagueId, teams }) {
             { query: ALL_MY_TEAMS_QUERY },
         ],
         awaitRefetchQueries: true,
-        onCompleted: data => {
-            setSyncSuccessful(true)
-            history.push('/app/teambuilder')
+        onCompleted: () => {
+            dispatch(showAlert('Team connected successfully', false))
+            history.push('/app/dashboard')
         },
     })
     return (

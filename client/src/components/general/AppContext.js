@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useMemo } from 'react'
+import React, { createContext, useReducer, useMemo, useEffect } from 'react'
 import cookie from 'react-cookies'
 
 const AppContext = createContext()
@@ -96,6 +96,12 @@ export function showAlert(message, isError) {
 
 function AppContextProvider({ children, initialState = initialAppState }) {
     const [appContext, dispatch] = useReducer(reducer, initialState)
+
+    useEffect(() => {
+        setTimeout(() => {
+            dispatch(closeAlert())
+        }, [5000])
+    }, [appContext.alert.showAlert])
 
     const contextValue = useMemo(
         () => ({

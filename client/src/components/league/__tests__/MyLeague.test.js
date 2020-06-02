@@ -63,7 +63,7 @@ const myLeagueWithThemeAndProvider = (
     <Grommet theme={theme}>
         <Router history={createMemoryHistory()}>
             <MockedProvider mocks={leagueMocks} addTypename>
-                <AppContextProvider initialState={{ selectedTeam: TEAM_ID }}>
+                <AppContextProvider initialConfig={{ selectedTeam: TEAM_ID }}>
                     <MyLeague />
                 </AppContextProvider>
             </MockedProvider>

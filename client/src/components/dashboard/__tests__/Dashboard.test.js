@@ -34,7 +34,7 @@ const dashboardMocks = [
 const dashboardWithThemeAndProvider = (
     <Grommet theme={theme}>
         <MockedProvider mocks={dashboardMocks} addTypename>
-            <AppContextProvider initialState={{ selectedTeam: TEAM_ID }}>
+            <AppContextProvider initialConfig={{ selectedTeam: TEAM_ID }}>
                 <Dashboard />
             </AppContextProvider>
         </MockedProvider>

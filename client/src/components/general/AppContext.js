@@ -94,8 +94,8 @@ export function showAlert(message, isError) {
     }
 }
 
-function AppContextProvider({ children, initialState }) {
-    const [appContext, dispatch] = useReducer(reducer, { ...initialAppState, ...initialState })
+function AppContextProvider({ children, initialConfig }) {
+    const [appContext, dispatch] = useReducer(reducer, { ...initialAppState, ...initialConfig })
 
     useEffect(() => {
         setTimeout(() => {

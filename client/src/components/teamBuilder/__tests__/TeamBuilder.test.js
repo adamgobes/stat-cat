@@ -39,7 +39,7 @@ const teamBuilderMocks = [
 const teamBuilderWithThemeAndProvider = (
     <Grommet theme={theme}>
         <MockedProvider mocks={teamBuilderMocks} addTypename>
-            <AppContextProvider initialState={{ selectedTeam: TEAM_ID }}>
+            <AppContextProvider initialConfig={{ selectedTeam: TEAM_ID }}>
                 <TeamBuilderContextProvider>
                     <TeamBuilder />
                 </TeamBuilderContextProvider>

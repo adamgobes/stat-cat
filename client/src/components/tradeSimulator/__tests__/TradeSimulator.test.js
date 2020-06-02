@@ -64,7 +64,7 @@ const tradeSimulatorMocks = [
 const tradeSimulatorWithThemeAndProvider = (
     <Grommet theme={theme}>
         <MockedProvider mocks={tradeSimulatorMocks} addTypename>
-            <AppContextProvider initialState={{ selectedTeam: TEAM_ID }}>
+            <AppContextProvider initialConfig={{ selectedTeam: TEAM_ID }}>
                 <TradeSimulator />
             </AppContextProvider>
         </MockedProvider>

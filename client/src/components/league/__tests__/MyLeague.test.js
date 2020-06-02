@@ -8,7 +8,7 @@ import { MockedProvider } from '@apollo/react-testing'
 import theme from '../../../theme'
 import { CREATE_LEAGUE_MUTATION } from '../../../apollo/mutations'
 import MyLeague from '../MyLeague'
-import { AppContextProvider } from '../../general/AppContext'
+import { AppContextProvider, initialAppState } from '../../general/AppContext'
 import { TEAM_ID } from '../../../utils/strings'
 
 const TEST_LEAGUE_ID = '12345'
@@ -63,7 +63,7 @@ const myLeagueWithThemeAndProvider = (
     <Grommet theme={theme}>
         <Router history={createMemoryHistory()}>
             <MockedProvider mocks={leagueMocks} addTypename>
-                <AppContextProvider initialConfig={{ selectedTeam: TEAM_ID }}>
+                <AppContextProvider initialState={{ ...initialAppState, selectedTeam: TEAM_ID }}>
                     <MyLeague />
                 </AppContextProvider>
             </MockedProvider>

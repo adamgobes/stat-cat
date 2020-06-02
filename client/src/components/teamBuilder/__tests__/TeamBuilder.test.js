@@ -9,7 +9,7 @@ import { MY_TEAM_QUERY, SEARCH_PLAYERS_QUERY } from '../../../apollo/queries'
 import { myTeamData } from '../stories/teamBuilderStoriesData'
 import { TeamBuilderContextProvider } from '../TeamBuilderContext'
 import { receivingSearchData as searchData } from '../../tradeSimulator/stories/tradeSimulatorStoriesData'
-import { AppContextProvider } from '../../general/AppContext'
+import { AppContextProvider, initialAppState } from '../../general/AppContext'
 import { TEAM_ID } from '../../../utils/strings'
 
 const SEARCH_STRING = 'julius randle'
@@ -39,7 +39,7 @@ const teamBuilderMocks = [
 const teamBuilderWithThemeAndProvider = (
     <Grommet theme={theme}>
         <MockedProvider mocks={teamBuilderMocks} addTypename>
-            <AppContextProvider initialConfig={{ selectedTeam: TEAM_ID }}>
+            <AppContextProvider initialState={{ ...initialAppState, selectedTeam: TEAM_ID }}>
                 <TeamBuilderContextProvider>
                     <TeamBuilder />
                 </TeamBuilderContextProvider>

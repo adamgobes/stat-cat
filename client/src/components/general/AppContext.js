@@ -5,7 +5,7 @@ const AppContext = createContext()
 
 const initialSelectedTeam = cookie.load('selectedTeam')
 
-const initialAppState = {
+export const initialAppState = {
     selectedTeam: initialSelectedTeam,
     isNavOpen: false,
     darkMode: false,
@@ -94,8 +94,8 @@ export function showAlert(message, isError) {
     }
 }
 
-function AppContextProvider({ children, initialConfig }) {
-    const [appContext, dispatch] = useReducer(reducer, { ...initialAppState, ...initialConfig })
+function AppContextProvider({ children, initialState = initialAppState }) {
+    const [appContext, dispatch] = useReducer(reducer, initialState)
 
     useEffect(() => {
         setTimeout(() => {

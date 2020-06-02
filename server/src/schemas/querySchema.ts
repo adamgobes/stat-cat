@@ -8,6 +8,6 @@ export default gql`
         getPlayerStats(playerIds: [ID!]!): [Player!]!
         getTeam(teamId: String): Team
         getUsers(userIds: [ID!]!): [User!]!
-        getFantasyLeague(leagueId: ID!): FantasyLeague
+        getFantasyLeague(statCatTeamId: ID!): FantasyLeague
     }
 `

@@ -58,6 +58,14 @@ export const MY_STATS_QUERY = gql`
     }
 `
 
+export const LEAGUE_INFO_QUERY = gql`
+    query leagueInfoQuery($statCatTeamId: ID!) {
+        getFantasyLeague(statCatTeamId: $statCatTeamId) {
+            name
+        }
+    }
+`
+
 export const SEARCH_PLAYERS_QUERY = gql`
     ${BasicPlayerInfoFragment}
     query allPlayersQuery($filter: String) {

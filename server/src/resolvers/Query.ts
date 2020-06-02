@@ -95,5 +95,5 @@ export function getUsers(parent, args, context): GQLUser[] {
 }
 
 export function getFantasyLeague(parent, args, context): GQLFantasyLeague {
-    return context.prisma.fantasyLeague({ espnId: args.leagueId })
+    return context.prisma.team({ id: args.statCatTeamId }).league()
 }

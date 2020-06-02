@@ -3,6 +3,7 @@ import * as Player from './Player'
 import * as Query from './Query'
 import * as Team from './Team'
 import * as User from './User'
+import * as FantasyLeague from './FantasyLeague'
 
 export const resolvers = {
     Mutation,
@@ -10,4 +11,5 @@ export const resolvers = {
     Query,
     Team,
     User,
+    FantasyLeague,
 }

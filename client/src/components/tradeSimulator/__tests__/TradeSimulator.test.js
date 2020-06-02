@@ -16,7 +16,7 @@ import {
     receivingSearchData,
 } from '../stories/tradeSimulatorStoriesData'
 import { myStatsData } from '../../dashboard/stories/dashboardStoriesData'
-import { AppContextProvider } from '../../general/AppContext'
+import { AppContextProvider, initialAppState } from '../../general/AppContext'
 import { TEAM_ID } from '../../../utils/strings'
 
 const SEARCH_STRING_SENDING = 'draymond green'
@@ -26,6 +26,7 @@ const tradeSimulatorMocks = [
     {
         request: {
             query: MY_STATS_QUERY,
+            variables: { timeFrame: 'All', teamId: TEAM_ID },
         },
         result: () => ({
             data: myStatsData,
@@ -63,7 +64,7 @@ const tradeSimulatorMocks = [
 const tradeSimulatorWithThemeAndProvider = (
     <Grommet theme={theme}>
         <MockedProvider mocks={tradeSimulatorMocks} addTypename>
-            <AppContextProvider initialState={{ teamId: TEAM_ID }}>
+            <AppContextProvider initialState={{ ...initialAppState, selectedTeam: TEAM_ID }}>
                 <TradeSimulator />
             </AppContextProvider>
         </MockedProvider>

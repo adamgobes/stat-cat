@@ -15,10 +15,10 @@ const Wrapper = styled(Box)`
 
 const AlertWrapper = styled(Box)`
     position: relative;
-    width: 32%;
+    padding: 10px 64px 10px 32px;
     height: 32px;
     margin-top: 10px;
-    background: #80dfa8;
+    background: ${props => (props.isError ? '#c95d6b' : '#80dfa8')};
     box-shadow: rgba(0, 0, 0, 0.3) 0 1px 6px;
     border-radius: 6px;
     visibility: ${props => (props.showAlert ? 'visible' : 'hidden')};
@@ -32,7 +32,7 @@ const AlertText = styled(Text)`
 `
 
 const CheckWrapper = styled(Box)`
-    background: #9ce7be;
+    background: ${props => (props.isError ? '#ee8e9b' : '#9ce7be')};
     padding: 2px;
     border-radius: 100%;
     margin: 0px 20px;
@@ -47,10 +47,16 @@ const ExitWrapper = styled(Box)`
 export default function Alert({ isNavOpen, alertWidth, alertInfo, onCloseAlert }) {
     return (
         <Wrapper align="center" isNavOpen={isNavOpen} alertWidth={alertWidth}>
-            <AlertWrapper direction="row" align="center" showAlert={alertInfo.showAlert}>
+            <AlertWrapper
+                direction="row"
+                align="center"
+                showAlert={alertInfo.showAlert}
+                isError={alertInfo.isError}
+            >
                 <Box direction="row" align="center">
-                    <CheckWrapper>
-                        <Checkmark color="white" size="small" />
+                    <CheckWrapper isError={alertInfo.isError}>
+                        {alertInfo.isError && <FormClose color="white" size="small" />}
+                        {!alertInfo.isError && <Checkmark color="white" size="small" />}
                     </CheckWrapper>
                     <AlertText>{alertInfo.message}</AlertText>
                 </Box>

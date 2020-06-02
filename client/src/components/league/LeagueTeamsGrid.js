@@ -4,7 +4,7 @@ import { Box } from 'grommet'
 import { useMutation } from '@apollo/react-hooks'
 import { useHistory } from 'react-router-dom'
 
-import { Subheader, Title } from '../shared/TextComponents'
+import { Subheader } from '../shared/TextComponents'
 import { RoundedButton } from '../shared/Buttons'
 import { WEEKLY_OVERVIEW_QUERY, MY_STATS_QUERY, ALL_MY_TEAMS_QUERY } from '../../apollo/queries'
 import { SYNC_ESPN_TEAM } from '../../apollo/mutations'
@@ -69,6 +69,9 @@ export default function LeagueTeamsGrid({ leagueId, teams }) {
         onCompleted: () => {
             dispatch(showAlert('Team connected successfully', false))
             history.push('/app/dashboard')
+        },
+        onError: error => {
+            dispatch(showAlert(error.graphQLErrors[0].message, true))
         },
     })
     return (

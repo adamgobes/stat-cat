@@ -61,7 +61,7 @@ export default function TradeSimulator() {
 
     const { data: currentStatsData, loading: statsLoading, error: statsError } = useQuery(
         MY_STATS_QUERY,
-        { variables: { teamId: selectedTeam } }
+        { variables: { timeFrame: 'All', teamId: selectedTeam } }
     )
 
     function onGetPlayerStatsCompleted(data) {

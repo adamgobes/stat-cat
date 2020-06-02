@@ -7,7 +7,7 @@ import theme from '../../../theme'
 import { WEEKLY_OVERVIEW_QUERY, MY_STATS_QUERY } from '../../../apollo/queries'
 import { weeklyOverviewData, myStatsData } from '../stories/dashboardStoriesData'
 import Dashboard from '../Dashboard'
-import { AppContextProvider } from '../../general/AppContext'
+import { AppContextProvider, initialAppState } from '../../general/AppContext'
 import { TEAM_ID } from '../../../utils/strings'
 
 const dashboardMocks = [
@@ -34,7 +34,7 @@ const dashboardMocks = [
 const dashboardWithThemeAndProvider = (
     <Grommet theme={theme}>
         <MockedProvider mocks={dashboardMocks} addTypename>
-            <AppContextProvider initialState={{ selectedTeam: TEAM_ID }}>
+            <AppContextProvider initialState={{ ...initialAppState, selectedTeam: TEAM_ID }}>
                 <Dashboard />
             </AppContextProvider>
         </MockedProvider>

@@ -144,10 +144,10 @@ export async function addFantasyLeagueMember(parent, args, context): Promise<boo
         .fantasyLeague({ espnId: args.leagueId })
         .teams()
 
-    const leagueTeamsIds: string[] = leagueTeams.map(t => t.id)
+    const espnIds = leagueTeams.map(team => team.espnId)
 
-    if (leagueTeamsIds.includes(args.teamId)) {
-        throw new Error(`This team is already in the ${leagueName} league`)
+    if (espnIds.includes(args.espnTeamId)) {
+        throw new Error(`Oops! Someone in your league has already connected to that team!`)
     }
 
     const { espnTeamName, playerNames } = await getESPNTeamPlayers(args.leagueId, args.espnTeamId)

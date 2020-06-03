@@ -9,6 +9,7 @@ import { AppContext } from '../general/AppContext'
 import Loader from '../shared/Loader'
 import FallbackMessage from '../general/FallbackMessage'
 import { NETWORK_ERROR_MESSAGE } from '../../utils/strings'
+import LeagueInformation from './LeagueInformation'
 
 const MyLeagueWrapper = styled(Box)`
     position: relative;
@@ -34,12 +35,17 @@ export default function MyLeague() {
 
     if (leagueError) return <FallbackMessage message={NETWORK_ERROR_MESSAGE} showReload />
 
-    console.log({ leagueData })
-
     return (
         <MyLeagueWrapper align="center" data-testid="myleague">
-            {!leagueData && <ConnectLeague />}
-            {!!leagueData && <h1>Some league info</h1>}
+            {!leagueData.getFantasyLeague && <ConnectLeague />}
+            {!!leagueData.getFantasyLeague && (
+                <LeagueInformation
+                    leagueData={leagueData.getFantasyLeague}
+                    myTeam={leagueData.getFantasyLeague.teams.find(
+                        team => team.id === selectedTeam
+                    )}
+                />
+            )}
         </MyLeagueWrapper>
     )
 }

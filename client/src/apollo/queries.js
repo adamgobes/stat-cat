@@ -62,6 +62,14 @@ export const LEAGUE_INFO_QUERY = gql`
     query leagueInfoQuery($statCatTeamId: ID!) {
         getFantasyLeague(statCatTeamId: $statCatTeamId) {
             name
+            teams {
+                id
+                name
+                owner {
+                    id
+                    name
+                }
+            }
         }
     }
 `

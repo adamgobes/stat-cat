@@ -6,7 +6,7 @@ import { RoundedButton } from '../shared/Buttons'
 
 const LeagueInformationWrapper = styled(Box)`
     width: 90%;
-    margin: 60px 0px 0px 100px;
+    margin-top: 60px;
 `
 
 const Header = styled(Box)`
@@ -108,8 +108,8 @@ const MemberTeamName = styled(Subheader)`
 
 export default function LeagueInformation({ leagueData, myTeam }) {
     return (
-        <LeagueInformationWrapper>
-            <Header direction="column" align="start">
+        <LeagueInformationWrapper align="center">
+            <Header direction="column" align="center">
                 <LeagueName>{leagueData.name}</LeagueName>
             </Header>
             <TeamInfoWrapper>
@@ -118,7 +118,7 @@ export default function LeagueInformation({ leagueData, myTeam }) {
                 <DisconnectButton width={180} label="Disconnect Team" />
             </TeamInfoWrapper>
             <OtherMembers>
-                <StyledSubheader>Other Members</StyledSubheader>
+                <StyledSubheader style={{ margin: '0 0 20px 0' }}>Other Members</StyledSubheader>
                 {leagueData.teams.map(team => (
                     <Member direction="row" align="center" key={team.id}>
                         <AvatarWrapper direction="column" justify="center" align="center">

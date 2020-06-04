@@ -62,3 +62,9 @@ export const CONNECT_ESPN_TEAM = gql`
         )
     }
 `
+
+export const DISCONNECT_ESPN_TEAM = gql`
+    mutation disconnectESPNTeam($leagueId: ID!, $statCatTeamId: ID!) {
+        removeFantasyLeagueMember(leagueId: $leagueId, statCatTeamId: $statCatTeamId)
+    }
+`

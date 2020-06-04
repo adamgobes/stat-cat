@@ -1,8 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
+import { useMutation } from '@apollo/react-hooks'
+
 import { Title, Subheader, Text } from '../shared/TextComponents'
 import { RoundedButton } from '../shared/Buttons'
+import { DISCONNECT_ESPN_TEAM } from '../../apollo/mutations'
 
 const LeagueInformationWrapper = styled(Box)`
     width: 90%;
@@ -109,6 +112,13 @@ const MemberTeamName = styled(Subheader)`
 export default function LeagueInformation({ leagueData, myTeam }) {
     const otherTeams = leagueData.teams.filter(team => team.id !== myTeam.id)
 
+    const [disconnectTeam, { loading: disconnectLoading }] = useMutation(DISCONNECT_ESPN_TEAM, {
+        variables: { leagueId: leagueData.espnId, statCatTeamId: myTeam.id },
+        onCompleted: () => {
+            window.location.reload()
+        },
+    })
+
     return (
         <LeagueInformationWrapper align="center">
             <Header direction="column" align="center">
@@ -117,7 +127,12 @@ export default function LeagueInformation({ leagueData, myTeam }) {
             <TeamInfoWrapper>
                 <StyledSubheader>Your Team</StyledSubheader>
                 <TeamName>{myTeam.name}</TeamName>
-                <DisconnectButton width={180} label="Disconnect Team" />
+                <DisconnectButton
+                    width={180}
+                    label="Disconnect Team"
+                    onClick={disconnectTeam}
+                    loading={disconnectLoading}
+                />
             </TeamInfoWrapper>
             <OtherMembers>
                 <StyledSubheader style={{ margin: '0 0 20px 0' }}>Other Members</StyledSubheader>

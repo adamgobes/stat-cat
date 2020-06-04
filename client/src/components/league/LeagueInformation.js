@@ -2,10 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 import { useMutation } from '@apollo/react-hooks'
+import { useHistory } from 'react-router-dom'
 
 import { Title, Subheader, Text } from '../shared/TextComponents'
 import { RoundedButton } from '../shared/Buttons'
 import { DISCONNECT_ESPN_TEAM } from '../../apollo/mutations'
+import { showAlert } from '../general/AppContext'
+import { LEAGUE_INFO_QUERY } from '../../apollo/queries'
 
 const LeagueInformationWrapper = styled(Box)`
     width: 90%;
@@ -109,14 +112,18 @@ const MemberTeamName = styled(Subheader)`
     text-overflow: ellipsis;
 `
 
-export default function LeagueInformation({ leagueData, myTeam }) {
+export default function LeagueInformation({ leagueData, myTeam, dispatch }) {
+    const history = useHistory()
+
     const otherTeams = leagueData.teams.filter(team => team.id !== myTeam.id)
 
     const [disconnectTeam, { loading: disconnectLoading }] = useMutation(DISCONNECT_ESPN_TEAM, {
         variables: { leagueId: leagueData.espnId, statCatTeamId: myTeam.id },
         onCompleted: () => {
-            window.location.reload()
+            dispatch(showAlert('Team Disconnected Successfully!', false))
+            history.push('/app/league')
         },
+        refetchQueries: [{ query: LEAGUE_INFO_QUERY, variables: { statCatTeamId: myTeam.id } }],
     })
 
     return (

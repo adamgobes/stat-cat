@@ -10,6 +10,7 @@ import { CREATE_LEAGUE_MUTATION } from '../../../apollo/mutations'
 import MyLeague from '../MyLeague'
 import { AppContextProvider, initialAppState } from '../../general/AppContext'
 import { TEAM_ID } from '../../../utils/strings'
+import { LEAGUE_INFO_QUERY } from '../../../apollo/queries'
 
 const TEST_LEAGUE_ID = '12345'
 
@@ -56,6 +57,13 @@ const leagueMocks = [
                 },
             },
         }),
+    },
+    {
+        request: {
+            query: LEAGUE_INFO_QUERY,
+            variables: { statCatTeamId: TEAM_ID },
+        },
+        result: () => ({ data: { getFantasyLeague: null } }),
     },
 ]
 

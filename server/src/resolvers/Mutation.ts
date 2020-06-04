@@ -170,8 +170,6 @@ export async function addFantasyLeagueMember(parent, args, context): Promise<boo
 export async function removeFantasyLeagueMember(parent, args, context): Promise<boolean> {
     const userId: string = getUserId(context)
 
-    const league: GQLFantasyLeague = await context.prisma.fantasyLeague({ espnId: args.leagueId })
-
     await context.prisma.updateTeam({
         data: {
             league: { disconnect: true },

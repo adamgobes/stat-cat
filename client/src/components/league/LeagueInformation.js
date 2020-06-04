@@ -118,9 +118,9 @@ export default function LeagueInformation({ leagueData, myTeam, dispatch }) {
     const otherTeams = leagueData.teams.filter(team => team.id !== myTeam.id)
 
     const [disconnectTeam, { loading: disconnectLoading }] = useMutation(DISCONNECT_ESPN_TEAM, {
-        variables: { leagueId: leagueData.espnId, statCatTeamId: myTeam.id },
+        variables: { statCatTeamId: myTeam.id },
         onCompleted: () => {
-            dispatch(showAlert('Team Disconnected Successfully!', false))
+            dispatch(showAlert('Team disconnected successfully!', false))
             history.push('/app/league')
         },
         refetchQueries: [{ query: LEAGUE_INFO_QUERY, variables: { statCatTeamId: myTeam.id } }],

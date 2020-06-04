@@ -61,10 +61,10 @@ const Member = styled(Box)`
     min-height: 60px;
     padding: 6px;
     cursor: pointer;
-    box-shadow: rgba(84, 70, 35, 0.15) 0px 2px 8px, rgba(84, 70, 35, 0.15) 0px 1px 3px;
-    &:hover {
-        opacity: 0.7;
-    }
+    // box-shadow: rgba(84, 70, 35, 0.15) 0px 2px 8px, rgba(84, 70, 35, 0.15) 0px 1px 3px;
+    // &:hover {
+    //     opacity: 0.7;
+    // }
 `
 
 const AvatarWrapper = styled(Box)`

@@ -27,13 +27,13 @@ const TeamInfoWrapper = styled(Box)`
 `
 
 const StyledSubheader = styled(Subheader)`
-    color: ${props => props.theme.global.colors.freeText};
+    color: black;
     font-size: 1.2em;
     margin: 8px 0px;
 `
 
 const TeamName = styled(Text)`
-    color: ${props => props.theme.global.colors.freeText};
+    color: black;
     font-size: 1em;
     margin: 8px 0px;
 `
@@ -107,6 +107,8 @@ const MemberTeamName = styled(Subheader)`
 `
 
 export default function LeagueInformation({ leagueData, myTeam }) {
+    const otherTeams = leagueData.teams.filter(team => team.id !== myTeam.id)
+
     return (
         <LeagueInformationWrapper align="center">
             <Header direction="column" align="center">
@@ -119,7 +121,7 @@ export default function LeagueInformation({ leagueData, myTeam }) {
             </TeamInfoWrapper>
             <OtherMembers>
                 <StyledSubheader style={{ margin: '0 0 20px 0' }}>Other Members</StyledSubheader>
-                {leagueData.teams.map(team => (
+                {otherTeams.map(team => (
                     <Member direction="row" align="center" key={team.id}>
                         <AvatarWrapper direction="column" justify="center" align="center">
                             <Avatar size="40" align="center" justify="center" background="#7781f7">

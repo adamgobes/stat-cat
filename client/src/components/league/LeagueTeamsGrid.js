@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom'
 import { Subheader } from '../shared/TextComponents'
 import { RoundedButton } from '../shared/Buttons'
 import { WEEKLY_OVERVIEW_QUERY, MY_STATS_QUERY, ALL_MY_TEAMS_QUERY } from '../../apollo/queries'
-import { SYNC_ESPN_TEAM } from '../../apollo/mutations'
+import { CONNECT_ESPN_TEAM } from '../../apollo/mutations'
 import { AppContext, showAlert } from '../general/AppContext'
 
 const Wrapper = styled(Box)`
@@ -54,7 +54,7 @@ export default function LeagueTeamsGrid({ leagueId, teams }) {
 
     const [selectedIndex, setSelectedIndex] = useState(-1)
 
-    const [syncTeam, { loading: syncTeamLoading }] = useMutation(SYNC_ESPN_TEAM, {
+    const [syncTeam, { loading: syncTeamLoading }] = useMutation(CONNECT_ESPN_TEAM, {
         variables: {
             leagueId,
             statCatTeamId: selectedTeam,

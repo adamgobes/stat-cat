@@ -61,6 +61,7 @@ export const MY_STATS_QUERY = gql`
 export const LEAGUE_INFO_QUERY = gql`
     query leagueInfoQuery($statCatTeamId: ID!) {
         getFantasyLeague(statCatTeamId: $statCatTeamId) {
+            espnId
             name
             teams {
                 id

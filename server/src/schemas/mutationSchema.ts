@@ -8,6 +8,6 @@ export default gql`
         addTeam(name: String!): Team
         createFantasyLeague(leagueId: ID!): CreateLeagueResponse
         addFantasyLeagueMember(leagueId: ID!, statCatTeamId: ID!, espnTeamId: ID!): Boolean
-        removeFantasyLeagueMember(leagueId: ID!, statCatTeamId: ID!): Boolean
+        removeFantasyLeagueMember(statCatTeamId: ID!): Boolean
     }
 `

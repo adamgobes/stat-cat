@@ -1,8 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grommet'
+import { useMutation } from '@apollo/react-hooks'
+import { useHistory } from 'react-router-dom'
+
 import { Title, Subheader, Text } from '../shared/TextComponents'
 import { RoundedButton } from '../shared/Buttons'
+import { DISCONNECT_ESPN_TEAM } from '../../apollo/mutations'
+import { showAlert } from '../general/AppContext'
+import { LEAGUE_INFO_QUERY } from '../../apollo/queries'
 
 const LeagueInformationWrapper = styled(Box)`
     width: 90%;
@@ -106,8 +112,19 @@ const MemberTeamName = styled(Subheader)`
     text-overflow: ellipsis;
 `
 
-export default function LeagueInformation({ leagueData, myTeam }) {
+export default function LeagueInformation({ leagueData, myTeam, dispatch }) {
+    const history = useHistory()
+
     const otherTeams = leagueData.teams.filter(team => team.id !== myTeam.id)
+
+    const [disconnectTeam, { loading: disconnectLoading }] = useMutation(DISCONNECT_ESPN_TEAM, {
+        variables: { statCatTeamId: myTeam.id },
+        onCompleted: () => {
+            dispatch(showAlert('Team disconnected successfully!', false))
+            history.push('/app/league')
+        },
+        refetchQueries: [{ query: LEAGUE_INFO_QUERY, variables: { statCatTeamId: myTeam.id } }],
+    })
 
     return (
         <LeagueInformationWrapper align="center">
@@ -117,7 +134,12 @@ export default function LeagueInformation({ leagueData, myTeam }) {
             <TeamInfoWrapper>
                 <StyledSubheader>Your Team</StyledSubheader>
                 <TeamName>{myTeam.name}</TeamName>
-                <DisconnectButton width={180} label="Disconnect Team" />
+                <DisconnectButton
+                    width={180}
+                    label="Disconnect Team"
+                    onClick={disconnectTeam}
+                    loading={disconnectLoading}
+                />
             </TeamInfoWrapper>
             <OtherMembers>
                 <StyledSubheader style={{ margin: '0 0 20px 0' }}>Other Members</StyledSubheader>

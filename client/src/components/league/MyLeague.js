@@ -21,6 +21,7 @@ const MyLeagueWrapper = styled(Box)`
 export default function MyLeague() {
     const {
         appContext: { selectedTeam },
+        dispatch,
     } = useContext(AppContext)
 
     const { data: leagueData, loading: leagueLoading, error: leagueError } = useQuery(
@@ -44,6 +45,7 @@ export default function MyLeague() {
                     myTeam={leagueData.getFantasyLeague.teams.find(
                         team => team.id === selectedTeam
                     )}
+                    dispatch={dispatch}
                 />
             )}
         </MyLeagueWrapper>

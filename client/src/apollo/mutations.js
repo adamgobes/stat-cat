@@ -53,12 +53,18 @@ export const CREATE_LEAGUE_MUTATION = gql`
     }
 `
 
-export const SYNC_ESPN_TEAM = gql`
-    mutation syncESPNTeam($leagueId: ID!, $statCatTeamId: ID!, $espnTeamId: ID!) {
+export const CONNECT_ESPN_TEAM = gql`
+    mutation connectESPNTeam($leagueId: ID!, $statCatTeamId: ID!, $espnTeamId: ID!) {
         addFantasyLeagueMember(
             leagueId: $leagueId
             statCatTeamId: $statCatTeamId
             espnTeamId: $espnTeamId
         )
+    }
+`
+
+export const DISCONNECT_ESPN_TEAM = gql`
+    mutation disconnectESPNTeam($statCatTeamId: ID!) {
+        removeFantasyLeagueMember(statCatTeamId: $statCatTeamId)
     }
 `

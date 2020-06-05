@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { useQuery } from '@apollo/react-hooks'
 import { Box } from 'grommet'

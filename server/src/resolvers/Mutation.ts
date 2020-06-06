@@ -11,6 +11,7 @@ import {
 } from '../generated/gqlTypes'
 import { getLeagueInformation, getESPNTeamPlayers } from '../scraper'
 import { playerNamesToIds } from '../sportsFeed/api'
+import { prisma } from '../generated/prisma-client'
 
 export async function register(parents, args, context, info): Promise<GQLAuthPayLoad> {
     const password = await bcrypt.hash(args.password, 10)
@@ -174,6 +175,26 @@ export async function removeFantasyLeagueMember(parent, args, context): Promise<
         data: {
             league: { disconnect: true },
             espnId: null,
+        },
+        where: { id: args.statCatTeamId },
+    })
+
+    return true
+}
+
+export async function syncTeam(parent, args, context): Promise<boolean> {
+    const userId: string = getUserId(context)
+
+    const league: GQLFantasyLeague = await context.prisma.team({ id: args.statCatTeamId }).league()
+
+    const { espnTeamName, playerNames } = await getESPNTeamPlayers(league.espnId, args.espnTeamId)
+
+    const playerIds: string[] = await playerNamesToIds(playerNames)
+
+    await context.prisma.updateTeam({
+        data: {
+            name: espnTeamName,
+            players: { set: playerIds },
         },
         where: { id: args.statCatTeamId },
     })

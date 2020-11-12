@@ -9,5 +9,6 @@ export default gql`
         createFantasyLeague(leagueId: ID!): CreateLeagueResponse
         addFantasyLeagueMember(leagueId: ID!, statCatTeamId: ID!, espnTeamId: ID!): Boolean
         removeFantasyLeagueMember(statCatTeamId: ID!): Boolean
+        syncTeam(statCatTeamId: ID!): Boolean
     }
 `

@@ -12,11 +12,7 @@ blocks:
           commands:
             - checkout
             - cd server
-            - docker-compose build prisma postgres
-            - docker-compose up -d prisma postgres
-            - docker-compose build server
-            - docker-compose up -d server
-            - docker exec -it statcat_server prisma deploy
+            - docker-compose up -d
             - docker exec -it statcat_server yarn test
       env_vars:
         - name: LOCAL_PRISMA_ENDPOINT

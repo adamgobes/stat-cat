@@ -16,8 +16,8 @@ blocks:
             - docker exec -it statcat_server npx prisma migrate deploy --preview-feature
             - docker exec -it statcat_server yarn test
       env_vars:
-        - name: LOCAL_PRISMA_ENDPOINT
-          value: 'http://prisma:4466'
+        - name: DATABASE_URL
+          value: 'postgresql://prisma:prisma@postgres:5432/prisma?schema=default$default'
       secrets:
         - name: stat-cat-jwt-secret
   - name: Frontend Tests

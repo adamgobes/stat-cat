@@ -13,6 +13,7 @@ blocks:
             - checkout
             - cd server
             - docker-compose up -d
+            - sleep 10
             - docker exec -it statcat_server yarn test
       env_vars:
         - name: LOCAL_PRISMA_ENDPOINT

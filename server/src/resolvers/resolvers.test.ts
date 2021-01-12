@@ -9,12 +9,13 @@ import {
     createLeagueMutation,
 } from '../testUtils/testQueries'
 import { getLeagueInformation } from '../scraper/index'
+import { PrismaClient } from '@prisma/client'
 
 jest.mock('../scraper/index')
 
 jest.setTimeout(5000 * 2)
 
-const prismaInstance: Prisma = new Prisma()
+const prismaInstance: PrismaClient = new PrismaClient()
 
 const TEST_EMAIL: string = 'test@gmail.com'
 const TEST_NAME: string = 'Test'
@@ -26,8 +27,9 @@ let testTeamId: string
 let authToken: string
 
 afterAll(async () => {
-    await prismaInstance.deleteTeam({ id: testTeamId })
-    await prismaInstance.deleteUser({ email: TEST_EMAIL })
+    await prismaInstance.team.delete({ where: { id: testTeamId } })
+    await prismaInstance.user.delete({ where: { email: TEST_EMAIL } })
+    await prismaInstance.$disconnect()
 })
 
 describe('resolvers', () => {
@@ -98,7 +100,7 @@ describe('resolvers', () => {
 
         const { name, id: newTeamId } = newTeamData.addTeam
 
-        await prismaInstance.deleteTeam({ id: newTeamId })
+        await prismaInstance.team.delete({ where: { id: newTeamId } })
 
         expect(name).toBe(newTeamName)
         expect(newTeamId).toBeDefined()
@@ -139,7 +141,7 @@ describe('resolvers', () => {
 
         const { leagueName, espnId, leagueMembers } = newLeagueData.createFantasyLeague
 
-        await prismaInstance.deleteFantasyLeague({ espnId })
+        await prismaInstance.fantasyLeague.delete({ where: { espnId } })
 
         expect(errors).toBeUndefined()
 

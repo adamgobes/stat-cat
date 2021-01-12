@@ -1,3 +1,5 @@
+import { FantasyLeague, Team, User } from '@prisma/client'
+import { Context } from '..'
 import {
     GQLPlayer,
     GQLUser,
@@ -23,10 +25,11 @@ function containsFilter(playerObj, filter: string): boolean {
     )
 }
 
-export function me(parent, args, context): GQLUser {
+export async function me(parent, args, context: Context): Promise<User> {
     const id: string = getUserId(context)
 
-    return context.prisma.user({ id })
+    const user = await context.prisma.user.findUnique({ where: { id } })
+    return user
 }
 
 // resolver to retrieve all players from third-party SportsFeed datasource
@@ -85,15 +88,19 @@ export function getPlayerStats(parent, args) {
     )
 }
 
-export function getTeam(parent, args, context): GQLTeam {
+export async function getTeam(parent, args, context: Context): Promise<Team> {
     const id: string = args.teamId
-    return context.prisma.team({ id })
+    const team = await context.prisma.team.findUnique({ where: { id } })
+    return team
 }
 
-export function getUsers(parent, args, context): GQLUser[] {
-    return args.userIds.map(async id => await context.prisma.user({ id }))
+export function getUsers(parent, args, context: Context): User[] {
+    return args.userIds.map(async id => await context.prisma.user.findUnique({ where: { id } }))
 }
 
-export function getFantasyLeague(parent, args, context): GQLFantasyLeague {
-    return context.prisma.team({ id: args.statCatTeamId }).league()
+export async function getFantasyLeague(parent, args, context: Context): Promise<FantasyLeague> {
+    const league = await context.prisma.team
+        .findUnique({ where: { id: args.statCatTeamId } })
+        .league()
+    return league
 }

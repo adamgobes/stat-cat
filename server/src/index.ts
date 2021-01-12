@@ -2,13 +2,18 @@ import { GraphQLServer } from 'graphql-yoga'
 import * as dotenv from 'dotenv'
 
 import typeDefs from './schemas/index'
-import { prisma } from './generated/prisma-client'
+import { PrismaClient } from '@prisma/client'
 import { resolvers } from './resolvers'
 
 dotenv.config()
 
+export interface Context {
+    request: any
+    prisma: PrismaClient
+}
+
 const server = new GraphQLServer({
-    context: request => ({ ...request, prisma }), // attach request object (for Authorization) and prisma client to context
+    context: request => ({ ...request, prisma: new PrismaClient() }), // attach request object (for Authorization) and prisma client to context
     resolvers,
     typeDefs,
 })

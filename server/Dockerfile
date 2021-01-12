@@ -18,11 +18,11 @@ COPY package.json ./
 
 COPY yarn.lock ./
 
-RUN npm i -g prisma
-
 RUN yarn
 
 COPY . .
+
+RUN npx prisma generate
 
 EXPOSE 4000
 

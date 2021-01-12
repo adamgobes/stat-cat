@@ -1,5 +1,6 @@
 import * as base64 from 'base-64'
 import t from 'typy'
+import fetch from 'node-fetch'
 
 export const season: string = '2019-2020-regular'
 

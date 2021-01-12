@@ -11,18 +11,19 @@ import {
 } from '../generated/gqlTypes'
 import { getLeagueInformation, getESPNTeamPlayers } from '../scraper'
 import { playerNamesToIds } from '../sportsFeed/api'
-import { prisma } from '../generated/prisma-client'
+import { Context } from '..'
+import { FantasyLeague, Team } from '@prisma/client'
 
-export async function register(parents, args, context, info): Promise<GQLAuthPayLoad> {
+export async function register(parent, args, context: Context): Promise<GQLAuthPayLoad> {
     const password = await bcrypt.hash(args.password, 10)
 
-    const doesUserExist = await context.prisma.user({ email: args.email })
+    const doesUserExist = await context.prisma.user.findUnique({ where: { email: args.email } })
 
     if (doesUserExist) {
         throw new Error('A user with that email has already registered!')
     }
 
-    const user = await context.prisma.createUser({ ...args, password })
+    const user = await context.prisma.user.create({ data: { ...args, password } })
 
     // initialize user's team when they create an account
     const initialTeam = {
@@ -30,11 +31,11 @@ export async function register(parents, args, context, info): Promise<GQLAuthPay
         owner: { connect: { id: user.id } },
     }
 
-    await context.prisma.createTeam({ ...initialTeam })
+    await context.prisma.team.create({ data: { ...initialTeam } })
 
     const token: string = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
 
-    const teams = await context.prisma.teams({ where: { owner: { id: user.id } } })
+    const teams = await context.prisma.team.findMany({ where: { ownerId: user.id } })
     const teamIds = teams.map(team => team.id)
 
     return {
@@ -43,8 +44,8 @@ export async function register(parents, args, context, info): Promise<GQLAuthPay
     }
 }
 
-export async function login(parent, args, context, info): Promise<GQLAuthPayLoad> {
-    const user = await context.prisma.user({ email: args.email })
+export async function login(parent, args, context: Context): Promise<GQLAuthPayLoad> {
+    const user = await context.prisma.user.findUnique({ where: { email: args.email } })
     if (!user) {
         throw new Error('No user with that email was found!')
     }
@@ -56,7 +57,7 @@ export async function login(parent, args, context, info): Promise<GQLAuthPayLoad
 
     const token: string = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
 
-    const teams = await context.prisma.teams({ where: { owner: { id: user.id } } })
+    const teams = await context.prisma.team.findMany({ where: { ownerId: user.id } })
     const teamIds = teams.map(team => team.id)
 
     return {
@@ -65,14 +66,14 @@ export async function login(parent, args, context, info): Promise<GQLAuthPayLoad
     }
 }
 
-export async function saveTeam(parent, args, context): Promise<GQLTeam> {
+export async function saveTeam(parent, args, context: Context): Promise<Team> {
     const userId: string = getUserId(context)
-    const team = await context.prisma.team({ id: args.teamId })
+    const team = await context.prisma.team.findUnique({ where: { id: args.teamId } })
 
     /* In DB, Team.players is simply array of sportsFeed IDs
      * In resolvers/Team.js this array gets mapped to array of actual player objects (see schema.graphql for what that looks like)
      */
-    return context.prisma.updateTeam({
+    return context.prisma.team.update({
         data: {
             players: { set: args.playerIds },
         },
@@ -80,7 +81,7 @@ export async function saveTeam(parent, args, context): Promise<GQLTeam> {
     })
 }
 
-export async function addTeam(parent, args, context): Promise<GQLTeam> {
+export async function addTeam(parent, args, context: Context): Promise<Team> {
     const userId: string = getUserId(context)
 
     const teamInfo = {
@@ -88,11 +89,15 @@ export async function addTeam(parent, args, context): Promise<GQLTeam> {
         owner: { connect: { id: userId } },
     }
 
-    const newTeam = await context.prisma.createTeam({ ...teamInfo })
+    const newTeam = await context.prisma.team.create({ data: { ...teamInfo } })
     return newTeam
 }
 
-export async function createFantasyLeague(parent, args, context): Promise<GQLCreateLeagueResponse> {
+export async function createFantasyLeague(
+    parent,
+    args,
+    context: Context
+): Promise<GQLCreateLeagueResponse> {
     const userId: string = getUserId(context)
 
     let leagueName: string
@@ -112,7 +117,9 @@ export async function createFantasyLeague(parent, args, context): Promise<GQLCre
     )
 
     // check if league already exists
-    const league = await context.prisma.fantasyLeague({ espnId: args.leagueId })
+    const league = await context.prisma.fantasyLeague.findUnique({
+        where: { espnId: args.leagueId },
+    })
     if (!!league) {
         return {
             leagueName: league.name,
@@ -122,9 +129,8 @@ export async function createFantasyLeague(parent, args, context): Promise<GQLCre
     }
 
     // if it doesn't, go ahead and create a new one
-    const createdLeague: GQLFantasyLeague = await context.prisma.createFantasyLeague({
-        name: leagueName,
-        espnId: args.leagueId,
+    const createdLeague: FantasyLeague = await context.prisma.fantasyLeague.create({
+        data: { name: leagueName, espnId: args.leagueId },
     })
 
     return {
@@ -134,16 +140,18 @@ export async function createFantasyLeague(parent, args, context): Promise<GQLCre
     }
 }
 
-export async function addFantasyLeagueMember(parent, args, context): Promise<boolean> {
+export async function addFantasyLeagueMember(parent, args, context: Context): Promise<boolean> {
     const userId: string = getUserId(context)
 
-    const league: GQLFantasyLeague = await context.prisma.fantasyLeague({ espnId: args.leagueId })
+    const league: FantasyLeague = await context.prisma.fantasyLeague.findUnique({
+        where: { espnId: args.leagueId },
+    })
 
     const leagueName: string = league.name
 
-    const leagueTeams: GQLTeam[] = await context.prisma
-        .fantasyLeague({ espnId: args.leagueId })
-        .teams()
+    const leagueTeams: Team[] = await context.prisma.team.findMany({
+        where: { espnId: league.espnId },
+    })
 
     const espnIds = leagueTeams.map(team => team.espnId)
 
@@ -155,7 +163,7 @@ export async function addFantasyLeagueMember(parent, args, context): Promise<boo
 
     const playerIds = await playerNamesToIds(playerNames)
 
-    await context.prisma.updateTeam({
+    await context.prisma.team.update({
         data: {
             league: { connect: { id: league.id } },
             espnId: args.espnTeamId,
@@ -168,10 +176,10 @@ export async function addFantasyLeagueMember(parent, args, context): Promise<boo
     return true
 }
 
-export async function removeFantasyLeagueMember(parent, args, context): Promise<boolean> {
+export async function removeFantasyLeagueMember(parent, args, context: Context): Promise<boolean> {
     const userId: string = getUserId(context)
 
-    await context.prisma.updateTeam({
+    await context.prisma.team.update({
         data: {
             league: { disconnect: true },
             espnId: null,
@@ -182,16 +190,18 @@ export async function removeFantasyLeagueMember(parent, args, context): Promise<
     return true
 }
 
-export async function syncTeam(parent, args, context): Promise<boolean> {
+export async function syncTeam(parent, args, context: Context): Promise<boolean> {
     const userId: string = getUserId(context)
 
-    const league: GQLFantasyLeague = await context.prisma.team({ id: args.statCatTeamId }).league()
+    const league: FantasyLeague = await context.prisma.team
+        .findUnique({ where: { id: args.statCatTeamId } })
+        .league()
 
     const { espnTeamName, playerNames } = await getESPNTeamPlayers(league.espnId, args.espnTeamId)
 
     const playerIds: string[] = await playerNamesToIds(playerNames)
 
-    await context.prisma.updateTeam({
+    await context.prisma.team.update({
         data: {
             name: espnTeamName,
             players: { set: playerIds },

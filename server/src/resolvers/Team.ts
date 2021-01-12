@@ -2,9 +2,12 @@ import { sportsFeedRequest } from '../sportsFeed/api'
 
 import { extractBasicInfo, extractInjuryInfo, getPlayersStats } from '../sportsFeed/helpers'
 import { GQLUser, GQLPlayer, GQLStat, GQLFantasyLeague } from '../generated/gqlTypes'
+import { Context } from '..'
+import { FantasyLeague, User } from '@prisma/client'
 
-export function owner(parent, args, context): GQLUser {
-    return context.prisma.team({ id: parent.id }).owner()
+export async function owner(parent, args, context: Context): Promise<User> {
+    const owner = await context.prisma.team.findUnique({ where: { id: parent.id } }).owner()
+    return owner
 }
 
 // in DB players are stored as IDs, this resolver turns those IDs into actual player objects
@@ -34,6 +37,7 @@ export function players(parent, { timeFrame }): Promise<GQLPlayer[]> {
     )
 }
 
-export function league(parent, args, context): Promise<GQLFantasyLeague> {
-    return context.prisma.team({ id: parent.id }).league()
+export async function league(parent, args, context: Context): Promise<FantasyLeague> {
+    const league = await context.prisma.team.findUnique({ where: { id: parent.id } }).league()
+    return league
 }

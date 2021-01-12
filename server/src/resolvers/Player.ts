@@ -1,6 +1,10 @@
-import { GQLStat, GQLTeam } from '../generated/gqlTypes'
+import { GQLNbaTeam, GQLStat, GQLTeam } from '../generated/gqlTypes'
 import { sportsFeedRequest, season, statCategories } from '../sportsFeed/api'
 import { getLastDayOfWeek, getFirstDayOfWeek, parseDate } from '../sportsFeed/helpers'
+
+interface Parent {
+    currentTeam: GQLNbaTeam
+}
 
 function calculateGameCount(teamId: string, startDate: string, endDate: string): Promise<number> {
     return sportsFeedRequest(
@@ -10,8 +14,8 @@ function calculateGameCount(teamId: string, startDate: string, endDate: string):
         .catch(err => 4)
 }
 
-export function gameCountThisWeek(parent, args): Promise<number> {
-    const currentTeam: GQLTeam = parent.currentTeam
+export function gameCountThisWeek(parent: Parent, args): Promise<number> {
+    const currentTeam: GQLNbaTeam = parent.currentTeam
     const firstDayOfWeek = getFirstDayOfWeek()
     return calculateGameCount(
         currentTeam.id,

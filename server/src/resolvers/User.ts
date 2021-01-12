@@ -1,8 +1,11 @@
 import { getUserId } from '../utils'
 import { GQLTeam } from '../generated/gqlTypes'
+import { Context } from '..'
+import { Team } from '@prisma/client'
 
-export function teams(parent, args, context): GQLTeam {
+export async function teams(parent, args, context: Context): Promise<Team[]> {
     const id: string = getUserId(context)
 
-    return context.prisma.user({ id }).teams()
+    const teams = await context.prisma.team.findMany({ where: { ownerId: id } })
+    return teams
 }

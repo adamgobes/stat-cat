@@ -1,0 +1,34 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model FantasyLeague {
+    id     String @id @default(cuid())
+    name   String
+    espnId String @unique @default(cuid())
+    teams  Team[]
+}
+
+model Team {
+    id       String         @id @default(cuid())
+    name     String
+    espnId   String?        @default(cuid())
+    ownerId  String?
+    leagueId String?
+    players  String[]
+    league   FantasyLeague? @relation(fields: [leagueId], references: [id])
+    owner    User?          @relation(fields: [ownerId], references: [id])
+}
+
+model User {
+    id       String @id @default(cuid())
+    name     String
+    email    String @unique
+    password String
+    teams    Team[]
+}

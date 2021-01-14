@@ -4,7 +4,8 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "start": "nodemon",
+		"start": "ts-node src/index.ts",
+		"dev": "nodemon",
         "test": "jest --runInBand",
 		"build-types": "ts-node src/generateTypes.ts",
 		"prepare": "npx prisma generate"

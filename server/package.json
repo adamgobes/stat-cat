@@ -4,14 +4,16 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "start": "nodemon",
+		"start": "ts-node src/index.ts",
+		"dev": "nodemon",
         "test": "jest --runInBand",
-        "build-types": "ts-node src/generateTypes.ts"
+		"build-types": "ts-node src/generateTypes.ts",
+		"prepare": "npx prisma generate"
     },
     "engines": {
         "node": "v12.10.0",
         "npm": "6.11.3",
-        "yarn": "1.17.3"
+        "yarn": "1.22.10"
     },
     "resolutions": {
         "mem": "4.0.0"

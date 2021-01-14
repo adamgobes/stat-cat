@@ -1,6 +1,6 @@
 FROM node:12.10.0
 
-ENV YARN_VERSION 1.17.3
+ENV YARN_VERSION 1.19.2
 
 RUN apt-get update \
 	&& apt-get install -y wget gnupg \

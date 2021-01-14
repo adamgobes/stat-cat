@@ -13,7 +13,7 @@
     "engines": {
         "node": "v12.10.0",
         "npm": "6.11.3",
-        "yarn": "1.19.2"
+        "yarn": "1.22.10"
     },
     "resolutions": {
         "mem": "4.0.0"

@@ -13,7 +13,6 @@ services:
             - sportsFeedUsername=${sportsFeedUsername}
             - sportsFeedPassword=${sportsFeedPassword}
             - sportsFeedUrl=${sportsFeedUrl}
-            - DATABASE_URL=${DATABASE_URL}
         volumes:
             - ./src:/usr/src/app/src
             - ./prisma:/usr/src/app/prisma

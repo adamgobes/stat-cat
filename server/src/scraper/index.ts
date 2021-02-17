@@ -1,13 +1,15 @@
 const puppeteer = require('puppeteer')
 import { GQLFantasyLeague } from '../generated/gqlTypes'
 
+const seasonId = '2021'
+
 export async function getLeagueInformation(leagueId: string) {
     const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] })
 
     const page = await browser.newPage()
 
     await page.goto(
-        `https://fantasy.espn.com/basketball/tools/leaguemembers?leagueId=${leagueId}&seasonId=2020`
+        `https://fantasy.espn.com/basketball/tools/leaguemembers?leagueId=${leagueId}&seasonId=${seasonId}`
     )
 
     try {
@@ -36,7 +38,7 @@ export async function getESPNTeamPlayers(leagueId: string, espnTeamId: string) {
 
     const page = await browser.newPage()
     await page.goto(
-        `https://fantasy.espn.com/basketball/team?leagueId=${leagueId}&teamId=${espnTeamId}&seasonId=2020`
+        `https://fantasy.espn.com/basketball/team?leagueId=${leagueId}&teamId=${espnTeamId}&seasonId=${seasonId}`
     )
 
     try {

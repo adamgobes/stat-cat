@@ -1,4 +1,3 @@
-import { Prisma } from '../generated/prisma-client/index'
 import { mocked } from 'ts-jest/utils'
 import { graphqlTestCall } from '../testUtils/gqlTestClient'
 import {

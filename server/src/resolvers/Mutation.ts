@@ -106,6 +106,7 @@ export async function createFantasyLeague(
     try {
         ;({ leagueName, leagueMembers } = await getLeagueInformation(args.leagueId))
     } catch (e) {
+        console.log({ e })
         throw new Error('Error fetching fantasy league information')
     }
 

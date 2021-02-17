@@ -3,12 +3,13 @@ import { Checkmark, FormClose } from 'grommet-icons'
 import styled from 'styled-components'
 import { Box } from 'grommet'
 import { Text } from '../shared/TextComponents'
+import { NAV_WIDTH } from './Nav'
 
 const Wrapper = styled(Box)`
     position: fixed;
     z-index: 1;
     top: 0;
-    left: ${({ isNavOpen }) => (isNavOpen ? '180px' : '0')};
+    left: ${({ isNavOpen }) => (isNavOpen ? `${NAV_WIDTH}px` : '0')};
     width: ${props => props.alertWidth}px;
     background: inherit;
 `

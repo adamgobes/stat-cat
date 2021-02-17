@@ -8,7 +8,7 @@ import TradeSimulator from '../tradeSimulator/TradeSimulator'
 import Dashboard from '../dashboard/Dashboard'
 import { AppContext, toggleNav, toggleDarkMode, closeAlert } from './AppContext'
 import { useWindowDimensions } from '../../utils/customHooks'
-import Nav from './Nav'
+import Nav, { NAV_WIDTH } from './Nav'
 import FallbackMessage from './FallbackMessage'
 import { SCREEN_SIZE_MESSAGE } from '../../utils/strings'
 import Messaging from '../messaging/Messaging'
@@ -19,7 +19,7 @@ const HIDE_NAV_WIDTH = 1100
 
 const StatCatAppWrapper = styled.div`
     height: 100%;
-    margin-left: ${props => (props.isNavOpen ? '180px' : '0')};
+    margin-left: ${props => (props.isNavOpen ? `${NAV_WIDTH}px` : '0')};
     transition: margin-left 0.3s;
 `
 
@@ -46,7 +46,7 @@ export default function StatCatApp() {
             />
             <Alert
                 isNavOpen={isNavOpen}
-                alertWidth={isNavOpen ? width - 180 : width}
+                alertWidth={isNavOpen ? width - NAV_WIDTH : width}
                 alertInfo={appContext.alert}
                 onCloseAlert={() => dispatch(closeAlert())}
             />

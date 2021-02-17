@@ -21,6 +21,8 @@ import { ALL_MY_TEAMS_QUERY } from '../../apollo/queries'
 import Loader from '../shared/Loader'
 import Toggle from '../shared/Toggle'
 
+export const NAV_WIDTH = 200
+
 const NavigationContainer = styled(Box)`
     background: ${props => props.theme.global.colors.brand};
     color: white;
@@ -28,7 +30,7 @@ const NavigationContainer = styled(Box)`
     top: 0;
     left: 0;
     height: 100%;
-    width: ${({ isNavOpen }) => (isNavOpen ? '180px' : '0')};
+    width: ${({ isNavOpen }) => (isNavOpen ? `${NAV_WIDTH}px` : '0')};
     z-index: 1;
     padding: ${({ isNavOpen }) => (isNavOpen ? '60px 0 60px 10px' : '0')};
     border-right: ${({ isNavOpen }) => (isNavOpen ? 'none' : 'none')};
@@ -61,7 +63,7 @@ const NavListHeader = styled(Subheader)`
 `
 
 const NavListItem = styled(Box)`
-    width: 94%;
+    width: 88%;
     border-radius: 10px;
     cursor: pointer;
     margin: 0 4px;

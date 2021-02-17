@@ -46,8 +46,8 @@ const PlayerName = styled(Text)`
 
 const RemovePlayerButton = styled(AddRemovePlayerButton)`
     position: absolute;
-    margin-left: 30px;
-    margin-top: -24px;
+    margin-left: 66px;
+    margin-top: -36px;
     background: white;
     border: 2px solid ${props => props.theme.global.colors.brand};
     color: ${props => props.theme.global.colors.brand};

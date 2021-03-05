@@ -223,6 +223,7 @@ describe('resolvers', () => {
 
         await prismaInstance.fantasyLeagueInvitation.delete({ where: { email } })
 
+        expect(leagueErrors).toBeUndefined()
         expect(leagueData.getFantasyLeague.name).toBe('Test League Name')
         expect(leagueData.getFantasyLeague.invitations.length).toBe(1)
     })

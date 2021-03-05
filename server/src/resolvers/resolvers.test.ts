@@ -216,7 +216,7 @@ describe('resolvers', () => {
         //     authToken
         // )
 
-        // await prismaInstance.fantasyLeagueInvitation.delete({ where: { email } })
+        await prismaInstance.fantasyLeagueInvitation.delete({ where: { email } })
 
         // console.log(leagueData.getFantasyLeague.invitations, leagueErrors)
     })

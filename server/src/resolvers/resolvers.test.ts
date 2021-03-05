@@ -6,9 +6,13 @@ import {
     saveTeamMutation,
     createTeamMutation,
     createLeagueMutation,
+    inviteMemberMutation,
+    addFantasyLeagueMemberMutation,
+    getFantasyLeagueQuery,
 } from '../testUtils/testQueries'
-import { getLeagueInformation } from '../scraper/index'
+import { getLeagueInformation, getESPNTeamPlayers } from '../scraper/index'
 import { PrismaClient } from '@prisma/client'
+import prisma from '../lib/prismaClient'
 
 jest.mock('../scraper/index')
 
@@ -24,8 +28,10 @@ const sampleIds: string[] = ['9158', '9369', '9232', '9387']
 
 let testTeamId: string
 let authToken: string
+let espnId: string
 
 afterAll(async () => {
+    await prismaInstance.fantasyLeague.delete({ where: { espnId } })
     await prismaInstance.team.delete({ where: { id: testTeamId } })
     await prismaInstance.user.delete({ where: { email: TEST_EMAIL } })
     await prismaInstance.$disconnect()
@@ -39,7 +45,7 @@ describe('resolvers', () => {
             password: TEST_PASSWORD,
         }
 
-        const { data: registerData } = await graphqlTestCall(
+        const { data: registerData, errors } = await graphqlTestCall(
             registerMutation,
             prismaInstance,
             registerVariables
@@ -114,7 +120,7 @@ describe('resolvers', () => {
             'league member 3',
         ]
 
-        const expectedReturn = new Promise<{ leagueName: any; leagueMembers: any }>(
+        const expectedReturnLeagueInfo = new Promise<{ leagueName: any; leagueMembers: any }>(
             (resolve, reject) => {
                 resolve({
                     leagueName: testLeagueName,
@@ -123,9 +129,9 @@ describe('resolvers', () => {
             }
         )
 
-        const mockedFunc = mocked(getLeagueInformation, true)
+        const mockedFuncLeague = mocked(getLeagueInformation, true)
 
-        mockedFunc.mockReturnValueOnce(expectedReturn)
+        mockedFuncLeague.mockReturnValueOnce(expectedReturnLeagueInfo)
 
         const newLeagueVariables = {
             leagueId: testLeagueId,
@@ -138,9 +144,8 @@ describe('resolvers', () => {
             authToken
         )
 
-        const { leagueName, espnId, leagueMembers } = newLeagueData.createFantasyLeague
-
-        await prismaInstance.fantasyLeague.delete({ where: { espnId } })
+        const { leagueName, leagueMembers } = newLeagueData.createFantasyLeague
+        espnId = newLeagueData.createFantasyLeague.espnId
 
         expect(errors).toBeUndefined()
 
@@ -150,5 +155,70 @@ describe('resolvers', () => {
             teamId: 1,
             teamName: testLeagueMembers[0],
         })
+
+        const expectedReturnTeamInfo = new Promise<{ espnTeamName: any; playerNames: any }>(
+            (resolve, reject) => {
+                resolve({
+                    espnTeamName: 'Test ESPN Team Name',
+                    playerNames: ['Lebron', 'Melo'],
+                })
+            }
+        )
+
+        const mockedFuncTeam = mocked(getESPNTeamPlayers, true)
+
+        mockedFuncTeam.mockReturnValueOnce(expectedReturnTeamInfo)
+
+        const addLeagueMemberVariables = {
+            leagueId: testLeagueId,
+            statCatTeamId: testTeamId,
+            espnTeamId: 1,
+        }
+
+        const { data: addLeagueMemberData, errors: addError } = await graphqlTestCall(
+            addFantasyLeagueMemberMutation,
+            prismaInstance,
+            addLeagueMemberVariables,
+            authToken
+        )
+
+        expect(addError).toBeUndefined()
+    })
+
+    it('allows the user to invite other users to their fantasy league', async () => {
+        const testLeagueId: string = '24502'
+        const testEmail = 'test@test.com'
+
+        const inviteMemberVariables = {
+            leagueId: testLeagueId,
+            email: testEmail,
+        }
+
+        const { data: inviteMemberData, errors } = await graphqlTestCall(
+            inviteMemberMutation,
+            prismaInstance,
+            inviteMemberVariables,
+            authToken
+        )
+
+        console.log(inviteMemberData, errors)
+
+        const { email } = inviteMemberData.inviteUserToLeague
+
+        console.log(email)
+
+        expect(errors).toBeUndefined()
+        expect(email).toEqual(testEmail)
+
+        const { data: leagueData, errors: leagueErrors } = await graphqlTestCall(
+            getFantasyLeagueQuery,
+            prismaInstance,
+            { statCatTeamId: testTeamId },
+            authToken
+        )
+
+        await prismaInstance.fantasyLeagueInvitation.delete({ where: { email } })
+
+        console.log(leagueData.getFantasyLeague.invitations, leagueErrors)
     })
 })

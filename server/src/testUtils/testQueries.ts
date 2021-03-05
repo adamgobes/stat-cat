@@ -44,3 +44,29 @@ export const createLeagueMutation = `
 		}
 	}
 `
+
+export const addFantasyLeagueMemberMutation = `
+	mutation addFantasyLeagueMemberMutation($leagueId: ID!, $statCatTeamId: ID!, $espnTeamId: ID!) {
+		addFantasyLeagueMember(leagueId: $leagueId, statCatTeamId: $statCatTeamId, espnTeamId: $espnTeamId)
+	}
+`
+
+export const inviteMemberMutation = `
+	mutation inviteMemberMutation($leagueId: ID!, $email: String!) {
+		inviteUserToLeague(leagueId: $leagueId, email: $email) {
+			email
+			sentOn
+		}	
+	}
+`
+
+export const getFantasyLeagueQuery = `
+	query getFantasyLeague($statCatTeamId: ID!) {
+		getFantasyLeague(statCatTeamId: $statCatTeamId) {
+			name
+			invitations {
+				email
+			}
+		}
+	}
+`

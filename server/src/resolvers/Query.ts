@@ -98,9 +98,13 @@ export function getUsers(parent, args, context: Context): User[] {
     return args.userIds.map(async id => await context.prisma.user.findUnique({ where: { id } }))
 }
 
-export async function getFantasyLeague(parent, args, context: Context): Promise<FantasyLeague> {
+export async function getFantasyLeague(parent, args, context: Context): Promise<any> {
     const league = await context.prisma.team
         .findUnique({ where: { id: args.statCatTeamId } })
         .league()
-    return league
+
+    const invitations = await context.prisma.fantasyLeagueInvitation.findMany({
+        where: { leagueId: league.id },
+    })
+    return { ...league, invitations }
 }

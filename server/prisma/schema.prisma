@@ -7,22 +7,32 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model FantasyLeagueInvitation {
+    id       String        @id @default(cuid())
+    email    String        @unique
+    sentOn   DateTime      @default(now())
+    leagueId String
+    league   FantasyLeague @relation(fields: [leagueId], references: [id])
+}
+
 model FantasyLeague {
-    id     String @id @default(cuid())
-    name   String
-    espnId String @unique @default(cuid())
-    teams  Team[]
+    id                       String                    @id @default(cuid())
+    name                     String
+    espnId                   String                    @unique @default(cuid())
+    teams                    Team[]
+    fantasyLeagueInvitations FantasyLeagueInvitation[]
 }
 
 model Team {
-    id       String         @id @default(cuid())
-    name     String
-    espnId   String?        @default(cuid())
-    ownerId  String?
-    leagueId String?
-    players  String[]
-    league   FantasyLeague? @relation(fields: [leagueId], references: [id])
-    owner    User?          @relation(fields: [ownerId], references: [id])
+    id             String         @id @default(cuid())
+    name           String
+    espnId         String?        @default(cuid())
+    ownerId        String?
+    leagueId       String?
+    players        String[]
+    joinedLeagueAt DateTime?
+    league         FantasyLeague? @relation(fields: [leagueId], references: [id])
+    owner          User?          @relation(fields: [ownerId], references: [id])
 }
 
 model User {

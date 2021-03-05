@@ -12,7 +12,8 @@ import {
 import { getLeagueInformation, getESPNTeamPlayers } from '../scraper'
 import { playerNamesToIds } from '../sportsFeed/api'
 import { Context } from '..'
-import { FantasyLeague, Team } from '@prisma/client'
+import { FantasyLeague, FantasyLeagueInvitation, Team } from '@prisma/client'
+import prisma from '../lib/prismaClient'
 
 export async function register(parent, args, context: Context): Promise<GQLAuthPayLoad> {
     const password = await bcrypt.hash(args.password, 10)
@@ -141,8 +142,30 @@ export async function createFantasyLeague(
     }
 }
 
+export async function inviteUserToLeague(
+    parent,
+    args,
+    context: Context
+): Promise<FantasyLeagueInvitation | null> {
+    try {
+        const invitation = await context.prisma.fantasyLeagueInvitation.create({
+            data: {
+                email: args.email,
+                league: { connect: { espnId: args.leagueId } },
+            },
+        })
+        return invitation
+    } catch (e) {
+        return null
+    }
+}
+
 export async function addFantasyLeagueMember(parent, args, context: Context): Promise<boolean> {
     const userId: string = getUserId(context)
+
+    const user = await context.prisma.user.findUnique({
+        where: { id: userId },
+    })
 
     const league: FantasyLeague = await context.prisma.fantasyLeague.findUnique({
         where: { espnId: args.leagueId },
@@ -173,6 +196,14 @@ export async function addFantasyLeagueMember(parent, args, context: Context): Pr
         },
         where: { id: args.statCatTeamId },
     })
+
+    const invitation = await context.prisma.fantasyLeagueInvitation.findUnique({
+        where: { email: user.email },
+    })
+    if (!!invitation)
+        await context.prisma.fantasyLeagueInvitation.delete({
+            where: { email: user.email },
+        })
 
     return true
 }

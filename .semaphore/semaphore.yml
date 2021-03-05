@@ -14,7 +14,7 @@ blocks:
             - cd server
             - docker-compose up -d
             - docker exec -it statcat_server yarn prepare
-            - docker exec -it statcat_server yarn migrate-dev
+            - docker exec -it statcat_server npx prisma migrate dev --preview-feature
             - docker exec -it statcat_server yarn test
       env_vars:
         - name: DATABASE_URL

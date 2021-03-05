@@ -183,6 +183,7 @@ describe('resolvers', () => {
         )
 
         expect(addError).toBeUndefined()
+        console.log(addError)
     })
 
     it('allows the user to invite other users to their fantasy league', async () => {
@@ -201,8 +202,6 @@ describe('resolvers', () => {
             authToken
         )
 
-        console.log(inviteMemberData, errors)
-
         const { email } = inviteMemberData.inviteUserToLeague
 
         console.log(email)
@@ -210,15 +209,15 @@ describe('resolvers', () => {
         expect(errors).toBeUndefined()
         expect(email).toEqual(testEmail)
 
-        const { data: leagueData, errors: leagueErrors } = await graphqlTestCall(
-            getFantasyLeagueQuery,
-            prismaInstance,
-            { statCatTeamId: testTeamId },
-            authToken
-        )
+        // const { data: leagueData, errors: leagueErrors } = await graphqlTestCall(
+        //     getFantasyLeagueQuery,
+        //     prismaInstance,
+        //     { statCatTeamId: testTeamId },
+        //     authToken
+        // )
 
-        await prismaInstance.fantasyLeagueInvitation.delete({ where: { email } })
+        // await prismaInstance.fantasyLeagueInvitation.delete({ where: { email } })
 
-        console.log(leagueData.getFantasyLeague.invitations, leagueErrors)
+        // console.log(leagueData.getFantasyLeague.invitations, leagueErrors)
     })
 })

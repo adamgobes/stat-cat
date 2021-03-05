@@ -8,7 +8,9 @@
 		"dev": "nodemon",
         "test": "jest --runInBand",
 		"build-types": "ts-node src/generateTypes.ts",
-		"prepare": "npx prisma generate"
+		"prepare": "npx prisma generate",
+		"migrate-dev": "prisma migrate dev --preview-feature",
+		"migrate-prod": "prisma migrate deploy --preview-feature"
     },
     "engines": {
         "node": "v12.10.0",

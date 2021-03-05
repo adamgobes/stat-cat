@@ -214,15 +214,16 @@ describe('resolvers', () => {
         expect(errors).toBeUndefined()
         expect(email).toEqual(testEmail)
 
-        // const { data: leagueData, errors: leagueErrors } = await graphqlTestCall(
-        //     getFantasyLeagueQuery,
-        //     prismaInstance,
-        //     { statCatTeamId: testTeamId },
-        //     authToken
-        // )
+        const { data: leagueData, errors: leagueErrors } = await graphqlTestCall(
+            getFantasyLeagueQuery,
+            prismaInstance,
+            { statCatTeamId: testTeamId },
+            authToken
+        )
 
         await prismaInstance.fantasyLeagueInvitation.delete({ where: { email } })
 
-        // console.log(leagueData.getFantasyLeague.invitations, leagueErrors)
+        expect(leagueData.getFantasyLeague.name).toBe('Test League Name')
+        expect(leagueData.getFantasyLeague.invitations.length).toBe(1)
     })
 })

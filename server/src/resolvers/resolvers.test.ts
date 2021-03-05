@@ -13,8 +13,10 @@ import {
 import { getLeagueInformation, getESPNTeamPlayers } from '../scraper/index'
 import { PrismaClient } from '@prisma/client'
 import prisma from '../lib/prismaClient'
+import { playerNamesToIds } from '../sportsFeed/api'
 
 jest.mock('../scraper/index')
+jest.mock('../sportsFeed/api')
 
 jest.setTimeout(5000 * 2)
 
@@ -165,9 +167,15 @@ describe('resolvers', () => {
             }
         )
 
+        const expectedReturnIds = new Promise<string[]>((resolve, reject) => {
+            resolve(['123', '456'])
+        })
+
         const mockedFuncTeam = mocked(getESPNTeamPlayers, true)
+        const mockedFuncIds = mocked(playerNamesToIds, true)
 
         mockedFuncTeam.mockReturnValueOnce(expectedReturnTeamInfo)
+        mockedFuncIds.mockReturnValueOnce(expectedReturnIds)
 
         const addLeagueMemberVariables = {
             leagueId: testLeagueId,
@@ -183,7 +191,6 @@ describe('resolvers', () => {
         )
 
         expect(addError).toBeUndefined()
-        console.log(addError)
     })
 
     it('allows the user to invite other users to their fantasy league', async () => {
@@ -203,8 +210,6 @@ describe('resolvers', () => {
         )
 
         const { email } = inviteMemberData.inviteUserToLeague
-
-        console.log(email)
 
         expect(errors).toBeUndefined()
         expect(email).toEqual(testEmail)

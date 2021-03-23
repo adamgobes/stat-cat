@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
+import moment from 'moment'
 import styled from 'styled-components'
-import { Box } from 'grommet'
+import { Box, Layer } from 'grommet'
 import { useMutation } from '@apollo/react-hooks'
 import { useHistory } from 'react-router-dom'
 
@@ -9,6 +10,7 @@ import { RoundedButton } from '../shared/Buttons'
 import { DISCONNECT_ESPN_TEAM } from '../../apollo/mutations'
 import { showAlert } from '../general/AppContext'
 import { LEAGUE_INFO_QUERY } from '../../apollo/queries'
+import InviteMemberModal from './InviteMemberModal'
 
 const LeagueInformationWrapper = styled(Box)`
     width: 90%;
@@ -23,93 +25,56 @@ const LeagueName = styled(Title)`
     color: ${props => props.theme.global.colors.freeText};
 `
 
-const TeamInfoWrapper = styled(Box)`
-    position: relative;
-    margin-top: 24px;
-    width: 68%;
-    padding: 40px;
-    background: white;
-    border-radius: 12px;
-`
-
-const StyledSubheader = styled(Subheader)`
-    color: black;
-    font-size: 1.2em;
-    margin: 8px 0px;
-`
-
-const TeamName = styled(Text)`
-    color: black;
-    font-size: 1em;
-    margin: 8px 0px;
-`
-
-const DisconnectButton = styled(RoundedButton)`
-    position: absolute;
-    right: 20px;
-    border-radius: 0px;
-`
-
-const OtherMembers = styled(Box)`
-    margin-top: 20px;
-    padding: 40px;
-    background: white;
-    width: 68%;
-    border-radius: 12px;
-`
-
-const Member = styled(Box)`
-    position: relative;
+const MembersInfoWrapper = styled(Box)`
     width: 60%;
+    background: #ffffff;
+    border: 1px solid #e1e1e1;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    overflow: hidden;
+`
+const MembersHeader = styled(Subheader)`
+    color: black;
+    padding: 20px;
+    margin-left: 40px;
+    font-size: 1.2em;
+`
+
+const SectionDivider = styled(Box)`
+    background: #f7f8fa;
+`
+
+const SectionDividerHeader = styled(Subheader)`
+    color: black;
+    padding: 20px;
+    margin-left: 40px;
+`
+
+const MemberSectionEntry = styled(Box)`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     background: white;
-    border-radius: 6px;
-    margin: 4px 0;
-    min-height: 60px;
-    padding: 6px;
-    cursor: pointer;
-    // box-shadow: rgba(84, 70, 35, 0.15) 0px 2px 8px, rgba(84, 70, 35, 0.15) 0px 1px 3px;
-    // &:hover {
-    //     opacity: 0.7;
-    // }
+    border: 1px solid #f7f8fa;
 `
 
-const AvatarWrapper = styled(Box)`
-    height: 100%;
-    width: 20%;
+const MemberSectionEntryText = styled(Text)`
+    padding: 20px;
+    margin-left: 40px;
 `
 
-const Avatar = styled(Box)`
-    height: ${props => props.size}px;
-    width: ${props => props.size}px;
-    border-radius: 100%;
-    background: ${props => props.background};
+const InviteButton = styled(RoundedButton)`
+    font-size: 0.9em;
+    padding: 0px 10px;
+    margin: 16px 0;
+    margin-right: 20px;
 `
 
-const MemberInformation = styled(Box)`
-    height: 100%;
-    width: 64%;
-    color: black;
-    margin-left: 10px;
-`
-
-const MemberName = styled(Title)`
-    color: black;
-    font-size: 0.8em;
-    margin: -6px 0px;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-`
-
-const MemberTeamName = styled(Subheader)`
-    width: 100%;
-    margin: 0px;
+const RemindButton = styled(RoundedButton)`
     font-size: 0.7em;
-    color: #c3c5cd;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    padding: 0px 10px;
+    margin: 12px 0;
 `
 
 export default function LeagueInformation({ leagueData, myTeam, dispatch }) {
@@ -126,39 +91,60 @@ export default function LeagueInformation({ leagueData, myTeam, dispatch }) {
         refetchQueries: [{ query: LEAGUE_INFO_QUERY, variables: { statCatTeamId: myTeam.id } }],
     })
 
+    const [showInviteModal, setShowInviteModal] = useState(false)
+
     return (
         <LeagueInformationWrapper align="center">
-            <Header direction="column" align="center">
+            <Header direction="column" align="start">
                 <LeagueName>{leagueData.name}</LeagueName>
             </Header>
-            <TeamInfoWrapper>
-                <StyledSubheader>Your Team</StyledSubheader>
-                <TeamName>{myTeam.name}</TeamName>
-                <DisconnectButton
-                    width={180}
-                    label="Disconnect Team"
-                    onClick={disconnectTeam}
-                    loading={disconnectLoading}
-                />
-            </TeamInfoWrapper>
-            <OtherMembers>
-                <StyledSubheader style={{ margin: '0 0 20px 0' }}>Other Members</StyledSubheader>
-                {otherTeams.map(team => (
-                    <Member direction="row" align="center" key={team.id}>
-                        <AvatarWrapper direction="column" justify="center" align="center">
-                            <Avatar size="40" align="center" justify="center" background="#7781f7">
-                                <Text style={{ color: 'white', fontSize: '1em' }}>
-                                    {team.owner.name.substring(0, 1)}
-                                </Text>
-                            </Avatar>
-                        </AvatarWrapper>
-                        <MemberInformation direction="column" justify="center">
-                            <MemberName>{team.owner.name}</MemberName>
-                            <MemberTeamName>{team.name}</MemberTeamName>
-                        </MemberInformation>
-                    </Member>
-                ))}
-            </OtherMembers>
+            <Box width="90%">
+                <MembersInfoWrapper>
+                    <Box direction="row" justify="between">
+                        <MembersHeader>Members</MembersHeader>
+                        <InviteButton
+                            inverted
+                            label="Invite Members"
+                            onClick={() => setShowInviteModal(true)}
+                        />
+                    </Box>
+                    <SectionDivider>
+                        <SectionDividerHeader>Registered</SectionDividerHeader>
+                        {leagueData.teams.map(t => (
+                            <MemberSectionEntry>
+                                <MemberSectionEntryText>{t.owner.email}</MemberSectionEntryText>
+                            </MemberSectionEntry>
+                        ))}
+                    </SectionDivider>
+                    <SectionDivider>
+                        <SectionDividerHeader>Pending</SectionDividerHeader>
+                        {leagueData.invitations.map(invitation => (
+                            <MemberSectionEntry>
+                                <MemberSectionEntryText>{invitation.email}</MemberSectionEntryText>
+                                <Box direction="row" style={{ marginRight: '8px' }}>
+                                    <MemberSectionEntryText style={{ fontWeight: 'bold' }}>
+                                        sent{' '}
+                                        {moment(parseInt(invitation.sentOn, 10)).format('MMM. Do')}
+                                    </MemberSectionEntryText>
+                                    <RemindButton label="Remind" sty />
+                                </Box>
+                            </MemberSectionEntry>
+                        ))}
+                    </SectionDivider>
+                </MembersInfoWrapper>
+            </Box>
+            {showInviteModal && (
+                <Layer
+                    onEsc={() => setShowInviteModal(false)}
+                    onClickOutside={() => setShowInviteModal(false)}
+                >
+                    <InviteMemberModal
+                        closeModal={() => setShowInviteModal(false)}
+                        leagueId={leagueData.espnId}
+                        statCatTeamId={myTeam.id}
+                    />
+                </Layer>
+            )}
         </LeagueInformationWrapper>
     )
 }

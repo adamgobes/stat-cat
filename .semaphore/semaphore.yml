@@ -13,7 +13,7 @@ blocks:
             - checkout
             - cd server
             - docker-compose up -d
-            - docker exec -it statcat_server npx prisma migrate deploy --preview-feature
+            - docker exec -it statcat_server npx prisma migrate deploy
             - docker exec -it statcat_server yarn test
       env_vars:
         - name: DATABASE_URL
@@ -31,3 +31,17 @@ blocks:
             - yarn test --watchAll=false
       secrets:
         - name: stat-cat-jwt-secret
+  - name: Migrate DB
+    run:
+      when: branch = 'master'
+    task:
+      env_vars:
+        - name: DATABASE_URL
+          value: 'postgres://upyjspgjcqogon:403229af7aebf47b5fbad432210c2978bb4cfb798f0fda4a1182df2c0028db37@ec2-52-203-165-126.compute-1.amazonaws.com:5432/ddde4fa3lt1p1s'
+      jobs:
+        - name: Build Docker + Migrate
+          commands:
+            - checkout
+            - cd server
+            - docker-compose up -d
+            - docker exec -it statcat_server npx prisma migrate deploy

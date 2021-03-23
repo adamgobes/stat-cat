@@ -68,3 +68,11 @@ export const DISCONNECT_ESPN_TEAM = gql`
         removeFantasyLeagueMember(statCatTeamId: $statCatTeamId)
     }
 `
+
+export const INVITE_LEAGUE_MEMBER = gql`
+    mutation inviteUserToLeague($leagueId: ID!, $email: String!) {
+        inviteUserToLeague(leagueId: $leagueId, email: $email) {
+            id
+        }
+    }
+`

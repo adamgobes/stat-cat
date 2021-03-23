@@ -69,7 +69,12 @@ export const LEAGUE_INFO_QUERY = gql`
                 owner {
                     id
                     name
+                    email
                 }
+            }
+            invitations {
+                email
+                sentOn
             }
         }
     }

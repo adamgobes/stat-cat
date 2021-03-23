@@ -4,13 +4,13 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-		"start": "ts-node src/index.ts",
-		"dev": "nodemon",
+        "start": "ts-node src/index.ts",
+        "dev": "nodemon",
         "test": "jest --runInBand",
-		"build-types": "ts-node src/generateTypes.ts",
-		"prepare": "npx prisma generate",
-		"migrate-dev": "prisma migrate dev --preview-feature",
-		"migrate-prod": "prisma migrate deploy --preview-feature"
+        "build-types": "ts-node src/generateTypes.ts",
+        "prepare": "npx prisma generate",
+        "migrate-dev": "prisma migrate dev --preview-feature",
+        "migrate-prod": "prisma migrate deploy --preview-feature"
     },
     "engines": {
         "node": "v12.10.0",
@@ -21,7 +21,7 @@
         "mem": "4.0.0"
     },
     "dependencies": {
-        "@prisma/client": "2.14.0",
+        "@prisma/client": "^2.14.0",
         "@types/jest": "^25.2.1",
         "base-64": "^0.1.0",
         "bcryptjs": "^2.4.3",
@@ -39,7 +39,6 @@
         "typy": "^3.3.0"
     },
     "devDependencies": {
-        "@prisma/cli": "2.14.0",
         "eslint": "^5.12.1",
         "eslint-config-airbnb": "^17.1.0",
         "eslint-config-prettier": "^3.6.0",
@@ -49,9 +48,10 @@
         "eslint-plugin-react": "^7.12.4",
         "graphql-schema-typescript": "^1.3.1",
         "prettier": "^1.16.0",
+        "prisma": "^2.19.0",
         "tslint": "^5.20.0",
         "tslint-config-prettier": "^1.18.0",
         "tslint-plugin-prettier": "^2.0.1",
-        "typescript": "^3.6.3"
+        "typescript": "^4.1.0"
     }
 }

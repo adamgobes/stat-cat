@@ -103,6 +103,8 @@ export async function getFantasyLeague(parent, args, context: Context): Promise<
         .findUnique({ where: { id: args.statCatTeamId } })
         .league()
 
+    if (!league) return null
+
     const invitations = await context.prisma.fantasyLeagueInvitation.findMany({
         where: { leagueId: league.id },
     })
